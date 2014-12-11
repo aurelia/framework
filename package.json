@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
@@ -16,7 +16,7 @@
   "main": "dist/commonjs/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/aurelia/framework"
+    "url": "http://github.com/aurelia/framework"
   },
   "jspm": {
     "main": "amd/index",
@@ -24,14 +24,14 @@
       "lib": "dist"
     },
     "dependencies": {
-      "aurelia-binding": "github:aurelia/binding@^0.0.1",
-      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.0.3",
-      "aurelia-event-aggregator": "github:aurelia/event-aggregator@^0.0.1",
-      "aurelia-loader": "github:aurelia/loader@^0.0.2",
-      "aurelia-logging": "github:aurelia/logging@^0.0.1",
-      "aurelia-metadata": "github:aurelia/metadata@^0.0.5",
-      "aurelia-task-queue": "github:aurelia/task-queue@^0.0.2",
-      "aurelia-templating": "github:aurelia/templating@^0.0.1"
+      "aurelia-binding": "^0.1.0",
+      "aurelia-dependency-injection": "^0.1.0",
+      "aurelia-event-aggregator": "^0.1.0",
+      "aurelia-loader": "^0.1.0",
+      "aurelia-logging": "^0.1.0",
+      "aurelia-metadata": "^0.1.0",
+      "aurelia-task-queue": "^0.1.0",
+      "aurelia-templating": "^0.1.0"
     }
   },
   "devDependencies": {

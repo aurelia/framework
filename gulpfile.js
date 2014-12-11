@@ -10,8 +10,6 @@ var assign = Object.assign || require('object.assign');
 var pkg = require('./package.json');
 var fs = require('fs');
 
-var VERSION = pkg.version;
-
 var path = {
   source:'lib/**/*.js',
   output:'dist/',
@@ -74,7 +72,7 @@ gulp.task('doc', function(){
 gulp.task('changelog', function(callback) {
   changelog({
     repository: pkg.repository.url,
-    version: VERSION,
+    version: pkg.version,
     file: 'CHANGELOG.md'
   }, function(err, log) {
     fs.writeFileSync(path.doc + '/CHANGELOG.md', log);
