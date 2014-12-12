@@ -73,7 +73,7 @@ gulp.task('changelog', function(callback) {
   changelog({
     repository: pkg.repository.url,
     version: pkg.version,
-    file: 'CHANGELOG.md'
+    file: path.doc + '/CHANGELOG.md'
   }, function(err, log) {
     fs.writeFileSync(path.doc + '/CHANGELOG.md', log);
   });
