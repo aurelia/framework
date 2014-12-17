@@ -1,3 +1,11 @@
+## 0.3.0 (2014-12-17)
+
+
+#### Bug Fixes
+
+* **package:** update dependencies to latest versions ([12f0f9a8](http://github.com/aurelia/framework/commit/12f0f9a8af4d8178e80e87fc4ce7d9a8a53eba85))
+
+
 ### 0.2.1 (2014-12-12)
 
 

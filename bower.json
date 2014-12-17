@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
@@ -9,7 +9,9 @@
   ],
   "homepage": "http://aurelia.io",
   "license": "MIT",
-  "authors": ["Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)"],
+  "authors": [
+    "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)"
+  ],
   "repository": {
     "type": "git",
     "url": "http://github.com/aurelia/framework"
