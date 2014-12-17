@@ -15,6 +15,10 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform and conta
 * [aurelia-event-aggregator](https://github.com/aurelia/event-aggregator)
 * [aurelia-logging](https://github.com/aurelia/logging)
 
+## Used By
+
+* [aurelia-bootstrapper](https://github.com/aurelia/bootstrapper)
+
 ## Platform Support
 
 This library can be used in the **browser** only.

@@ -38,6 +38,7 @@
     "conventional-changelog": "0.0.11",
     "gulp": "^3.8.10",
     "gulp-6to5": "^1.0.2",
+    "gulp-bump": "^0.1.11",
     "gulp-clean": "^0.3.1",
     "gulp-jshint": "^1.9.0",
     "gulp-yuidoc": "^0.1.2",
@@ -50,5 +51,32 @@
     "karma-jspm": "^1.0.1",
     "object.assign": "^1.0.3",
     "run-sequence": "^1.0.2"
+  },
+  "aurelia": {
+    "usedBy": [
+      "aurelia-bootstrapper"
+    ],
+    "documentation": {
+      "links": [
+        {
+          "rel": "license",
+          "mediaType": "text/plain",
+          "title": "The MIT License (MIT)",
+          "href": "LICENSE"
+        },
+        {
+          "rel": "describedby",
+          "mediaType": "application/yuidoc+json",
+          "title": "API",
+          "href": "doc/api.json"
+        },
+        {
+          "rel": "version-history",
+          "mediaType": "text/markdown",
+          "title": "Change Log",
+          "href": "doc/CHANGELOG.md"
+        }
+      ]
+    }
   }
 }
