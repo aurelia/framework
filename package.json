@@ -31,7 +31,7 @@
       "aurelia-logging": "^0.1.1",
       "aurelia-metadata": "^0.1.1",
       "aurelia-task-queue": "^0.1.1",
-      "aurelia-templating": "^0.3.0"
+      "aurelia-templating": "^0.3.1"
     }
   },
   "devDependencies": {
