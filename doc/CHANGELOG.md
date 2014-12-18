@@ -1,3 +1,11 @@
+### 0.3.2 (2014-12-18)
+
+
+#### Bug Fixes
+
+* **package:** update templating to latest version ([5d1305e6](http://github.com/aurelia/framework/commit/5d1305e637d827f83c97df3e08db4f60f47915df))
+
+
 ### 0.3.1 (2014-12-18)
 
 
