@@ -71,7 +71,7 @@ export class Aurelia {
       });
   }
 
-  setRoot(root, transition, applicationHost){
+  setRoot(root, applicationHost){
     if (!applicationHost || typeof applicationHost == 'string') {
       this.host = document.getElementById(applicationHost || 'applicationHost') || document.body;
     } else {
