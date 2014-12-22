@@ -1,3 +1,16 @@
+## 0.4.0 (2014-12-22)
+
+
+#### Bug Fixes
+
+* **package:** update templating to latest version ([63d4c5f6](http://github.com/aurelia/framework/commit/63d4c5f6db58a50f6e1776b2b4939ca81ce4edf5))
+
+
+#### Features
+
+* **framework:** enable plugin loading and config ([f3b02ea9](http://github.com/aurelia/framework/commit/f3b02ea96c0a607b77bb7fbc7e0389748fb07c12))
+
+
 ### 0.3.2 (2014-12-18)
 
 

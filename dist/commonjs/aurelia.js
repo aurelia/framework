@@ -14,12 +14,33 @@ var includeEventsIn = require('aurelia-event-aggregator').includeEventsIn;
 
 var logger = LogManager.getLogger("aurelia");
 
+function loadPlugins(loader, plugins) {
+  var toLoad = [], i, ii, current;
+
+  for (i = 0, ii = plugins.length; i < ii; ++i) {
+    current = plugins[i];
+    logger.debug("Loading plugin " + current.moduleId + ".");
+    toLoad.push(loader.loadModule(current.moduleId).then(function (exportedValue) {
+      if ("install" in exportedValue) {
+        return exportedValue.install(current.config || {}).then(function () {
+          logger.debug("Installed plugin " + current.moduleId + ".");
+        });
+      } else {
+        logger.debug("Loaded plugin " + current.moduleId + ".");
+      }
+    }));
+  }
+
+  return Promise.all(toLoad);
+}
+
 var Aurelia = (function () {
   var Aurelia = function Aurelia(loader, container, resources) {
     this.loader = loader || Loader.createDefaultLoader();
     this.container = container || new Container();
     this.resources = resources || new ResourceRegistry();
     this.resourcesToLoad = [];
+    this.plugins = [];
 
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
@@ -42,8 +63,8 @@ var Aurelia = (function () {
     return this;
   };
 
-  Aurelia.prototype.withPlugins = function (config, baseUrl) {
-    logger.error("withPlugins is not yet implemented");
+  Aurelia.prototype.withPlugin = function (moduleId, config) {
+    this.plugins.push({ moduleId: moduleId, config: config });
     return this;
   };
 
@@ -70,16 +91,18 @@ var Aurelia = (function () {
       logger.error("You must configure Aurelia with a BindingLanguage implementation.");
     }
 
-    return this.container.get(ResourceCoordinator).importResources(this.resourcesToLoad).then(function (resources) {
-      resources.forEach(function (x) {
-        return x.register(_this.resources);
+    return loadPlugins(this.loader, this.plugins).then(function () {
+      return _this.container.get(ResourceCoordinator).importResources(_this.resourcesToLoad).then(function (resources) {
+        resources.forEach(function (x) {
+          return x.register(_this.resources);
+        });
+        logger.info("Aurelia Started");
+        return _this;
       });
-      logger.info("Aurelia Started");
-      return _this;
     });
   };
 
-  Aurelia.prototype.setRoot = function (root, transition, applicationHost) {
+  Aurelia.prototype.setRoot = function (root, applicationHost) {
     var _this2 = this;
     if (!applicationHost || typeof applicationHost == "string") {
       this.host = document.getElementById(applicationHost || "applicationHost") || document.body;
