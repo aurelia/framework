@@ -24,6 +24,6 @@
     "aurelia-logging": "0.1.1",
     "aurelia-metadata": "0.1.1",
     "aurelia-task-queue": "0.1.1",
-    "aurelia-templating": "0.3.2"
+    "aurelia-templating": "0.4.0"
   }
 }
