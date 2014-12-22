@@ -6,12 +6,33 @@ import {EventAggregator, includeEventsIn} from 'aurelia-event-aggregator';
 
 var logger = LogManager.getLogger('aurelia');
 
+function loadPlugins(loader, plugins){
+  var toLoad = [], i, ii, current;
+
+  for(i = 0, ii = plugins.length; i < ii; ++i){
+    current = plugins[i];
+    logger.debug(`Loading plugin ${current.moduleId}.`);
+    toLoad.push(loader.loadModule(current.moduleId).then(exportedValue => {
+      if('install' in exportedValue){
+        return exportedValue.install(current.config || {}).then(() =>{
+          logger.debug(`Installed plugin ${current.moduleId}.`);
+        });
+      }else{
+        logger.debug(`Loaded plugin ${current.moduleId}.`);
+      }
+    }));
+  }
+
+  return Promise.all(toLoad);
+}
+
 export class Aurelia {
   constructor(loader, container, resources){
     this.loader = loader || Loader.createDefaultLoader();
     this.container = container || new Container();
     this.resources = resources || new ResourceRegistry();
     this.resourcesToLoad = [];
+    this.plugins = [];
 
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
@@ -34,8 +55,8 @@ export class Aurelia {
     return this;
   }
 
-  withPlugins(config, baseUrl){
-    logger.error('withPlugins is not yet implemented');
+  withPlugin(moduleId, config){
+    this.plugins.push({moduleId:moduleId, config:config});
     return this;
   }
 
@@ -61,14 +82,14 @@ export class Aurelia {
       logger.error('You must configure Aurelia with a BindingLanguage implementation.');
     }
 
-    //TODO: configure plugins
-
-    return this.container.get(ResourceCoordinator)
-      .importResources(this.resourcesToLoad).then(resources => {
-        resources.forEach(x => x.register(this.resources));
-        logger.info('Aurelia Started');
-        return this;
-      });
+    return loadPlugins(this.loader, this.plugins).then(() => {
+      return this.container.get(ResourceCoordinator)
+        .importResources(this.resourcesToLoad).then(resources => {
+          resources.forEach(x => x.register(this.resources));
+          logger.info('Aurelia Started');
+          return this;
+        });
+    });
   }
 
   setRoot(root, applicationHost){
