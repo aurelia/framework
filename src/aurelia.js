@@ -6,21 +6,34 @@ import {EventAggregator, includeEventsIn} from 'aurelia-event-aggregator';
 
 var logger = LogManager.getLogger('aurelia');
 
-function loadPlugins(loader, plugins){
-  var toLoad = [], i, ii, current;
+function loadPlugin(aurelia, loader, info){
+  logger.debug(`Loading plugin ${info.moduleId}.`);
 
-  for(i = 0, ii = plugins.length; i < ii; ++i){
-    current = plugins[i];
-    logger.debug(`Loading plugin ${current.moduleId}.`);
-    toLoad.push(loader.loadModule(current.moduleId).then(exportedValue => {
-      if('install' in exportedValue){
-        return exportedValue.install(current.config || {}).then(() =>{
-          logger.debug(`Installed plugin ${current.moduleId}.`);
+  return loader.loadModule(info.moduleId, '').then(exportedValue => {
+    if('install' in exportedValue){
+      var result = exportedValue.install(aurelia, info.config || {});
+
+      if(result){
+        return result.then(() =>{
+          logger.debug(`Installed plugin ${info.moduleId}.`);
         });
       }else{
-        logger.debug(`Loaded plugin ${current.moduleId}.`);
+        logger.debug(`Installed plugin ${info.moduleId}.`);
       }
-    }));
+    }else{
+      logger.debug(`Loaded plugin ${info.moduleId}.`);
+    }
+  });
+}
+
+function loadPlugins(aurelia){
+  var toLoad = [], 
+      loader = aurelia.loader,
+      plugins = aurelia.plugins,
+      i, ii, current, result;
+
+  for(i = 0, ii = plugins.length; i < ii; ++i){
+    toLoad.push(loadPlugin(aurelia, loader, plugins[i]));
   }
 
   return Promise.all(toLoad);
@@ -82,7 +95,7 @@ export class Aurelia {
       logger.error('You must configure Aurelia with a BindingLanguage implementation.');
     }
 
-    return loadPlugins(this.loader, this.plugins).then(() => {
+    return loadPlugins(this).then(() => {
       return this.container.get(ResourceCoordinator)
         .importResources(this.resourcesToLoad).then(resources => {
           resources.forEach(x => x.register(this.resources));
