@@ -3,41 +3,9 @@ import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
 import {BindingLanguage,ResourceCoordinator, ViewSlot, ResourceRegistry} from 'aurelia-templating';
 import {EventAggregator, includeEventsIn} from 'aurelia-event-aggregator';
+import {Plugins} from './plugins';
 
 var logger = LogManager.getLogger('aurelia');
-
-function loadPlugin(aurelia, loader, info){
-  logger.debug(`Loading plugin ${info.moduleId}.`);
-
-  return loader.loadModule(info.moduleId, '').then(exportedValue => {
-    if('install' in exportedValue){
-      var result = exportedValue.install(aurelia, info.config || {});
-
-      if(result){
-        return result.then(() =>{
-          logger.debug(`Installed plugin ${info.moduleId}.`);
-        });
-      }else{
-        logger.debug(`Installed plugin ${info.moduleId}.`);
-      }
-    }else{
-      logger.debug(`Loaded plugin ${info.moduleId}.`);
-    }
-  });
-}
-
-function loadPlugins(aurelia){
-  var toLoad = [], 
-      loader = aurelia.loader,
-      plugins = aurelia.plugins,
-      i, ii, current, result;
-
-  for(i = 0, ii = plugins.length; i < ii; ++i){
-    toLoad.push(loadPlugin(aurelia, loader, plugins[i]));
-  }
-
-  return Promise.all(toLoad);
-}
 
 export class Aurelia {
   constructor(loader, container, resources){
@@ -45,7 +13,7 @@ export class Aurelia {
     this.container = container || new Container();
     this.resources = resources || new ResourceRegistry();
     this.resourcesToLoad = [];
-    this.plugins = [];
+    this.plugins = new Plugins(this);
 
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
@@ -60,16 +28,6 @@ export class Aurelia {
 
   withSingleton(type, implementation){
     this.container.registerSingleton(type, implementation);
-    return this;
-  }
-
-  withBindingLanguage(languageType){
-    this.container.registerSingleton(BindingLanguage, languageType);
-    return this;
-  }
-
-  withPlugin(moduleId, config){
-    this.plugins.push({moduleId:moduleId, config:config});
     return this;
   }
 
@@ -91,11 +49,11 @@ export class Aurelia {
     this.started = true;
     logger.info('Aurelia Starting');
 
-    if(!this.container.hasHandler(BindingLanguage)){
-      logger.error('You must configure Aurelia with a BindingLanguage implementation.');
-    }
+    return this.plugins.process().then(() => {
+      if(!this.container.hasHandler(BindingLanguage)){
+        logger.error('You must configure Aurelia with a BindingLanguage implementation.');
+      }
 
-    return loadPlugins(this).then(() => {
       return this.container.get(ResourceCoordinator)
         .importResources(this.resourcesToLoad).then(resources => {
           resources.forEach(x => x.register(this.resources));
