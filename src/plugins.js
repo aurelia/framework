@@ -26,6 +26,7 @@ export class Plugins {
   constructor(aurelia){
     this.aurelia = aurelia;
     this.info = [];
+    this.hasProcessed = false;
   }
 
   install(moduleId, config){
@@ -38,7 +39,13 @@ export class Plugins {
         aurelia = this.aurelia,
         loader = aurelia.loader,
         info = this.info,
-        i, ii, current, result;
+        i, ii;
+
+    if(this.hasProcessed){
+      return Promise.resolve();
+    }
+
+    this.hasProcessed = true;
 
     for(i = 0, ii = info.length; i < ii; ++i){
       toLoad.push(loadPlugin(aurelia, loader, info[i]));
