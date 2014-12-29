@@ -9,7 +9,6 @@ System.config({
   "map": {
     "aurelia-binding": "github:aurelia/binding@0.1.2",
     "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.1.1",
-    "aurelia-event-aggregator": "github:aurelia/event-aggregator@0.1.1",
     "aurelia-loader": "github:aurelia/loader@0.2.0",
     "aurelia-logging": "github:aurelia/logging@0.1.1",
     "aurelia-metadata": "github:aurelia/metadata@0.1.1",

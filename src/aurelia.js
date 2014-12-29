@@ -1,8 +1,7 @@
 import * as LogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
-import {BindingLanguage,ResourceCoordinator, ViewSlot, ResourceRegistry} from 'aurelia-templating';
-import {EventAggregator, includeEventsIn} from 'aurelia-event-aggregator';
+import {BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry} from 'aurelia-templating';
 import {Plugins} from './plugins';
 
 var logger = LogManager.getLogger('aurelia');
@@ -18,7 +17,6 @@ export class Aurelia {
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
     this.withInstance(ResourceRegistry, this.resources);
-    this.withInstance(EventAggregator, includeEventsIn(this));
   }
 
   withInstance(type, instance){

@@ -19,7 +19,6 @@
   "dependencies": {
     "aurelia-binding": "0.1.2",
     "aurelia-dependency-injection": "0.1.1",
-    "aurelia-event-aggregator": "0.1.1",
     "aurelia-loader": "0.2.0",
     "aurelia-logging": "0.1.1",
     "aurelia-metadata": "0.1.1",
