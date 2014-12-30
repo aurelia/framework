@@ -10,6 +10,7 @@ var changelog = require('conventional-changelog');
 var assign = Object.assign || require('object.assign');
 var fs = require('fs');
 var bump = require('gulp-bump');
+var tools = require('aurelia-tools');
 
 var path = {
   source:'src/**/*.js',
@@ -64,10 +65,14 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('doc', function(){
+gulp.task('doc-generate', function(){
   return gulp.src(path.source)
     .pipe(yuidoc.parser(null, 'api.json'))
     .pipe(gulp.dest(path.doc));
+});
+
+gulp.task('doc', ['doc-generate'], function(){
+  tools.transformAPIModel(path.doc);
 });
 
 gulp.task('bump-version', function(){
@@ -94,6 +99,10 @@ gulp.task('build', function(callback) {
     ['build-es6', 'build-commonjs', 'build-amd'],
     callback
   );
+});
+
+gulp.task('update-own-deps', function(){
+  tools.updateOwnDependenciesFromLocalRepositories();
 });
 
 gulp.task('prepare-release', function(callback){
