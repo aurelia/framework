@@ -29,10 +29,19 @@ var compilerOptions = {
   sourceFileName: '',
   sourceRoot: '',
   moduleRoot: '',
-  amdModuleIds: false,
+  moduleIds: false,
   runtime: false,
-  comments: false,
-  experimental: false
+  experimental: false,
+  format: {
+    comments: false,
+    compact: false,
+    indent: {
+      parentheses: true,
+      adjustMultilineComment: true,
+      style: "  ",
+      base: 0
+    }
+  }
 };
 
 var jshintConfig = {esnext:true};
@@ -57,6 +66,12 @@ gulp.task('build-amd', function () {
   return gulp.src(path.source)
     .pipe(to5(assign({}, compilerOptions, {modules:'amd'})))
     .pipe(gulp.dest(path.output + 'amd'));
+});
+
+gulp.task('build-system', function () {
+  return gulp.src(path.source)
+    .pipe(to5(assign({}, compilerOptions, {modules:'system'})))
+    .pipe(gulp.dest(path.output + 'system'));
 });
 
 gulp.task('lint', function() {
@@ -96,7 +111,7 @@ gulp.task('changelog', function(callback) {
 gulp.task('build', function(callback) {
   return runSequence(
     'clean',
-    ['build-es6', 'build-commonjs', 'build-amd'],
+    ['build-es6', 'build-commonjs', 'build-amd', 'build-system'],
     callback
   );
 });

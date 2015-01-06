@@ -33,7 +33,13 @@ module.exports = function(config) {
       'test/**/*.js': ['6to5'],
       'src/**/*.js': ['6to5']
     },
-
+    '6to5Preprocessor': {
+      options: {
+        sourceMap: 'inline',
+        modules: 'system',
+        moduleIds: false
+      }
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
