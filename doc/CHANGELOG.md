@@ -1,3 +1,19 @@
+## 0.5.0 (2015-01-06)
+
+
+#### Bug Fixes
+
+* **aurelia:**
+  * remove dependency on event aggregator ([424fa2bf](http://github.com/aurelia/framework/commit/424fa2bf3b9d2a4b79c2bb5cec5ad45d87273327))
+  * plugin loading module id fix ([ba79cb93](http://github.com/aurelia/framework/commit/ba79cb933e86e9cea6d391cb3664c82a31231f7e))
+* **plugins:** ensure plugin installation can only happen once ([9b37c848](http://github.com/aurelia/framework/commit/9b37c8485ce7d966e1f10eb66f088e341d9a4d4e))
+
+
+#### Features
+
+* **build:** update compiler and switch to register module format ([63c5d367](http://github.com/aurelia/framework/commit/63c5d367ed576a4350fcf6bfc3d87b4d55370372))
+
+
 ## 0.4.0 (2014-12-22)
 
 

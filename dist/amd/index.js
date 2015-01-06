@@ -1,48 +1,32 @@
-define(["exports", "./aurelia", "aurelia-dependency-injection", "aurelia-binding", "aurelia-metadata", "aurelia-templating", "aurelia-loader", "aurelia-task-queue", "aurelia-event-aggregator", "aurelia-logging"], function (exports, _aurelia, _aureliaDependencyInjection, _aureliaBinding, _aureliaMetadata, _aureliaTemplating, _aureliaLoader, _aureliaTaskQueue, _aureliaEventAggregator, _aureliaLogging) {
+define(["exports", "./aurelia", "aurelia-dependency-injection", "aurelia-binding", "aurelia-metadata", "aurelia-templating", "aurelia-loader", "aurelia-task-queue", "aurelia-logging"], function (exports, _aurelia, _aureliaDependencyInjection, _aureliaBinding, _aureliaMetadata, _aureliaTemplating, _aureliaLoader, _aureliaTaskQueue, _aureliaLogging) {
   "use strict";
 
+  var _interopRequireWildcard = function (obj) {
+    return obj && obj.constructor === Object ? obj : {
+      "default": obj
+    };
+  };
+
+  var _exportsWildcard = function (obj) {
+    for (var i in obj) {
+      if (exports[i] !== undefined) {
+        exports[i] = obj[i];
+      }
+    }
+  };
+
   exports.Aurelia = _aurelia.Aurelia;
-  (function (obj) {
-    for (var i in obj) {
-      exports[i] = obj[i];
-    }
-  })(_aureliaDependencyInjection);
+  _exportsWildcard(_interopRequireWildcard(_aureliaDependencyInjection));
 
-  (function (obj) {
-    for (var i in obj) {
-      exports[i] = obj[i];
-    }
-  })(_aureliaBinding);
+  _exportsWildcard(_interopRequireWildcard(_aureliaBinding));
 
-  (function (obj) {
-    for (var i in obj) {
-      exports[i] = obj[i];
-    }
-  })(_aureliaMetadata);
+  _exportsWildcard(_interopRequireWildcard(_aureliaMetadata));
 
-  (function (obj) {
-    for (var i in obj) {
-      exports[i] = obj[i];
-    }
-  })(_aureliaTemplating);
+  _exportsWildcard(_interopRequireWildcard(_aureliaTemplating));
 
-  (function (obj) {
-    for (var i in obj) {
-      exports[i] = obj[i];
-    }
-  })(_aureliaLoader);
+  _exportsWildcard(_interopRequireWildcard(_aureliaLoader));
 
-  (function (obj) {
-    for (var i in obj) {
-      exports[i] = obj[i];
-    }
-  })(_aureliaTaskQueue);
-
-  (function (obj) {
-    for (var i in obj) {
-      exports[i] = obj[i];
-    }
-  })(_aureliaEventAggregator);
+  _exportsWildcard(_interopRequireWildcard(_aureliaTaskQueue));
 
   var TheLogManager = _aureliaLogging;
   var LogManager = exports.LogManager = TheLogManager;
