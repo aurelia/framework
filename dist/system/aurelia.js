@@ -1,7 +1,7 @@
 System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loader", "aurelia-templating", "./plugins"], function (_export) {
   "use strict";
 
-  var LogManager, Container, Loader, BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, Plugins, logger, Aurelia;
+  var LogManager, Container, Loader, BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine, Plugins, logger, Aurelia;
   return {
     setters: [function (_aureliaLogging) {
       LogManager = _aureliaLogging;
@@ -14,6 +14,7 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
       ResourceCoordinator = _aureliaTemplating.ResourceCoordinator;
       ViewSlot = _aureliaTemplating.ViewSlot;
       ResourceRegistry = _aureliaTemplating.ResourceRegistry;
+      CompositionEngine = _aureliaTemplating.CompositionEngine;
     }, function (_plugins) {
       Plugins = _plugins.Plugins;
     }],
@@ -77,6 +78,8 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
 
       Aurelia.prototype.setRoot = function (root, applicationHost) {
         var _this2 = this;
+        var compositionEngine, instruction = {};
+
         if (!applicationHost || typeof applicationHost == "string") {
           this.host = document.getElementById(applicationHost || "applicationHost") || document.body;
         } else {
@@ -84,12 +87,16 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
         }
 
         this.host.aurelia = this;
+        this.container.registerInstance(Element, this.host);
 
-        return this.container.get(ResourceCoordinator).loadElement(root).then(function (type) {
-          _this2.root = type.create(_this2.container);
-          var slot = new ViewSlot(_this2.host, true);
-          slot.swap(_this2.root.view);
-          slot.attached();
+        compositionEngine = this.container.get(CompositionEngine);
+        instruction.viewModel = root;
+        instruction.viewSlot = new ViewSlot(this.host, true);
+        instruction.container = instruction.childContainer = this.container;
+
+        return compositionEngine.compose(instruction).then(function (root) {
+          _this2.root = root;
+          instruction.viewSlot.attached();
           return _this2;
         });
       };

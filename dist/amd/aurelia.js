@@ -8,6 +8,7 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
   var ResourceCoordinator = _aureliaTemplating.ResourceCoordinator;
   var ViewSlot = _aureliaTemplating.ViewSlot;
   var ResourceRegistry = _aureliaTemplating.ResourceRegistry;
+  var CompositionEngine = _aureliaTemplating.CompositionEngine;
   var Plugins = _plugins.Plugins;
 
 
@@ -71,6 +72,8 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
 
   Aurelia.prototype.setRoot = function (root, applicationHost) {
     var _this2 = this;
+    var compositionEngine, instruction = {};
+
     if (!applicationHost || typeof applicationHost == "string") {
       this.host = document.getElementById(applicationHost || "applicationHost") || document.body;
     } else {
@@ -78,12 +81,16 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
     }
 
     this.host.aurelia = this;
+    this.container.registerInstance(Element, this.host);
 
-    return this.container.get(ResourceCoordinator).loadElement(root).then(function (type) {
-      _this2.root = type.create(_this2.container);
-      var slot = new ViewSlot(_this2.host, true);
-      slot.swap(_this2.root.view);
-      slot.attached();
+    compositionEngine = this.container.get(CompositionEngine);
+    instruction.viewModel = root;
+    instruction.viewSlot = new ViewSlot(this.host, true);
+    instruction.container = instruction.childContainer = this.container;
+
+    return compositionEngine.compose(instruction).then(function (root) {
+      _this2.root = root;
+      instruction.viewSlot.attached();
       return _this2;
     });
   };

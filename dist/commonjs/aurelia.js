@@ -14,6 +14,7 @@ var BindingLanguage = require("aurelia-templating").BindingLanguage;
 var ResourceCoordinator = require("aurelia-templating").ResourceCoordinator;
 var ViewSlot = require("aurelia-templating").ViewSlot;
 var ResourceRegistry = require("aurelia-templating").ResourceRegistry;
+var CompositionEngine = require("aurelia-templating").CompositionEngine;
 var Plugins = require("./plugins").Plugins;
 
 
@@ -77,6 +78,8 @@ Aurelia.prototype.start = function () {
 
 Aurelia.prototype.setRoot = function (root, applicationHost) {
   var _this2 = this;
+  var compositionEngine, instruction = {};
+
   if (!applicationHost || typeof applicationHost == "string") {
     this.host = document.getElementById(applicationHost || "applicationHost") || document.body;
   } else {
@@ -84,12 +87,16 @@ Aurelia.prototype.setRoot = function (root, applicationHost) {
   }
 
   this.host.aurelia = this;
+  this.container.registerInstance(Element, this.host);
 
-  return this.container.get(ResourceCoordinator).loadElement(root).then(function (type) {
-    _this2.root = type.create(_this2.container);
-    var slot = new ViewSlot(_this2.host, true);
-    slot.swap(_this2.root.view);
-    slot.attached();
+  compositionEngine = this.container.get(CompositionEngine);
+  instruction.viewModel = root;
+  instruction.viewSlot = new ViewSlot(this.host, true);
+  instruction.container = instruction.childContainer = this.container;
+
+  return compositionEngine.compose(instruction).then(function (root) {
+    _this2.root = root;
+    instruction.viewSlot.attached();
     return _this2;
   });
 };

@@ -1,3 +1,17 @@
+## 0.6.0 (2015-01-07)
+
+
+#### Bug Fixes
+
+* **aurelia:** directly use app container to create root view model ([d86665b3](http://github.com/aurelia/framework/commit/d86665b390dbfa65f8c53c148adfc740d7e8ebb2))
+* **package:** update dependencies to latest ([bfcd292e](http://github.com/aurelia/framework/commit/bfcd292e5c26bde6b7064e866db566201f280b4f))
+
+
+#### Features
+
+* **aurelia:** set root sets element in container and uses composition engine ([9f6fa60d](http://github.com/aurelia/framework/commit/9f6fa60d27dc7e9d418970925df2fc23514c1422))
+
+
 ## 0.5.0 (2015-01-06)
 
 
