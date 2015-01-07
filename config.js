@@ -15,7 +15,7 @@ System.config({
     "aurelia-logging": "github:aurelia/logging@0.2.0",
     "aurelia-metadata": "github:aurelia/metadata@0.2.3",
     "aurelia-task-queue": "github:aurelia/task-queue@0.2.0",
-    "aurelia-templating": "github:aurelia/templating@0.5.0",
+    "aurelia-templating": "github:aurelia/templating@0.6.0",
     "github:aurelia/binding@0.2.0": {
       "aurelia-metadata": "github:aurelia/metadata@0.2.3",
       "aurelia-task-queue": "github:aurelia/task-queue@0.2.0"
@@ -29,7 +29,7 @@ System.config({
       "core-js": "npm:core-js@0.4.1",
       "webcomponentsjs": "github:webcomponents/webcomponentsjs@0.5.2"
     },
-    "github:aurelia/templating@0.5.0": {
+    "github:aurelia/templating@0.6.0": {
       "aurelia-binding": "github:aurelia/binding@0.2.0",
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.2.1",
       "aurelia-html-template-element": "github:aurelia/html-template-element@0.1.2",
