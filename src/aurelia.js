@@ -1,7 +1,13 @@
 import * as LogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
-import {BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry} from 'aurelia-templating';
+import {
+  BindingLanguage, 
+  ResourceCoordinator, 
+  ViewSlot, 
+  ResourceRegistry,
+  CompositionEngine
+} from 'aurelia-templating';
 import {Plugins} from './plugins';
 
 var logger = LogManager.getLogger('aurelia');
@@ -62,6 +68,8 @@ export class Aurelia {
   }
 
   setRoot(root, applicationHost){
+    var compositionEngine, instruction = {};
+
     if (!applicationHost || typeof applicationHost == 'string') {
       this.host = document.getElementById(applicationHost || 'applicationHost') || document.body;
     } else {
@@ -69,14 +77,17 @@ export class Aurelia {
     }
 
     this.host.aurelia = this;
+    this.container.registerInstance(Element, this.host);
 
-    return this.container.get(ResourceCoordinator)
-      .loadElement(root).then(type => {
-        this.root = type.create(this.container);
-        var slot = new ViewSlot(this.host, true);
-        slot.swap(this.root.view);
-        slot.attached();
-        return this;
-      });
+    compositionEngine = this.container.get(CompositionEngine);
+    instruction.viewModel = root;
+    instruction.viewSlot = new ViewSlot(this.host, true);
+    instruction.container = this.container;
+
+    return compositionEngine.compose(instruction).then(root => {
+      this.root = root;
+      instruction.viewSlot.attached();
+      return this;
+    });
   }
 }
