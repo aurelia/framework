@@ -26,7 +26,6 @@ export class Plugins {
   constructor(aurelia){
     this.aurelia = aurelia;
     this.info = [];
-    this.hasProcessed = false;
   }
 
   install(moduleId, config){
@@ -35,22 +34,19 @@ export class Plugins {
   }
 
   process(){
-    var toLoad = [], 
-        aurelia = this.aurelia,
+    var aurelia = this.aurelia,
         loader = aurelia.loader,
         info = this.info,
-        i, ii;
+        current;
 
-    if(this.hasProcessed){
+    var next = function(){
+      if(current = info.shift()){
+        return loadPlugin(aurelia, loader, current).then(next);
+      }
+
       return Promise.resolve();
     }
 
-    this.hasProcessed = true;
-
-    for(i = 0, ii = info.length; i < ii; ++i){
-      toLoad.push(loadPlugin(aurelia, loader, info[i]));
-    }
-
-    return Promise.all(toLoad);
+    return next();
   }
 }
