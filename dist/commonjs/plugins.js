@@ -1,5 +1,10 @@
 "use strict";
 
+var _prototypeProperties = function (child, staticProps, instanceProps) {
+  if (staticProps) Object.defineProperties(child, staticProps);
+  if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
+};
+
 var _interopRequireWildcard = function (obj) {
   return obj && obj.constructor === Object ? obj : {
     "default": obj
@@ -30,31 +35,46 @@ function loadPlugin(aurelia, loader, info) {
   });
 }
 
-var Plugins = function Plugins(aurelia) {
-  this.aurelia = aurelia;
-  this.info = [];
-  this.hasProcessed = false;
-};
-
-Plugins.prototype.install = function (moduleId, config) {
-  this.info.push({ moduleId: moduleId, config: config });
-  return this;
-};
-
-Plugins.prototype.process = function () {
-  var toLoad = [], aurelia = this.aurelia, loader = aurelia.loader, info = this.info, i, ii;
-
-  if (this.hasProcessed) {
-    return Promise.resolve();
+var Plugins = (function () {
+  function Plugins(aurelia) {
+    this.aurelia = aurelia;
+    this.info = [];
   }
 
-  this.hasProcessed = true;
+  _prototypeProperties(Plugins, null, {
+    install: {
+      value: function (moduleId, config) {
+        this.info.push({ moduleId: moduleId, config: config });
+        return this;
+      },
+      writable: true,
+      enumerable: true,
+      configurable: true
+    },
+    process: {
+      value: function () {
+        var aurelia = this.aurelia,
+            loader = aurelia.loader,
+            info = this.info,
+            current;
 
-  for (i = 0, ii = info.length; i < ii; ++i) {
-    toLoad.push(loadPlugin(aurelia, loader, info[i]));
-  }
+        var next = function () {
+          if (current = info.shift()) {
+            return loadPlugin(aurelia, loader, current).then(next);
+          }
 
-  return Promise.all(toLoad);
-};
+          return Promise.resolve();
+        };
+
+        return next();
+      },
+      writable: true,
+      enumerable: true,
+      configurable: true
+    }
+  });
+
+  return Plugins;
+})();
 
 exports.Plugins = Plugins;

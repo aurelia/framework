@@ -1,3 +1,13 @@
+## 0.7.0 (2015-01-12)
+
+
+#### Bug Fixes
+
+* **aurelia:** load groups of resources in order ([2d936e5f](http://github.com/aurelia/framework/commit/2d936e5f6d1750841e99180d72078416926326f1))
+* **package:** update Aurelia dependencies ([f9df6e55](http://github.com/aurelia/framework/commit/f9df6e55ab139d8589516d8ebdf4f27ae3f83b90))
+* **plugins:** install sequentially ([cc78f9a0](http://github.com/aurelia/framework/commit/cc78f9a07974df00c1dcd88b6c71afcf1e52fcc9))
+
+
 ## 0.6.0 (2015-01-07)
 
 

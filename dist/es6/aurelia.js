@@ -10,7 +10,26 @@ import {
 } from 'aurelia-templating';
 import {Plugins} from './plugins';
 
-var logger = LogManager.getLogger('aurelia');
+var logger = LogManager.getLogger('aurelia'),
+    slice = Array.prototype.slice;
+
+function loadResources(container, resourcesToLoad, appResources){
+  var resourceCoordinator = container.get(ResourceCoordinator), 
+      current;
+
+  function next(){
+    if(current = resourcesToLoad.shift()){
+      return resourceCoordinator.importResources(current).then(resources => {
+        resources.forEach(x => x.register(appResources));
+        return next();
+      });
+    }
+
+    return Promise.resolve();
+  }
+
+  return next();
+}
 
 export class Aurelia {
   constructor(loader, container, resources){
@@ -36,10 +55,10 @@ export class Aurelia {
   }
 
   withResources(resources){
-    if(Array.isArray(resources)){
-      this.resourcesToLoad = this.resourcesToLoad.concat(resources);
-    }else{
-      this.resourcesToLoad = this.resourcesToLoad.concat(Array.prototype.slice.call(arguments));
+    if (Array.isArray(resources)) {
+      this.resourcesToLoad.push(resources);
+    } else {
+      this.resourcesToLoad.push(slice.call(arguments));
     }
 
     return this;
@@ -58,12 +77,10 @@ export class Aurelia {
         logger.error('You must configure Aurelia with a BindingLanguage implementation.');
       }
 
-      return this.container.get(ResourceCoordinator)
-        .importResources(this.resourcesToLoad).then(resources => {
-          resources.forEach(x => x.register(this.resources));
-          logger.info('Aurelia Started');
-          return this;
-        });
+      return loadResources(this.container, this.resourcesToLoad, this.resources).then(() => {
+        logger.info('Aurelia Started');
+        return this;
+      });
     });
   }
 

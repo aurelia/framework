@@ -1,7 +1,28 @@
 System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loader", "aurelia-templating", "./plugins"], function (_export) {
   "use strict";
 
-  var LogManager, Container, Loader, BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine, Plugins, logger, Aurelia;
+  var LogManager, Container, Loader, BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine, Plugins, _prototypeProperties, logger, slice, Aurelia;
+
+
+  function loadResources(container, resourcesToLoad, appResources) {
+    var resourceCoordinator = container.get(ResourceCoordinator), current;
+
+    function next() {
+      if (current = resourcesToLoad.shift()) {
+        return resourceCoordinator.importResources(current).then(function (resources) {
+          resources.forEach(function (x) {
+            return x.register(appResources);
+          });
+          return next();
+        });
+      }
+
+      return Promise.resolve();
+    }
+
+    return next();
+  }
+
   return {
     setters: [function (_aureliaLogging) {
       LogManager = _aureliaLogging;
@@ -19,88 +40,117 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
       Plugins = _plugins.Plugins;
     }],
     execute: function () {
+      _prototypeProperties = function (child, staticProps, instanceProps) {
+        if (staticProps) Object.defineProperties(child, staticProps);
+        if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
+      };
+
       logger = LogManager.getLogger("aurelia");
-      Aurelia = function Aurelia(loader, container, resources) {
-        this.loader = loader || Loader.createDefaultLoader();
-        this.container = container || new Container();
-        this.resources = resources || new ResourceRegistry();
-        this.resourcesToLoad = [];
-        this.plugins = new Plugins(this);
+      slice = Array.prototype.slice;
+      Aurelia = (function () {
+        function Aurelia(loader, container, resources) {
+          this.loader = loader || Loader.createDefaultLoader();
+          this.container = container || new Container();
+          this.resources = resources || new ResourceRegistry();
+          this.resourcesToLoad = [];
+          this.plugins = new Plugins(this);
 
-        this.withInstance(Aurelia, this);
-        this.withInstance(Loader, this.loader);
-        this.withInstance(ResourceRegistry, this.resources);
-      };
-
-      Aurelia.prototype.withInstance = function (type, instance) {
-        this.container.registerInstance(type, instance);
-        return this;
-      };
-
-      Aurelia.prototype.withSingleton = function (type, implementation) {
-        this.container.registerSingleton(type, implementation);
-        return this;
-      };
-
-      Aurelia.prototype.withResources = function (resources) {
-        if (Array.isArray(resources)) {
-          this.resourcesToLoad = this.resourcesToLoad.concat(resources);
-        } else {
-          this.resourcesToLoad = this.resourcesToLoad.concat(Array.prototype.slice.call(arguments));
+          this.withInstance(Aurelia, this);
+          this.withInstance(Loader, this.loader);
+          this.withInstance(ResourceRegistry, this.resources);
         }
 
-        return this;
-      };
+        _prototypeProperties(Aurelia, null, {
+          withInstance: {
+            value: function (type, instance) {
+              this.container.registerInstance(type, instance);
+              return this;
+            },
+            writable: true,
+            enumerable: true,
+            configurable: true
+          },
+          withSingleton: {
+            value: function (type, implementation) {
+              this.container.registerSingleton(type, implementation);
+              return this;
+            },
+            writable: true,
+            enumerable: true,
+            configurable: true
+          },
+          withResources: {
+            value: function (resources) {
+              if (Array.isArray(resources)) {
+                this.resourcesToLoad.push(resources);
+              } else {
+                this.resourcesToLoad.push(slice.call(arguments));
+              }
 
-      Aurelia.prototype.start = function () {
-        var _this = this;
-        if (this.started) {
-          return;
-        }
+              return this;
+            },
+            writable: true,
+            enumerable: true,
+            configurable: true
+          },
+          start: {
+            value: function () {
+              var _this = this;
+              if (this.started) {
+                return;
+              }
 
-        this.started = true;
-        logger.info("Aurelia Starting");
+              this.started = true;
+              logger.info("Aurelia Starting");
 
-        return this.plugins.process().then(function () {
-          if (!_this.container.hasHandler(BindingLanguage)) {
-            logger.error("You must configure Aurelia with a BindingLanguage implementation.");
+              return this.plugins.process().then(function () {
+                if (!_this.container.hasHandler(BindingLanguage)) {
+                  logger.error("You must configure Aurelia with a BindingLanguage implementation.");
+                }
+
+                return loadResources(_this.container, _this.resourcesToLoad, _this.resources).then(function () {
+                  logger.info("Aurelia Started");
+                  return _this;
+                });
+              });
+            },
+            writable: true,
+            enumerable: true,
+            configurable: true
+          },
+          setRoot: {
+            value: function (root, applicationHost) {
+              var _this2 = this;
+              var compositionEngine, instruction = {};
+
+              if (!applicationHost || typeof applicationHost == "string") {
+                this.host = document.getElementById(applicationHost || "applicationHost") || document.body;
+              } else {
+                this.host = applicationHost;
+              }
+
+              this.host.aurelia = this;
+              this.container.registerInstance(Element, this.host);
+
+              compositionEngine = this.container.get(CompositionEngine);
+              instruction.viewModel = root;
+              instruction.viewSlot = new ViewSlot(this.host, true);
+              instruction.container = instruction.childContainer = this.container;
+
+              return compositionEngine.compose(instruction).then(function (root) {
+                _this2.root = root;
+                instruction.viewSlot.attached();
+                return _this2;
+              });
+            },
+            writable: true,
+            enumerable: true,
+            configurable: true
           }
-
-          return _this.container.get(ResourceCoordinator).importResources(_this.resourcesToLoad).then(function (resources) {
-            resources.forEach(function (x) {
-              return x.register(_this.resources);
-            });
-            logger.info("Aurelia Started");
-            return _this;
-          });
         });
-      };
 
-      Aurelia.prototype.setRoot = function (root, applicationHost) {
-        var _this2 = this;
-        var compositionEngine, instruction = {};
-
-        if (!applicationHost || typeof applicationHost == "string") {
-          this.host = document.getElementById(applicationHost || "applicationHost") || document.body;
-        } else {
-          this.host = applicationHost;
-        }
-
-        this.host.aurelia = this;
-        this.container.registerInstance(Element, this.host);
-
-        compositionEngine = this.container.get(CompositionEngine);
-        instruction.viewModel = root;
-        instruction.viewSlot = new ViewSlot(this.host, true);
-        instruction.container = instruction.childContainer = this.container;
-
-        return compositionEngine.compose(instruction).then(function (root) {
-          _this2.root = root;
-          instruction.viewSlot.attached();
-          return _this2;
-        });
-      };
-
+        return Aurelia;
+      })();
       _export("Aurelia", Aurelia);
     }
   };

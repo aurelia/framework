@@ -7,26 +7,28 @@ define(["exports", "./aurelia", "aurelia-dependency-injection", "aurelia-binding
     };
   };
 
-  var _exportsWildcard = function (obj) {
-    for (var i in obj) {
-      if (exports[i] !== undefined) {
-        exports[i] = obj[i];
+  var _defaults = function (obj, defaults) {
+    for (var key in defaults) {
+      if (obj[key] === undefined) {
+        obj[key] = defaults[key];
       }
     }
+
+    return obj;
   };
 
   exports.Aurelia = _aurelia.Aurelia;
-  _exportsWildcard(_interopRequireWildcard(_aureliaDependencyInjection));
+  _defaults(exports, _interopRequireWildcard(_aureliaDependencyInjection));
 
-  _exportsWildcard(_interopRequireWildcard(_aureliaBinding));
+  _defaults(exports, _interopRequireWildcard(_aureliaBinding));
 
-  _exportsWildcard(_interopRequireWildcard(_aureliaMetadata));
+  _defaults(exports, _interopRequireWildcard(_aureliaMetadata));
 
-  _exportsWildcard(_interopRequireWildcard(_aureliaTemplating));
+  _defaults(exports, _interopRequireWildcard(_aureliaTemplating));
 
-  _exportsWildcard(_interopRequireWildcard(_aureliaLoader));
+  _defaults(exports, _interopRequireWildcard(_aureliaLoader));
 
-  _exportsWildcard(_interopRequireWildcard(_aureliaTaskQueue));
+  _defaults(exports, _interopRequireWildcard(_aureliaTaskQueue));
 
   var TheLogManager = _aureliaLogging;
   var LogManager = exports.LogManager = TheLogManager;
