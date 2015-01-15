@@ -1,3 +1,9 @@
+/**
+ * Aurelia core framework module.
+ *
+ * @module framework
+ */
+
 export {Aurelia} from './aurelia';
 export * from 'aurelia-dependency-injection';
 export * from 'aurelia-binding';

@@ -31,6 +31,15 @@ function loadResources(container, resourcesToLoad, appResources){
   return next();
 }
 
+/**
+ * The framework core that provides the main Aurelia object.
+ *
+ * @class Aurelia
+ * @constructor
+ * @param {Loader} loader The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use a defaultLoader.
+ * @param {Container} container The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty container.
+ * @param {ResourceRegistry} resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
+ */
 export class Aurelia {
   constructor(loader, container, resources){
     this.loader = loader || Loader.createDefaultLoader();
@@ -44,16 +53,39 @@ export class Aurelia {
     this.withInstance(ResourceRegistry, this.resources);
   }
 
+  /**
+   * Adds an existing object to the framework's dependency injection container.
+   *
+   * @method withInstance
+   * @param {Class} type The object type of the dependency that the framework will inject.
+   * @param {Object} instance The existing instance of the dependency that the framework will inject.
+   * @return {Aurelia} Returns the current Aurelia instance.
+   */
   withInstance(type, instance){
     this.container.registerInstance(type, instance);
     return this;
   }
 
+  /**
+   * Adds a singleton to the framework's dependency injection container.
+   *
+   * @method withSingleton
+   * @param {Class} type The object type of the dependency that the framework will inject.
+   * @param {Object} implementation The constructor function of the dependency that the framework will inject.
+   * @return {Aurelia} Returns the current Aurelia instance.
+   */
   withSingleton(type, implementation){
     this.container.registerSingleton(type, implementation);
     return this;
   }
 
+  /**
+   * Adds a resource to be imported into the Aurelia framework.
+   *
+   * @method withResources
+   * @param {Object|Array} resources The constructor function(s) to use when the dependency needs to be instantiated.
+   * @return {Aurelia} Returns the current Aurelia instance.
+   */
   withResources(resources){
     if (Array.isArray(resources)) {
       this.resourcesToLoad.push(resources);
@@ -64,6 +96,12 @@ export class Aurelia {
     return this;
   }
 
+  /**
+   * Loads plugins, then resources, and then starts the Aurelia instance.
+   *
+   * @method start
+   * @return {Aurelia} Returns the started Aurelia instance.
+   */
   start(){
     if(this.started){
       return;
@@ -84,6 +122,14 @@ export class Aurelia {
     });
   }
 
+  /**
+   * Adds an object to the framework's dependency injection container.
+   *
+   * @method withSingleton
+   * @param {Object} root The root viewModel to load upon bootstrap.
+   * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
+   * @return {Aurelia} Returns the current Aurelia instance.
+   */
   setRoot(root, applicationHost){
     var compositionEngine, instruction = {};
 

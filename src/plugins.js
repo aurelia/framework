@@ -22,12 +22,28 @@ function loadPlugin(aurelia, loader, info){
   });
 }
 
+/**
+ * A metadata annotation that describes the origin module of the function to which it's attached.
+ *
+ * @class Plugins
+ * @constructor
+ * @param {Aurelia} aurelia An instance of Aurelia.
+ */
 export class Plugins {
   constructor(aurelia){
     this.aurelia = aurelia;
     this.info = [];
   }
 
+  /**
+   * Installs a plugin before Aurelia starts.
+   *
+   * @method install
+   * @param {moduleId} moduleId The ID of the module to install.
+   * @param {config} config The configuration for the specified module.
+   * @return {Plugins} Returns the current Plugins instance.
+   * @for export
+ */
   install(moduleId, config){
     this.info.push({moduleId:moduleId, config:config});
     return this;
