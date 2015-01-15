@@ -104,7 +104,7 @@ export class Aurelia {
    */
   start(){
     if(this.started){
-      return;
+      return Promise.resolve(this);
     }
 
     this.started = true;
