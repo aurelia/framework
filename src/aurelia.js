@@ -123,10 +123,10 @@ export class Aurelia {
   }
 
   /**
-   * Adds an object to the framework's dependency injection container.
+   * Instantiates the root view-model and view and add them to the DOM.
    *
    * @method withSingleton
-   * @param {Object} root The root viewModel to load upon bootstrap.
+   * @param {Object} root The root view-model to load upon bootstrap.
    * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
    * @return {Aurelia} Returns the current Aurelia instance.
    */

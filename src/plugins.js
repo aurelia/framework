@@ -23,7 +23,7 @@ function loadPlugin(aurelia, loader, info){
 }
 
 /**
- * A metadata annotation that describes the origin module of the function to which it's attached.
+ * Manages loading and installing plugins.
  *
  * @class Plugins
  * @constructor
@@ -42,7 +42,6 @@ export class Plugins {
    * @param {moduleId} moduleId The ID of the module to install.
    * @param {config} config The configuration for the specified module.
    * @return {Plugins} Returns the current Plugins instance.
-   * @for export
  */
   install(moduleId, config){
     this.info.push({moduleId:moduleId, config:config});
