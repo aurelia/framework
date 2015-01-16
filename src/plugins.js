@@ -5,12 +5,15 @@ var logger = LogManager.getLogger('aurelia');
 function loadPlugin(aurelia, loader, info){
   logger.debug(`Loading plugin ${info.moduleId}.`);
 
+  aurelia.currentPluginId = info.moduleId;
+
   return loader.loadModule(info.moduleId, '').then(exportedValue => {
     if('install' in exportedValue){
       var result = exportedValue.install(aurelia, info.config || {});
 
       if(result){
         return result.then(() =>{
+          aurelia.currentPluginId = null;
           logger.debug(`Installed plugin ${info.moduleId}.`);
         });
       }else{
@@ -19,6 +22,8 @@ function loadPlugin(aurelia, loader, info){
     }else{
       logger.debug(`Loaded plugin ${info.moduleId}.`);
     }
+
+    aurelia.currentPluginId = null;
   });
 }
 

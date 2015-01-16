@@ -1,13 +1,7 @@
 import * as LogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
-import {
-  BindingLanguage, 
-  ResourceCoordinator, 
-  ViewSlot, 
-  ResourceRegistry,
-  CompositionEngine
-} from 'aurelia-templating';
+import {BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine} from 'aurelia-templating';
 import {Plugins} from './plugins';
 
 var logger = LogManager.getLogger('aurelia'),
@@ -19,7 +13,7 @@ function loadResources(container, resourcesToLoad, appResources){
 
   function next(){
     if(current = resourcesToLoad.shift()){
-      return resourceCoordinator.importResources(current).then(resources => {
+      return resourceCoordinator.importResources(current, current.resourceManifestUrl).then(resources => {
         resources.forEach(x => x.register(appResources));
         return next();
       });
@@ -47,6 +41,10 @@ export class Aurelia {
     this.resources = resources || new ResourceRegistry();
     this.resourcesToLoad = [];
     this.plugins = new Plugins(this);
+
+    if(!this.resources.baseResourcePath){
+      this.resources.baseResourcePath = System.baseUrl || '';
+    }
 
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
@@ -87,12 +85,9 @@ export class Aurelia {
    * @return {Aurelia} Returns the current Aurelia instance.
    */
   withResources(resources){
-    if (Array.isArray(resources)) {
-      this.resourcesToLoad.push(resources);
-    } else {
-      this.resourcesToLoad.push(slice.call(arguments));
-    }
-
+    var toAdd = Array.isArray(resources) ? resources : slice.call(arguments);
+    toAdd.resourceManifestUrl = this.currentPluginId;
+    this.resourcesToLoad.push(toAdd);
     return this;
   }
 
