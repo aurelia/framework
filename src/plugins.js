@@ -39,6 +39,7 @@ export class Plugins {
   constructor(aurelia){
     this.aurelia = aurelia;
     this.info = [];
+    this.processed = false;
   }
 
   /**
@@ -50,7 +51,14 @@ export class Plugins {
    * @return {Plugins} Returns the current Plugins instance.
  */
   plugin(moduleId, config){
-    this.info.push({moduleId:moduleId, config:config});
+    var plugin = {moduleId:moduleId, config:config || {}};
+
+    if(this.processed){
+      loadPlugin(this.aurelia, this.aurelia.loader, plugin);
+    }else{
+      this.info.push(plugin);
+    }
+
     return this;
   }
 
@@ -87,11 +95,16 @@ export class Plugins {
         info = this.info,
         current;
 
+    if(this.processed){
+      return;
+    }
+
     var next = function(){
       if(current = info.shift()){
         return loadPlugin(aurelia, loader, current).then(next);
       }
 
+      this.processed = true;
       return Promise.resolve();
     }
 
