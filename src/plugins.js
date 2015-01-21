@@ -99,14 +99,14 @@ export class Plugins {
       return;
     }
 
-    var next = function(){
+    var next = () => {
       if(current = info.shift()){
         return loadPlugin(aurelia, loader, current).then(next);
       }
 
       this.processed = true;
       return Promise.resolve();
-    }
+    };
 
     return next();
   }

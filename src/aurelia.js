@@ -139,8 +139,9 @@ export class Aurelia {
 
     compositionEngine = this.container.get(CompositionEngine);
     instruction.viewModel = root;
-    instruction.viewSlot = new ViewSlot(this.host, true);
     instruction.container = instruction.childContainer = this.container;
+    instruction.viewSlot = new ViewSlot(this.host, true);
+    instruction.viewSlot.transformChildNodesIntoView();
 
     return compositionEngine.compose(instruction).then(root => {
       this.root = root;
