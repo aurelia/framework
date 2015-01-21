@@ -1,4 +1,5 @@
 import * as LogManager from 'aurelia-logging';
+import {addFunctionMetadataLocation} from 'aurelia-metadata';
 
 var logger = LogManager.getLogger('aurelia');
 
@@ -43,17 +44,44 @@ export class Plugins {
   /**
    * Installs a plugin before Aurelia starts.
    *
-   * @method install
+   * @method plugin
    * @param {moduleId} moduleId The ID of the module to install.
    * @param {config} config The configuration for the specified module.
    * @return {Plugins} Returns the current Plugins instance.
  */
-  install(moduleId, config){
+  plugin(moduleId, config){
     this.info.push({moduleId:moduleId, config:config});
     return this;
   }
 
-  process(){
+  /**
+   * Installs special support for ES5 authoring.
+   *
+   * @method es5
+   * @return {Plugins} Returns the current Plugins instance.
+ */
+  es5(){
+    Function.prototype.computed = function(computedProperties){
+      for(var key in computedProperties){
+        if(computedProperties.hasOwnProperty(key)){
+          Object.defineProperty(this.prototype, key, { get: prop[key], enumerable: true }); 
+        }
+      }
+    }
+  }
+
+  /**
+   * Installs special support for AtScript authoring.
+   *
+   * @method atscript
+   * @return {Plugins} Returns the current Plugins instance.
+ */
+  atscript(){
+    this.aurelia.container.supportAtScript();
+    addFunctionMetadataLocation('annotate');
+  }
+
+  _process(){
     var aurelia = this.aurelia,
         loader = aurelia.loader,
         info = this.info,

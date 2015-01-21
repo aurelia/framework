@@ -40,7 +40,7 @@ export class Aurelia {
     this.container = container || new Container();
     this.resources = resources || new ResourceRegistry();
     this.resourcesToLoad = [];
-    this.plugins = new Plugins(this);
+    this.use = new Plugins(this);
 
     if(!this.resources.baseResourcePath){
       this.resources.baseResourcePath = System.baseUrl || '';
@@ -105,7 +105,7 @@ export class Aurelia {
     this.started = true;
     logger.info('Aurelia Starting');
 
-    return this.plugins.process().then(() => {
+    return this.use._process().then(() => {
       if(!this.container.hasHandler(BindingLanguage)){
         logger.error('You must configure Aurelia with a BindingLanguage implementation.');
       }
