@@ -1,3 +1,22 @@
+## 0.8.0 (2015-01-22)
+
+
+#### Bug Fixes
+
+* **aurelia:** ensure all start code paths return a promise ([02752512](http://github.com/aurelia/framework/commit/0275251243271e30a7a484903ff0dd5a0da8eb80))
+* **package:** update dependencies ([b52b1b05](http://github.com/aurelia/framework/commit/b52b1b050a3d5809f7b0f602ebc8479f3d57eecb))
+
+
+#### Features
+
+* **aurelia:** enable splash screen swaps on load ([c2135d41](http://github.com/aurelia/framework/commit/c2135d41333328a2c7a6acfe4e0325d5c6bfb090))
+* **plugins:**
+  * update atscript helper to use new metadata api ([c9b4fb99](http://github.com/aurelia/framework/commit/c9b4fb99b1ac32fb71a69ad8e945cd4a208ca1eb))
+  * enable loading after bootstrapped ([790c9da2](http://github.com/aurelia/framework/commit/790c9da2ba89018d25f1dcf6c929b421f47c0b73))
+  * new plugin api including explicit support for es5 and at script ([b5c588bc](http://github.com/aurelia/framework/commit/b5c588bc716955273833ebbeabb33deb431bda5d))
+  * track plugin id for relative resource loading without system hack ([3465e849](http://github.com/aurelia/framework/commit/3465e84963e871b713cc4c3ca049eb459023ec9e))
+
+
 ## 0.7.0 (2015-01-12)
 
 

@@ -1,3 +1,9 @@
+/**
+ * The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.
+ *
+ * @module framework
+ */
+
 export {Aurelia} from './aurelia';
 export * from 'aurelia-dependency-injection';
 export * from 'aurelia-binding';

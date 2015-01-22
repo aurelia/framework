@@ -27,11 +27,9 @@ var logger = LogManager.getLogger("aurelia"),
     slice = Array.prototype.slice;
 
 function loadResources(container, resourcesToLoad, appResources) {
-  var resourceCoordinator = container.get(ResourceCoordinator), current;
-
-  function next() {
+  var next = function () {
     if (current = resourcesToLoad.shift()) {
-      return resourceCoordinator.importResources(current).then(function (resources) {
+      return resourceCoordinator.importResources(current, current.resourceManifestUrl).then(function (resources) {
         resources.forEach(function (x) {
           return x.register(appResources);
         });
@@ -40,7 +38,10 @@ function loadResources(container, resourcesToLoad, appResources) {
     }
 
     return Promise.resolve();
-  }
+  };
+
+  var resourceCoordinator = container.get(ResourceCoordinator),
+      current;
 
   return next();
 }
@@ -51,7 +52,11 @@ var Aurelia = (function () {
     this.container = container || new Container();
     this.resources = resources || new ResourceRegistry();
     this.resourcesToLoad = [];
-    this.plugins = new Plugins(this);
+    this.use = new Plugins(this);
+
+    if (!this.resources.baseResourcePath) {
+      this.resources.baseResourcePath = System.baseUrl || "";
+    }
 
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
@@ -60,7 +65,7 @@ var Aurelia = (function () {
 
   _prototypeProperties(Aurelia, null, {
     withInstance: {
-      value: function (type, instance) {
+      value: function withInstance(type, instance) {
         this.container.registerInstance(type, instance);
         return this;
       },
@@ -69,7 +74,7 @@ var Aurelia = (function () {
       configurable: true
     },
     withSingleton: {
-      value: function (type, implementation) {
+      value: function withSingleton(type, implementation) {
         this.container.registerSingleton(type, implementation);
         return this;
       },
@@ -78,13 +83,10 @@ var Aurelia = (function () {
       configurable: true
     },
     withResources: {
-      value: function (resources) {
-        if (Array.isArray(resources)) {
-          this.resourcesToLoad.push(resources);
-        } else {
-          this.resourcesToLoad.push(slice.call(arguments));
-        }
-
+      value: function withResources(resources) {
+        var toAdd = Array.isArray(resources) ? resources : slice.call(arguments);
+        toAdd.resourceManifestUrl = this.currentPluginId;
+        this.resourcesToLoad.push(toAdd);
         return this;
       },
       writable: true,
@@ -92,16 +94,16 @@ var Aurelia = (function () {
       configurable: true
     },
     start: {
-      value: function () {
+      value: function start() {
         var _this = this;
         if (this.started) {
-          return;
+          return Promise.resolve(this);
         }
 
         this.started = true;
         logger.info("Aurelia Starting");
 
-        return this.plugins.process().then(function () {
+        return this.use._process().then(function () {
           if (!_this.container.hasHandler(BindingLanguage)) {
             logger.error("You must configure Aurelia with a BindingLanguage implementation.");
           }
@@ -117,9 +119,10 @@ var Aurelia = (function () {
       configurable: true
     },
     setRoot: {
-      value: function (root, applicationHost) {
+      value: function setRoot(root, applicationHost) {
         var _this2 = this;
-        var compositionEngine, instruction = {};
+        var compositionEngine,
+            instruction = {};
 
         if (!applicationHost || typeof applicationHost == "string") {
           this.host = document.getElementById(applicationHost || "applicationHost") || document.body;
@@ -132,8 +135,9 @@ var Aurelia = (function () {
 
         compositionEngine = this.container.get(CompositionEngine);
         instruction.viewModel = root;
-        instruction.viewSlot = new ViewSlot(this.host, true);
         instruction.container = instruction.childContainer = this.container;
+        instruction.viewSlot = new ViewSlot(this.host, true);
+        instruction.viewSlot.transformChildNodesIntoView();
 
         return compositionEngine.compose(instruction).then(function (root) {
           _this2.root = root;
