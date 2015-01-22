@@ -70,6 +70,8 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
               }
             }
           };
+
+          return this;
         },
         writable: true,
         enumerable: true,
@@ -79,6 +81,7 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
         value: function atscript() {
           this.aurelia.container.supportAtScript();
           Metadata.configure.location("annotate");
+          return this;
         },
         writable: true,
         enumerable: true,

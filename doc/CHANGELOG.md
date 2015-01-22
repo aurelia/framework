@@ -1,3 +1,11 @@
+### 0.8.1 (2015-01-22)
+
+
+#### Bug Fixes
+
+* **plugins:** language helpers should return this for chaining ([d8817425](http://github.com/aurelia/framework/commit/d8817425e1ca618d752e9708e76674a3fb6e1191))
+
+
 ## 0.8.0 (2015-01-22)
 
 

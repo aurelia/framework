@@ -75,6 +75,8 @@ System.register(["aurelia-logging", "aurelia-metadata"], function (_export) {
                   }
                 }
               };
+
+              return this;
             },
             writable: true,
             enumerable: true,
@@ -84,6 +86,7 @@ System.register(["aurelia-logging", "aurelia-metadata"], function (_export) {
             value: function atscript() {
               this.aurelia.container.supportAtScript();
               Metadata.configure.location("annotate");
+              return this;
             },
             writable: true,
             enumerable: true,

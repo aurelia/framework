@@ -76,6 +76,8 @@ export class Plugins {
         }
       }
     }
+
+    return this;
   }
 
   /**
@@ -87,6 +89,7 @@ export class Plugins {
   atscript(){
     this.aurelia.container.supportAtScript();
     Metadata.configure.location('annotate');
+    return this;
   }
 
   _process(){

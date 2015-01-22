@@ -76,6 +76,8 @@ var Plugins = (function () {
             }
           }
         };
+
+        return this;
       },
       writable: true,
       enumerable: true,
@@ -85,6 +87,7 @@ var Plugins = (function () {
       value: function atscript() {
         this.aurelia.container.supportAtScript();
         Metadata.configure.location("annotate");
+        return this;
       },
       writable: true,
       enumerable: true,
