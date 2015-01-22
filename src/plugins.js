@@ -1,5 +1,5 @@
 import * as LogManager from 'aurelia-logging';
-import {addFunctionMetadataLocation} from 'aurelia-metadata';
+import {Metadata} from 'aurelia-metadata';
 
 var logger = LogManager.getLogger('aurelia');
 
@@ -86,7 +86,7 @@ export class Plugins {
  */
   atscript(){
     this.aurelia.container.supportAtScript();
-    addFunctionMetadataLocation('annotate');
+    Metadata.configure.location('annotate');
   }
 
   _process(){
