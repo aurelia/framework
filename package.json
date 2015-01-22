@@ -25,13 +25,13 @@
       "lib": "dist"
     },
     "dependencies": {
-      "aurelia-binding": "^0.2.1",
-      "aurelia-dependency-injection": "^0.3.1",
-      "aurelia-loader": "^0.3.1",
-      "aurelia-logging": "^0.2.1",
-      "aurelia-metadata": "^0.2.4",
-      "aurelia-task-queue": "^0.2.1",
-      "aurelia-templating": "^0.7.0"
+      "aurelia-binding": "^0.3.0",
+      "aurelia-dependency-injection": "^0.4.0",
+      "aurelia-loader": "^0.3.2",
+      "aurelia-logging": "^0.2.2",
+      "aurelia-metadata": "^0.3.0",
+      "aurelia-task-queue": "^0.2.2",
+      "aurelia-templating": "^0.8.0"
     }
   },
   "devDependencies": {
