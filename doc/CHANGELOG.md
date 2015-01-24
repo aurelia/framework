@@ -1,3 +1,11 @@
+### 0.8.2 (2015-01-24)
+
+
+#### Bug Fixes
+
+* **package:** update deps and fix bower semver ranges ([3f05b27e](http://github.com/aurelia/framework/commit/3f05b27ed1c7961fc5049f848ea2f220949d7414))
+
+
 ### 0.8.1 (2015-01-22)
 
 
