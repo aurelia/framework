@@ -1,3 +1,11 @@
+### 0.8.3 (2015-01-25)
+
+
+#### Bug Fixes
+
+* **plugins:** enable relative path plugins ([7cbe4d22](http://github.com/aurelia/framework/commit/7cbe4d22e47ef586a4800d1104ff90d15ff93b98))
+
+
 ### 0.8.2 (2015-01-24)
 
 

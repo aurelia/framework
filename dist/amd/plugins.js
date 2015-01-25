@@ -17,7 +17,9 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
 
     aurelia.currentPluginId = info.moduleId;
 
-    return loader.loadModule(info.moduleId, "").then(function (exportedValue) {
+    var baseUrl = info.moduleId.startsWith("./") ? undefined : "";
+
+    return loader.loadModule(info.moduleId, baseUrl).then(function (exportedValue) {
       if ("install" in exportedValue) {
         var result = exportedValue.install(aurelia, info.config || {});
 
