@@ -105,10 +105,15 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
               this.started = true;
               logger.info("Aurelia Starting");
 
+              var resourcesToLoad = this.resourcesToLoad;
+              this.resourcesToLoad = [];
+
               return this.use._process().then(function () {
                 if (!_this.container.hasHandler(BindingLanguage)) {
                   logger.error("You must configure Aurelia with a BindingLanguage implementation.");
                 }
+
+                _this.resourcesToLoad = _this.resourcesToLoad.concat(resourcesToLoad);
 
                 return loadResources(_this.container, _this.resourcesToLoad, _this.resources).then(function () {
                   logger.info("Aurelia Started");

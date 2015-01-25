@@ -1,3 +1,11 @@
+### 0.8.4 (2015-01-25)
+
+
+#### Bug Fixes
+
+* **aurelia:** ensure plugin resources are loaded first ([bffcd614](http://github.com/aurelia/framework/commit/bffcd6146167b1169d9d43acf4857be84636ccc7))
+
+
 ### 0.8.3 (2015-01-25)
 
 

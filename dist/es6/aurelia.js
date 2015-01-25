@@ -105,10 +105,15 @@ export class Aurelia {
     this.started = true;
     logger.info('Aurelia Starting');
 
+    var resourcesToLoad = this.resourcesToLoad;
+    this.resourcesToLoad = [];
+
     return this.use._process().then(() => {
       if(!this.container.hasHandler(BindingLanguage)){
         logger.error('You must configure Aurelia with a BindingLanguage implementation.');
       }
+
+      this.resourcesToLoad = this.resourcesToLoad.concat(resourcesToLoad);
 
       return loadResources(this.container, this.resourcesToLoad, this.resources).then(() => {
         logger.info('Aurelia Started');
