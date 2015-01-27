@@ -18,6 +18,11 @@
     "type": "git",
     "url": "http://github.com/aurelia/framework"
   },
+  "scripts": {
+    "build": "gulp build",
+    "install": "jspm install",
+    "test": "karma start"
+  },
   "jspm": {
     "main": "system/index",
     "format": "register",
@@ -45,9 +50,11 @@
     "gulp-yuidoc": "^0.1.2",
     "jasmine-core": "^2.1.3",
     "jshint-stylish": "^1.0.0",
+    "jspm": "^0.10.6",
     "karma": "^0.12.28",
     "karma-6to5-preprocessor": "^1.0.0",
     "karma-chrome-launcher": "^0.1.7",
+    "karma-cli": "0.0.4",
     "karma-jasmine": "^0.3.2",
     "karma-jspm": "^1.0.1",
     "object.assign": "^1.0.3",
