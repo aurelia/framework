@@ -134,7 +134,7 @@ export class Aurelia {
 
       return loadResources(this.container, this.resourcesToLoad, this.resources).then(() => {
         logger.info('Aurelia Started');
-        var evt = new CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
+        var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
         document.dispatchEvent(evt);
         return this;
       });
@@ -170,7 +170,7 @@ export class Aurelia {
     return compositionEngine.compose(instruction).then(root => {
       this.root = root;
       instruction.viewSlot.attached();
-      var evt = new CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
+      var evt = new window.CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
       setTimeout(() => document.dispatchEvent(evt), 1);
       return this;
     });
