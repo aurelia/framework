@@ -1,7 +1,7 @@
 System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loader", "aurelia-templating", "./plugins"], function (_export) {
   "use strict";
 
-  var LogManager, Container, Loader, BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine, Plugins, _prototypeProperties, logger, slice, Aurelia;
+  var LogManager, Container, Loader, BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine, Plugins, _prototypeProperties, logger, slice, CustomEvent, Aurelia;
 
 
   function loadResources(container, resourcesToLoad, appResources) {
@@ -48,7 +48,24 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
 
       logger = LogManager.getLogger("aurelia");
       slice = Array.prototype.slice;
-      Aurelia = (function () {
+
+
+      if (!window.CustomEvent || typeof window.CustomEvent !== "function") {
+        CustomEvent = function (event, params) {
+          var params = params || {
+            bubbles: false,
+            cancelable: false,
+            detail: undefined
+          };
+
+          var evt = document.createEvent("CustomEvent");
+          evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+          return evt;
+        };
+
+        CustomEvent.prototype = window.Event.prototype;
+        window.CustomEvent = CustomEvent;
+      }Aurelia = (function () {
         function Aurelia(loader, container, resources) {
           this.loader = loader || Loader.createDefaultLoader();
           this.container = container || new Container();
@@ -117,6 +134,8 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
 
                 return loadResources(_this.container, _this.resourcesToLoad, _this.resources).then(function () {
                   logger.info("Aurelia Started");
+                  var evt = new window.CustomEvent("aurelia-started", { bubbles: true, cancelable: true });
+                  document.dispatchEvent(evt);
                   return _this;
                 });
               });
@@ -149,6 +168,10 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
               return compositionEngine.compose(instruction).then(function (root) {
                 _this2.root = root;
                 instruction.viewSlot.attached();
+                var evt = new window.CustomEvent("aurelia-composed", { bubbles: true, cancelable: true });
+                setTimeout(function () {
+                  return document.dispatchEvent(evt);
+                }, 1);
                 return _this2;
               });
             },

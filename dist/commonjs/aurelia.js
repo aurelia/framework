@@ -26,6 +26,23 @@ var Plugins = require("./plugins").Plugins;
 var logger = LogManager.getLogger("aurelia"),
     slice = Array.prototype.slice;
 
+if (!window.CustomEvent || typeof window.CustomEvent !== "function") {
+  var CustomEvent = function (event, params) {
+    var params = params || {
+      bubbles: false,
+      cancelable: false,
+      detail: undefined
+    };
+
+    var evt = document.createEvent("CustomEvent");
+    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+    return evt;
+  };
+
+  CustomEvent.prototype = window.Event.prototype;
+  window.CustomEvent = CustomEvent;
+}
+
 function loadResources(container, resourcesToLoad, appResources) {
   var next = function () {
     if (current = resourcesToLoad.shift()) {
@@ -115,6 +132,8 @@ var Aurelia = (function () {
 
           return loadResources(_this.container, _this.resourcesToLoad, _this.resources).then(function () {
             logger.info("Aurelia Started");
+            var evt = new window.CustomEvent("aurelia-started", { bubbles: true, cancelable: true });
+            document.dispatchEvent(evt);
             return _this;
           });
         });
@@ -147,6 +166,10 @@ var Aurelia = (function () {
         return compositionEngine.compose(instruction).then(function (root) {
           _this2.root = root;
           instruction.viewSlot.attached();
+          var evt = new window.CustomEvent("aurelia-composed", { bubbles: true, cancelable: true });
+          setTimeout(function () {
+            return document.dispatchEvent(evt);
+          }, 1);
           return _this2;
         });
       },

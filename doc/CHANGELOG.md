@@ -1,3 +1,17 @@
+### 0.8.5 (2015-01-29)
+
+
+#### Bug Fixes
+
+* **aurelia:** custom event undefined in local scope ([c3594bf9](http://github.com/aurelia/framework/commit/c3594bf9ae0b9836ef433d857f422131e65674c5))
+* **plugins:** set es5 computed properties correctly ([f1b140d9](http://github.com/aurelia/framework/commit/f1b140d9d2c846cc75e986d6fb967132d82df5e1))
+
+
+#### Features
+
+* **aurelia:** raise DOM events for start and compose ([feed2a3a](http://github.com/aurelia/framework/commit/feed2a3a05fe8cd9f5463a84ddb692aba4912193))
+
+
 ### 0.8.4 (2015-01-25)
 
 

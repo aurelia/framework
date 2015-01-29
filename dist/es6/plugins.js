@@ -74,7 +74,7 @@ export class Plugins {
     Function.prototype.computed = function(computedProperties){
       for(var key in computedProperties){
         if(computedProperties.hasOwnProperty(key)){
-          Object.defineProperty(this.prototype, key, { get: prop[key], enumerable: true }); 
+          Object.defineProperty(this.prototype, key, { get: computedProperties[key], enumerable: true }); 
         }
       }
     }
