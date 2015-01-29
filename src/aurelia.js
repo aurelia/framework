@@ -7,6 +7,23 @@ import {Plugins} from './plugins';
 var logger = LogManager.getLogger('aurelia'),
     slice = Array.prototype.slice;
 
+if (!window.CustomEvent || typeof window.CustomEvent !== 'function') {
+  var CustomEvent = function(event, params) {
+    var params = params || {
+      bubbles: false,
+      cancelable: false,
+      detail: undefined
+    };
+
+    var evt = document.createEvent("CustomEvent");
+    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+    return evt;
+  };
+
+  CustomEvent.prototype = window.Event.prototype;
+  window.CustomEvent = CustomEvent;
+}
+
 function loadResources(container, resourcesToLoad, appResources){
   var resourceCoordinator = container.get(ResourceCoordinator), 
       current;
@@ -117,6 +134,8 @@ export class Aurelia {
 
       return loadResources(this.container, this.resourcesToLoad, this.resources).then(() => {
         logger.info('Aurelia Started');
+        var evt = new CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
+        document.dispatchEvent(evt);
         return this;
       });
     });
@@ -151,6 +170,8 @@ export class Aurelia {
     return compositionEngine.compose(instruction).then(root => {
       this.root = root;
       instruction.viewSlot.attached();
+      var evt = new CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
+      setTimeout(() => document.dispatchEvent(evt), 1);
       return this;
     });
   }
