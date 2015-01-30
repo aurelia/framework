@@ -30,7 +30,6 @@ var compilerOptions = {
   sourceRoot: '',
   moduleRoot: '',
   moduleIds: false,
-  runtime: false,
   experimental: false,
   format: {
     comments: false,
