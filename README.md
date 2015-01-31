@@ -12,7 +12,6 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform and conta
 * [aurelia-templating](https://github.com/aurelia/templating)
 * [aurelia-loader](https://github.com/aurelia/loader)
 * [aurelia-task-queue](https://github.com/aurelia/task-queue)
-* [aurelia-event-aggregator](https://github.com/aurelia/event-aggregator)
 * [aurelia-logging](https://github.com/aurelia/logging)
 
 ## Used By
