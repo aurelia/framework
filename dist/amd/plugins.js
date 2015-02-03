@@ -1,10 +1,7 @@
 define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _aureliaLogging, _aureliaMetadata) {
   "use strict";
 
-  var _prototypeProperties = function (child, staticProps, instanceProps) {
-    if (staticProps) Object.defineProperties(child, staticProps);
-    if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
-  };
+  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
   var LogManager = _aureliaLogging;
   var Metadata = _aureliaMetadata.Metadata;
@@ -39,7 +36,7 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
     });
   }
 
-  var Plugins = (function () {
+  var Plugins = exports.Plugins = (function () {
     function Plugins(aurelia) {
       this.aurelia = aurelia;
       this.info = [];
@@ -60,7 +57,6 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
           return this;
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       es5: {
@@ -76,21 +72,21 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
           return this;
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       atscript: {
         value: function atscript() {
           this.aurelia.container.supportAtScript();
-          Metadata.configure.location("annotate");
+          Metadata.configure.locator(function (fn) {
+            return fn.annotate || fn.annotations;
+          });
           return this;
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       _process: {
-        value: function Process() {
+        value: function _process() {
           var _this = this;
           var aurelia = this.aurelia,
               loader = aurelia.loader,
@@ -113,13 +109,11 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
           return next();
         },
         writable: true,
-        enumerable: true,
         configurable: true
       }
     });
 
     return Plugins;
   })();
-
-  exports.Plugins = Plugins;
+  exports.__esModule = true;
 });

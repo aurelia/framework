@@ -1,3 +1,11 @@
+### 0.8.6 (2015-02-03)
+
+
+#### Features
+
+* **plugins:** support legacy atscript annotation location ([37463681](http://github.com/aurelia/framework/commit/374636810d3e5249b3f1d8d6b4767f97c21a1240))
+
+
 ### 0.8.5 (2015-01-29)
 
 

@@ -38,13 +38,10 @@ System.register(["aurelia-logging", "aurelia-metadata"], function (_export) {
       Metadata = _aureliaMetadata.Metadata;
     }],
     execute: function () {
-      _prototypeProperties = function (child, staticProps, instanceProps) {
-        if (staticProps) Object.defineProperties(child, staticProps);
-        if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
-      };
+      _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
       logger = LogManager.getLogger("aurelia");
-      Plugins = (function () {
+      Plugins = _export("Plugins", (function () {
         function Plugins(aurelia) {
           this.aurelia = aurelia;
           this.info = [];
@@ -65,7 +62,6 @@ System.register(["aurelia-logging", "aurelia-metadata"], function (_export) {
               return this;
             },
             writable: true,
-            enumerable: true,
             configurable: true
           },
           es5: {
@@ -81,21 +77,21 @@ System.register(["aurelia-logging", "aurelia-metadata"], function (_export) {
               return this;
             },
             writable: true,
-            enumerable: true,
             configurable: true
           },
           atscript: {
             value: function atscript() {
               this.aurelia.container.supportAtScript();
-              Metadata.configure.location("annotate");
+              Metadata.configure.locator(function (fn) {
+                return fn.annotate || fn.annotations;
+              });
               return this;
             },
             writable: true,
-            enumerable: true,
             configurable: true
           },
           _process: {
-            value: function Process() {
+            value: function _process() {
               var _this = this;
               var aurelia = this.aurelia,
                   loader = aurelia.loader,
@@ -118,14 +114,12 @@ System.register(["aurelia-logging", "aurelia-metadata"], function (_export) {
               return next();
             },
             writable: true,
-            enumerable: true,
             configurable: true
           }
         });
 
         return Plugins;
-      })();
-      _export("Plugins", Plugins);
+      })());
     }
   };
 });

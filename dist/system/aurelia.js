@@ -5,7 +5,10 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
 
 
   function loadResources(container, resourcesToLoad, appResources) {
-    var next = function () {
+    var resourceCoordinator = container.get(ResourceCoordinator),
+        current;
+
+    function next() {
       if (current = resourcesToLoad.shift()) {
         return resourceCoordinator.importResources(current, current.resourceManifestUrl).then(function (resources) {
           resources.forEach(function (x) {
@@ -16,10 +19,7 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
       }
 
       return Promise.resolve();
-    };
-
-    var resourceCoordinator = container.get(ResourceCoordinator),
-        current;
+    }
 
     return next();
   }
@@ -41,10 +41,7 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
       Plugins = _plugins.Plugins;
     }],
     execute: function () {
-      _prototypeProperties = function (child, staticProps, instanceProps) {
-        if (staticProps) Object.defineProperties(child, staticProps);
-        if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
-      };
+      _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
       logger = LogManager.getLogger("aurelia");
       slice = Array.prototype.slice;
@@ -65,7 +62,7 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
 
         CustomEvent.prototype = window.Event.prototype;
         window.CustomEvent = CustomEvent;
-      }Aurelia = (function () {
+      }Aurelia = _export("Aurelia", (function () {
         function Aurelia(loader, container, resources) {
           this.loader = loader || Loader.createDefaultLoader();
           this.container = container || new Container();
@@ -89,7 +86,6 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
               return this;
             },
             writable: true,
-            enumerable: true,
             configurable: true
           },
           withSingleton: {
@@ -98,7 +94,6 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
               return this;
             },
             writable: true,
-            enumerable: true,
             configurable: true
           },
           withResources: {
@@ -109,7 +104,6 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
               return this;
             },
             writable: true,
-            enumerable: true,
             configurable: true
           },
           start: {
@@ -141,12 +135,11 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
               });
             },
             writable: true,
-            enumerable: true,
             configurable: true
           },
           setRoot: {
             value: function setRoot(root, applicationHost) {
-              var _this2 = this;
+              var _this = this;
               var compositionEngine,
                   instruction = {};
 
@@ -166,24 +159,22 @@ System.register(["aurelia-logging", "aurelia-dependency-injection", "aurelia-loa
               instruction.viewSlot.transformChildNodesIntoView();
 
               return compositionEngine.compose(instruction).then(function (root) {
-                _this2.root = root;
+                _this.root = root;
                 instruction.viewSlot.attached();
                 var evt = new window.CustomEvent("aurelia-composed", { bubbles: true, cancelable: true });
                 setTimeout(function () {
                   return document.dispatchEvent(evt);
                 }, 1);
-                return _this2;
+                return _this;
               });
             },
             writable: true,
-            enumerable: true,
             configurable: true
           }
         });
 
         return Aurelia;
-      })();
-      _export("Aurelia", Aurelia);
+      })());
     }
   };
 });

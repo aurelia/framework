@@ -1,10 +1,7 @@
 define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-loader", "aurelia-templating", "./plugins"], function (exports, _aureliaLogging, _aureliaDependencyInjection, _aureliaLoader, _aureliaTemplating, _plugins) {
   "use strict";
 
-  var _prototypeProperties = function (child, staticProps, instanceProps) {
-    if (staticProps) Object.defineProperties(child, staticProps);
-    if (instanceProps) Object.defineProperties(child.prototype, instanceProps);
-  };
+  var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
   var LogManager = _aureliaLogging;
   var Container = _aureliaDependencyInjection.Container;
@@ -38,7 +35,10 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
   }
 
   function loadResources(container, resourcesToLoad, appResources) {
-    var next = function () {
+    var resourceCoordinator = container.get(ResourceCoordinator),
+        current;
+
+    function next() {
       if (current = resourcesToLoad.shift()) {
         return resourceCoordinator.importResources(current, current.resourceManifestUrl).then(function (resources) {
           resources.forEach(function (x) {
@@ -49,15 +49,12 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
       }
 
       return Promise.resolve();
-    };
-
-    var resourceCoordinator = container.get(ResourceCoordinator),
-        current;
+    }
 
     return next();
   }
 
-  var Aurelia = (function () {
+  var Aurelia = exports.Aurelia = (function () {
     function Aurelia(loader, container, resources) {
       this.loader = loader || Loader.createDefaultLoader();
       this.container = container || new Container();
@@ -81,7 +78,6 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
           return this;
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       withSingleton: {
@@ -90,7 +86,6 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
           return this;
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       withResources: {
@@ -101,7 +96,6 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
           return this;
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       start: {
@@ -133,12 +127,11 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
           });
         },
         writable: true,
-        enumerable: true,
         configurable: true
       },
       setRoot: {
         value: function setRoot(root, applicationHost) {
-          var _this2 = this;
+          var _this = this;
           var compositionEngine,
               instruction = {};
 
@@ -158,23 +151,21 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
           instruction.viewSlot.transformChildNodesIntoView();
 
           return compositionEngine.compose(instruction).then(function (root) {
-            _this2.root = root;
+            _this.root = root;
             instruction.viewSlot.attached();
             var evt = new window.CustomEvent("aurelia-composed", { bubbles: true, cancelable: true });
             setTimeout(function () {
               return document.dispatchEvent(evt);
             }, 1);
-            return _this2;
+            return _this;
           });
         },
         writable: true,
-        enumerable: true,
         configurable: true
       }
     });
 
     return Aurelia;
   })();
-
-  exports.Aurelia = Aurelia;
+  exports.__esModule = true;
 });
