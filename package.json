@@ -35,7 +35,7 @@
     }
   },
   "devDependencies": {
-    "aurelia-tools": "git://github.com/aurelia/tools.git",
+    "aurelia-tools": "^0.1.0",
     "conventional-changelog": "0.0.11",
     "del": "^1.1.0",
     "gulp": "^3.8.10",
@@ -51,6 +51,7 @@
     "karma-jasmine": "^0.3.2",
     "karma-jspm": "^1.0.1",
     "object.assign": "^1.0.3",
+    "require-dir": "^0.1.0",
     "run-sequence": "^1.0.2",
     "vinyl-paths": "^1.0.0"
   },
