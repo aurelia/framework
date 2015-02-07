@@ -1,13 +1,14 @@
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var paths = require('../paths');
+var args = require('../args');
 var changelog = require('conventional-changelog');
 var fs = require('fs');
 var bump = require('gulp-bump');
 
 gulp.task('bump-version', function(){
   return gulp.src(['./package.json', './bower.json'])
-    .pipe(bump({type:'patch'})) //major|minor|patch|prerelease
+    .pipe(bump({type:args.versionBumpType })) //major|minor|patch|prerelease
     .pipe(gulp.dest('./'));
 });
 

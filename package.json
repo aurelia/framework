@@ -53,7 +53,8 @@
     "object.assign": "^1.0.3",
     "require-dir": "^0.1.0",
     "run-sequence": "^1.0.2",
-    "vinyl-paths": "^1.0.0"
+    "vinyl-paths": "^1.0.0",
+    "yargs": "^2.1.1"
   },
   "aurelia": {
     "usedBy": [
