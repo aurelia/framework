@@ -6,7 +6,7 @@ var fs = require('fs');
 var bump = require('gulp-bump');
 
 gulp.task('bump-version', function(){
-  return gulp.src(['./package.json'])
+  return gulp.src(['./package.json', './bower.json'])
     .pipe(bump({type:'patch'})) //major|minor|patch|prerelease
     .pipe(gulp.dest('./'));
 });
