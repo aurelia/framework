@@ -8,7 +8,7 @@ var bump = require('gulp-bump');
 
 gulp.task('bump-version', function(){
   return gulp.src(['./package.json', './bower.json'])
-    .pipe(bump({type:args.versionBumpType })) //major|minor|patch|prerelease
+    .pipe(bump({type:args.bump })) //major|minor|patch|prerelease
     .pipe(gulp.dest('./'));
 });
 
