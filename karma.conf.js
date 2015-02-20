@@ -30,14 +30,18 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.js': ['6to5'],
-      'src/**/*.js': ['6to5']
+      'test/**/*.js': ['babel'],
+      'src/**/*.js': ['babel']
     },
-    '6to5Preprocessor': {
+    'babelPreprocessor': {
       options: {
         sourceMap: 'inline',
         modules: 'system',
-        moduleIds: false
+        moduleIds: false,
+        sourceRoot : ''
+      },
+      sourceFileName : function(file){
+        return file.path.replace(/.+\//,'');
       }
     },
 
