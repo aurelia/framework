@@ -24,6 +24,15 @@ if (!window.CustomEvent || typeof window.CustomEvent !== 'function') {
   window.CustomEvent = CustomEvent;
 }
 
+function preventActionlessFormSubmit() {
+  document.body.addEventListener('submit', evt => {
+    const target = evt.target;
+    const action = target.action;
+    if (target.tagName.toLowerCase() === 'form' && !action)
+      evt.preventDefault();
+  });
+}
+
 function loadResources(container, resourcesToLoad, appResources){
   var resourceCoordinator = container.get(ResourceCoordinator), 
       current;
@@ -121,6 +130,8 @@ export class Aurelia {
 
     this.started = true;
     logger.info('Aurelia Starting');
+    
+    preventActionlessFormSubmit();
 
     var resourcesToLoad = this.resourcesToLoad;
     this.resourcesToLoad = [];
