@@ -127,12 +127,14 @@ export class Aurelia {
 
     return this.use._process().then(() => {
       if(!this.container.hasHandler(BindingLanguage)){
-        logger.error('You must configure Aurelia with a BindingLanguage implementation.');
+        var message = 'You must configure Aurelia with a BindingLanguage implementation.';
+        logger.error(message);
+        throw new Error(message);
       }
 
       this.resourcesToLoad = this.resourcesToLoad.concat(resourcesToLoad);
 
-      return loadResources(this.container, this.resourcesToLoad, this.resources).then(() => {
+      return loadResources(this.container, resourcesToLoad, this.resources).then(() => {
         logger.info('Aurelia Started');
         var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
         document.dispatchEvent(evt);
