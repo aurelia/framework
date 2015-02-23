@@ -28,13 +28,15 @@ function preventActionlessFormSubmit() {
   document.body.addEventListener('submit', evt => {
     const target = evt.target;
     const action = target.action;
-    if (target.tagName.toLowerCase() === 'form' && !action)
+
+    if (target.tagName.toLowerCase() === 'form' && !action){
       evt.preventDefault();
+    }
   });
 }
 
 function loadResources(container, resourcesToLoad, appResources){
-  var resourceCoordinator = container.get(ResourceCoordinator), 
+  var resourceCoordinator = container.get(ResourceCoordinator),
       current;
 
   function next(){
@@ -130,7 +132,7 @@ export class Aurelia {
 
     this.started = true;
     logger.info('Aurelia Starting');
-    
+
     preventActionlessFormSubmit();
 
     var resourcesToLoad = this.resourcesToLoad;
