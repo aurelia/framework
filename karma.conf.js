@@ -14,7 +14,8 @@ module.exports = function(config) {
 
     jspm: {
       // Edit this to your needs
-      loadFiles: ['src/**/*.js', 'test/**/*.js']
+      loadFiles: ['test/**/*.js'],
+      serveFiles : ['src/**/*.js']
     },
 
 
@@ -30,15 +31,14 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.js': ['babel'],
-      'src/**/*.js': ['babel']
+      'test/**/*.js': ['6to5'],
+      'src/**/*.js': ['6to5']
     },
-    'babelPreprocessor': {
+    '6to5Preprocessor': {
       options: {
         sourceMap: 'inline',
         modules: 'system',
-        moduleIds: false,
-        sourceRoot : ''
+        moduleIds: false
       },
       sourceFileName : function(file){
         return file.path.replace(/.+\//,'');
