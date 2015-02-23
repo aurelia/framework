@@ -3,7 +3,6 @@ import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
 import {BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine} from 'aurelia-templating';
 import {Plugins} from '../src/plugins';
-import * as LogManager from 'aurelia-logging';
 
 describe('aurelia', () => {
   describe("constructor", () => {
@@ -37,10 +36,12 @@ describe('aurelia', () => {
       expect(mockContainer.registerInstance).toHaveBeenCalledWith(Loader, mockLoader);
       expect(mockContainer.registerInstance).toHaveBeenCalledWith(ResourceRegistry, mockResources);
     });
+
   });
 
   describe('with', () => {
     let aurelia, mockContainer, testInstance;
+
     class TestClass {
     }
 
@@ -130,7 +131,7 @@ describe('aurelia', () => {
         .then(done);
     });
 
-    //I'm going to assume start should fail
+    //I'm going to assume start should fail in this case.
     it("should check for a binding language and log an error if one is not set", (done) => {
       mockContainer.hasHandler.and.returnValue(false);
       aurelia.start()
@@ -170,15 +171,10 @@ describe('aurelia', () => {
         .then(done);
     });
 
-
   });
 
   describe('setRoot()', () => {
-    let aurelia, mockContainer, mockLoader, mockCompositionEngine, rootModel, composePromise;
-
-    function getLastInstruction() {
-      return mockCompositionEngine.compose.calls.mostRecent().args[0];
-    }
+    let aurelia, mockContainer, mockLoader, mockCompositionEngine, rootModel, composePromise, composeListener;
 
     beforeEach(() => {
       mockLoader = jasmine.createSpy("loader");
@@ -186,7 +182,9 @@ describe('aurelia', () => {
       mockCompositionEngine = jasmine.createSpyObj("compositionEngine", ["compose"]);
 
       rootModel = {};
-      composePromise = new Promise((resolve, error) => { resolve(rootModel)});
+      composePromise = new Promise((resolve, error) => {
+        resolve(rootModel)
+      });
 
       mockContainer.get.and.returnValue(mockCompositionEngine);
       mockCompositionEngine.compose.and.returnValue(composePromise);
@@ -195,13 +193,19 @@ describe('aurelia', () => {
 
     });
 
-    afterEach(() => delete document.body.aurelia);
+    afterEach(() => {
+      delete document.body.aurelia;
+      if (composeListener) {
+        document.removeEventListener("aurelia-composed", composeListener);
+      }
+    });
 
     //This needs to be reworded
-    it("should default the host to the document body if the supplied applicationHost is a string and no element has that id", (done) => {
+    it("should default the host to the document body if the supplied applicationHost is a string and no element with that id is found", (done) => {
       var documentSpy = spyOn(document, "getElementById").and.callThrough();
       aurelia.setRoot(rootModel, "someIDThatShouldNotExist")
-        .then(() => {
+        .then((result) => {
+          expect(result).toBe(aurelia);
           expect(aurelia.host).toBe(document.body);
           expect(document.body.aurelia).toBe(aurelia);
           expect(documentSpy).toHaveBeenCalledWith("someIDThatShouldNotExist");
@@ -214,7 +218,8 @@ describe('aurelia', () => {
     it("should try and find the element with an id of applicationHost if one is not supplied", (done) => {
       var documentSpy = spyOn(document, "getElementById").and.callThrough();
       aurelia.setRoot(rootModel)
-        .then(() => {
+        .then((result) => {
+          expect(result).toBe(aurelia);
           expect(aurelia.host).toBe(document.body);
           expect(document.body.aurelia).toBe(aurelia);
           expect(documentSpy).toHaveBeenCalledWith("applicationHost");
@@ -229,7 +234,8 @@ describe('aurelia', () => {
       //But the function doesn't guard against applicationHost so this test is valid
       var host = {};
       aurelia.setRoot(rootModel, host)
-        .then(() => {
+        .then((result) => {
+          expect(result).toBe(aurelia);
           expect(aurelia.host).toBe(host);
           expect(host.aurelia).toBe(aurelia);
           expect(mockContainer.registerInstance).toHaveBeenCalledWith(Element, host);
@@ -241,14 +247,17 @@ describe('aurelia', () => {
     it("should call the compose function of the composition instance with a well formed instruction", (done) => {
       let attachedSpy;
       mockCompositionEngine.compose.and.callFake((instruction) => {
-        attachedSpy = spyOn(instruction.viewSlot,'attached');
+        attachedSpy = spyOn(instruction.viewSlot, 'attached');
         return composePromise;
       });
 
       aurelia.setRoot(rootModel)
-        .then(() => {
+        .then((result) => {
+          expect(result).toBe(aurelia);
           expect(mockCompositionEngine.compose).toHaveBeenCalled();
+
           let instruction = mockCompositionEngine.compose.calls.mostRecent().args[0];
+
           expect(instruction.viewModel).toBe(rootModel);
           expect(instruction.container).toBe(mockContainer);
           expect(instruction.childContainer).toBe(mockContainer);
@@ -256,6 +265,24 @@ describe('aurelia', () => {
         })
         .catch((reason) => expect(false).toBeTruthy(reason))
         .then(done);
+    });
+
+    it("should fire a custom aurelia-composed event when it's done", (done) => {
+
+      composeListener = (event) => {
+        expect(event).toEqual(jasmine.any(window.Event));
+        expect(event.type).toEqual("aurelia-composed");
+        done();
+      };
+
+      //Can't do the same trick with aurelia-start because it waits till after the promise is resolved to fire the event
+      document.addEventListener("aurelia-composed", composeListener);
+      aurelia.setRoot(rootModel)
+        .catch((reason) => {
+          expect(false).toBeTruthy(reason);
+          done();
+        });
+
     });
   });
 });
