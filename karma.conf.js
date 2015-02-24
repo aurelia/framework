@@ -14,7 +14,8 @@ module.exports = function(config) {
 
     jspm: {
       // Edit this to your needs
-      loadFiles: ['src/**/*.js', 'test/**/*.js']
+      loadFiles: ['test/**/*.js'],
+      serveFiles : ['src/**/*.js']
     },
 
 
@@ -38,6 +39,9 @@ module.exports = function(config) {
         sourceMap: 'inline',
         modules: 'system',
         moduleIds: false
+      },
+      sourceFileName : function(file){
+        return file.path.replace(/.+\//,'');
       }
     },
 

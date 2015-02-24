@@ -8,7 +8,7 @@ function loadPlugin(aurelia, loader, info){
 
   aurelia.currentPluginId = info.moduleId;
 
-  var baseUrl = info.moduleId.startsWith('./') ? undefined : "";
+  var baseUrl = info.moduleId.indexOf('./') === 0 ? undefined : "";
 
   return loader.loadModule(info.moduleId, baseUrl).then(exportedValue => {
     if('install' in exportedValue){
@@ -77,7 +77,7 @@ export class Plugins {
           Object.defineProperty(this.prototype, key, { get: computedProperties[key], enumerable: true }); 
         }
       }
-    }
+    };
 
     return this;
   }
