@@ -1,7 +1,7 @@
 import * as LogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
-import {BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine} from 'aurelia-templating';
+import {BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine, Animator} from 'aurelia-templating';
 import {Plugins} from './plugins';
 
 var logger = LogManager.getLogger('aurelia'),
@@ -143,6 +143,10 @@ export class Aurelia {
         var message = 'You must configure Aurelia with a BindingLanguage implementation.';
         logger.error(message);
         throw new Error(message);
+      }
+
+      if(!this.container.hasHandler(Animator)){
+        this.withInstance(Animator, new Animator());
       }
 
       this.resourcesToLoad = this.resourcesToLoad.concat(resourcesToLoad);
