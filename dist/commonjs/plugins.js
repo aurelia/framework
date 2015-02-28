@@ -4,10 +4,11 @@ var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? ob
 
 var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
 var LogManager = _interopRequireWildcard(require("aurelia-logging"));
 
 var Metadata = require("aurelia-metadata").Metadata;
-
 
 var logger = LogManager.getLogger("aurelia");
 
@@ -16,7 +17,7 @@ function loadPlugin(aurelia, loader, info) {
 
   aurelia.currentPluginId = info.moduleId;
 
-  var baseUrl = info.moduleId.startsWith("./") ? undefined : "";
+  var baseUrl = info.moduleId.indexOf("./") === 0 ? undefined : "";
 
   return loader.loadModule(info.moduleId, baseUrl).then(function (exportedValue) {
     if ("install" in exportedValue) {
@@ -38,8 +39,18 @@ function loadPlugin(aurelia, loader, info) {
   });
 }
 
+/**
+ * Manages loading and installing plugins.
+ *
+ * @class Plugins
+ * @constructor
+ * @param {Aurelia} aurelia An instance of Aurelia.
+ */
+
 var Plugins = exports.Plugins = (function () {
   function Plugins(aurelia) {
+    _classCallCheck(this, Plugins);
+
     this.aurelia = aurelia;
     this.info = [];
     this.processed = false;
@@ -47,7 +58,27 @@ var Plugins = exports.Plugins = (function () {
 
   _prototypeProperties(Plugins, null, {
     plugin: {
-      value: function plugin(moduleId, config) {
+
+      /**
+       * Installs a plugin before Aurelia starts.
+       *
+       * @method plugin
+       * @param {moduleId} moduleId The ID of the module to install.
+       * @param {config} config The configuration for the specified module.
+       * @return {Plugins} Returns the current Plugins instance.
+      */
+
+      value: (function (_plugin) {
+        var _pluginWrapper = function plugin(_x, _x2) {
+          return _plugin.apply(this, arguments);
+        };
+
+        _pluginWrapper.toString = function () {
+          return _plugin.toString();
+        };
+
+        return _pluginWrapper;
+      })(function (moduleId, config) {
         var plugin = { moduleId: moduleId, config: config || {} };
 
         if (this.processed) {
@@ -57,11 +88,19 @@ var Plugins = exports.Plugins = (function () {
         }
 
         return this;
-      },
+      }),
       writable: true,
       configurable: true
     },
     es5: {
+
+      /**
+       * Installs special support for ES5 authoring.
+       *
+       * @method es5
+       * @return {Plugins} Returns the current Plugins instance.
+      */
+
       value: function es5() {
         Function.prototype.computed = function (computedProperties) {
           for (var key in computedProperties) {
@@ -77,6 +116,14 @@ var Plugins = exports.Plugins = (function () {
       configurable: true
     },
     atscript: {
+
+      /**
+       * Installs special support for AtScript authoring.
+       *
+       * @method atscript
+       * @return {Plugins} Returns the current Plugins instance.
+      */
+
       value: function atscript() {
         this.aurelia.container.supportAtScript();
         Metadata.configure.locator(function (fn) {
@@ -90,6 +137,7 @@ var Plugins = exports.Plugins = (function () {
     _process: {
       value: function _process() {
         var _this = this;
+
         var aurelia = this.aurelia,
             loader = aurelia.loader,
             info = this.info,
@@ -117,4 +165,7 @@ var Plugins = exports.Plugins = (function () {
 
   return Plugins;
 })();
-exports.__esModule = true;
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});

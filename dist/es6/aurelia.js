@@ -1,7 +1,7 @@
 import * as LogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
-import {BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine} from 'aurelia-templating';
+import {BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine, Animator} from 'aurelia-templating';
 import {Plugins} from './plugins';
 
 var logger = LogManager.getLogger('aurelia'),
@@ -24,8 +24,19 @@ if (!window.CustomEvent || typeof window.CustomEvent !== 'function') {
   window.CustomEvent = CustomEvent;
 }
 
+function preventActionlessFormSubmit() {
+  document.body.addEventListener('submit', evt => {
+    const target = evt.target;
+    const action = target.action;
+
+    if (target.tagName.toLowerCase() === 'form' && !action){
+      evt.preventDefault();
+    }
+  });
+}
+
 function loadResources(container, resourcesToLoad, appResources){
-  var resourceCoordinator = container.get(ResourceCoordinator), 
+  var resourceCoordinator = container.get(ResourceCoordinator),
       current;
 
   function next(){
@@ -122,12 +133,20 @@ export class Aurelia {
     this.started = true;
     logger.info('Aurelia Starting');
 
+    preventActionlessFormSubmit();
+
     var resourcesToLoad = this.resourcesToLoad;
     this.resourcesToLoad = [];
 
     return this.use._process().then(() => {
       if(!this.container.hasHandler(BindingLanguage)){
-        logger.error('You must configure Aurelia with a BindingLanguage implementation.');
+        var message = 'You must configure Aurelia with a BindingLanguage implementation.';
+        logger.error(message);
+        throw new Error(message);
+      }
+
+      if(!this.container.hasHandler(Animator)){
+        this.withInstance(Animator, new Animator());
       }
 
       this.resourcesToLoad = this.resourcesToLoad.concat(resourcesToLoad);

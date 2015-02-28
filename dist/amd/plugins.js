@@ -3,9 +3,10 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
 
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
   var LogManager = _aureliaLogging;
   var Metadata = _aureliaMetadata.Metadata;
-
 
   var logger = LogManager.getLogger("aurelia");
 
@@ -14,7 +15,7 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
 
     aurelia.currentPluginId = info.moduleId;
 
-    var baseUrl = info.moduleId.startsWith("./") ? undefined : "";
+    var baseUrl = info.moduleId.indexOf("./") === 0 ? undefined : "";
 
     return loader.loadModule(info.moduleId, baseUrl).then(function (exportedValue) {
       if ("install" in exportedValue) {
@@ -36,8 +37,18 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
     });
   }
 
+  /**
+   * Manages loading and installing plugins.
+   *
+   * @class Plugins
+   * @constructor
+   * @param {Aurelia} aurelia An instance of Aurelia.
+   */
+
   var Plugins = exports.Plugins = (function () {
     function Plugins(aurelia) {
+      _classCallCheck(this, Plugins);
+
       this.aurelia = aurelia;
       this.info = [];
       this.processed = false;
@@ -45,7 +56,27 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
 
     _prototypeProperties(Plugins, null, {
       plugin: {
-        value: function plugin(moduleId, config) {
+
+        /**
+         * Installs a plugin before Aurelia starts.
+         *
+         * @method plugin
+         * @param {moduleId} moduleId The ID of the module to install.
+         * @param {config} config The configuration for the specified module.
+         * @return {Plugins} Returns the current Plugins instance.
+        */
+
+        value: (function (_plugin) {
+          var _pluginWrapper = function plugin(_x, _x2) {
+            return _plugin.apply(this, arguments);
+          };
+
+          _pluginWrapper.toString = function () {
+            return _plugin.toString();
+          };
+
+          return _pluginWrapper;
+        })(function (moduleId, config) {
           var plugin = { moduleId: moduleId, config: config || {} };
 
           if (this.processed) {
@@ -55,11 +86,19 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
           }
 
           return this;
-        },
+        }),
         writable: true,
         configurable: true
       },
       es5: {
+
+        /**
+         * Installs special support for ES5 authoring.
+         *
+         * @method es5
+         * @return {Plugins} Returns the current Plugins instance.
+        */
+
         value: function es5() {
           Function.prototype.computed = function (computedProperties) {
             for (var key in computedProperties) {
@@ -75,6 +114,14 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
         configurable: true
       },
       atscript: {
+
+        /**
+         * Installs special support for AtScript authoring.
+         *
+         * @method atscript
+         * @return {Plugins} Returns the current Plugins instance.
+        */
+
         value: function atscript() {
           this.aurelia.container.supportAtScript();
           Metadata.configure.locator(function (fn) {
@@ -88,6 +135,7 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
       _process: {
         value: function _process() {
           var _this = this;
+
           var aurelia = this.aurelia,
               loader = aurelia.loader,
               info = this.info,
@@ -115,5 +163,8 @@ define(["exports", "aurelia-logging", "aurelia-metadata"], function (exports, _a
 
     return Plugins;
   })();
-  exports.__esModule = true;
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
 });

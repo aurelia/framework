@@ -3,9 +3,16 @@ define(["exports", "./aurelia", "aurelia-dependency-injection", "aurelia-binding
 
   var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
 
-  var _defaults = function (obj, defaults) { for (var key in defaults) { if (obj[key] === undefined) { obj[key] = defaults[key]; } } return obj; };
+  var _defaults = function (obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; };
+
+  /**
+   * The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.
+   *
+   * @module framework
+   */
 
   exports.Aurelia = _aurelia.Aurelia;
+
   _defaults(exports, _interopRequireWildcard(_aureliaDependencyInjection));
 
   _defaults(exports, _interopRequireWildcard(_aureliaBinding));
@@ -20,5 +27,7 @@ define(["exports", "./aurelia", "aurelia-dependency-injection", "aurelia-binding
 
   var TheLogManager = _aureliaLogging;
   var LogManager = exports.LogManager = TheLogManager;
-  exports.__esModule = true;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
 });

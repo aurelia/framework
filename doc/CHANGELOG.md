@@ -1,3 +1,20 @@
+### 0.8.7 (2015-02-28)
+
+
+#### Bug Fixes
+
+* **aurelia:** global resources left out ([4bb098a3](http://github.com/aurelia/framework/commit/4bb098a36ea226dedc5343f3c629d889f9028580))
+* **build:** add missing bower bump ([111797ae](http://github.com/aurelia/framework/commit/111797ae2f669b3eb9a86538c23f5e537fc259c5))
+* **package:** update dependencies ([79feec43](http://github.com/aurelia/framework/commit/79feec432b8f3afd7a2ca90fc4eec2445e34940f))
+
+
+#### Features
+
+* **aurelia:** ensure animator implementation ([e3ab3ab0](http://github.com/aurelia/framework/commit/e3ab3ab08aac022d0c7b58ddef7b8632f2e5f980))
+* **build:** add command line argument for semver bump. resolve #28 ([39652c80](http://github.com/aurelia/framework/commit/39652c8026dd26e459ed5e84a0924e1f58724d53))
+* **framework:** prevent forms without [action] from submiting ([a5805257](http://github.com/aurelia/framework/commit/a58052571281cce001089bc065858e47ee595874))
+
+
 ### 0.8.6 (2015-02-03)
 
 
