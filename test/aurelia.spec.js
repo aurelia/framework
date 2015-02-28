@@ -232,7 +232,7 @@ describe('aurelia', () => {
     it("should use the applicationHost if it's not a string as the host", (done) => {
       //This wouldn't have succeeded because registerInstance checks the type
       //But the function doesn't guard against applicationHost so this test is valid
-      var host = {};
+      var host = { firstChild:{} };
       aurelia.setRoot(rootModel, host)
         .then((result) => {
           expect(result).toBe(aurelia);
