@@ -151,7 +151,7 @@ export class Aurelia {
 
       this.resourcesToLoad = this.resourcesToLoad.concat(resourcesToLoad);
 
-      return loadResources(this.container, resourcesToLoad, this.resources).then(() => {
+      return loadResources(this.container, this.resourcesToLoad, this.resources).then(() => {
         logger.info('Aurelia Started');
         var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
         document.dispatchEvent(evt);
