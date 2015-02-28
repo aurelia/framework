@@ -1,8 +1,8 @@
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
-var to5 = require('gulp-6to5');
+var to5 = require('gulp-babel');
 var paths = require('../paths');
-var compilerOptions = require('../6to5-options');
+var compilerOptions = require('../babel-options');
 var assign = Object.assign || require('object.assign');
 
 gulp.task('build-es6', function () {
