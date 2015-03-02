@@ -41,7 +41,7 @@ function loadResources(container, resourcesToLoad, appResources){
 
   function next(){
     if(current = resourcesToLoad.shift()){
-      return resourceCoordinator.importResources(current, current.resourceManifestUrl).then(resources => {
+      return resourceCoordinator.importResourcesFromModuleIds(current, current.resourceManifestUrl).then(resources => {
         resources.forEach(x => x.register(appResources));
         return next();
       });
@@ -64,15 +64,11 @@ function loadResources(container, resourcesToLoad, appResources){
  */
 export class Aurelia {
   constructor(loader, container, resources){
-    this.loader = loader || Loader.createDefaultLoader();
+    this.loader = loader || new window.AureliaLoader();
     this.container = container || new Container();
     this.resources = resources || new ResourceRegistry();
-    this.resourcesToLoad = [];
     this.use = new Plugins(this);
-
-    if(!this.resources.baseResourcePath){
-      this.resources.baseResourcePath = System.baseUrl || '';
-    }
+    this.resourcesToLoad = [];
 
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
