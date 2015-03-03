@@ -9,7 +9,9 @@ describe('aurelia', () => {
 
     it("should have good defaults", () => {
       let mockLoader = {};
-      spyOn(Loader, 'createDefaultLoader').and.returnValue(mockLoader);
+      window.AureliaLoader = function(){
+        return mockLoader;
+      }
       let aurelia = new Aurelia();
 
       expect(aurelia.loader).toBe(mockLoader);
@@ -98,7 +100,7 @@ describe('aurelia', () => {
       mockLoader = jasmine.createSpy('loader');
       mockResources = jasmine.createSpy('resourceRegistry');
 
-      mockResourceCoordinator = jasmine.createSpyObj("resourceCoordinator", ["importResources"]);
+      mockResourceCoordinator = jasmine.createSpyObj("resourceCoordinator", ["importResourcesFromModuleIds"]);
 
       mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'hasHandler', 'get']);
       mockContainer.hasHandler.and.returnValue(true);
@@ -159,12 +161,12 @@ describe('aurelia', () => {
       aurelia.resourcesToLoad.push("aResource");
       let resource = jasmine.createSpyObj("resource", ["register"]);
 
-      mockResourceCoordinator.importResources.and.returnValue(new Promise((resolve, error) => {
+      mockResourceCoordinator.importResourcesFromModuleIds.and.returnValue(new Promise((resolve, error) => {
         resolve([resource]);
       }));
 
       aurelia.start().then(() => {
-        expect(mockResourceCoordinator.importResources).toHaveBeenCalledWith("aResource", undefined);
+        expect(mockResourceCoordinator.importResourcesFromModuleIds).toHaveBeenCalledWith("aResource", undefined);
         expect(resource.register).toHaveBeenCalledWith(mockResources);
       })
         .catch((reason) => expect(true).toBeFalsy(reason))

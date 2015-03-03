@@ -63,7 +63,7 @@ describe('the plugin loader', () => {
 
     it("should load a plugin when processed", (done) => {
       plugins.plugin("plugin")._process()
-        .then(() => expect(loadModule).toHaveBeenCalledWith("plugin", ""))
+        .then(() => expect(loadModule).toHaveBeenCalledWith("plugin"))
         .catch((reason) => expect(false).toBeTruthy(reason))
         .then(done);
     });
@@ -74,7 +74,7 @@ describe('the plugin loader', () => {
 
       plugins.plugin("plugin", config)._process()
         .then(() => {
-          expect(loadModule).toHaveBeenCalledWith("plugin", "");
+          expect(loadModule).toHaveBeenCalledWith("plugin");
           expect(pluginSpy.install).toHaveBeenCalledWith(aureliaMock, config);
         })
         .catch((reason) => expect(false).toBeTruthy(reason))
@@ -91,7 +91,7 @@ describe('the plugin loader', () => {
 
       plugins.plugin("plugin", config)._process()
         .then(() => {
-          expect(loadModule).toHaveBeenCalledWith("plugin", "");
+          expect(loadModule).toHaveBeenCalledWith("plugin");
           expect(pluginSpy.install).toHaveBeenCalledWith(aureliaMock, config);
           expect(resolved).toBeTruthy();
         })
@@ -102,7 +102,7 @@ describe('the plugin loader', () => {
     it("should reject if the plugin fails to load", (done) => {
       plugins.plugin("failedLoad")._process()
         .then(() => expect(true).toBeFalsy("This should have failed"))
-        .catch(() => expect(loadModule).toHaveBeenCalledWith("failedLoad", ""))
+        .catch(() => expect(loadModule).toHaveBeenCalledWith("failedLoad"))
         .then(done);
     });
 
@@ -113,7 +113,7 @@ describe('the plugin loader', () => {
       expect(aureliaMock.currentPluginId).toBe("plugin");
       //There is no promise to hook onto here so the best option is to do an instant timeout
       setTimeout(() => {
-        expect(aureliaMock.loader.loadModule).toHaveBeenCalledWith("plugin", "");
+        expect(aureliaMock.loader.loadModule).toHaveBeenCalledWith("plugin");
         expect(aureliaMock.currentPluginId).toBeNull();
         done();
       });
