@@ -14,6 +14,7 @@ System.config({
     "aurelia-loader": "github:aurelia/loader@0.3.5",
     "aurelia-logging": "github:aurelia/logging@0.2.5",
     "aurelia-metadata": "github:aurelia/metadata@0.3.3",
+    "aurelia-path": "github:aurelia/path@0.4.5",
     "aurelia-task-queue": "github:aurelia/task-queue@0.2.5",
     "aurelia-templating": "github:aurelia/templating@0.8.14",
     "github:aurelia/binding@0.3.7": {

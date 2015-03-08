@@ -13,6 +13,7 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform and conta
 * [aurelia-loader](https://github.com/aurelia/loader)
 * [aurelia-task-queue](https://github.com/aurelia/task-queue)
 * [aurelia-logging](https://github.com/aurelia/logging)
+* [aurelia-path](https://github.com/aurelia/path)
 
 ## Used By
 
