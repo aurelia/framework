@@ -5,7 +5,7 @@ import {join,relativeToFile} from 'aurelia-path';
 import {Plugins} from './plugins';
 import {
   BindingLanguage,
-  ResourceCoordinator,
+  ViewEngine,
   ViewSlot,
   ResourceRegistry,
   CompositionEngine,
@@ -44,7 +44,7 @@ function preventActionlessFormSubmit() {
 }
 
 function loadResources(container, resourcesToLoad, appResources){
-  var resourceCoordinator = container.get(ResourceCoordinator),
+  var viewEngine = container.get(ViewEngine),
       importIds = Object.keys(resourcesToLoad),
       names = new Array(importIds.length),
       i, ii;
@@ -53,7 +53,7 @@ function loadResources(container, resourcesToLoad, appResources){
     names[i] = resourcesToLoad[importIds[i]];
   }
 
-  return resourceCoordinator.importViewResources(importIds, names, appResources);
+  return viewEngine.importViewResources(importIds, names, appResources);
 }
 
 /**
