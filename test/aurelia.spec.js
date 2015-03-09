@@ -63,48 +63,40 @@ describe('aurelia', () => {
       expect(mockContainer.registerSingleton).toHaveBeenCalledWith(TestClass, testInstance);
     });
 
-    it("resources will add an array of objects", () => {
-      expect(aurelia.withResources(['someResource'])).toBe(aurelia);
-      expect(aurelia.resourcesToLoad.length).toBe(1);
-
-      var resource = aurelia.resourcesToLoad[0];
-
-      expect(resource.length).toBe(1);
-      expect(resource[0]).toEqual('someResource');
+    it("globalizeResources will add an array of paths", () => {
+      expect(aurelia.globalizeResources(['./someResource'])).toBe(aurelia);
+      expect('./someResource' in aurelia.resourcesToLoad).toEqual(true);
     });
 
-    it("resources will add arguments as an array", () => {
-      expect(aurelia.withResources('someResource', 'andAnother')).toBe(aurelia);
-      expect(aurelia.resourcesToLoad.length).toBe(1);
-
-      var resource = aurelia.resourcesToLoad[0];
-
-      expect(resource.length).toBe(2);
-      expect(resource[0]).toEqual('someResource');
-      expect(resource[1]).toEqual('andAnother');
+    it("globalizeResources will add resources to lookup", () => {
+      expect(aurelia.globalizeResources('./someResource', './andAnother')).toBe(aurelia);
+      expect('./someResource' in aurelia.resourcesToLoad).toEqual(true);
+      expect('./someResource' in aurelia.resourcesToLoad).toEqual(true);
     });
 
-    it('resources will set the resourceManifestUrl of the resources if currentPluginId is set in aurelia', () => {
-      aurelia.currentPluginId = './plugin';
-      expect(aurelia.withResources('someResource')).toBe(aurelia);
-      expect(aurelia.resourcesToLoad.length).toBe(1);
-      expect(aurelia.resourcesToLoad[0].resourceManifestUrl).toEqual('./plugin');
+    it('globalizeResources will make relative to currentPluginId if set in aurelia', () => {
+      aurelia.currentPluginId = './plugin/index';
+      expect(aurelia.globalizeResources('./someResource')).toBe(aurelia);
+      expect('plugin/someResource' in aurelia.resourcesToLoad).toEqual(true);
     });
 
   });
 
   describe('start()', () => {
-    let aurelia, mockContainer, mockLoader, mockResources, mockPlugin, mockResourceCoordinator;
+    let aurelia, mockContainer, mockLoader, mockResources, mockPlugin, mockViewEngine;
 
     beforeEach(() => {
       mockLoader = jasmine.createSpy('loader');
       mockResources = jasmine.createSpy('resourceRegistry');
 
-      mockResourceCoordinator = jasmine.createSpyObj("resourceCoordinator", ["importResourcesFromModuleIds"]);
+      mockViewEngine = jasmine.createSpyObj("viewEngine", ["importViewResources"]);
+      mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
+        resolve();
+      }));
 
       mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'hasHandler', 'get']);
       mockContainer.hasHandler.and.returnValue(true);
-      mockContainer.get.and.returnValue(mockResourceCoordinator);
+      mockContainer.get.and.returnValue(mockViewEngine);
 
       mockPlugin = jasmine.createSpyObj('plugin', ['_process']);
       mockPlugin._process.and.returnValue(new Promise((resolve, error) => {
@@ -157,17 +149,15 @@ describe('aurelia', () => {
     });
 
     it("should load resources that are defined and register them with the resource registry", (done) => {
-      //I guess plugins should do this but this is fine
-      aurelia.resourcesToLoad.push("aResource");
+      aurelia.resourcesToLoad["./aResource"] = undefined;
       let resource = jasmine.createSpyObj("resource", ["register"]);
 
-      mockResourceCoordinator.importResourcesFromModuleIds.and.returnValue(new Promise((resolve, error) => {
+      mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
         resolve([resource]);
       }));
 
       aurelia.start().then(() => {
-        expect(mockResourceCoordinator.importResourcesFromModuleIds).toHaveBeenCalledWith("aResource", undefined);
-        expect(resource.register).toHaveBeenCalledWith(mockResources);
+        expect(mockViewEngine.importViewResources).toHaveBeenCalledWith(["./aResource"], [undefined], mockResources);
       })
         .catch((reason) => expect(true).toBeFalsy(reason))
         .then(done);
@@ -192,7 +182,6 @@ describe('aurelia', () => {
       mockCompositionEngine.compose.and.returnValue(composePromise);
 
       aurelia = new Aurelia(mockLoader, mockContainer);
-
     });
 
     afterEach(() => {

@@ -113,13 +113,14 @@ export class Aurelia {
    */
    globalizeResources(resources){
     var toAdd = Array.isArray(resources) ? resources : arguments,
-        i, ii, pluginPath = this.currentPluginId, path,
+        i, ii, pluginPath = this.currentPluginId || '', path,
         internalPlugin = pluginPath.startsWith('./');
 
     for(i = 0, ii = toAdd.length; i < ii; ++i){
       path = internalPlugin
         ? relativeToFile(toAdd[i], pluginPath)
         : join(pluginPath, toAdd[i]);
+
       this.resourcesToLoad[path] = this.resourcesToLoad[path];
     }
 
