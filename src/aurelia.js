@@ -164,7 +164,7 @@ export class Aurelia {
       }
 
       if(!this.container.hasHandler(Animator)){
-        this.withInstance(Animator, new Animator());
+        Animator.configureDefault(this.container);
       }
 
       return loadResources(this.container, this.resourcesToLoad, this.resources).then(() => {
