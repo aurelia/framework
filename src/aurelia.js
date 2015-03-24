@@ -184,7 +184,7 @@ export class Aurelia {
    * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
    * @return {Aurelia} Returns the current Aurelia instance.
    */
-  setRoot(root, applicationHost){
+  setRoot(root='app', applicationHost=null){
     var compositionEngine, instruction = {};
 
     if (!applicationHost || typeof applicationHost == 'string') {
