@@ -12,16 +12,21 @@ var Container = require("aurelia-dependency-injection").Container;
 
 var Loader = require("aurelia-loader").Loader;
 
+var _aureliaPath = require("aurelia-path");
+
+var join = _aureliaPath.join;
+var relativeToFile = _aureliaPath.relativeToFile;
+
+var Plugins = require("./plugins").Plugins;
+
 var _aureliaTemplating = require("aurelia-templating");
 
 var BindingLanguage = _aureliaTemplating.BindingLanguage;
-var ResourceCoordinator = _aureliaTemplating.ResourceCoordinator;
+var ViewEngine = _aureliaTemplating.ViewEngine;
 var ViewSlot = _aureliaTemplating.ViewSlot;
 var ResourceRegistry = _aureliaTemplating.ResourceRegistry;
 var CompositionEngine = _aureliaTemplating.CompositionEngine;
 var Animator = _aureliaTemplating.Animator;
-
-var Plugins = require("./plugins").Plugins;
 
 var logger = LogManager.getLogger("aurelia"),
     slice = Array.prototype.slice;
@@ -55,23 +60,17 @@ function preventActionlessFormSubmit() {
 }
 
 function loadResources(container, resourcesToLoad, appResources) {
-  var resourceCoordinator = container.get(ResourceCoordinator),
-      current;
+  var viewEngine = container.get(ViewEngine),
+      importIds = Object.keys(resourcesToLoad),
+      names = new Array(importIds.length),
+      i,
+      ii;
 
-  function next() {
-    if (current = resourcesToLoad.shift()) {
-      return resourceCoordinator.importResources(current, current.resourceManifestUrl).then(function (resources) {
-        resources.forEach(function (x) {
-          return x.register(appResources);
-        });
-        return next();
-      });
-    }
-
-    return Promise.resolve();
+  for (i = 0, ii = importIds.length; i < ii; ++i) {
+    names[i] = resourcesToLoad[importIds[i]];
   }
 
-  return next();
+  return viewEngine.importViewResources(importIds, names, appResources);
 }
 
 /**
@@ -88,15 +87,11 @@ var Aurelia = exports.Aurelia = (function () {
   function Aurelia(loader, container, resources) {
     _classCallCheck(this, Aurelia);
 
-    this.loader = loader || Loader.createDefaultLoader();
+    this.loader = loader || new window.AureliaLoader();
     this.container = container || new Container();
     this.resources = resources || new ResourceRegistry();
-    this.resourcesToLoad = [];
     this.use = new Plugins(this);
-
-    if (!this.resources.baseResourcePath) {
-      this.resources.baseResourcePath = System.baseUrl || "";
-    }
+    this.resourcesToLoad = {};
 
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
@@ -140,20 +135,48 @@ var Aurelia = exports.Aurelia = (function () {
       writable: true,
       configurable: true
     },
-    withResources: {
+    globalizeResources: {
 
       /**
-       * Adds a resource to be imported into the Aurelia framework.
+       * Adds globally available view resources to be imported into the Aurelia framework.
        *
-       * @method withResources
-       * @param {Object|Array} resources The constructor function(s) to use when the dependency needs to be instantiated.
+       * @method globalizeResources
+       * @param {Object|Array} resources The relative module id to the resource. (Relative to the plugin's installer.)
        * @return {Aurelia} Returns the current Aurelia instance.
        */
 
-      value: function withResources(resources) {
-        var toAdd = Array.isArray(resources) ? resources : slice.call(arguments);
-        toAdd.resourceManifestUrl = this.currentPluginId;
-        this.resourcesToLoad.push(toAdd);
+      value: function globalizeResources(resources) {
+        var toAdd = Array.isArray(resources) ? resources : arguments,
+            i,
+            ii,
+            pluginPath = this.currentPluginId || "",
+            path,
+            internalPlugin = pluginPath.startsWith("./");
+
+        for (i = 0, ii = toAdd.length; i < ii; ++i) {
+          path = internalPlugin ? relativeToFile(toAdd[i], pluginPath) : join(pluginPath, toAdd[i]);
+
+          this.resourcesToLoad[path] = this.resourcesToLoad[path];
+        }
+
+        return this;
+      },
+      writable: true,
+      configurable: true
+    },
+    renameGlobalResource: {
+
+      /**
+       * Renames a global resource that was imported.
+       *
+       * @method renameGlobalResource
+       * @param {String} resourcePath The path to the resource.
+       * @param {String} newName The new name.
+       * @return {Aurelia} Returns the current Aurelia instance.
+       */
+
+      value: function renameGlobalResource(resourcePath, newName) {
+        this.resourcesToLoad[resourcePath] = newName;
         return this;
       },
       writable: true,
@@ -180,9 +203,6 @@ var Aurelia = exports.Aurelia = (function () {
 
         preventActionlessFormSubmit();
 
-        var resourcesToLoad = this.resourcesToLoad;
-        this.resourcesToLoad = [];
-
         return this.use._process().then(function () {
           if (!_this.container.hasHandler(BindingLanguage)) {
             var message = "You must configure Aurelia with a BindingLanguage implementation.";
@@ -191,10 +211,8 @@ var Aurelia = exports.Aurelia = (function () {
           }
 
           if (!_this.container.hasHandler(Animator)) {
-            _this.withInstance(Animator, new Animator());
+            Animator.configureDefault(_this.container);
           }
-
-          _this.resourcesToLoad = _this.resourcesToLoad.concat(resourcesToLoad);
 
           return loadResources(_this.container, _this.resourcesToLoad, _this.resources).then(function () {
             logger.info("Aurelia Started");
@@ -218,8 +236,11 @@ var Aurelia = exports.Aurelia = (function () {
        * @return {Aurelia} Returns the current Aurelia instance.
        */
 
-      value: function setRoot(root, applicationHost) {
+      value: function setRoot() {
         var _this = this;
+
+        var root = arguments[0] === undefined ? "app" : arguments[0];
+        var applicationHost = arguments[1] === undefined ? null : arguments[1];
 
         var compositionEngine,
             instruction = {};

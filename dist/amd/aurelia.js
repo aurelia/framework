@@ -1,4 +1,4 @@
-define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-loader", "aurelia-templating", "./plugins"], function (exports, _aureliaLogging, _aureliaDependencyInjection, _aureliaLoader, _aureliaTemplating, _plugins) {
+define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-loader", "aurelia-path", "./plugins", "aurelia-templating"], function (exports, _aureliaLogging, _aureliaDependencyInjection, _aureliaLoader, _aureliaPath, _plugins, _aureliaTemplating) {
   "use strict";
 
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
@@ -8,13 +8,15 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
   var LogManager = _aureliaLogging;
   var Container = _aureliaDependencyInjection.Container;
   var Loader = _aureliaLoader.Loader;
+  var join = _aureliaPath.join;
+  var relativeToFile = _aureliaPath.relativeToFile;
+  var Plugins = _plugins.Plugins;
   var BindingLanguage = _aureliaTemplating.BindingLanguage;
-  var ResourceCoordinator = _aureliaTemplating.ResourceCoordinator;
+  var ViewEngine = _aureliaTemplating.ViewEngine;
   var ViewSlot = _aureliaTemplating.ViewSlot;
   var ResourceRegistry = _aureliaTemplating.ResourceRegistry;
   var CompositionEngine = _aureliaTemplating.CompositionEngine;
   var Animator = _aureliaTemplating.Animator;
-  var Plugins = _plugins.Plugins;
 
   var logger = LogManager.getLogger("aurelia"),
       slice = Array.prototype.slice;
@@ -48,23 +50,17 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
   }
 
   function loadResources(container, resourcesToLoad, appResources) {
-    var resourceCoordinator = container.get(ResourceCoordinator),
-        current;
+    var viewEngine = container.get(ViewEngine),
+        importIds = Object.keys(resourcesToLoad),
+        names = new Array(importIds.length),
+        i,
+        ii;
 
-    function next() {
-      if (current = resourcesToLoad.shift()) {
-        return resourceCoordinator.importResources(current, current.resourceManifestUrl).then(function (resources) {
-          resources.forEach(function (x) {
-            return x.register(appResources);
-          });
-          return next();
-        });
-      }
-
-      return Promise.resolve();
+    for (i = 0, ii = importIds.length; i < ii; ++i) {
+      names[i] = resourcesToLoad[importIds[i]];
     }
 
-    return next();
+    return viewEngine.importViewResources(importIds, names, appResources);
   }
 
   /**
@@ -81,15 +77,11 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
     function Aurelia(loader, container, resources) {
       _classCallCheck(this, Aurelia);
 
-      this.loader = loader || Loader.createDefaultLoader();
+      this.loader = loader || new window.AureliaLoader();
       this.container = container || new Container();
       this.resources = resources || new ResourceRegistry();
-      this.resourcesToLoad = [];
       this.use = new Plugins(this);
-
-      if (!this.resources.baseResourcePath) {
-        this.resources.baseResourcePath = System.baseUrl || "";
-      }
+      this.resourcesToLoad = {};
 
       this.withInstance(Aurelia, this);
       this.withInstance(Loader, this.loader);
@@ -133,20 +125,48 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
         writable: true,
         configurable: true
       },
-      withResources: {
+      globalizeResources: {
 
         /**
-         * Adds a resource to be imported into the Aurelia framework.
+         * Adds globally available view resources to be imported into the Aurelia framework.
          *
-         * @method withResources
-         * @param {Object|Array} resources The constructor function(s) to use when the dependency needs to be instantiated.
+         * @method globalizeResources
+         * @param {Object|Array} resources The relative module id to the resource. (Relative to the plugin's installer.)
          * @return {Aurelia} Returns the current Aurelia instance.
          */
 
-        value: function withResources(resources) {
-          var toAdd = Array.isArray(resources) ? resources : slice.call(arguments);
-          toAdd.resourceManifestUrl = this.currentPluginId;
-          this.resourcesToLoad.push(toAdd);
+        value: function globalizeResources(resources) {
+          var toAdd = Array.isArray(resources) ? resources : arguments,
+              i,
+              ii,
+              pluginPath = this.currentPluginId || "",
+              path,
+              internalPlugin = pluginPath.startsWith("./");
+
+          for (i = 0, ii = toAdd.length; i < ii; ++i) {
+            path = internalPlugin ? relativeToFile(toAdd[i], pluginPath) : join(pluginPath, toAdd[i]);
+
+            this.resourcesToLoad[path] = this.resourcesToLoad[path];
+          }
+
+          return this;
+        },
+        writable: true,
+        configurable: true
+      },
+      renameGlobalResource: {
+
+        /**
+         * Renames a global resource that was imported.
+         *
+         * @method renameGlobalResource
+         * @param {String} resourcePath The path to the resource.
+         * @param {String} newName The new name.
+         * @return {Aurelia} Returns the current Aurelia instance.
+         */
+
+        value: function renameGlobalResource(resourcePath, newName) {
+          this.resourcesToLoad[resourcePath] = newName;
           return this;
         },
         writable: true,
@@ -173,9 +193,6 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
 
           preventActionlessFormSubmit();
 
-          var resourcesToLoad = this.resourcesToLoad;
-          this.resourcesToLoad = [];
-
           return this.use._process().then(function () {
             if (!_this.container.hasHandler(BindingLanguage)) {
               var message = "You must configure Aurelia with a BindingLanguage implementation.";
@@ -184,10 +201,8 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
             }
 
             if (!_this.container.hasHandler(Animator)) {
-              _this.withInstance(Animator, new Animator());
+              Animator.configureDefault(_this.container);
             }
-
-            _this.resourcesToLoad = _this.resourcesToLoad.concat(resourcesToLoad);
 
             return loadResources(_this.container, _this.resourcesToLoad, _this.resources).then(function () {
               logger.info("Aurelia Started");
@@ -211,8 +226,11 @@ define(["exports", "aurelia-logging", "aurelia-dependency-injection", "aurelia-l
          * @return {Aurelia} Returns the current Aurelia instance.
          */
 
-        value: function setRoot(root, applicationHost) {
+        value: function setRoot() {
           var _this = this;
+
+          var root = arguments[0] === undefined ? "app" : arguments[0];
+          var applicationHost = arguments[1] === undefined ? null : arguments[1];
 
           var compositionEngine,
               instruction = {};

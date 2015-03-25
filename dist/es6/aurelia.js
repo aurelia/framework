@@ -1,8 +1,16 @@
 import * as LogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
-import {BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine, Animator} from 'aurelia-templating';
+import {join,relativeToFile} from 'aurelia-path';
 import {Plugins} from './plugins';
+import {
+  BindingLanguage,
+  ViewEngine,
+  ViewSlot,
+  ResourceRegistry,
+  CompositionEngine,
+  Animator
+} from 'aurelia-templating';
 
 var logger = LogManager.getLogger('aurelia'),
     slice = Array.prototype.slice;
@@ -36,21 +44,16 @@ function preventActionlessFormSubmit() {
 }
 
 function loadResources(container, resourcesToLoad, appResources){
-  var resourceCoordinator = container.get(ResourceCoordinator),
-      current;
+  var viewEngine = container.get(ViewEngine),
+      importIds = Object.keys(resourcesToLoad),
+      names = new Array(importIds.length),
+      i, ii;
 
-  function next(){
-    if(current = resourcesToLoad.shift()){
-      return resourceCoordinator.importResources(current, current.resourceManifestUrl).then(resources => {
-        resources.forEach(x => x.register(appResources));
-        return next();
-      });
-    }
-
-    return Promise.resolve();
+  for(i = 0, ii = importIds.length; i < ii; ++i){
+    names[i] = resourcesToLoad[importIds[i]];
   }
 
-  return next();
+  return viewEngine.importViewResources(importIds, names, appResources);
 }
 
 /**
@@ -64,15 +67,11 @@ function loadResources(container, resourcesToLoad, appResources){
  */
 export class Aurelia {
   constructor(loader, container, resources){
-    this.loader = loader || Loader.createDefaultLoader();
+    this.loader = loader || new window.AureliaLoader();
     this.container = container || new Container();
     this.resources = resources || new ResourceRegistry();
-    this.resourcesToLoad = [];
     this.use = new Plugins(this);
-
-    if(!this.resources.baseResourcePath){
-      this.resources.baseResourcePath = System.baseUrl || '';
-    }
+    this.resourcesToLoad = {};
 
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
@@ -106,16 +105,38 @@ export class Aurelia {
   }
 
   /**
-   * Adds a resource to be imported into the Aurelia framework.
+   * Adds globally available view resources to be imported into the Aurelia framework.
    *
-   * @method withResources
-   * @param {Object|Array} resources The constructor function(s) to use when the dependency needs to be instantiated.
+   * @method globalizeResources
+   * @param {Object|Array} resources The relative module id to the resource. (Relative to the plugin's installer.)
    * @return {Aurelia} Returns the current Aurelia instance.
    */
-  withResources(resources){
-    var toAdd = Array.isArray(resources) ? resources : slice.call(arguments);
-    toAdd.resourceManifestUrl = this.currentPluginId;
-    this.resourcesToLoad.push(toAdd);
+   globalizeResources(resources){
+    var toAdd = Array.isArray(resources) ? resources : arguments,
+        i, ii, pluginPath = this.currentPluginId || '', path,
+        internalPlugin = pluginPath.startsWith('./');
+
+    for(i = 0, ii = toAdd.length; i < ii; ++i){
+      path = internalPlugin
+        ? relativeToFile(toAdd[i], pluginPath)
+        : join(pluginPath, toAdd[i]);
+
+      this.resourcesToLoad[path] = this.resourcesToLoad[path];
+    }
+
+    return this;
+  }
+
+  /**
+   * Renames a global resource that was imported.
+   *
+   * @method renameGlobalResource
+   * @param {String} resourcePath The path to the resource.
+   * @param {String} newName The new name.
+   * @return {Aurelia} Returns the current Aurelia instance.
+   */
+  renameGlobalResource(resourcePath, newName){
+    this.resourcesToLoad[resourcePath] = newName;
     return this;
   }
 
@@ -135,9 +156,6 @@ export class Aurelia {
 
     preventActionlessFormSubmit();
 
-    var resourcesToLoad = this.resourcesToLoad;
-    this.resourcesToLoad = [];
-
     return this.use._process().then(() => {
       if(!this.container.hasHandler(BindingLanguage)){
         var message = 'You must configure Aurelia with a BindingLanguage implementation.';
@@ -146,10 +164,8 @@ export class Aurelia {
       }
 
       if(!this.container.hasHandler(Animator)){
-        this.withInstance(Animator, new Animator());
+        Animator.configureDefault(this.container);
       }
-
-      this.resourcesToLoad = this.resourcesToLoad.concat(resourcesToLoad);
 
       return loadResources(this.container, this.resourcesToLoad, this.resources).then(() => {
         logger.info('Aurelia Started');
@@ -168,7 +184,7 @@ export class Aurelia {
    * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
    * @return {Aurelia} Returns the current Aurelia instance.
    */
-  setRoot(root, applicationHost){
+  setRoot(root='app', applicationHost=null){
     var compositionEngine, instruction = {};
 
     if (!applicationHost || typeof applicationHost == 'string') {

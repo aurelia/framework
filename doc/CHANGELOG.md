@@ -1,3 +1,20 @@
+## 0.9.0 (2015-03-25)
+
+
+#### Bug Fixes
+
+* **all:** load resources by module id only ([655192b2](http://github.com/aurelia/framework/commit/655192b26f7c8b47fb57ad1522e85af58d971443))
+* **aurelia:**
+  * update to use latest animator default config api ([5dea25b5](http://github.com/aurelia/framework/commit/5dea25b57512ccf4701daf6520c0156582a5182b))
+  * update to use new view engine ([e6d20c42](http://github.com/aurelia/framework/commit/e6d20c42ead1f74652fb1bce5b5ae728b4b6bb77))
+  * update to load global resources through new resource pipeline ([bdbca554](http://github.com/aurelia/framework/commit/bdbca554e8d0e7ee839fb1b3b8269f590bc7aa97))
+
+
+#### Features
+
+* **aurelia:** add parameter default to setRoot ([f3955d22](http://github.com/aurelia/framework/commit/f3955d228483758ce8b385bba14d99e053468612))
+
+
 ### 0.8.8 (2015-02-28)
 
 

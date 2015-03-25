@@ -17,9 +17,7 @@ function loadPlugin(aurelia, loader, info) {
 
   aurelia.currentPluginId = info.moduleId;
 
-  var baseUrl = info.moduleId.indexOf("./") === 0 ? undefined : "";
-
-  return loader.loadModule(info.moduleId, baseUrl).then(function (exportedValue) {
+  return loader.loadModule(info.moduleId).then(function (exportedValue) {
     if ("install" in exportedValue) {
       var result = exportedValue.install(aurelia, info.config || {});
 
