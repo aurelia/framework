@@ -88,7 +88,16 @@ export class Plugins {
  */
   atscript(){
     this.aurelia.container.supportAtScript();
-    Metadata.configure.locator(fn => fn['annotate'] || fn['annotations']);
+    Metadata.configure.locator((fn, meta) => {
+      var annotations = fn['annotate'] || fn['annotations'],
+          i, ii;
+
+      if(annotations && annotations.length){
+        for(i = 0, ii = annotations.length; i < ii; ++i){
+          meta.add(annotations[i]);
+        }
+      }
+    });
     return this;
   }
 
