@@ -1,8 +1,6 @@
 module.exports = {
   filename: '',
   filenameRelative: '',
-  blacklist: [],
-  whitelist: [],
   modules: '',
   sourceMap: true,
   sourceMapName: '',
@@ -10,14 +8,11 @@ module.exports = {
   moduleRoot: '',
   moduleIds: false,
   experimental: false,
-  format: {
-    comments: false,
-    compact: false,
-    indent: {
-      parentheses: true,
-      adjustMultilineComment: true,
-      style: "  ",
-      base: 0
-    }
-  }
+  comments: false,
+  compact: false,
+  code:true,
+  stage:2,
+  optional: [
+    "es7.decorators"
+  ]
 };

@@ -38,10 +38,10 @@ module.exports = function(config) {
       options: {
         sourceMap: 'inline',
         modules: 'system',
-        moduleIds: false
-      },
-      sourceFileName : function(file){
-        return file.path.replace(/.+\//,'');
+        moduleIds: false,
+        optional: [
+          "es7.decorators"
+        ]
       }
     },
 

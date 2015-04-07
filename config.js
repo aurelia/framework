@@ -17,6 +17,7 @@ System.config({
     "aurelia-path": "github:aurelia/path@0.4.6",
     "aurelia-task-queue": "github:aurelia/task-queue@0.2.5",
     "aurelia-templating": "github:aurelia/templating@0.9.0",
+    "core-js": "github:zloirock/core-js@0.8.1",
     "github:aurelia/binding@0.4.0": {
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.5.0",
       "aurelia-metadata": "github:aurelia/metadata@0.3.4",

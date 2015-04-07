@@ -157,10 +157,6 @@ describe('the plugin loader', () => {
       plugins.atscript();
       expect(containerMock.supportAtScript).toHaveBeenCalled();
       expect(Metadata.configure.locator).toHaveBeenCalled();
-      //Let's also ensure that the locator is working correctly seeing that it's defined in plugins
-      var locator = Metadata.configure.locator.calls.mostRecent().args[0];
-      expect(locator({annotate : 'annotation'})).toBe("annotation");
-      expect(locator({annotations : 'annotations'})).toBe("annotations");
     });
   });
 });
