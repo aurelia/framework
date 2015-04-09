@@ -1,3 +1,4 @@
+import core from 'core-js';
 import * as LogManager from 'aurelia-logging';
 import {Metadata} from 'aurelia-metadata';
 
@@ -77,18 +78,6 @@ export class Plugins {
       }
     };
 
-    return this;
-  }
-
-  /**
-   * Installs special support for AtScript authoring.
-   *
-   * @method atscript
-   * @return {Plugins} Returns the current Plugins instance.
- */
-  atscript(){
-    this.aurelia.container.supportAtScript();
-    Metadata.configure.locator(fn => fn['annotate'] || fn['annotations']);
     return this;
   }
 

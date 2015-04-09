@@ -1,14 +1,10 @@
-System.register(["./aurelia", "aurelia-dependency-injection", "aurelia-binding", "aurelia-metadata", "aurelia-templating", "aurelia-loader", "aurelia-task-queue", "aurelia-logging"], function (_export) {
+System.register(['aurelia-logging', './aurelia', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-metadata', 'aurelia-templating', 'aurelia-loader', 'aurelia-task-queue'], function (_export) {
   var TheLogManager, LogManager;
   return {
-    setters: [function (_aurelia) {
-      /**
-       * The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.
-       *
-       * @module framework
-       */
-
-      _export("Aurelia", _aurelia.Aurelia);
+    setters: [function (_aureliaLogging) {
+      TheLogManager = _aureliaLogging;
+    }, function (_aurelia) {
+      _export('Aurelia', _aurelia.Aurelia);
     }, function (_aureliaDependencyInjection) {
       for (var _key in _aureliaDependencyInjection) {
         _export(_key, _aureliaDependencyInjection[_key]);
@@ -33,13 +29,13 @@ System.register(["./aurelia", "aurelia-dependency-injection", "aurelia-binding",
       for (var _key6 in _aureliaTaskQueue) {
         _export(_key6, _aureliaTaskQueue[_key6]);
       }
-    }, function (_aureliaLogging) {
-      TheLogManager = _aureliaLogging;
     }],
     execute: function () {
-      "use strict";
+      'use strict';
 
-      LogManager = _export("LogManager", TheLogManager);
+      LogManager = TheLogManager;
+
+      _export('LogManager', LogManager);
     }
   };
 });

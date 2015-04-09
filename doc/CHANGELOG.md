@@ -1,3 +1,18 @@
+## 0.10.0 (2015-04-09)
+
+
+#### Bug Fixes
+
+* **all:** update compiler and metadata plugin ([50e3afe0](http://github.com/aurelia/framework/commit/50e3afe0e5a4c6c0e15242433007e4fe068e35fc))
+
+
+#### Features
+
+* **plugins:**
+  * remove AtScript support ([f1adb01a](http://github.com/aurelia/framework/commit/f1adb01ab32afcd8ba3b427e9274f72fb4d56fda))
+  * update to use new metadata locator function ([4b09490d](http://github.com/aurelia/framework/commit/4b09490daf7f351e1001557c8e8a8032bdadbf1c))
+
+
 ## 0.9.0 (2015-03-25)
 
 

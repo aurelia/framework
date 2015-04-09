@@ -143,20 +143,4 @@ describe('the plugin loader', () => {
       expect(testFn.boolProp).toBeFalsy();
     });
   });
-
-  describe("atscript()", () => {
-    let containerMock;
-
-    beforeEach(() => {
-      containerMock = jasmine.createSpyObj('container',['supportAtScript']);
-      aureliaMock.container = containerMock;
-      spyOn(Metadata.configure,'locator').and.callThrough();
-    });
-
-    it("should add support for atScript", () => {
-      plugins.atscript();
-      expect(containerMock.supportAtScript).toHaveBeenCalled();
-      expect(Metadata.configure.locator).toHaveBeenCalled();
-    });
-  });
 });
