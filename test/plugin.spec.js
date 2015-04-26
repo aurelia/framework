@@ -118,29 +118,5 @@ describe('the plugin loader', () => {
         done();
       });
     });
-
-
-  });
-
-  describe("es5()", () => {
-    afterEach(() => Function.prototype.computed = undefined);
-
-    it("adds the computed function on the Function prototype", () => {
-      expect(Function.prototype.computed).toBeUndefined();
-      plugins.es5();
-      expect(Function.prototype.computed).toEqual(jasmine.any(Function));
-    });
-
-    it("Function.prototype.computed adds read only object keys to a function", () => {
-      plugins.es5();
-      function TestFn() {}
-
-      var metaData = {intProp: () => 1, boolProp: () => false};
-      TestFn.computed(metaData);
-      var testFn = new TestFn();
-
-      expect(testFn.intProp).toBe(1);
-      expect(testFn.boolProp).toBeFalsy();
-    });
   });
 });

@@ -63,24 +63,6 @@ export class Plugins {
     return this;
   }
 
-  /**
-   * Installs special support for ES5 authoring.
-   *
-   * @method es5
-   * @return {Plugins} Returns the current Plugins instance.
- */
-  es5(){
-    Function.prototype.computed = function(computedProperties){
-      for(var key in computedProperties){
-        if(computedProperties.hasOwnProperty(key)){
-          Object.defineProperty(this.prototype, key, { get: computedProperties[key], enumerable: true });
-        }
-      }
-    };
-
-    return this;
-  }
-
   _process(){
     var aurelia = this.aurelia,
         loader = aurelia.loader,
