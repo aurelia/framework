@@ -68,23 +68,23 @@ describe('the plugin loader', () => {
         .then(done);
     });
 
-    it("should load a plugin and call it's install function if it's defined", (done) => {
+    it("should load a plugin and call it's configure function if it's defined", (done) => {
       var config = {};
-      pluginSpy.install = jasmine.createSpy("install").and.returnValue(null);
+      pluginSpy.configure = jasmine.createSpy("configure").and.returnValue(null);
 
       plugins.plugin("plugin", config)._process()
         .then(() => {
           expect(loadModule).toHaveBeenCalledWith("plugin");
-          expect(pluginSpy.install).toHaveBeenCalledWith(aureliaMock, config);
+          expect(pluginSpy.configure).toHaveBeenCalledWith(aureliaMock, config);
         })
         .catch((reason) => expect(false).toBeTruthy(reason))
         .then(done);
     });
 
-    it("should load a plugin, call it's install function and resolve the returned promise if defined", (done) => {
+    it("should load a plugin, call it's configure function and resolve the returned promise if defined", (done) => {
       var config = {};
       var resolved = false;
-      pluginSpy.install = jasmine.createSpy("install").and.returnValue(new Promise((resolve) => {
+      pluginSpy.configure = jasmine.createSpy("configure").and.returnValue(new Promise((resolve) => {
         resolved = true;
         resolve();
       }));
@@ -92,7 +92,7 @@ describe('the plugin loader', () => {
       plugins.plugin("plugin", config)._process()
         .then(() => {
           expect(loadModule).toHaveBeenCalledWith("plugin");
-          expect(pluginSpy.install).toHaveBeenCalledWith(aureliaMock, config);
+          expect(pluginSpy.configure).toHaveBeenCalledWith(aureliaMock, config);
           expect(resolved).toBeTruthy();
         })
         .catch((reason) => expect(false).toBeTruthy(reason))

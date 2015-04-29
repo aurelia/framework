@@ -6,31 +6,23 @@ var logger = LogManager.getLogger('aurelia');
 
 function loadPlugin(aurelia, loader, info){
   logger.debug(`Loading plugin ${info.moduleId}.`);
-
   aurelia.currentPluginId = info.moduleId;
 
-  return loader.loadModule(info.moduleId).then(exportedValue => {
-    if('install' in exportedValue){
-      var result = exportedValue.install(aurelia, info.config || {});
-
-      if(result){
-        return result.then(() =>{
-          aurelia.currentPluginId = null;
-          logger.debug(`Installed plugin ${info.moduleId}.`);
-        });
-      }else{
-        logger.debug(`Installed plugin ${info.moduleId}.`);
-      }
+  return loader.loadModule(info.moduleId).then(m => {
+    if('configure' in m){
+      return Promise.resolve(m.configure(aurelia, info.config || {})).then(() => {
+        aurelia.currentPluginId = null;
+        logger.debug(`Configured plugin ${info.moduleId}.`);
+      });
     }else{
+      aurelia.currentPluginId = null;
       logger.debug(`Loaded plugin ${info.moduleId}.`);
     }
-
-    aurelia.currentPluginId = null;
   });
 }
 
 /**
- * Manages loading and installing plugins.
+ * Manages loading and configuring plugins.
  *
  * @class Plugins
  * @constructor
@@ -44,10 +36,10 @@ export class Plugins {
   }
 
   /**
-   * Installs a plugin before Aurelia starts.
+   * Configures a plugin before Aurelia starts.
    *
    * @method plugin
-   * @param {moduleId} moduleId The ID of the module to install.
+   * @param {moduleId} moduleId The ID of the module to configure.
    * @param {config} config The configuration for the specified module.
    * @return {Plugins} Returns the current Plugins instance.
  */
