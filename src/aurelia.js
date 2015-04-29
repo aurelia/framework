@@ -193,6 +193,8 @@ export class Aurelia {
   setRoot(root='app', applicationHost=null){
     var compositionEngine, instruction = {};
 
+    applicationHost = applicationHost || this.host;
+
     if (!applicationHost || typeof applicationHost == 'string') {
       this.host = document.getElementById(applicationHost || 'applicationHost') || document.body;
     } else {
