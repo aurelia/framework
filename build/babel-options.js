@@ -12,6 +12,7 @@ module.exports = {
   compact: false,
   code:true,
   stage:2,
+  loose: "all",
   optional: [
     "es7.decorators"
   ]
