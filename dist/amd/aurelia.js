@@ -5,11 +5,7 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-dependency-injection',
 
   var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 
-  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-  Object.defineProperty(exports, '__esModule', {
-    value: true
-  });
+  exports.__esModule = true;
 
   var _core = _interopRequire(_coreJs);
 
@@ -73,112 +69,112 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-dependency-injection',
       this.withInstance(_aureliaTemplating.ResourceRegistry, this.resources);
     }
 
-    _createClass(Aurelia, [{
-      key: 'withInstance',
-      value: function withInstance(type, instance) {
-        this.container.registerInstance(type, instance);
-        return this;
-      }
-    }, {
-      key: 'withSingleton',
-      value: function withSingleton(type, implementation) {
-        this.container.registerSingleton(type, implementation);
-        return this;
-      }
-    }, {
-      key: 'globalizeResources',
-      value: function globalizeResources(resources) {
-        var toAdd = Array.isArray(resources) ? resources : arguments,
-            i,
-            ii,
-            pluginPath = this.currentPluginId || '',
-            path,
-            internalPlugin = pluginPath.startsWith('./');
+    Aurelia.prototype.withInstance = function withInstance(type, instance) {
+      this.container.registerInstance(type, instance);
+      return this;
+    };
 
-        for (i = 0, ii = toAdd.length; i < ii; ++i) {
-          path = internalPlugin ? _aureliaPath.relativeToFile(toAdd[i], pluginPath) : _aureliaPath.join(pluginPath, toAdd[i]);
+    Aurelia.prototype.withSingleton = function withSingleton(type, implementation) {
+      this.container.registerSingleton(type, implementation);
+      return this;
+    };
 
-          this.resourcesToLoad[path] = this.resourcesToLoad[path];
+    Aurelia.prototype.globalizeResources = function globalizeResources(resources) {
+      var toAdd = Array.isArray(resources) ? resources : arguments,
+          i,
+          ii,
+          resource,
+          pluginPath = this.currentPluginId || '',
+          path,
+          internalPlugin = pluginPath.startsWith('./');
+
+      for (i = 0, ii = toAdd.length; i < ii; ++i) {
+        resource = toAdd[i];
+        if (typeof resource != 'string') {
+          throw new Error('Invalid resource path [' + resource + ']. Resources must be specified as relative module IDs.');
         }
 
-        return this;
-      }
-    }, {
-      key: 'renameGlobalResource',
-      value: function renameGlobalResource(resourcePath, newName) {
-        this.resourcesToLoad[resourcePath] = newName;
-        return this;
-      }
-    }, {
-      key: 'start',
-      value: function start() {
-        var _this = this;
+        path = internalPlugin ? _aureliaPath.relativeToFile(resource, pluginPath) : _aureliaPath.join(pluginPath, resource);
 
-        if (this.started) {
-          return Promise.resolve(this);
+        this.resourcesToLoad[path] = this.resourcesToLoad[path];
+      }
+
+      return this;
+    };
+
+    Aurelia.prototype.renameGlobalResource = function renameGlobalResource(resourcePath, newName) {
+      this.resourcesToLoad[resourcePath] = newName;
+      return this;
+    };
+
+    Aurelia.prototype.start = function start() {
+      var _this = this;
+
+      if (this.started) {
+        return Promise.resolve(this);
+      }
+
+      this.started = true;
+      logger.info('Aurelia Starting');
+
+      preventActionlessFormSubmit();
+
+      return this.use._process().then(function () {
+        if (!_this.container.hasHandler(_aureliaTemplating.BindingLanguage)) {
+          var message = 'You must configure Aurelia with a BindingLanguage implementation.';
+          logger.error(message);
+          throw new Error(message);
         }
 
-        this.started = true;
-        logger.info('Aurelia Starting');
+        if (!_this.container.hasHandler(_aureliaTemplating.Animator)) {
+          _aureliaTemplating.Animator.configureDefault(_this.container);
+        }
 
-        preventActionlessFormSubmit();
-
-        return this.use._process().then(function () {
-          if (!_this.container.hasHandler(_aureliaTemplating.BindingLanguage)) {
-            var message = 'You must configure Aurelia with a BindingLanguage implementation.';
-            logger.error(message);
-            throw new Error(message);
-          }
-
-          if (!_this.container.hasHandler(_aureliaTemplating.Animator)) {
-            _aureliaTemplating.Animator.configureDefault(_this.container);
-          }
-
-          return loadResources(_this.container, _this.resourcesToLoad, _this.resources).then(function () {
-            logger.info('Aurelia Started');
-            var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
-            document.dispatchEvent(evt);
-            return _this;
-          });
+        return loadResources(_this.container, _this.resourcesToLoad, _this.resources).then(function () {
+          logger.info('Aurelia Started');
+          var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
+          document.dispatchEvent(evt);
+          return _this;
         });
+      });
+    };
+
+    Aurelia.prototype.setRoot = function setRoot() {
+      var _this2 = this;
+
+      var root = arguments[0] === undefined ? 'app' : arguments[0];
+      var applicationHost = arguments[1] === undefined ? null : arguments[1];
+
+      var compositionEngine,
+          instruction = {};
+
+      applicationHost = applicationHost || this.host;
+
+      if (!applicationHost || typeof applicationHost == 'string') {
+        this.host = document.getElementById(applicationHost || 'applicationHost') || document.body;
+      } else {
+        this.host = applicationHost;
       }
-    }, {
-      key: 'setRoot',
-      value: function setRoot() {
-        var _this2 = this;
 
-        var root = arguments[0] === undefined ? 'app' : arguments[0];
-        var applicationHost = arguments[1] === undefined ? null : arguments[1];
+      this.host.aurelia = this;
+      this.container.registerInstance(Element, this.host);
 
-        var compositionEngine,
-            instruction = {};
+      compositionEngine = this.container.get(_aureliaTemplating.CompositionEngine);
+      instruction.viewModel = root;
+      instruction.container = instruction.childContainer = this.container;
+      instruction.viewSlot = new _aureliaTemplating.ViewSlot(this.host, true);
+      instruction.viewSlot.transformChildNodesIntoView();
 
-        if (!applicationHost || typeof applicationHost == 'string') {
-          this.host = document.getElementById(applicationHost || 'applicationHost') || document.body;
-        } else {
-          this.host = applicationHost;
-        }
-
-        this.host.aurelia = this;
-        this.container.registerInstance(Element, this.host);
-
-        compositionEngine = this.container.get(_aureliaTemplating.CompositionEngine);
-        instruction.viewModel = root;
-        instruction.container = instruction.childContainer = this.container;
-        instruction.viewSlot = new _aureliaTemplating.ViewSlot(this.host, true);
-        instruction.viewSlot.transformChildNodesIntoView();
-
-        return compositionEngine.compose(instruction).then(function (root) {
-          _this2.root = root;
-          instruction.viewSlot.attached();
-          var evt = new window.CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
-          setTimeout(function () {
-            return document.dispatchEvent(evt);
-          }, 1);
-          return _this2;
-        });
-      }
-    }]);
+      return compositionEngine.compose(instruction).then(function (root) {
+        _this2.root = root;
+        instruction.viewSlot.attached();
+        var evt = new window.CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
+        setTimeout(function () {
+          return document.dispatchEvent(evt);
+        }, 1);
+        return _this2;
+      });
+    };
 
     return Aurelia;
   })();

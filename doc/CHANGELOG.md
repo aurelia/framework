@@ -1,3 +1,26 @@
+## 0.11.0 (2015-05-01)
+
+
+#### Bug Fixes
+
+* **aurelia:** throw a descriptive error when globalizeResources is called with non-strings ([09038c83](http://github.com/aurelia/framework/commit/09038c83b4ca02f2e55b30804b330c59207f682d))
+* **plugin:** make api use configure like other apis in framework ([cbfdaad7](http://github.com/aurelia/framework/commit/cbfdaad764abca997a15302073819d0723ccd32a), closes [#96](http://github.com/aurelia/framework/issues/96))
+* **plugins:** removed unnecessary es5 helper support ([710499a8](http://github.com/aurelia/framework/commit/710499a896ccbc6d787b29aa8da8aeb373bfae8f))
+
+
+#### Features
+
+* **aurelia:** take advantage of previously configured host ([0c5bbcd7](http://github.com/aurelia/framework/commit/0c5bbcd799be99958dcea3c3a1f850bdd43700a4))
+
+
+#### Breaking Changes
+
+* If you were using ES5 and used the computed helper on
+function, this will affect you as that is no longer present.
+
+ ([710499a8](http://github.com/aurelia/framework/commit/710499a896ccbc6d787b29aa8da8aeb373bfae8f))
+
+
 ## 0.10.0 (2015-04-09)
 
 

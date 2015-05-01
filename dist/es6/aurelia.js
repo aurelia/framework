@@ -114,13 +114,18 @@ export class Aurelia {
    */
    globalizeResources(resources){
     var toAdd = Array.isArray(resources) ? resources : arguments,
-        i, ii, pluginPath = this.currentPluginId || '', path,
+        i, ii, resource, pluginPath = this.currentPluginId || '', path,
         internalPlugin = pluginPath.startsWith('./');
 
     for(i = 0, ii = toAdd.length; i < ii; ++i){
+      resource = toAdd[i];
+      if(typeof resource != 'string'){
+        throw new Error(`Invalid resource path [${resource}]. Resources must be specified as relative module IDs.`);
+      }
+
       path = internalPlugin
-        ? relativeToFile(toAdd[i], pluginPath)
-        : join(pluginPath, toAdd[i]);
+        ? relativeToFile(resource, pluginPath)
+        : join(pluginPath, resource);
 
       this.resourcesToLoad[path] = this.resourcesToLoad[path];
     }
@@ -187,6 +192,8 @@ export class Aurelia {
    */
   setRoot(root='app', applicationHost=null){
     var compositionEngine, instruction = {};
+
+    applicationHost = applicationHost || this.host;
 
     if (!applicationHost || typeof applicationHost == 'string') {
       this.host = document.getElementById(applicationHost || 'applicationHost') || document.body;
