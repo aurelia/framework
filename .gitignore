@@ -3,3 +3,4 @@ jspm_packages
 bower_components
 .idea
 .DS_STORE
+build/reports
