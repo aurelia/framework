@@ -200,7 +200,6 @@ describe('aurelia', () => {
           expect(aurelia.host).toBe(document.body);
           expect(document.body.aurelia).toBe(aurelia);
           expect(documentSpy).toHaveBeenCalledWith("someIDThatShouldNotExist");
-          expect(mockContainer.registerInstance).toHaveBeenCalledWith(Element, document.body);
         })
         .catch((reason) => expect(false).toBeTruthy(reason))
         .then(done);
@@ -214,7 +213,6 @@ describe('aurelia', () => {
           expect(aurelia.host).toBe(document.body);
           expect(document.body.aurelia).toBe(aurelia);
           expect(documentSpy).toHaveBeenCalledWith("applicationHost");
-          expect(mockContainer.registerInstance).toHaveBeenCalledWith(Element, document.body);
         })
         .catch((reason) => expect(false).toBeTruthy(reason))
         .then(done);
@@ -229,7 +227,6 @@ describe('aurelia', () => {
           expect(result).toBe(aurelia);
           expect(aurelia.host).toBe(host);
           expect(host.aurelia).toBe(aurelia);
-          expect(mockContainer.registerInstance).toHaveBeenCalledWith(Element, host);
         })
         .catch((reason) => expect(false).toBeTruthy(reason))
         .then(done);
