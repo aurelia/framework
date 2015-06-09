@@ -1,5 +1,9 @@
 System.register(['core-js', 'aurelia-logging', 'aurelia-metadata'], function (_export) {
-  var core, LogManager, Metadata, _classCallCheck, logger, Plugins;
+  'use strict';
+
+  var core, LogManager, Metadata, logger, Plugins;
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   function loadPlugin(aurelia, loader, info) {
     logger.debug('Loading plugin ' + info.moduleId + '.');
@@ -27,10 +31,6 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-metadata'], function (_e
       Metadata = _aureliaMetadata.Metadata;
     }],
     execute: function () {
-      'use strict';
-
-      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
       logger = LogManager.getLogger('aurelia');
 
       Plugins = (function () {
@@ -42,17 +42,7 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-metadata'], function (_e
           this.processed = false;
         }
 
-        Plugins.prototype.plugin = (function (_plugin) {
-          function plugin(_x, _x2) {
-            return _plugin.apply(this, arguments);
-          }
-
-          plugin.toString = function () {
-            return _plugin.toString();
-          };
-
-          return plugin;
-        })(function (moduleId, config) {
+        Plugins.prototype.plugin = function plugin(moduleId, config) {
           var plugin = { moduleId: moduleId, config: config || {} };
 
           if (this.processed) {
@@ -62,7 +52,7 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-metadata'], function (_e
           }
 
           return this;
-        });
+        };
 
         Plugins.prototype._process = function _process() {
           var _this = this;
@@ -76,24 +66,14 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-metadata'], function (_e
             return;
           }
 
-          var next = (function (_next) {
-            function next() {
-              return _next.apply(this, arguments);
-            }
-
-            next.toString = function () {
-              return _next.toString();
-            };
-
-            return next;
-          })(function () {
+          var next = function next() {
             if (current = info.shift()) {
               return loadPlugin(aurelia, loader, current).then(next);
             }
 
             _this.processed = true;
             return Promise.resolve();
-          });
+          };
 
           return next();
         };

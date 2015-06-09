@@ -1,30 +1,30 @@
 'use strict';
 
-var _interopRequireWildcard = function (obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (typeof obj === 'object' && obj !== null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } };
-
-var _interopRequireDefault = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
 exports.__esModule = true;
 
-var _core = require('core-js');
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-var _core2 = _interopRequireDefault(_core);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _import = require('aurelia-logging');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var LogManager = _interopRequireWildcard(_import);
+var _coreJs = require('core-js');
 
-var _Container = require('aurelia-dependency-injection');
+var _coreJs2 = _interopRequireDefault(_coreJs);
 
-var _Loader = require('aurelia-loader');
+var _aureliaLogging = require('aurelia-logging');
 
-var _join$relativeToFile = require('aurelia-path');
+var LogManager = _interopRequireWildcard(_aureliaLogging);
 
-var _Plugins = require('./plugins');
+var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
-var _BindingLanguage$ViewEngine$ViewSlot$ResourceRegistry$CompositionEngine$Animator = require('aurelia-templating');
+var _aureliaLoader = require('aurelia-loader');
+
+var _aureliaPath = require('aurelia-path');
+
+var _plugins = require('./plugins');
+
+var _aureliaTemplating = require('aurelia-templating');
 
 var logger = LogManager.getLogger('aurelia'),
     slice = Array.prototype.slice;
@@ -58,7 +58,7 @@ function preventActionlessFormSubmit() {
 }
 
 function loadResources(container, resourcesToLoad, appResources) {
-  var viewEngine = container.get(_BindingLanguage$ViewEngine$ViewSlot$ResourceRegistry$CompositionEngine$Animator.ViewEngine),
+  var viewEngine = container.get(_aureliaTemplating.ViewEngine),
       importIds = Object.keys(resourcesToLoad),
       names = new Array(importIds.length),
       i,
@@ -76,14 +76,14 @@ var Aurelia = (function () {
     _classCallCheck(this, Aurelia);
 
     this.loader = loader || new window.AureliaLoader();
-    this.container = container || new _Container.Container();
-    this.resources = resources || new _BindingLanguage$ViewEngine$ViewSlot$ResourceRegistry$CompositionEngine$Animator.ResourceRegistry();
-    this.use = new _Plugins.Plugins(this);
+    this.container = container || new _aureliaDependencyInjection.Container();
+    this.resources = resources || new _aureliaTemplating.ResourceRegistry();
+    this.use = new _plugins.Plugins(this);
     this.resourcesToLoad = {};
 
     this.withInstance(Aurelia, this);
-    this.withInstance(_Loader.Loader, this.loader);
-    this.withInstance(_BindingLanguage$ViewEngine$ViewSlot$ResourceRegistry$CompositionEngine$Animator.ResourceRegistry, this.resources);
+    this.withInstance(_aureliaLoader.Loader, this.loader);
+    this.withInstance(_aureliaTemplating.ResourceRegistry, this.resources);
   }
 
   Aurelia.prototype.withInstance = function withInstance(type, instance) {
@@ -111,7 +111,7 @@ var Aurelia = (function () {
         throw new Error('Invalid resource path [' + resource + ']. Resources must be specified as relative module IDs.');
       }
 
-      path = internalPlugin ? _join$relativeToFile.relativeToFile(resource, pluginPath) : _join$relativeToFile.join(pluginPath, resource);
+      path = internalPlugin ? (0, _aureliaPath.relativeToFile)(resource, pluginPath) : (0, _aureliaPath.join)(pluginPath, resource);
 
       this.resourcesToLoad[path] = this.resourcesToLoad[path];
     }
@@ -137,14 +137,14 @@ var Aurelia = (function () {
     preventActionlessFormSubmit();
 
     return this.use._process().then(function () {
-      if (!_this.container.hasHandler(_BindingLanguage$ViewEngine$ViewSlot$ResourceRegistry$CompositionEngine$Animator.BindingLanguage)) {
+      if (!_this.container.hasHandler(_aureliaTemplating.BindingLanguage)) {
         var message = 'You must configure Aurelia with a BindingLanguage implementation.';
         logger.error(message);
         throw new Error(message);
       }
 
-      if (!_this.container.hasHandler(_BindingLanguage$ViewEngine$ViewSlot$ResourceRegistry$CompositionEngine$Animator.Animator)) {
-        _BindingLanguage$ViewEngine$ViewSlot$ResourceRegistry$CompositionEngine$Animator.Animator.configureDefault(_this.container);
+      if (!_this.container.hasHandler(_aureliaTemplating.Animator)) {
+        _aureliaTemplating.Animator.configureDefault(_this.container);
       }
 
       return loadResources(_this.container, _this.resourcesToLoad, _this.resources).then(function () {
@@ -174,13 +174,13 @@ var Aurelia = (function () {
     }
 
     this.host.aurelia = this;
-    this.container.registerInstance(Element, this.host);
 
-    compositionEngine = this.container.get(_BindingLanguage$ViewEngine$ViewSlot$ResourceRegistry$CompositionEngine$Animator.CompositionEngine);
+    compositionEngine = this.container.get(_aureliaTemplating.CompositionEngine);
     instruction.viewModel = root;
     instruction.container = instruction.childContainer = this.container;
-    instruction.viewSlot = new _BindingLanguage$ViewEngine$ViewSlot$ResourceRegistry$CompositionEngine$Animator.ViewSlot(this.host, true);
+    instruction.viewSlot = new _aureliaTemplating.ViewSlot(this.host, true);
     instruction.viewSlot.transformChildNodesIntoView();
+    instruction.host = this.host;
 
     return compositionEngine.compose(instruction).then(function (root) {
       _this2.root = root;

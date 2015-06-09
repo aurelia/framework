@@ -1,4 +1,6 @@
-System.register(['aurelia-logging', './aurelia', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-metadata', 'aurelia-templating', 'aurelia-loader', 'aurelia-task-queue'], function (_export) {
+System.register(['aurelia-logging', './aurelia', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-metadata', 'aurelia-templating', 'aurelia-loader', 'aurelia-task-queue', 'aurelia-path'], function (_export) {
+  'use strict';
+
   var TheLogManager, LogManager;
   return {
     setters: [function (_aureliaLogging) {
@@ -29,10 +31,12 @@ System.register(['aurelia-logging', './aurelia', 'aurelia-dependency-injection',
       for (var _key6 in _aureliaTaskQueue) {
         _export(_key6, _aureliaTaskQueue[_key6]);
       }
+    }, function (_aureliaPath) {
+      for (var _key7 in _aureliaPath) {
+        _export(_key7, _aureliaPath[_key7]);
+      }
     }],
     execute: function () {
-      'use strict';
-
       LogManager = TheLogManager;
 
       _export('LogManager', LogManager);

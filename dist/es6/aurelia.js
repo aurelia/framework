@@ -202,13 +202,13 @@ export class Aurelia {
     }
 
     this.host.aurelia = this;
-    this.container.registerInstance(Element, this.host);
 
     compositionEngine = this.container.get(CompositionEngine);
     instruction.viewModel = root;
     instruction.container = instruction.childContainer = this.container;
     instruction.viewSlot = new ViewSlot(this.host, true);
     instruction.viewSlot.transformChildNodesIntoView();
+    instruction.host = this.host;
 
     return compositionEngine.compose(instruction).then(root => {
       this.root = root;

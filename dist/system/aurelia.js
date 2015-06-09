@@ -1,5 +1,9 @@
 System.register(['core-js', 'aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-path', './plugins', 'aurelia-templating'], function (_export) {
-  var core, LogManager, Container, Loader, join, relativeToFile, Plugins, BindingLanguage, ViewEngine, ViewSlot, ResourceRegistry, CompositionEngine, Animator, _classCallCheck, logger, slice, CustomEvent, Aurelia;
+  'use strict';
+
+  var core, LogManager, Container, Loader, join, relativeToFile, Plugins, BindingLanguage, ViewEngine, ViewSlot, ResourceRegistry, CompositionEngine, Animator, logger, slice, CustomEvent, Aurelia;
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   function preventActionlessFormSubmit() {
     document.body.addEventListener('submit', function (evt) {
@@ -49,10 +53,6 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-dependency-injection', '
       Animator = _aureliaTemplating.Animator;
     }],
     execute: function () {
-      'use strict';
-
-      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
       logger = LogManager.getLogger('aurelia');
       slice = Array.prototype.slice;
 
@@ -175,13 +175,13 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-dependency-injection', '
           }
 
           this.host.aurelia = this;
-          this.container.registerInstance(Element, this.host);
 
           compositionEngine = this.container.get(CompositionEngine);
           instruction.viewModel = root;
           instruction.container = instruction.childContainer = this.container;
           instruction.viewSlot = new ViewSlot(this.host, true);
           instruction.viewSlot.transformChildNodesIntoView();
+          instruction.host = this.host;
 
           return compositionEngine.compose(instruction).then(function (root) {
             _this2.root = root;

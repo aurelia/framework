@@ -1,13 +1,13 @@
 define(['exports', 'core-js', 'aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-path', './plugins', 'aurelia-templating'], function (exports, _coreJs, _aureliaLogging, _aureliaDependencyInjection, _aureliaLoader, _aureliaPath, _plugins, _aureliaTemplating) {
   'use strict';
 
-  var _interopRequire = function (obj) { return obj && obj.__esModule ? obj['default'] : obj; };
-
-  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
   exports.__esModule = true;
 
-  var _core = _interopRequire(_coreJs);
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+  var _core = _interopRequireDefault(_coreJs);
 
   var logger = _aureliaLogging.getLogger('aurelia'),
       slice = Array.prototype.slice;
@@ -94,7 +94,7 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-dependency-injection',
           throw new Error('Invalid resource path [' + resource + ']. Resources must be specified as relative module IDs.');
         }
 
-        path = internalPlugin ? _aureliaPath.relativeToFile(resource, pluginPath) : _aureliaPath.join(pluginPath, resource);
+        path = internalPlugin ? (0, _aureliaPath.relativeToFile)(resource, pluginPath) : (0, _aureliaPath.join)(pluginPath, resource);
 
         this.resourcesToLoad[path] = this.resourcesToLoad[path];
       }
@@ -157,13 +157,13 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-dependency-injection',
       }
 
       this.host.aurelia = this;
-      this.container.registerInstance(Element, this.host);
 
       compositionEngine = this.container.get(_aureliaTemplating.CompositionEngine);
       instruction.viewModel = root;
       instruction.container = instruction.childContainer = this.container;
       instruction.viewSlot = new _aureliaTemplating.ViewSlot(this.host, true);
       instruction.viewSlot.transformChildNodesIntoView();
+      instruction.host = this.host;
 
       return compositionEngine.compose(instruction).then(function (root) {
         _this2.root = root;

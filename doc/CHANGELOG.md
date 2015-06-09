@@ -1,3 +1,16 @@
+## 0.12.0 (2015-06-08)
+
+
+#### Bug Fixes
+
+* **index:** ensure export of path module api ([17cf46cd](http://github.com/aurelia/framework/commit/17cf46cdfbf4081e08c41db3c20a0590c885d254))
+
+
+#### Features
+
+* **aurelia:** update to use composition host instruction value ([bd456bc5](http://github.com/aurelia/framework/commit/bd456bc5411ed7f122bc14a2ecc0d7b0cc2f192b))
+
+
 ## 0.11.0 (2015-05-01)
 
 

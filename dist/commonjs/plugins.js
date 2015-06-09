@@ -1,22 +1,22 @@
 'use strict';
 
-var _interopRequireWildcard = function (obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (typeof obj === 'object' && obj !== null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } };
-
-var _interopRequireDefault = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
-
 exports.__esModule = true;
 
-var _core = require('core-js');
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-var _core2 = _interopRequireDefault(_core);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _import = require('aurelia-logging');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var LogManager = _interopRequireWildcard(_import);
+var _coreJs = require('core-js');
 
-var _Metadata = require('aurelia-metadata');
+var _coreJs2 = _interopRequireDefault(_coreJs);
+
+var _aureliaLogging = require('aurelia-logging');
+
+var LogManager = _interopRequireWildcard(_aureliaLogging);
+
+var _aureliaMetadata = require('aurelia-metadata');
 
 var logger = LogManager.getLogger('aurelia');
 
@@ -46,17 +46,7 @@ var Plugins = (function () {
     this.processed = false;
   }
 
-  Plugins.prototype.plugin = (function (_plugin) {
-    function plugin(_x, _x2) {
-      return _plugin.apply(this, arguments);
-    }
-
-    plugin.toString = function () {
-      return _plugin.toString();
-    };
-
-    return plugin;
-  })(function (moduleId, config) {
+  Plugins.prototype.plugin = function plugin(moduleId, config) {
     var plugin = { moduleId: moduleId, config: config || {} };
 
     if (this.processed) {
@@ -66,7 +56,7 @@ var Plugins = (function () {
     }
 
     return this;
-  });
+  };
 
   Plugins.prototype._process = function _process() {
     var _this = this;
@@ -80,24 +70,14 @@ var Plugins = (function () {
       return;
     }
 
-    var next = (function (_next) {
-      function next() {
-        return _next.apply(this, arguments);
-      }
-
-      next.toString = function () {
-        return _next.toString();
-      };
-
-      return next;
-    })(function () {
+    var next = function next() {
       if (current = info.shift()) {
         return loadPlugin(aurelia, loader, current).then(next);
       }
 
       _this.processed = true;
       return Promise.resolve();
-    });
+    };
 
     return next();
   };
