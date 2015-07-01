@@ -4,7 +4,6 @@
  * @module framework
  */
 
-export {Aurelia} from './aurelia';
 export * from 'aurelia-dependency-injection';
 export * from 'aurelia-binding';
 export * from 'aurelia-metadata';

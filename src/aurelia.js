@@ -1,5 +1,5 @@
 import core from 'core-js';
-import * as LogManager from 'aurelia-logging';
+import * as TheLogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
 import {join,relativeToFile} from 'aurelia-path';
@@ -13,7 +13,7 @@ import {
   Animator
 } from 'aurelia-templating';
 
-var logger = LogManager.getLogger('aurelia'),
+var logger = TheLogManager.getLogger('aurelia'),
     slice = Array.prototype.slice;
 
 if (!window.CustomEvent || typeof window.CustomEvent !== 'function') {
@@ -77,6 +77,8 @@ export class Aurelia {
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
     this.withInstance(ResourceRegistry, this.resources);
+
+    this.container.makeGlobal();
   }
 
   /**

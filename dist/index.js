@@ -1,19 +1,88 @@
 import core from 'core-js';
-import * as LogManager from 'aurelia-logging';
+import * as TheLogManager from 'aurelia-logging';
+import {Metadata} from 'aurelia-metadata';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
 import {join,relativeToFile} from 'aurelia-path';
-import {Plugins} from './plugins';
-import {
-  BindingLanguage,
-  ViewEngine,
-  ViewSlot,
-  ResourceRegistry,
-  CompositionEngine,
-  Animator
-} from 'aurelia-templating';
+import {BindingLanguage,ViewEngine,ViewSlot,ResourceRegistry,CompositionEngine,Animator} from 'aurelia-templating';
 
-var logger = LogManager.getLogger('aurelia'),
+var logger = TheLogManager.getLogger('aurelia');
+
+function loadPlugin(aurelia, loader, info){
+  logger.debug(`Loading plugin ${info.moduleId}.`);
+  aurelia.currentPluginId = info.moduleId;
+
+  return loader.loadModule(info.moduleId).then(m => {
+    if('configure' in m){
+      return Promise.resolve(m.configure(aurelia, info.config || {})).then(() => {
+        aurelia.currentPluginId = null;
+        logger.debug(`Configured plugin ${info.moduleId}.`);
+      });
+    }else{
+      aurelia.currentPluginId = null;
+      logger.debug(`Loaded plugin ${info.moduleId}.`);
+    }
+  });
+}
+
+/**
+ * Manages loading and configuring plugins.
+ *
+ * @class Plugins
+ * @constructor
+ * @param {Aurelia} aurelia An instance of Aurelia.
+ */
+export class Plugins {
+  constructor(aurelia){
+    this.aurelia = aurelia;
+    this.info = [];
+    this.processed = false;
+  }
+
+  /**
+   * Configures a plugin before Aurelia starts.
+   *
+   * @method plugin
+   * @param {moduleId} moduleId The ID of the module to configure.
+   * @param {config} config The configuration for the specified module.
+   * @return {Plugins} Returns the current Plugins instance.
+ */
+  plugin(moduleId, config){
+    var plugin = {moduleId:moduleId, config:config || {}};
+
+    if(this.processed){
+      loadPlugin(this.aurelia, this.aurelia.loader, plugin);
+    }else{
+      this.info.push(plugin);
+    }
+
+    return this;
+  }
+
+  _process(){
+    var aurelia = this.aurelia,
+        loader = aurelia.loader,
+        info = this.info,
+        current;
+
+    if(this.processed){
+      return;
+    }
+
+    var next = () => {
+      if(current = info.shift()){
+        return loadPlugin(aurelia, loader, current).then(next);
+      }
+
+      this.processed = true;
+      return Promise.resolve();
+    };
+
+    return next();
+  }
+}
+
+var logger = TheLogManager.getLogger('aurelia'),
     slice = Array.prototype.slice;
 
 if (!window.CustomEvent || typeof window.CustomEvent !== 'function') {
@@ -77,6 +146,8 @@ export class Aurelia {
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
     this.withInstance(ResourceRegistry, this.resources);
+
+    this.container.makeGlobal();
   }
 
   /**
@@ -219,3 +290,19 @@ export class Aurelia {
     });
   }
 }
+
+/**
+ * The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.
+ *
+ * @module framework
+ */
+
+export * from 'aurelia-dependency-injection';
+export * from 'aurelia-binding';
+export * from 'aurelia-metadata';
+export * from 'aurelia-templating';
+export * from 'aurelia-loader';
+export * from 'aurelia-task-queue';
+export * from 'aurelia-path';
+
+export var LogManager = TheLogManager;

@@ -1,8 +1,8 @@
 import core from 'core-js';
-import * as LogManager from 'aurelia-logging';
+import * as TheLogManager from 'aurelia-logging';
 import {Metadata} from 'aurelia-metadata';
 
-var logger = LogManager.getLogger('aurelia');
+var logger = TheLogManager.getLogger('aurelia');
 
 function loadPlugin(aurelia, loader, info){
   logger.debug(`Loading plugin ${info.moduleId}.`);

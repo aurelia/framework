@@ -1,4 +1,4 @@
-import {Aurelia} from '../src/index';
+import {Aurelia} from '../src/aurelia';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
 import {BindingLanguage, ResourceCoordinator, ViewSlot, ResourceRegistry, CompositionEngine} from 'aurelia-templating';
@@ -24,7 +24,7 @@ describe('aurelia', () => {
     it("will take in a loader, container and resource registry", () => {
       let mockLoader = jasmine.createSpy('loader');
       let mockResources = jasmine.createSpy('resourceRegistry');
-      let mockContainer = jasmine.createSpyObj('container', ['registerInstance']);
+      let mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'makeGlobal']);
 
       let aurelia = new Aurelia(mockLoader, mockContainer, mockResources);
       expect(aurelia.loader).toBe(mockLoader);
@@ -48,7 +48,7 @@ describe('aurelia', () => {
     }
 
     beforeEach(() => {
-      mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'registerSingleton']);
+      mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'registerSingleton', 'makeGlobal']);
       aurelia = new Aurelia({}, mockContainer);
       testInstance = new TestClass();
     });
@@ -94,7 +94,7 @@ describe('aurelia', () => {
         resolve();
       }));
 
-      mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'hasHandler', 'get']);
+      mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'hasHandler', 'get', 'makeGlobal']);
       mockContainer.hasHandler.and.returnValue(true);
       mockContainer.get.and.returnValue(mockViewEngine);
 
@@ -170,7 +170,7 @@ describe('aurelia', () => {
 
     beforeEach(() => {
       mockLoader = jasmine.createSpy("loader");
-      mockContainer = jasmine.createSpyObj("container", ["get", "registerInstance"]);
+      mockContainer = jasmine.createSpyObj("container", ["get", "registerInstance", 'makeGlobal']);
       mockCompositionEngine = jasmine.createSpyObj("compositionEngine", ["compose"]);
 
       rootModel = {};
