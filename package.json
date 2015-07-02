@@ -48,7 +48,7 @@
     "del": "^1.1.0",
     "gulp": "^3.8.10",
     "gulp-babel": "^5.1.0",
-    "gulp-bump": "^0.1.11",
+    "gulp-bump": "^0.3.1",
     "gulp-concat": "^2.6.0",
     "gulp-insert": "^0.4.0",
     "gulp-jshint": "^1.9.0",
