@@ -184,7 +184,7 @@ var Aurelia = (function () {
         throw new Error('Invalid resource path [' + resource + ']. Resources must be specified as relative module IDs.');
       }
 
-      path = internalPlugin ? (0, _aureliaPath.relativeToFile)(resource, pluginPath) : (0, _aureliaPath.join)(pluginPath, resource);
+      path = internalPlugin ? _aureliaPath.relativeToFile(resource, pluginPath) : _aureliaPath.join(pluginPath, resource);
 
       this.resourcesToLoad[path] = this.resourcesToLoad[path];
     }
