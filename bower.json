@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
@@ -24,7 +24,7 @@
     "aurelia-metadata": "^0.7.0",
     "aurelia-path": "^0.8.0",
     "aurelia-task-queue": "^0.6.0",
-    "aurelia-templating": "^0.13.0",
+    "aurelia-templating": "^0.13.1",
     "core-js": "zloirock/core-js"
   }
 }

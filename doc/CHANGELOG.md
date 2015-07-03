@@ -1,3 +1,11 @@
+### 0.13.1 (2015-07-03)
+
+
+#### Bug Fixes
+
+* **plugins:** address changes in jspm/system.js beta ([90afee4d](http://github.com/aurelia/framework/commit/90afee4de0770c576fb8fd4f0af5fb3191833f0f))
+
+
 ## 0.13.0 (2015-07-02)
 
 
