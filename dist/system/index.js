@@ -7,7 +7,7 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-depe
 
   function loadPlugin(aurelia, loader, info) {
     logger.debug('Loading plugin ' + info.moduleId + '.');
-    aurelia.currentPluginId = info.moduleId.endsWith('.js') ? info.moduleId.substring(0, info.moduleId.length - 3) : info.moduleId;
+    aurelia.currentPluginId = info.moduleId.endsWith('.js') || info.moduleId.endsWith('.ts') ? info.moduleId.substring(0, info.moduleId.length - 3) : info.moduleId;
 
     return loader.loadModule(info.moduleId).then(function (m) {
       if ('configure' in m) {
