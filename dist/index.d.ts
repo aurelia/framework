@@ -15,7 +15,7 @@ declare module 'aurelia-framework' {
    * @param {Aurelia} aurelia An instance of Aurelia.
    */
   export class Plugins {
-    constructor(aurelia: any);
+    constructor(aurelia: Aurelia);
     
     /**
        * Configures a plugin before Aurelia starts.
@@ -25,7 +25,7 @@ declare module 'aurelia-framework' {
        * @param {config} config The configuration for the specified module.
        * @return {Plugins} Returns the current Plugins instance.
      */
-    plugin(moduleId: any, config: any): any;
+    plugin(moduleId: string, config: any): Plugins;
   }
   
   /**
@@ -38,7 +38,11 @@ declare module 'aurelia-framework' {
    * @param {ResourceRegistry} resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
    */
   export class Aurelia {
-    constructor(loader: any, container: any, resources: any);
+    loader: Loader;
+    container: Container;
+    resources: ResourceRegistry;
+    use: Plugins;
+    constructor(loader?: Loader, container?: Container, resources?: ResourceRegistry);
     
     /**
        * Adds an existing object to the framework's dependency injection container.
@@ -48,7 +52,7 @@ declare module 'aurelia-framework' {
        * @param {Object} instance The existing instance of the dependency that the framework will inject.
        * @return {Aurelia} Returns the current Aurelia instance.
        */
-    withInstance(type: any, instance: any): any;
+    withInstance(type: any, instance: any): Aurelia;
     
     /**
        * Adds a singleton to the framework's dependency injection container.
@@ -58,7 +62,17 @@ declare module 'aurelia-framework' {
        * @param {Object} implementation The constructor function of the dependency that the framework will inject.
        * @return {Aurelia} Returns the current Aurelia instance.
        */
-    withSingleton(type: any, implementation: any): any;
+    withSingleton(type: any, implementation?: Function): Aurelia;
+    
+    /**
+       * Adds a transient to the framework's dependency injection container.
+       *
+       * @method withTransient
+       * @param {Class} type The object type of the dependency that the framework will inject.
+       * @param {Object} implementation The constructor function of the dependency that the framework will inject.
+       * @return {Aurelia} Returns the current Aurelia instance.
+       */
+    withTransient(type: any, implementation?: Function): Aurelia;
     
     /**
        * Adds globally available view resources to be imported into the Aurelia framework.
@@ -67,7 +81,7 @@ declare module 'aurelia-framework' {
        * @param {Object|Array} resources The relative module id to the resource. (Relative to the plugin's installer.)
        * @return {Aurelia} Returns the current Aurelia instance.
        */
-    globalizeResources(resources: any): any;
+    globalizeResources(resources: string | string[]): Aurelia;
     
     /**
        * Renames a global resource that was imported.
@@ -77,7 +91,7 @@ declare module 'aurelia-framework' {
        * @param {String} newName The new name.
        * @return {Aurelia} Returns the current Aurelia instance.
        */
-    renameGlobalResource(resourcePath: any, newName: any): any;
+    renameGlobalResource(resourcePath: string, newName: string): Aurelia;
     
     /**
        * Loads plugins, then resources, and then starts the Aurelia instance.
@@ -95,7 +109,7 @@ declare module 'aurelia-framework' {
        * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
        * @return {Aurelia} Returns the current Aurelia instance.
        */
-    setRoot(root?: any, applicationHost?: any): any;
+    setRoot(root?: string, applicationHost?: any): any;
   }
   
   /**

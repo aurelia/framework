@@ -29,7 +29,7 @@ function loadPlugin(aurelia, loader, info){
  * @param {Aurelia} aurelia An instance of Aurelia.
  */
 export class Plugins {
-  constructor(aurelia){
+  constructor(aurelia:Aurelia){
     this.aurelia = aurelia;
     this.info = [];
     this.processed = false;
@@ -43,7 +43,7 @@ export class Plugins {
    * @param {config} config The configuration for the specified module.
    * @return {Plugins} Returns the current Plugins instance.
  */
-  plugin(moduleId, config){
+  plugin(moduleId:string, config:any):Plugins{
     var plugin = {moduleId:moduleId, config:config || {}};
 
     if(this.processed){

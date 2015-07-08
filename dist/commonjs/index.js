@@ -169,6 +169,11 @@ var Aurelia = (function () {
     return this;
   };
 
+  Aurelia.prototype.withTransient = function withTransient(type, implementation) {
+    this.container.registerTransient(type, implementation);
+    return this;
+  };
+
   Aurelia.prototype.globalizeResources = function globalizeResources(resources) {
     var toAdd = Array.isArray(resources) ? resources : arguments,
         i,

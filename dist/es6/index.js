@@ -33,7 +33,7 @@ function loadPlugin(aurelia, loader, info){
  * @param {Aurelia} aurelia An instance of Aurelia.
  */
 export class Plugins {
-  constructor(aurelia){
+  constructor(aurelia:Aurelia){
     this.aurelia = aurelia;
     this.info = [];
     this.processed = false;
@@ -47,7 +47,7 @@ export class Plugins {
    * @param {config} config The configuration for the specified module.
    * @return {Plugins} Returns the current Plugins instance.
  */
-  plugin(moduleId, config){
+  plugin(moduleId:string, config:any):Plugins{
     var plugin = {moduleId:moduleId, config:config || {}};
 
     if(this.processed){
@@ -136,7 +136,12 @@ function loadResources(container, resourcesToLoad, appResources){
  * @param {ResourceRegistry} resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
  */
 export class Aurelia {
-  constructor(loader, container, resources){
+  loader:Loader;
+  container:Container;
+  resources:ResourceRegistry;
+  use:Plugins;
+
+  constructor(loader?:Loader, container?:Container, resources?:ResourceRegistry){
     this.loader = loader || new window.AureliaLoader();
     this.container = container || new Container();
     this.resources = resources || new ResourceRegistry();
@@ -158,7 +163,7 @@ export class Aurelia {
    * @param {Object} instance The existing instance of the dependency that the framework will inject.
    * @return {Aurelia} Returns the current Aurelia instance.
    */
-  withInstance(type, instance){
+  withInstance(type:any, instance:any):Aurelia{
     this.container.registerInstance(type, instance);
     return this;
   }
@@ -171,8 +176,21 @@ export class Aurelia {
    * @param {Object} implementation The constructor function of the dependency that the framework will inject.
    * @return {Aurelia} Returns the current Aurelia instance.
    */
-  withSingleton(type, implementation){
+  withSingleton(type:any, implementation?:Function):Aurelia{
     this.container.registerSingleton(type, implementation);
+    return this;
+  }
+
+  /**
+   * Adds a transient to the framework's dependency injection container.
+   *
+   * @method withTransient
+   * @param {Class} type The object type of the dependency that the framework will inject.
+   * @param {Object} implementation The constructor function of the dependency that the framework will inject.
+   * @return {Aurelia} Returns the current Aurelia instance.
+   */
+  withTransient(type:any, implementation?:Function):Aurelia{
+    this.container.registerTransient(type, implementation);
     return this;
   }
 
@@ -183,7 +201,7 @@ export class Aurelia {
    * @param {Object|Array} resources The relative module id to the resource. (Relative to the plugin's installer.)
    * @return {Aurelia} Returns the current Aurelia instance.
    */
-   globalizeResources(resources){
+   globalizeResources(resources:string|string[]):Aurelia{
     var toAdd = Array.isArray(resources) ? resources : arguments,
         i, ii, resource, pluginPath = this.currentPluginId || '', path,
         internalPlugin = pluginPath.startsWith('./');
@@ -212,7 +230,7 @@ export class Aurelia {
    * @param {String} newName The new name.
    * @return {Aurelia} Returns the current Aurelia instance.
    */
-  renameGlobalResource(resourcePath, newName){
+  renameGlobalResource(resourcePath:string, newName:string):Aurelia{
     this.resourcesToLoad[resourcePath] = newName;
     return this;
   }
@@ -261,7 +279,7 @@ export class Aurelia {
    * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
    * @return {Aurelia} Returns the current Aurelia instance.
    */
-  setRoot(root='app', applicationHost=null){
+  setRoot(root:string='app', applicationHost=null){
     var compositionEngine, instruction = {};
 
     applicationHost = applicationHost || this.host;
