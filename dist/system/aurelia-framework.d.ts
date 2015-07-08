@@ -97,9 +97,9 @@ declare module 'aurelia-framework' {
        * Loads plugins, then resources, and then starts the Aurelia instance.
        *
        * @method start
-       * @return {Aurelia} Returns the started Aurelia instance.
+       * @return {Promise<Aurelia>} Returns the started Aurelia instance.
        */
-    start(): any;
+    start(): Promise<Aurelia>;
     
     /**
        * Instantiates the root view-model and view and add them to the DOM.
@@ -107,9 +107,9 @@ declare module 'aurelia-framework' {
        * @method withSingleton
        * @param {Object} root The root view-model to load upon bootstrap.
        * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
-       * @return {Aurelia} Returns the current Aurelia instance.
+       * @return {Promise<Aurelia>} Returns the current Aurelia instance.
        */
-    setRoot(root?: string, applicationHost?: any): any;
+    setRoot(root?: string, applicationHost?: any): Promise<Aurelia>;
   }
   
   /**

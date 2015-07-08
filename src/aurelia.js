@@ -170,9 +170,9 @@ export class Aurelia {
    * Loads plugins, then resources, and then starts the Aurelia instance.
    *
    * @method start
-   * @return {Aurelia} Returns the started Aurelia instance.
+   * @return {Promise<Aurelia>} Returns the started Aurelia instance.
    */
-  start(){
+  start():Promise<Aurelia>{
     if(this.started){
       return Promise.resolve(this);
     }
@@ -208,9 +208,9 @@ export class Aurelia {
    * @method withSingleton
    * @param {Object} root The root view-model to load upon bootstrap.
    * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
-   * @return {Aurelia} Returns the current Aurelia instance.
+   * @return {Promise<Aurelia>} Returns the current Aurelia instance.
    */
-  setRoot(root:string='app', applicationHost=null){
+  setRoot(root:string='app', applicationHost=null):Promise<Aurelia>{
     var compositionEngine, instruction = {};
 
     applicationHost = applicationHost || this.host;
