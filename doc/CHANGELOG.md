@@ -1,3 +1,11 @@
+### 0.13.3 (2015-07-13)
+
+
+#### Bug Fixes
+
+* **dts:** update promise-based apis ([94548514](http://github.com/aurelia/framework/commit/94548514165b1cb8ba0629f5e775d0d758630ce9))
+
+
 ### 0.13.2 (2015-07-07)
 
 
