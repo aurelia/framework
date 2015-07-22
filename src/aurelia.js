@@ -10,7 +10,8 @@ import {
   ViewSlot,
   ResourceRegistry,
   CompositionEngine,
-  Animator
+  Animator,
+  DOMBoundary
 } from 'aurelia-templating';
 
 var logger = TheLogManager.getLogger('aurelia'),
@@ -222,6 +223,7 @@ export class Aurelia {
     }
 
     this.host.aurelia = this;
+    this.container.registerInstance(DOMBoundary, this.host);
 
     compositionEngine = this.container.get(CompositionEngine);
     instruction.viewModel = root;
