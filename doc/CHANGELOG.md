@@ -1,3 +1,11 @@
+### 0.13.4 (2015-07-29)
+
+
+#### Features
+
+* **aurelia:** configure host as root dom boundary ([5a99ab02](http://github.com/aurelia/framework/commit/5a99ab0284813eba42b579058e3059a756ca485d))
+
+
 ### 0.13.3 (2015-07-13)
 
 
