@@ -237,6 +237,7 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-de
       }
 
       this.host.aurelia = this;
+      this.container.registerInstance(_aureliaTemplating.DOMBoundary, this.host);
 
       compositionEngine = this.container.get(_aureliaTemplating.CompositionEngine);
       instruction.viewModel = root;

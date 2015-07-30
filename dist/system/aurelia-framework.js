@@ -1,7 +1,7 @@
 System.register(['core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-path', 'aurelia-templating', 'aurelia-binding', 'aurelia-task-queue'], function (_export) {
   'use strict';
 
-  var core, TheLogManager, Metadata, Container, Loader, join, relativeToFile, BindingLanguage, ViewEngine, ViewSlot, ResourceRegistry, CompositionEngine, Animator, logger, Plugins, logger, slice, CustomEvent, Aurelia, LogManager;
+  var core, TheLogManager, Metadata, Container, Loader, join, relativeToFile, BindingLanguage, ViewEngine, ViewSlot, ResourceRegistry, CompositionEngine, Animator, DOMBoundary, logger, Plugins, logger, slice, CustomEvent, Aurelia, LogManager;
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
@@ -84,6 +84,7 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-depe
       ResourceRegistry = _aureliaTemplating.ResourceRegistry;
       CompositionEngine = _aureliaTemplating.CompositionEngine;
       Animator = _aureliaTemplating.Animator;
+      DOMBoundary = _aureliaTemplating.DOMBoundary;
 
       for (var _key4 in _aureliaTemplating) {
         _export(_key4, _aureliaTemplating[_key4]);
@@ -279,6 +280,7 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-depe
           }
 
           this.host.aurelia = this;
+          this.container.registerInstance(DOMBoundary, this.host);
 
           compositionEngine = this.container.get(CompositionEngine);
           instruction.viewModel = root;

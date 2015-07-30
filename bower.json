@@ -17,14 +17,14 @@
     "url": "http://github.com/aurelia/framework"
   },
   "dependencies": {
-    "aurelia-binding": "^0.8.0",
-    "aurelia-dependency-injection": "^0.9.0",
-    "aurelia-loader": "^0.8.0",
-    "aurelia-logging": "^0.6.0",
-    "aurelia-metadata": "^0.7.0",
-    "aurelia-path": "^0.8.0",
-    "aurelia-task-queue": "^0.6.0",
-    "aurelia-templating": "^0.13.1",
+    "aurelia-binding": "^0.8.3",
+    "aurelia-dependency-injection": "^0.9.1",
+    "aurelia-loader": "^0.8.3",
+    "aurelia-logging": "^0.6.2",
+    "aurelia-metadata": "^0.7.1",
+    "aurelia-path": "^0.8.1",
+    "aurelia-task-queue": "^0.6.1",
+    "aurelia-templating": "^0.13.12",
     "core-js": "zloirock/core-js"
   }
 }

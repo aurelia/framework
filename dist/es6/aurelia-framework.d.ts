@@ -5,7 +5,7 @@ declare module 'aurelia-framework' {
   import { Container }  from 'aurelia-dependency-injection';
   import { Loader }  from 'aurelia-loader';
   import { join, relativeToFile }  from 'aurelia-path';
-  import { BindingLanguage, ViewEngine, ViewSlot, ResourceRegistry, CompositionEngine, Animator }  from 'aurelia-templating';
+  import { BindingLanguage, ViewEngine, ViewSlot, ResourceRegistry, CompositionEngine, Animator, DOMBoundary }  from 'aurelia-templating';
   
   /**
    * Manages loading and configuring plugins.

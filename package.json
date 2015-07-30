@@ -13,26 +13,26 @@
   },
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
-  "main": "dist/commonjs/index.js",
+  "main": "dist/commonjs/aurelia-framework.js",
   "repository": {
     "type": "git",
     "url": "http://github.com/aurelia/framework"
   },
   "jspm": {
-    "main": "index",
+    "main": "aurelia-framework",
     "format": "amd",
     "directories": {
       "lib": "dist/amd"
     },
     "dependencies": {
-      "aurelia-binding": "github:aurelia/binding@^0.8.0",
-      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.9.0",
-      "aurelia-loader": "github:aurelia/loader@^0.8.0",
-      "aurelia-logging": "github:aurelia/logging@^0.6.0",
-      "aurelia-metadata": "github:aurelia/metadata@^0.7.0",
-      "aurelia-path": "github:aurelia/path@^0.8.0",
-      "aurelia-task-queue": "github:aurelia/task-queue@^0.6.0",
-      "aurelia-templating": "github:aurelia/templating@^0.13.1",
+      "aurelia-binding": "github:aurelia/binding@^0.8.3",
+      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.9.1",
+      "aurelia-loader": "github:aurelia/loader@^0.8.3",
+      "aurelia-logging": "github:aurelia/logging@^0.6.2",
+      "aurelia-metadata": "github:aurelia/metadata@^0.7.1",
+      "aurelia-path": "github:aurelia/path@^0.8.1",
+      "aurelia-task-queue": "github:aurelia/task-queue@^0.6.1",
+      "aurelia-templating": "github:aurelia/templating@^0.13.12",
       "core-js": "npm:core-js@^0.9.5"
     },
     "devDependencies": {

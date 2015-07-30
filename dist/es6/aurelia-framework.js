@@ -4,7 +4,7 @@ import {Metadata} from 'aurelia-metadata';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
 import {join,relativeToFile} from 'aurelia-path';
-import {BindingLanguage,ViewEngine,ViewSlot,ResourceRegistry,CompositionEngine,Animator} from 'aurelia-templating';
+import {BindingLanguage,ViewEngine,ViewSlot,ResourceRegistry,CompositionEngine,Animator,DOMBoundary} from 'aurelia-templating';
 
 var logger = TheLogManager.getLogger('aurelia');
 
@@ -291,6 +291,7 @@ export class Aurelia {
     }
 
     this.host.aurelia = this;
+    this.container.registerInstance(DOMBoundary, this.host);
 
     compositionEngine = this.container.get(CompositionEngine);
     instruction.viewModel = root;
