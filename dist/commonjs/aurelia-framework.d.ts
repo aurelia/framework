@@ -102,9 +102,19 @@ declare module 'aurelia-framework' {
     start(): Promise<Aurelia>;
     
     /**
+       * Enhances the host's existing elements with behaviors and bindings.
+       *
+       * @method enhance
+       * @param {Object} bindingContext A binding context for the enhanced elements.
+       * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
+       * @return {Promise<Aurelia>} Returns the current Aurelia instance.
+       */
+    enhance(bindingContext?: Object, applicationHost?: any): Promise<Aurelia>;
+    
+    /**
        * Instantiates the root view-model and view and add them to the DOM.
        *
-       * @method withSingleton
+       * @method setRoot
        * @param {Object} root The root view-model to load upon bootstrap.
        * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
        * @return {Promise<Aurelia>} Returns the current Aurelia instance.

@@ -204,9 +204,29 @@ export class Aurelia {
   }
 
   /**
+   * Enhances the host's existing elements with behaviors and bindings.
+   *
+   * @method enhance
+   * @param {Object} bindingContext A binding context for the enhanced elements.
+   * @param {string|Object} applicationHost The DOM object that Aurelia will enhance.
+   * @return {Promise<Aurelia>} Returns the current Aurelia instance.
+   */
+  enhance(bindingContext:Object={}, applicationHost=null):Promise<Aurelia>{
+    this._configureHost(applicationHost);
+
+    return new Promise((resolve) => {
+      let viewEngine = this.container.get(ViewEngine);
+      this.root = viewEngine.enhance(this.container, this.host, this.resources, bindingContext);
+      this.root.attached();
+      this._onAureliaComposed();
+      return this;
+    });
+  }
+
+  /**
    * Instantiates the root view-model and view and add them to the DOM.
    *
-   * @method withSingleton
+   * @method setRoot
    * @param {Object} root The root view-model to load upon bootstrap.
    * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
    * @return {Promise<Aurelia>} Returns the current Aurelia instance.
@@ -214,16 +234,7 @@ export class Aurelia {
   setRoot(root:string='app', applicationHost=null):Promise<Aurelia>{
     var compositionEngine, instruction = {};
 
-    applicationHost = applicationHost || this.host;
-
-    if (!applicationHost || typeof applicationHost == 'string') {
-      this.host = document.getElementById(applicationHost || 'applicationHost') || document.body;
-    } else {
-      this.host = applicationHost;
-    }
-
-    this.host.aurelia = this;
-    this.container.registerInstance(DOMBoundary, this.host);
+    this._configureHost(applicationHost);
 
     compositionEngine = this.container.get(CompositionEngine);
     instruction.viewModel = root;
@@ -235,9 +246,26 @@ export class Aurelia {
     return compositionEngine.compose(instruction).then(root => {
       this.root = root;
       instruction.viewSlot.attached();
-      var evt = new window.CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
-      setTimeout(() => document.dispatchEvent(evt), 1);
+      this._onAureliaComposed();
       return this;
     });
+  }
+
+  _configureHost(applicationHost){
+    applicationHost = applicationHost || this.host;
+
+    if (!applicationHost || typeof applicationHost == 'string') {
+      this.host = document.getElementById(applicationHost || 'applicationHost') || document.body;
+    } else {
+      this.host = applicationHost;
+    }
+
+    this.host.aurelia = this;
+    this.container.registerInstance(DOMBoundary, this.host);
+  }
+
+  _onAureliaComposed(){
+    var evt = new window.CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
+    setTimeout(() => document.dispatchEvent(evt), 1);
   }
 }

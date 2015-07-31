@@ -262,8 +262,25 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-depe
           });
         };
 
-        Aurelia.prototype.setRoot = function setRoot() {
+        Aurelia.prototype.enhance = function enhance() {
           var _this3 = this;
+
+          var bindingContext = arguments[0] === undefined ? {} : arguments[0];
+          var applicationHost = arguments[1] === undefined ? null : arguments[1];
+
+          this._configureHost(applicationHost);
+
+          return new Promise(function (resolve) {
+            var viewEngine = _this3.container.get(ViewEngine);
+            _this3.root = viewEngine.enhance(_this3.container, _this3.host, _this3.resources, bindingContext);
+            _this3.root.attached();
+            _this3._onAureliaComposed();
+            return _this3;
+          });
+        };
+
+        Aurelia.prototype.setRoot = function setRoot() {
+          var _this4 = this;
 
           var root = arguments[0] === undefined ? 'app' : arguments[0];
           var applicationHost = arguments[1] === undefined ? null : arguments[1];
@@ -271,6 +288,24 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-depe
           var compositionEngine,
               instruction = {};
 
+          this._configureHost(applicationHost);
+
+          compositionEngine = this.container.get(CompositionEngine);
+          instruction.viewModel = root;
+          instruction.container = instruction.childContainer = this.container;
+          instruction.viewSlot = new ViewSlot(this.host, true);
+          instruction.viewSlot.transformChildNodesIntoView();
+          instruction.host = this.host;
+
+          return compositionEngine.compose(instruction).then(function (root) {
+            _this4.root = root;
+            instruction.viewSlot.attached();
+            _this4._onAureliaComposed();
+            return _this4;
+          });
+        };
+
+        Aurelia.prototype._configureHost = function _configureHost(applicationHost) {
           applicationHost = applicationHost || this.host;
 
           if (!applicationHost || typeof applicationHost == 'string') {
@@ -281,23 +316,13 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-depe
 
           this.host.aurelia = this;
           this.container.registerInstance(DOMBoundary, this.host);
+        };
 
-          compositionEngine = this.container.get(CompositionEngine);
-          instruction.viewModel = root;
-          instruction.container = instruction.childContainer = this.container;
-          instruction.viewSlot = new ViewSlot(this.host, true);
-          instruction.viewSlot.transformChildNodesIntoView();
-          instruction.host = this.host;
-
-          return compositionEngine.compose(instruction).then(function (root) {
-            _this3.root = root;
-            instruction.viewSlot.attached();
-            var evt = new window.CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
-            setTimeout(function () {
-              return document.dispatchEvent(evt);
-            }, 1);
-            return _this3;
-          });
+        Aurelia.prototype._onAureliaComposed = function _onAureliaComposed() {
+          var evt = new window.CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
+          setTimeout(function () {
+            return document.dispatchEvent(evt);
+          }, 1);
         };
 
         return Aurelia;
