@@ -33,6 +33,8 @@ export class Plugins {
     this.aurelia = aurelia;
     this.info = [];
     this.processed = false;
+
+    aurelia.addPreStartTask(() => System.normalize('aurelia-bootstrapper').then(bootstrapperName => this.bootstrapperName = bootstrapperName));
   }
 
   /**
@@ -51,6 +53,122 @@ export class Plugins {
     }else{
       this.info.push(plugin);
     }
+
+    return this;
+  }
+
+  /**
+   * Plugs in the default binding language from aurelia-templating-binding.
+   *
+   * @method defaultBindingLanguage
+   * @return {Plugins} Returns the current Plugins instance.
+  */
+  defaultBindingLanguage():Plugins{
+    this.aurelia.addPreStartTask(() => {
+      return System.normalize('aurelia-templating-binding', this.bootstrapperName).then(name => {
+        this.aurelia.use.plugin(name);
+      });
+    });
+
+    return this;
+  };
+
+  /**
+   * Plugs in the router from aurelia-templating-router.
+   *
+   * @method router
+   * @return {Plugins} Returns the current Plugins instance.
+  */
+  router():Plugins{
+    this.aurelia.addPreStartTask(() => {
+      return System.normalize('aurelia-templating-router', this.bootstrapperName).then(name => {
+        this.aurelia.use.plugin(name);
+      });
+    });
+
+    return this;
+  }
+
+  /**
+   * Plugs in the default history implementation from aurelia-history-browser.
+   *
+   * @method history
+   * @return {Plugins} Returns the current Plugins instance.
+  */
+  history():Plugins{
+    this.aurelia.addPreStartTask(() => {
+      return System.normalize('aurelia-history-browser', this.bootstrapperName).then(name => {
+        this.aurelia.use.plugin(name);
+      });
+    });
+
+    return this;
+  }
+
+  /**
+   * Plugs in the default templating resources (if, repeat, show, compose, etc.) from aurelia-templating-resources.
+   *
+   * @method defaultResources
+   * @return {Plugins} Returns the current Plugins instance.
+  */
+  defaultResources():Plugins{
+    this.aurelia.addPreStartTask(() => {
+      return System.normalize('aurelia-templating-resources', this.bootstrapperName).then(name => {
+        System.map['aurelia-templating-resources'] = name;
+        this.aurelia.use.plugin(name);
+      });
+    });
+
+    return this;
+  }
+
+  /**
+   * Plugs in the event aggregator from aurelia-event-aggregator.
+   *
+   * @method eventAggregator
+   * @return {Plugins} Returns the current Plugins instance.
+  */
+  eventAggregator():Plugins{
+    this.aurelia.addPreStartTask(() => {
+      return System.normalize('aurelia-event-aggregator', this.bootstrapperName).then(name => {
+        System.map['aurelia-event-aggregator'] = name;
+        this.aurelia.use.plugin(name);
+      });
+    });
+
+    return this;
+  }
+
+  /**
+   * Sets up the Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().history().router().eventAggregator();`
+   *
+   * @method standardConfiguration
+   * @return {Plugins} Returns the current Plugins instance.
+  */
+  standardConfiguration():Plugins{
+    return this.aurelia.use
+      .defaultBindingLanguage()
+      .defaultResources()
+      .history()
+      .router()
+      .eventAggregator();
+  }
+
+  /**
+   * Plugs in the ConsoleAppender and sets the log level to debug.
+   *
+   * @method developmentLogging
+   * @return {Plugins} Returns the current Plugins instance.
+  */
+  developmentLogging():Plugins{
+    this.aurelia.addPreStartTask(() => {
+      return System.normalize('aurelia-logging-console', this.bootstrapperName).then(name => {
+        return this.aurelia.loader.loadModule(name).then(m => {
+          TheLogManager.addAppender(new m.ConsoleAppender());
+          TheLogManager.setLevel(TheLogManager.logLevel.debug);
+        });
+      });
+    });
 
     return this;
   }

@@ -58,6 +58,18 @@ function loadResources(container, resourcesToLoad, appResources){
   return viewEngine.importViewResources(importIds, names, appResources);
 }
 
+function runTasks(aurelia, tasks){
+  let current, next = () => {
+    if(current = tasks.shift()){
+      return Promise.resolve(current(aurelia)).then(next);
+    }
+
+    return Promise.resolve();
+  };
+
+  return next();
+}
+
 /**
  * The framework core that provides the main Aurelia object.
  *
@@ -74,11 +86,13 @@ export class Aurelia {
   use:Plugins;
 
   constructor(loader?:Loader, container?:Container, resources?:ResourceRegistry){
+    this.resourcesToLoad = {};
+    this.preStartTasks = [];
+    this.postStartTasks = [];
     this.loader = loader || new window.AureliaLoader();
     this.container = container || new Container();
     this.resources = resources || new ResourceRegistry();
     this.use = new Plugins(this);
-    this.resourcesToLoad = {};
 
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
@@ -168,6 +182,30 @@ export class Aurelia {
   }
 
   /**
+   * Adds an async function that runs before the plugins are run.
+   *
+   * @method addPreStartTask
+   * @param {Function} task The function to run before start.
+   * @return {Aurelia} Returns the current Aurelia instance.
+   */
+  addPreStartTask(task:Function):Aurelia{
+    this.preStartTasks.push(task);
+    return this;
+  }
+
+  /**
+   * Adds an async function that runs after the plugins are run.
+   *
+   * @method addPostStartTask
+   * @param {Function} task The function to run after start.
+   * @return {Aurelia} Returns the current Aurelia instance.
+   */
+  addPostStartTask(task:Function):Aurelia{
+    this.postStartTasks.push(task);
+    return this;
+  }
+
+  /**
    * Loads plugins, then resources, and then starts the Aurelia instance.
    *
    * @method start
@@ -183,22 +221,26 @@ export class Aurelia {
 
     preventActionlessFormSubmit();
 
-    return this.use._process().then(() => {
-      if(!this.container.hasHandler(BindingLanguage)){
-        var message = 'You must configure Aurelia with a BindingLanguage implementation.';
-        logger.error(message);
-        throw new Error(message);
-      }
+    return runTasks(this, this.preStartTasks).then(() => {
+      return this.use._process().then(() => {
+        if(!this.container.hasHandler(BindingLanguage)){
+          var message = 'You must configure Aurelia with a BindingLanguage implementation.';
+          logger.error(message);
+          throw new Error(message);
+        }
 
-      if(!this.container.hasHandler(Animator)){
-        Animator.configureDefault(this.container);
-      }
+        if(!this.container.hasHandler(Animator)){
+          Animator.configureDefault(this.container);
+        }
 
-      return loadResources(this.container, this.resourcesToLoad, this.resources).then(() => {
-        logger.info('Aurelia Started');
-        var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
-        document.dispatchEvent(evt);
-        return this;
+        return loadResources(this.container, this.resourcesToLoad, this.resources);
+      }).then(() => {
+        return runTasks(this, this.postStartTasks).then(() => {
+          logger.info('Aurelia Started');
+          var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
+          document.dispatchEvent(evt);
+          return this;
+        });
       });
     });
   }

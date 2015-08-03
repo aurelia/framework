@@ -6,7 +6,7 @@ describe('the plugin loader', () => {
     aureliaMock;
 
   beforeEach(() => {
-    aureliaMock = jasmine.createSpyObj('aureliaMock', ['loader']);
+    aureliaMock = jasmine.createSpyObj('aureliaMock', ['loader', 'addPreStartTask']);
     plugins = new Plugins(aureliaMock);
   });
 
