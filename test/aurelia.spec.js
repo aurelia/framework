@@ -74,8 +74,8 @@ describe('aurelia', () => {
       expect('./someResource' in aurelia.resourcesToLoad).toEqual(true);
     });
 
-    it('globalizeResources will make relative to currentPluginId if set in aurelia', () => {
-      aurelia.currentPluginId = './plugin/index';
+    it('globalizeResources will make relative to resourcesRelativeTo if set in aurelia', () => {
+      aurelia.resourcesRelativeTo = './plugin';
       expect(aurelia.globalizeResources('./someResource')).toBe(aurelia);
       expect('plugin/someResource' in aurelia.resourcesToLoad).toEqual(true);
     });

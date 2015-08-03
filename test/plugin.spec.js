@@ -110,11 +110,11 @@ describe('the plugin loader', () => {
       plugins._process();
       expect(plugins.processed).toBeTruthy();
       plugins.plugin("plugin");
-      expect(aureliaMock.currentPluginId).toBe("plugin");
+      expect(aureliaMock.resourcesRelativeTo).toBe("plugin");
       //There is no promise to hook onto here so the best option is to do an instant timeout
       setTimeout(() => {
         expect(aureliaMock.loader.loadModule).toHaveBeenCalledWith("plugin");
-        expect(aureliaMock.currentPluginId).toBeNull();
+        expect(aureliaMock.resourcesRelativeTo).toBeNull();
         done();
       });
     });

@@ -6,16 +6,16 @@ var logger = TheLogManager.getLogger('aurelia');
 
 function loadPlugin(aurelia, loader, info){
   logger.debug(`Loading plugin ${info.moduleId}.`);
-  aurelia.currentPluginId = (info.moduleId.endsWith('.js') || info.moduleId.endsWith('.ts')) ? info.moduleId.substring(0, info.moduleId.length - 3) : info.moduleId;
+  aurelia.resourcesRelativeTo = info.resourcesRelativeTo;
 
   return loader.loadModule(info.moduleId).then(m => {
     if('configure' in m){
       return Promise.resolve(m.configure(aurelia, info.config || {})).then(() => {
-        aurelia.currentPluginId = null;
+        aurelia.resourcesRelativeTo = null;
         logger.debug(`Configured plugin ${info.moduleId}.`);
       });
     }else{
-      aurelia.currentPluginId = null;
+      aurelia.resourcesRelativeTo = null;
       logger.debug(`Loaded plugin ${info.moduleId}.`);
     }
   });
@@ -38,19 +38,35 @@ export class Plugins {
   }
 
   /**
-   * Configures a plugin before Aurelia starts.
+   * Configures an internal feature plugin before Aurelia starts.
+   *
+   * @method feature
+   * @param {string} plugin The folder for the internal plugin to configure (expects an index.js in that folder).
+   * @param {config} config The configuration for the specified plugin.
+   * @return {Plugins} Returns the current Plugins instance.
+  */
+  feature(plugin:string, config:any):Plugins{
+    plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
+    return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: plugin, config: config || {} });
+  }
+
+  /**
+   * Configures an external, 3rd party plugin before Aurelia starts.
    *
    * @method plugin
-   * @param {moduleId} moduleId The ID of the module to configure.
-   * @param {config} config The configuration for the specified module.
+   * @param {string} plugin The ID of the 3rd party plugin to configure.
+   * @param {config} config The configuration for the specified plugin.
    * @return {Plugins} Returns the current Plugins instance.
  */
-  plugin(moduleId:string, config:any):Plugins{
-    var plugin = {moduleId:moduleId, config:config || {}};
+  plugin(plugin:string, config:any):Plugins{
+    if(typeof(plugin) === 'string'){
+      plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
+      return this.plugin({ moduleId: plugin, resourcesRelativeTo: plugin, config: config || {} });
+    }
 
-    if(this.processed){
+    if (this.processed) {
       loadPlugin(this.aurelia, this.aurelia.loader, plugin);
-    }else{
+    } else {
       this.info.push(plugin);
     }
 
