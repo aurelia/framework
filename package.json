@@ -32,7 +32,7 @@
       "aurelia-metadata": "github:aurelia/metadata@^0.7.1",
       "aurelia-path": "github:aurelia/path@^0.8.1",
       "aurelia-task-queue": "github:aurelia/task-queue@^0.6.1",
-      "aurelia-templating": "github:aurelia/templating@^0.13.12",
+      "aurelia-templating": "github:aurelia/templating@^0.13.16",
       "core-js": "npm:core-js@^0.9.5"
     },
     "devDependencies": {
