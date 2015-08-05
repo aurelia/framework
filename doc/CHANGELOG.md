@@ -1,3 +1,17 @@
+## 0.14.0 (2015-08-05)
+
+
+#### Bug Fixes
+
+* **plugin:** add feature api and prepare for jspm beta ([5f0b7cf3](http://github.com/aurelia/framework/commit/5f0b7cf35c7c7b445f06b237aab704ceb44c88ae))
+
+
+#### Features
+
+* **aurelia:** add preliminary enhance api ([f970c65c](http://github.com/aurelia/framework/commit/f970c65c2053391a5b6bd79079102fde8c750612))
+* **plugins:** better api by moving some bootstrapper code directly into aurelia ([f76baf08](http://github.com/aurelia/framework/commit/f76baf084f382c168d3a2225df091df5d36f9a50))
+
+
 ### 0.13.4 (2015-07-29)
 
 

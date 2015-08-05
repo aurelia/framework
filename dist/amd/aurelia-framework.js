@@ -17,16 +17,16 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-de
 
   function loadPlugin(aurelia, loader, info) {
     logger.debug('Loading plugin ' + info.moduleId + '.');
-    aurelia.currentPluginId = info.moduleId.endsWith('.js') || info.moduleId.endsWith('.ts') ? info.moduleId.substring(0, info.moduleId.length - 3) : info.moduleId;
+    aurelia.resourcesRelativeTo = info.resourcesRelativeTo;
 
     return loader.loadModule(info.moduleId).then(function (m) {
       if ('configure' in m) {
         return Promise.resolve(m.configure(aurelia, info.config || {})).then(function () {
-          aurelia.currentPluginId = null;
+          aurelia.resourcesRelativeTo = null;
           logger.debug('Configured plugin ' + info.moduleId + '.');
         });
       } else {
-        aurelia.currentPluginId = null;
+        aurelia.resourcesRelativeTo = null;
         logger.debug('Loaded plugin ' + info.moduleId + '.');
       }
     });
@@ -34,27 +34,124 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-de
 
   var Plugins = (function () {
     function Plugins(aurelia) {
+      var _this = this;
+
       _classCallCheck(this, Plugins);
 
       this.aurelia = aurelia;
       this.info = [];
       this.processed = false;
+
+      aurelia.addPreStartTask(function () {
+        return System.normalize('aurelia-bootstrapper').then(function (bootstrapperName) {
+          return _this.bootstrapperName = bootstrapperName;
+        });
+      });
     }
 
-    Plugins.prototype.plugin = function plugin(moduleId, config) {
-      var plugin = { moduleId: moduleId, config: config || {} };
+    Plugins.prototype.feature = function feature(plugin, config) {
+      plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
+      return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: plugin, config: config || {} });
+    };
+
+    Plugins.prototype.plugin = function plugin(_plugin, config) {
+      if (typeof _plugin === 'string') {
+        _plugin = _plugin.endsWith('.js') || _plugin.endsWith('.ts') ? _plugin.substring(0, _plugin.length - 3) : _plugin;
+        return this.plugin({ moduleId: _plugin, resourcesRelativeTo: _plugin, config: config || {} });
+      }
 
       if (this.processed) {
-        loadPlugin(this.aurelia, this.aurelia.loader, plugin);
+        loadPlugin(this.aurelia, this.aurelia.loader, _plugin);
       } else {
-        this.info.push(plugin);
+        this.info.push(_plugin);
       }
 
       return this;
     };
 
+    Plugins.prototype.defaultBindingLanguage = function defaultBindingLanguage() {
+      var _this2 = this;
+
+      this.aurelia.addPreStartTask(function () {
+        return System.normalize('aurelia-templating-binding', _this2.bootstrapperName).then(function (name) {
+          _this2.aurelia.use.plugin(name);
+        });
+      });
+
+      return this;
+    };
+
+    Plugins.prototype.router = function router() {
+      var _this3 = this;
+
+      this.aurelia.addPreStartTask(function () {
+        return System.normalize('aurelia-templating-router', _this3.bootstrapperName).then(function (name) {
+          _this3.aurelia.use.plugin(name);
+        });
+      });
+
+      return this;
+    };
+
+    Plugins.prototype.history = function history() {
+      var _this4 = this;
+
+      this.aurelia.addPreStartTask(function () {
+        return System.normalize('aurelia-history-browser', _this4.bootstrapperName).then(function (name) {
+          _this4.aurelia.use.plugin(name);
+        });
+      });
+
+      return this;
+    };
+
+    Plugins.prototype.defaultResources = function defaultResources() {
+      var _this5 = this;
+
+      this.aurelia.addPreStartTask(function () {
+        return System.normalize('aurelia-templating-resources', _this5.bootstrapperName).then(function (name) {
+          System.map['aurelia-templating-resources'] = name;
+          _this5.aurelia.use.plugin(name);
+        });
+      });
+
+      return this;
+    };
+
+    Plugins.prototype.eventAggregator = function eventAggregator() {
+      var _this6 = this;
+
+      this.aurelia.addPreStartTask(function () {
+        return System.normalize('aurelia-event-aggregator', _this6.bootstrapperName).then(function (name) {
+          System.map['aurelia-event-aggregator'] = name;
+          _this6.aurelia.use.plugin(name);
+        });
+      });
+
+      return this;
+    };
+
+    Plugins.prototype.standardConfiguration = function standardConfiguration() {
+      return this.aurelia.use.defaultBindingLanguage().defaultResources().history().router().eventAggregator();
+    };
+
+    Plugins.prototype.developmentLogging = function developmentLogging() {
+      var _this7 = this;
+
+      this.aurelia.addPreStartTask(function () {
+        return System.normalize('aurelia-logging-console', _this7.bootstrapperName).then(function (name) {
+          return _this7.aurelia.loader.loadModule(name).then(function (m) {
+            _aureliaLogging.addAppender(new m.ConsoleAppender());
+            _aureliaLogging.setLevel(_aureliaLogging.logLevel.debug);
+          });
+        });
+      });
+
+      return this;
+    };
+
     Plugins.prototype._process = function _process() {
-      var _this = this;
+      var _this8 = this;
 
       var aurelia = this.aurelia,
           loader = aurelia.loader,
@@ -70,7 +167,7 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-de
           return loadPlugin(aurelia, loader, current).then(next);
         }
 
-        _this.processed = true;
+        _this8.processed = true;
         return Promise.resolve();
       };
 
@@ -127,15 +224,30 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-de
     return viewEngine.importViewResources(importIds, names, appResources);
   }
 
+  function runTasks(aurelia, tasks) {
+    var current = undefined,
+        next = function next() {
+      if (current = tasks.shift()) {
+        return Promise.resolve(current(aurelia)).then(next);
+      }
+
+      return Promise.resolve();
+    };
+
+    return next();
+  }
+
   var Aurelia = (function () {
     function Aurelia(loader, container, resources) {
       _classCallCheck(this, Aurelia);
 
+      this.resourcesToLoad = {};
+      this.preStartTasks = [];
+      this.postStartTasks = [];
       this.loader = loader || new window.AureliaLoader();
       this.container = container || new _aureliaDependencyInjection.Container();
       this.resources = resources || new _aureliaTemplating.ResourceRegistry();
       this.use = new Plugins(this);
-      this.resourcesToLoad = {};
 
       this.withInstance(Aurelia, this);
       this.withInstance(_aureliaLoader.Loader, this.loader);
@@ -164,9 +276,8 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-de
           i,
           ii,
           resource,
-          pluginPath = this.currentPluginId || '',
           path,
-          internalPlugin = pluginPath.startsWith('./');
+          resourcesRelativeTo = this.resourcesRelativeTo || '';
 
       for (i = 0, ii = toAdd.length; i < ii; ++i) {
         resource = toAdd[i];
@@ -174,8 +285,7 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-de
           throw new Error('Invalid resource path [' + resource + ']. Resources must be specified as relative module IDs.');
         }
 
-        path = internalPlugin ? _aureliaPath.relativeToFile(resource, pluginPath) : _aureliaPath.join(pluginPath, resource);
-
+        path = _aureliaPath.join(resourcesRelativeTo, resource);
         this.resourcesToLoad[path] = this.resourcesToLoad[path];
       }
 
@@ -187,8 +297,18 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-de
       return this;
     };
 
+    Aurelia.prototype.addPreStartTask = function addPreStartTask(task) {
+      this.preStartTasks.push(task);
+      return this;
+    };
+
+    Aurelia.prototype.addPostStartTask = function addPostStartTask(task) {
+      this.postStartTasks.push(task);
+      return this;
+    };
+
     Aurelia.prototype.start = function start() {
-      var _this2 = this;
+      var _this9 = this;
 
       if (this.started) {
         return Promise.resolve(this);
@@ -199,28 +319,32 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-de
 
       preventActionlessFormSubmit();
 
-      return this.use._process().then(function () {
-        if (!_this2.container.hasHandler(_aureliaTemplating.BindingLanguage)) {
-          var message = 'You must configure Aurelia with a BindingLanguage implementation.';
-          logger.error(message);
-          throw new Error(message);
-        }
+      return runTasks(this, this.preStartTasks).then(function () {
+        return _this9.use._process().then(function () {
+          if (!_this9.container.hasHandler(_aureliaTemplating.BindingLanguage)) {
+            var message = 'You must configure Aurelia with a BindingLanguage implementation.';
+            logger.error(message);
+            throw new Error(message);
+          }
 
-        if (!_this2.container.hasHandler(_aureliaTemplating.Animator)) {
-          _aureliaTemplating.Animator.configureDefault(_this2.container);
-        }
+          if (!_this9.container.hasHandler(_aureliaTemplating.Animator)) {
+            _aureliaTemplating.Animator.configureDefault(_this9.container);
+          }
 
-        return loadResources(_this2.container, _this2.resourcesToLoad, _this2.resources).then(function () {
-          logger.info('Aurelia Started');
-          var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
-          document.dispatchEvent(evt);
-          return _this2;
+          return loadResources(_this9.container, _this9.resourcesToLoad, _this9.resources);
+        }).then(function () {
+          return runTasks(_this9, _this9.postStartTasks).then(function () {
+            logger.info('Aurelia Started');
+            var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
+            document.dispatchEvent(evt);
+            return _this9;
+          });
         });
       });
     };
 
     Aurelia.prototype.enhance = function enhance() {
-      var _this3 = this;
+      var _this10 = this;
 
       var bindingContext = arguments[0] === undefined ? {} : arguments[0];
       var applicationHost = arguments[1] === undefined ? null : arguments[1];
@@ -228,16 +352,16 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-de
       this._configureHost(applicationHost);
 
       return new Promise(function (resolve) {
-        var viewEngine = _this3.container.get(_aureliaTemplating.ViewEngine);
-        _this3.root = viewEngine.enhance(_this3.container, _this3.host, _this3.resources, bindingContext);
-        _this3.root.attached();
-        _this3._onAureliaComposed();
-        return _this3;
+        var viewEngine = _this10.container.get(_aureliaTemplating.ViewEngine);
+        _this10.root = viewEngine.enhance(_this10.container, _this10.host, _this10.resources, bindingContext);
+        _this10.root.attached();
+        _this10._onAureliaComposed();
+        return _this10;
       });
     };
 
     Aurelia.prototype.setRoot = function setRoot() {
-      var _this4 = this;
+      var _this11 = this;
 
       var root = arguments[0] === undefined ? 'app' : arguments[0];
       var applicationHost = arguments[1] === undefined ? null : arguments[1];
@@ -255,10 +379,10 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-de
       instruction.host = this.host;
 
       return compositionEngine.compose(instruction).then(function (root) {
-        _this4.root = root;
+        _this11.root = root;
         instruction.viewSlot.attached();
-        _this4._onAureliaComposed();
-        return _this4;
+        _this11._onAureliaComposed();
+        return _this11;
       });
     };
 

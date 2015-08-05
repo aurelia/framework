@@ -18,14 +18,80 @@ declare module 'aurelia-framework' {
     constructor(aurelia: Aurelia);
     
     /**
-       * Configures a plugin before Aurelia starts.
+       * Configures an internal feature plugin before Aurelia starts.
+       *
+       * @method feature
+       * @param {string} plugin The folder for the internal plugin to configure (expects an index.js in that folder).
+       * @param {config} config The configuration for the specified plugin.
+       * @return {Plugins} Returns the current Plugins instance.
+      */
+    feature(plugin: string, config: any): Plugins;
+    
+    /**
+       * Configures an external, 3rd party plugin before Aurelia starts.
        *
        * @method plugin
-       * @param {moduleId} moduleId The ID of the module to configure.
-       * @param {config} config The configuration for the specified module.
+       * @param {string} plugin The ID of the 3rd party plugin to configure.
+       * @param {config} config The configuration for the specified plugin.
        * @return {Plugins} Returns the current Plugins instance.
      */
-    plugin(moduleId: string, config: any): Plugins;
+    plugin(plugin: string, config: any): Plugins;
+    
+    /**
+       * Plugs in the default binding language from aurelia-templating-binding.
+       *
+       * @method defaultBindingLanguage
+       * @return {Plugins} Returns the current Plugins instance.
+      */
+    defaultBindingLanguage(): Plugins;
+    
+    /**
+       * Plugs in the router from aurelia-templating-router.
+       *
+       * @method router
+       * @return {Plugins} Returns the current Plugins instance.
+      */
+    router(): Plugins;
+    
+    /**
+       * Plugs in the default history implementation from aurelia-history-browser.
+       *
+       * @method history
+       * @return {Plugins} Returns the current Plugins instance.
+      */
+    history(): Plugins;
+    
+    /**
+       * Plugs in the default templating resources (if, repeat, show, compose, etc.) from aurelia-templating-resources.
+       *
+       * @method defaultResources
+       * @return {Plugins} Returns the current Plugins instance.
+      */
+    defaultResources(): Plugins;
+    
+    /**
+       * Plugs in the event aggregator from aurelia-event-aggregator.
+       *
+       * @method eventAggregator
+       * @return {Plugins} Returns the current Plugins instance.
+      */
+    eventAggregator(): Plugins;
+    
+    /**
+       * Sets up the Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().history().router().eventAggregator();`
+       *
+       * @method standardConfiguration
+       * @return {Plugins} Returns the current Plugins instance.
+      */
+    standardConfiguration(): Plugins;
+    
+    /**
+       * Plugs in the ConsoleAppender and sets the log level to debug.
+       *
+       * @method developmentLogging
+       * @return {Plugins} Returns the current Plugins instance.
+      */
+    developmentLogging(): Plugins;
   }
   
   /**
@@ -94,6 +160,24 @@ declare module 'aurelia-framework' {
     renameGlobalResource(resourcePath: string, newName: string): Aurelia;
     
     /**
+       * Adds an async function that runs before the plugins are run.
+       *
+       * @method addPreStartTask
+       * @param {Function} task The function to run before start.
+       * @return {Aurelia} Returns the current Aurelia instance.
+       */
+    addPreStartTask(task: Function): Aurelia;
+    
+    /**
+       * Adds an async function that runs after the plugins are run.
+       *
+       * @method addPostStartTask
+       * @param {Function} task The function to run after start.
+       * @return {Aurelia} Returns the current Aurelia instance.
+       */
+    addPostStartTask(task: Function): Aurelia;
+    
+    /**
        * Loads plugins, then resources, and then starts the Aurelia instance.
        *
        * @method start
@@ -106,7 +190,7 @@ declare module 'aurelia-framework' {
        *
        * @method enhance
        * @param {Object} bindingContext A binding context for the enhanced elements.
-       * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
+       * @param {string|Object} applicationHost The DOM object that Aurelia will enhance.
        * @return {Promise<Aurelia>} Returns the current Aurelia instance.
        */
     enhance(bindingContext?: Object, applicationHost?: any): Promise<Aurelia>;
