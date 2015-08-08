@@ -1,3 +1,11 @@
+### 0.14.1 (2015-08-08)
+
+
+#### Bug Fixes
+
+* **plugins:** preserve built-in plugin load order ([25a35297](http://github.com/aurelia/framework/commit/25a35297cb330bdbac7796a20b4ad6842e8de477))
+
+
 ## 0.14.0 (2015-08-05)
 
 
