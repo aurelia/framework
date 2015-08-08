@@ -77,6 +77,25 @@ export class Plugins {
     return this;
   }
 
+  _addNormalizedPlugin(name, config){
+    var plugin = { moduleId: name, resourcesRelativeTo: name, config: config || {} };
+
+    this.plugin(plugin);
+
+    this.aurelia.addPreStartTask(() => {
+      return System.normalize(name, this.bootstrapperName).then(normalizedName => {
+        normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts')
+          ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
+
+        plugin.moduleId = normalizedName;
+        plugin.resourcesRelativeTo = normalizedName;
+        System.map[name] = normalizedName;
+      });
+    });
+
+    return this;
+  }
+
   /**
    * Plugs in the default binding language from aurelia-templating-binding.
    *
@@ -84,13 +103,7 @@ export class Plugins {
    * @return {Plugins} Returns the current Plugins instance.
   */
   defaultBindingLanguage():Plugins{
-    this.aurelia.addPreStartTask(() => {
-      return System.normalize('aurelia-templating-binding', this.bootstrapperName).then(name => {
-        this.aurelia.use.plugin(name);
-      });
-    });
-
-    return this;
+    return this._addNormalizedPlugin('aurelia-templating-binding');
   };
 
   /**
@@ -100,13 +113,7 @@ export class Plugins {
    * @return {Plugins} Returns the current Plugins instance.
   */
   router():Plugins{
-    this.aurelia.addPreStartTask(() => {
-      return System.normalize('aurelia-templating-router', this.bootstrapperName).then(name => {
-        this.aurelia.use.plugin(name);
-      });
-    });
-
-    return this;
+    return this._addNormalizedPlugin('aurelia-templating-router');
   }
 
   /**
@@ -116,13 +123,7 @@ export class Plugins {
    * @return {Plugins} Returns the current Plugins instance.
   */
   history():Plugins{
-    this.aurelia.addPreStartTask(() => {
-      return System.normalize('aurelia-history-browser', this.bootstrapperName).then(name => {
-        this.aurelia.use.plugin(name);
-      });
-    });
-
-    return this;
+    return this._addNormalizedPlugin('aurelia-history-browser');
   }
 
   /**
@@ -132,14 +133,7 @@ export class Plugins {
    * @return {Plugins} Returns the current Plugins instance.
   */
   defaultResources():Plugins{
-    this.aurelia.addPreStartTask(() => {
-      return System.normalize('aurelia-templating-resources', this.bootstrapperName).then(name => {
-        System.map['aurelia-templating-resources'] = name;
-        this.aurelia.use.plugin(name);
-      });
-    });
-
-    return this;
+    return this._addNormalizedPlugin('aurelia-templating-resources');
   }
 
   /**
@@ -149,14 +143,7 @@ export class Plugins {
    * @return {Plugins} Returns the current Plugins instance.
   */
   eventAggregator():Plugins{
-    this.aurelia.addPreStartTask(() => {
-      return System.normalize('aurelia-event-aggregator', this.bootstrapperName).then(name => {
-        System.map['aurelia-event-aggregator'] = name;
-        this.aurelia.use.plugin(name);
-      });
-    });
-
-    return this;
+    return this._addNormalizedPlugin('aurelia-event-aggregator');
   }
 
   /**
