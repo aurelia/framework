@@ -8,7 +8,7 @@ import {
   BindingLanguage,
   ViewEngine,
   ViewSlot,
-  ResourceRegistry,
+  ViewResources,
   CompositionEngine,
   Animator,
   DOMBoundary
@@ -77,26 +77,26 @@ function runTasks(aurelia, tasks){
  * @constructor
  * @param {Loader} loader The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use a defaultLoader.
  * @param {Container} container The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty container.
- * @param {ResourceRegistry} resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
+ * @param {ViewResources} resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
  */
 export class Aurelia {
   loader:Loader;
   container:Container;
-  resources:ResourceRegistry;
+  resources:ViewResources;
   use:Plugins;
 
-  constructor(loader?:Loader, container?:Container, resources?:ResourceRegistry){
+  constructor(loader?:Loader, container?:Container, resources?:ViewResources){
     this.resourcesToLoad = {};
     this.preStartTasks = [];
     this.postStartTasks = [];
     this.loader = loader || new window.AureliaLoader();
     this.container = container || new Container();
-    this.resources = resources || new ResourceRegistry();
+    this.resources = resources || new ViewResources();
     this.use = new Plugins(this);
 
     this.withInstance(Aurelia, this);
     this.withInstance(Loader, this.loader);
-    this.withInstance(ResourceRegistry, this.resources);
+    this.withInstance(ViewResources, this.resources);
 
     this.container.makeGlobal();
   }
