@@ -86,6 +86,8 @@ export class Aurelia {
   use:Plugins;
 
   constructor(loader?:Loader, container?:Container, resources?:ViewResources){
+    this.hostConfigured = false;
+    this.host = null;
     this.resourcesToLoad = {};
     this.preStartTasks = [];
     this.postStartTasks = [];
@@ -278,8 +280,7 @@ export class Aurelia {
     compositionEngine = this.container.get(CompositionEngine);
     instruction.viewModel = root;
     instruction.container = instruction.childContainer = this.container;
-    instruction.viewSlot = new ViewSlot(this.host, true);
-    instruction.viewSlot.transformChildNodesIntoView();
+    instruction.viewSlot = this.hostSlot;
     instruction.host = this.host;
 
     return compositionEngine.compose(instruction).then(root => {
@@ -291,6 +292,10 @@ export class Aurelia {
   }
 
   _configureHost(applicationHost){
+    if(this.hostConfigured){
+      return;
+    }
+
     applicationHost = applicationHost || this.host;
 
     if (!applicationHost || typeof applicationHost == 'string') {
@@ -299,7 +304,10 @@ export class Aurelia {
       this.host = applicationHost;
     }
 
+    this.hostConfigured = true;
     this.host.aurelia = this;
+    this.hostSlot = new ViewSlot(this.host, true);
+    this.hostSlot.transformChildNodesIntoView();
     this.container.registerInstance(DOMBoundary, this.host);
   }
 
