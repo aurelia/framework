@@ -1,1 +1,1307 @@
-{"id":2,"name":"\"aurelia-framework\"","kind":2,"kindString":"Module","flags":{},"children":[{"id":29,"name":"Aurelia","kind":128,"kindString":"Class","flags":{"isExported":true},"comment":{"shortText":"The framework core that provides the main Aurelia object.","tags":[{"tag":"class","text":"Aurelia"},{"tag":"constructor","text":""},{"tag":"param","text":"The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use a defaultLoader.","param":"loader"},{"tag":"param","text":"The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty container.","param":"container"},{"tag":"param","text":"The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.\n","param":"resources"}]},"children":[{"id":34,"name":"constructor","kind":512,"kindString":"Constructor","flags":{"isExported":true},"signatures":[{"id":35,"name":"new Aurelia","kind":16384,"kindString":"Constructor signature","flags":{},"parameters":[{"id":36,"name":"loader","kind":32768,"kindString":"Parameter","flags":{"isOptional":true},"type":{"type":"reference","name":"Loader","id":1464,"moduleName":"\"aurelia-loader\""}},{"id":37,"name":"container","kind":32768,"kindString":"Parameter","flags":{"isOptional":true},"type":{"type":"reference","name":"Container","id":1363,"moduleName":"\"aurelia-dependency-injection\""}},{"id":38,"name":"resources","kind":32768,"kindString":"Parameter","flags":{"isOptional":true},"type":{"type":"reference","name":"ResourceRegistry","id":1751,"moduleName":"\"aurelia-templating\""}}],"type":{"type":"reference","name":"Aurelia","id":29,"moduleName":"\"aurelia-framework\""}}]},{"id":31,"name":"container","kind":1024,"kindString":"Property","flags":{"isExported":true},"type":{"type":"reference","name":"Container","id":1363,"moduleName":"\"aurelia-dependency-injection\""}},{"id":30,"name":"loader","kind":1024,"kindString":"Property","flags":{"isExported":true},"type":{"type":"reference","name":"Loader","id":1464,"moduleName":"\"aurelia-loader\""}},{"id":32,"name":"resources","kind":1024,"kindString":"Property","flags":{"isExported":true},"type":{"type":"reference","name":"ResourceRegistry","id":1751,"moduleName":"\"aurelia-templating\""}},{"id":33,"name":"use","kind":1024,"kindString":"Property","flags":{"isExported":true},"type":{"type":"reference","name":"Plugins","id":3,"moduleName":"\"aurelia-framework\""}},{"id":61,"name":"addPostStartTask","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":62,"name":"addPostStartTask","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Adds an async function that runs after the plugins are run.","returns":"Returns the current Aurelia instance.\n","tags":[{"tag":"method","text":"addPostStartTask"}]},"parameters":[{"id":63,"name":"task","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The function to run after start."},"type":{"type":"reference","name":"Function"}}],"type":{"type":"reference","name":"Aurelia","id":29,"moduleName":"\"aurelia-framework\""}}]},{"id":58,"name":"addPreStartTask","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":59,"name":"addPreStartTask","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Adds an async function that runs before the plugins are run.","returns":"Returns the current Aurelia instance.\n","tags":[{"tag":"method","text":"addPreStartTask"}]},"parameters":[{"id":60,"name":"task","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The function to run before start."},"type":{"type":"reference","name":"Function"}}],"type":{"type":"reference","name":"Aurelia","id":29,"moduleName":"\"aurelia-framework\""}}]},{"id":66,"name":"enhance","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":67,"name":"enhance","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Enhances the host's existing elements with behaviors and bindings.","returns":"Returns the current Aurelia instance.\n","tags":[{"tag":"method","text":"enhance"}]},"parameters":[{"id":68,"name":"bindingContext","kind":32768,"kindString":"Parameter","flags":{"isOptional":true},"comment":{"text":"A binding context for the enhanced elements."},"type":{"type":"reference","name":"Object"}},{"id":69,"name":"applicationHost","kind":32768,"kindString":"Parameter","flags":{"isOptional":true},"comment":{"text":"The DOM object that Aurelia will enhance."},"type":{"type":"instrinct","name":"any"}}],"type":{"type":"reference","name":"Promise","typeArguments":[{"type":"reference","name":"Aurelia","id":29}]}}]},{"id":51,"name":"globalizeResources","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":52,"name":"globalizeResources","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Adds globally available view resources to be imported into the Aurelia framework.","returns":"Returns the current Aurelia instance.\n","tags":[{"tag":"method","text":"globalizeResources"}]},"parameters":[{"id":53,"name":"resources","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The relative module id to the resource. (Relative to the plugin's installer.)"},"type":{"type":"union","types":[{"type":"instrinct","name":"string"},{"type":"instrinct","isArray":true,"name":"string"}]}}],"type":{"type":"reference","name":"Aurelia","id":29,"moduleName":"\"aurelia-framework\""}}]},{"id":54,"name":"renameGlobalResource","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":55,"name":"renameGlobalResource","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Renames a global resource that was imported.","returns":"Returns the current Aurelia instance.\n","tags":[{"tag":"method","text":"renameGlobalResource"}]},"parameters":[{"id":56,"name":"resourcePath","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The path to the resource."},"type":{"type":"instrinct","name":"string"}},{"id":57,"name":"newName","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The new name."},"type":{"type":"instrinct","name":"string"}}],"type":{"type":"reference","name":"Aurelia","id":29,"moduleName":"\"aurelia-framework\""}}]},{"id":70,"name":"setRoot","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":71,"name":"setRoot","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Instantiates the root view-model and view and add them to the DOM.","returns":"Returns the current Aurelia instance.\n","tags":[{"tag":"method","text":"setRoot"}]},"parameters":[{"id":72,"name":"root","kind":32768,"kindString":"Parameter","flags":{"isOptional":true},"comment":{"text":"The root view-model to load upon bootstrap."},"type":{"type":"instrinct","name":"string"}},{"id":73,"name":"applicationHost","kind":32768,"kindString":"Parameter","flags":{"isOptional":true},"comment":{"text":"The DOM object that Aurelia will attach to."},"type":{"type":"instrinct","name":"any"}}],"type":{"type":"reference","name":"Promise","typeArguments":[{"type":"reference","name":"Aurelia","id":29}]}}]},{"id":64,"name":"start","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":65,"name":"start","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Loads plugins, then resources, and then starts the Aurelia instance.","returns":"Returns the started Aurelia instance.\n","tags":[{"tag":"method","text":"start"}]},"type":{"type":"reference","name":"Promise","typeArguments":[{"type":"reference","name":"Aurelia","id":29}]}}]},{"id":39,"name":"withInstance","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":40,"name":"withInstance","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Adds an existing object to the framework's dependency injection container.","returns":"Returns the current Aurelia instance.\n","tags":[{"tag":"method","text":"withInstance"}]},"parameters":[{"id":41,"name":"type","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The object type of the dependency that the framework will inject."},"type":{"type":"instrinct","name":"any"}},{"id":42,"name":"instance","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The existing instance of the dependency that the framework will inject."},"type":{"type":"instrinct","name":"any"}}],"type":{"type":"reference","name":"Aurelia","id":29,"moduleName":"\"aurelia-framework\""}}]},{"id":43,"name":"withSingleton","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":44,"name":"withSingleton","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Adds a singleton to the framework's dependency injection container.","returns":"Returns the current Aurelia instance.\n","tags":[{"tag":"method","text":"withSingleton"}]},"parameters":[{"id":45,"name":"type","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The object type of the dependency that the framework will inject."},"type":{"type":"instrinct","name":"any"}},{"id":46,"name":"implementation","kind":32768,"kindString":"Parameter","flags":{"isOptional":true},"comment":{"text":"The constructor function of the dependency that the framework will inject."},"type":{"type":"reference","name":"Function"}}],"type":{"type":"reference","name":"Aurelia","id":29,"moduleName":"\"aurelia-framework\""}}]},{"id":47,"name":"withTransient","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":48,"name":"withTransient","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Adds a transient to the framework's dependency injection container.","returns":"Returns the current Aurelia instance.\n","tags":[{"tag":"method","text":"withTransient"}]},"parameters":[{"id":49,"name":"type","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The object type of the dependency that the framework will inject."},"type":{"type":"instrinct","name":"any"}},{"id":50,"name":"implementation","kind":32768,"kindString":"Parameter","flags":{"isOptional":true},"comment":{"text":"The constructor function of the dependency that the framework will inject."},"type":{"type":"reference","name":"Function"}}],"type":{"type":"reference","name":"Aurelia","id":29,"moduleName":"\"aurelia-framework\""}}]}],"groups":[{"title":"Constructors","kind":512,"children":[34]},{"title":"Properties","kind":1024,"children":[31,30,32,33]},{"title":"Methods","kind":2048,"children":[61,58,66,51,54,70,64,39,43,47]}]},{"id":3,"name":"Plugins","kind":128,"kindString":"Class","flags":{"isExported":true},"comment":{"shortText":"Manages loading and configuring plugins.","tags":[{"tag":"class","text":"Plugins"},{"tag":"constructor","text":""},{"tag":"param","text":"An instance of Aurelia.\n","param":"aurelia"}]},"children":[{"id":4,"name":"constructor","kind":512,"kindString":"Constructor","flags":{"isExported":true},"signatures":[{"id":5,"name":"new Plugins","kind":16384,"kindString":"Constructor signature","flags":{},"parameters":[{"id":6,"name":"aurelia","kind":32768,"kindString":"Parameter","flags":{},"type":{"type":"reference","name":"Aurelia","id":29,"moduleName":"\"aurelia-framework\""}}],"type":{"type":"reference","name":"Plugins","id":3,"moduleName":"\"aurelia-framework\""}}]},{"id":15,"name":"defaultBindingLanguage","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":16,"name":"defaultBindingLanguage","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Plugs in the default binding language from aurelia-templating-binding.","returns":"Returns the current Plugins instance.\n","tags":[{"tag":"method","text":"defaultBindingLanguage"}]},"type":{"type":"reference","name":"Plugins","id":3,"moduleName":"\"aurelia-framework\""}}]},{"id":21,"name":"defaultResources","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":22,"name":"defaultResources","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Plugs in the default templating resources (if, repeat, show, compose, etc.) from aurelia-templating-resources.","returns":"Returns the current Plugins instance.\n","tags":[{"tag":"method","text":"defaultResources"}]},"type":{"type":"reference","name":"Plugins","id":3,"moduleName":"\"aurelia-framework\""}}]},{"id":27,"name":"developmentLogging","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":28,"name":"developmentLogging","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Plugs in the ConsoleAppender and sets the log level to debug.","returns":"Returns the current Plugins instance.\n","tags":[{"tag":"method","text":"developmentLogging"}]},"type":{"type":"reference","name":"Plugins","id":3,"moduleName":"\"aurelia-framework\""}}]},{"id":23,"name":"eventAggregator","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":24,"name":"eventAggregator","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Plugs in the event aggregator from aurelia-event-aggregator.","returns":"Returns the current Plugins instance.\n","tags":[{"tag":"method","text":"eventAggregator"}]},"type":{"type":"reference","name":"Plugins","id":3,"moduleName":"\"aurelia-framework\""}}]},{"id":7,"name":"feature","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":8,"name":"feature","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Configures an internal feature plugin before Aurelia starts.","returns":"Returns the current Plugins instance.\n","tags":[{"tag":"method","text":"feature"}]},"parameters":[{"id":9,"name":"plugin","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The folder for the internal plugin to configure (expects an index.js in that folder)."},"type":{"type":"instrinct","name":"string"}},{"id":10,"name":"config","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The configuration for the specified plugin."},"type":{"type":"instrinct","name":"any"}}],"type":{"type":"reference","name":"Plugins","id":3,"moduleName":"\"aurelia-framework\""}}]},{"id":19,"name":"history","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":20,"name":"history","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Plugs in the default history implementation from aurelia-history-browser.","returns":"Returns the current Plugins instance.\n","tags":[{"tag":"method","text":"history"}]},"type":{"type":"reference","name":"Plugins","id":3,"moduleName":"\"aurelia-framework\""}}]},{"id":11,"name":"plugin","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":12,"name":"plugin","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Configures an external, 3rd party plugin before Aurelia starts.","returns":"Returns the current Plugins instance.\n","tags":[{"tag":"method","text":"plugin"}]},"parameters":[{"id":13,"name":"plugin","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The ID of the 3rd party plugin to configure."},"type":{"type":"instrinct","name":"string"}},{"id":14,"name":"config","kind":32768,"kindString":"Parameter","flags":{},"comment":{"text":"The configuration for the specified plugin."},"type":{"type":"instrinct","name":"any"}}],"type":{"type":"reference","name":"Plugins","id":3,"moduleName":"\"aurelia-framework\""}}]},{"id":17,"name":"router","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":18,"name":"router","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Plugs in the router from aurelia-templating-router.","returns":"Returns the current Plugins instance.\n","tags":[{"tag":"method","text":"router"}]},"type":{"type":"reference","name":"Plugins","id":3,"moduleName":"\"aurelia-framework\""}}]},{"id":25,"name":"standardConfiguration","kind":2048,"kindString":"Method","flags":{"isExported":true},"signatures":[{"id":26,"name":"standardConfiguration","kind":4096,"kindString":"Call signature","flags":{},"comment":{"shortText":"Sets up the Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().history().router().eventAggregator();`","returns":"Returns the current Plugins instance.\n","tags":[{"tag":"method","text":"standardConfiguration"}]},"type":{"type":"reference","name":"Plugins","id":3,"moduleName":"\"aurelia-framework\""}}]}],"groups":[{"title":"Constructors","kind":512,"children":[4]},{"title":"Methods","kind":2048,"children":[15,21,27,23,7,19,11,17,25]}]},{"id":74,"name":"LogManager","kind":32,"kindString":"Variable","flags":{"isExported":true},"type":{"type":"instrinct","name":"any"}}],"groups":[{"title":"Classes","kind":128,"children":[29,3]},{"title":"Variables","kind":32,"children":[74]}]}
+{
+  "id": 2,
+  "name": "\"aurelia-framework\"",
+  "kind": 2,
+  "kindString": "Module",
+  "flags": {},
+  "children": [
+    {
+      "id": 29,
+      "name": "Aurelia",
+      "kind": 128,
+      "kindString": "Class",
+      "flags": {
+        "isExported": true
+      },
+      "comment": {
+        "shortText": "The framework core that provides the main Aurelia object.",
+        "tags": [
+          {
+            "tag": "class",
+            "text": "Aurelia"
+          },
+          {
+            "tag": "constructor",
+            "text": ""
+          },
+          {
+            "tag": "param",
+            "text": "The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use a defaultLoader.",
+            "param": "loader"
+          },
+          {
+            "tag": "param",
+            "text": "The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty container.",
+            "param": "container"
+          },
+          {
+            "tag": "param",
+            "text": "The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.\n",
+            "param": "resources"
+          }
+        ]
+      },
+      "children": [
+        {
+          "id": 34,
+          "name": "constructor",
+          "kind": 512,
+          "kindString": "Constructor",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 35,
+              "name": "new Aurelia",
+              "kind": 16384,
+              "kindString": "Constructor signature",
+              "flags": {},
+              "parameters": [
+                {
+                  "id": 36,
+                  "name": "loader",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {
+                    "isOptional": true
+                  },
+                  "type": {
+                    "type": "reference",
+                    "name": "Loader",
+                    "id": 1464,
+                    "moduleName": "\"aurelia-loader\""
+                  }
+                },
+                {
+                  "id": 37,
+                  "name": "container",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {
+                    "isOptional": true
+                  },
+                  "type": {
+                    "type": "reference",
+                    "name": "Container",
+                    "id": 1363,
+                    "moduleName": "\"aurelia-dependency-injection\""
+                  }
+                },
+                {
+                  "id": 38,
+                  "name": "resources",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {
+                    "isOptional": true
+                  },
+                  "type": {
+                    "type": "reference",
+                    "name": "ResourceRegistry",
+                    "id": 1751,
+                    "moduleName": "\"aurelia-templating\""
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Aurelia",
+                "id": 29,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 31,
+          "name": "container",
+          "kind": 1024,
+          "kindString": "Property",
+          "flags": {
+            "isExported": true
+          },
+          "type": {
+            "type": "reference",
+            "name": "Container",
+            "id": 1363,
+            "moduleName": "\"aurelia-dependency-injection\""
+          }
+        },
+        {
+          "id": 30,
+          "name": "loader",
+          "kind": 1024,
+          "kindString": "Property",
+          "flags": {
+            "isExported": true
+          },
+          "type": {
+            "type": "reference",
+            "name": "Loader",
+            "id": 1464,
+            "moduleName": "\"aurelia-loader\""
+          }
+        },
+        {
+          "id": 32,
+          "name": "resources",
+          "kind": 1024,
+          "kindString": "Property",
+          "flags": {
+            "isExported": true
+          },
+          "type": {
+            "type": "reference",
+            "name": "ResourceRegistry",
+            "id": 1751,
+            "moduleName": "\"aurelia-templating\""
+          }
+        },
+        {
+          "id": 33,
+          "name": "use",
+          "kind": 1024,
+          "kindString": "Property",
+          "flags": {
+            "isExported": true
+          },
+          "type": {
+            "type": "reference",
+            "name": "Plugins",
+            "id": 3,
+            "moduleName": "\"aurelia-framework\""
+          }
+        },
+        {
+          "id": 61,
+          "name": "addPostStartTask",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 62,
+              "name": "addPostStartTask",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Adds an async function that runs after the plugins are run.",
+                "returns": "Returns the current Aurelia instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "addPostStartTask"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 63,
+                  "name": "task",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The function to run after start."
+                  },
+                  "type": {
+                    "type": "reference",
+                    "name": "Function"
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Aurelia",
+                "id": 29,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 58,
+          "name": "addPreStartTask",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 59,
+              "name": "addPreStartTask",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Adds an async function that runs before the plugins are run.",
+                "returns": "Returns the current Aurelia instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "addPreStartTask"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 60,
+                  "name": "task",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The function to run before start."
+                  },
+                  "type": {
+                    "type": "reference",
+                    "name": "Function"
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Aurelia",
+                "id": 29,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 66,
+          "name": "enhance",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 67,
+              "name": "enhance",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Enhances the host's existing elements with behaviors and bindings.",
+                "returns": "Returns the current Aurelia instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "enhance"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 68,
+                  "name": "bindingContext",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {
+                    "isOptional": true
+                  },
+                  "comment": {
+                    "text": "A binding context for the enhanced elements."
+                  },
+                  "type": {
+                    "type": "reference",
+                    "name": "Object"
+                  }
+                },
+                {
+                  "id": 69,
+                  "name": "applicationHost",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {
+                    "isOptional": true
+                  },
+                  "comment": {
+                    "text": "The DOM object that Aurelia will enhance."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "any"
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Promise",
+                "typeArguments": [
+                  {
+                    "type": "reference",
+                    "name": "Aurelia",
+                    "id": 29
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 51,
+          "name": "globalizeResources",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 52,
+              "name": "globalizeResources",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Adds globally available view resources to be imported into the Aurelia framework.",
+                "returns": "Returns the current Aurelia instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "globalizeResources"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 53,
+                  "name": "resources",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The relative module id to the resource. (Relative to the plugin's installer.)"
+                  },
+                  "type": {
+                    "type": "union",
+                    "types": [
+                      {
+                        "type": "instrinct",
+                        "name": "string"
+                      },
+                      {
+                        "type": "instrinct",
+                        "isArray": true,
+                        "name": "string"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Aurelia",
+                "id": 29,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 54,
+          "name": "renameGlobalResource",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 55,
+              "name": "renameGlobalResource",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Renames a global resource that was imported.",
+                "returns": "Returns the current Aurelia instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "renameGlobalResource"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 56,
+                  "name": "resourcePath",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The path to the resource."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "string"
+                  }
+                },
+                {
+                  "id": 57,
+                  "name": "newName",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The new name."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "string"
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Aurelia",
+                "id": 29,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 70,
+          "name": "setRoot",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 71,
+              "name": "setRoot",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Instantiates the root view-model and view and add them to the DOM.",
+                "returns": "Returns the current Aurelia instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "setRoot"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 72,
+                  "name": "root",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {
+                    "isOptional": true
+                  },
+                  "comment": {
+                    "text": "The root view-model to load upon bootstrap."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "string"
+                  }
+                },
+                {
+                  "id": 73,
+                  "name": "applicationHost",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {
+                    "isOptional": true
+                  },
+                  "comment": {
+                    "text": "The DOM object that Aurelia will attach to."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "any"
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Promise",
+                "typeArguments": [
+                  {
+                    "type": "reference",
+                    "name": "Aurelia",
+                    "id": 29
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 64,
+          "name": "start",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 65,
+              "name": "start",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Loads plugins, then resources, and then starts the Aurelia instance.",
+                "returns": "Returns the started Aurelia instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "start"
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "name": "Promise",
+                "typeArguments": [
+                  {
+                    "type": "reference",
+                    "name": "Aurelia",
+                    "id": 29
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 39,
+          "name": "withInstance",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 40,
+              "name": "withInstance",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Adds an existing object to the framework's dependency injection container.",
+                "returns": "Returns the current Aurelia instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "withInstance"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 41,
+                  "name": "type",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The object type of the dependency that the framework will inject."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "any"
+                  }
+                },
+                {
+                  "id": 42,
+                  "name": "instance",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The existing instance of the dependency that the framework will inject."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "any"
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Aurelia",
+                "id": 29,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 43,
+          "name": "withSingleton",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 44,
+              "name": "withSingleton",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Adds a singleton to the framework's dependency injection container.",
+                "returns": "Returns the current Aurelia instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "withSingleton"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 45,
+                  "name": "type",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The object type of the dependency that the framework will inject."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "any"
+                  }
+                },
+                {
+                  "id": 46,
+                  "name": "implementation",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {
+                    "isOptional": true
+                  },
+                  "comment": {
+                    "text": "The constructor function of the dependency that the framework will inject."
+                  },
+                  "type": {
+                    "type": "reference",
+                    "name": "Function"
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Aurelia",
+                "id": 29,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 47,
+          "name": "withTransient",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 48,
+              "name": "withTransient",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Adds a transient to the framework's dependency injection container.",
+                "returns": "Returns the current Aurelia instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "withTransient"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 49,
+                  "name": "type",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The object type of the dependency that the framework will inject."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "any"
+                  }
+                },
+                {
+                  "id": 50,
+                  "name": "implementation",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {
+                    "isOptional": true
+                  },
+                  "comment": {
+                    "text": "The constructor function of the dependency that the framework will inject."
+                  },
+                  "type": {
+                    "type": "reference",
+                    "name": "Function"
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Aurelia",
+                "id": 29,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        }
+      ],
+      "groups": [
+        {
+          "title": "Constructors",
+          "kind": 512,
+          "children": [
+            34
+          ]
+        },
+        {
+          "title": "Properties",
+          "kind": 1024,
+          "children": [
+            31,
+            30,
+            32,
+            33
+          ]
+        },
+        {
+          "title": "Methods",
+          "kind": 2048,
+          "children": [
+            61,
+            58,
+            66,
+            51,
+            54,
+            70,
+            64,
+            39,
+            43,
+            47
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Plugins",
+      "kind": 128,
+      "kindString": "Class",
+      "flags": {
+        "isExported": true
+      },
+      "comment": {
+        "shortText": "Manages loading and configuring plugins.",
+        "tags": [
+          {
+            "tag": "class",
+            "text": "Plugins"
+          },
+          {
+            "tag": "constructor",
+            "text": ""
+          },
+          {
+            "tag": "param",
+            "text": "An instance of Aurelia.\n",
+            "param": "aurelia"
+          }
+        ]
+      },
+      "children": [
+        {
+          "id": 4,
+          "name": "constructor",
+          "kind": 512,
+          "kindString": "Constructor",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 5,
+              "name": "new Plugins",
+              "kind": 16384,
+              "kindString": "Constructor signature",
+              "flags": {},
+              "parameters": [
+                {
+                  "id": 6,
+                  "name": "aurelia",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "type": {
+                    "type": "reference",
+                    "name": "Aurelia",
+                    "id": 29,
+                    "moduleName": "\"aurelia-framework\""
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Plugins",
+                "id": 3,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "name": "defaultBindingLanguage",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 16,
+              "name": "defaultBindingLanguage",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Plugs in the default binding language from aurelia-templating-binding.",
+                "returns": "Returns the current Plugins instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "defaultBindingLanguage"
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "name": "Plugins",
+                "id": 3,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 21,
+          "name": "defaultResources",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 22,
+              "name": "defaultResources",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Plugs in the default templating resources (if, repeat, show, compose, etc.) from aurelia-templating-resources.",
+                "returns": "Returns the current Plugins instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "defaultResources"
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "name": "Plugins",
+                "id": 3,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 27,
+          "name": "developmentLogging",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 28,
+              "name": "developmentLogging",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Plugs in the ConsoleAppender and sets the log level to debug.",
+                "returns": "Returns the current Plugins instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "developmentLogging"
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "name": "Plugins",
+                "id": 3,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 23,
+          "name": "eventAggregator",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 24,
+              "name": "eventAggregator",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Plugs in the event aggregator from aurelia-event-aggregator.",
+                "returns": "Returns the current Plugins instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "eventAggregator"
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "name": "Plugins",
+                "id": 3,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "name": "feature",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 8,
+              "name": "feature",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Configures an internal feature plugin before Aurelia starts.",
+                "returns": "Returns the current Plugins instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "feature"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 9,
+                  "name": "plugin",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The folder for the internal plugin to configure (expects an index.js in that folder)."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "string"
+                  }
+                },
+                {
+                  "id": 10,
+                  "name": "config",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The configuration for the specified plugin."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "any"
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Plugins",
+                "id": 3,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "name": "history",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 20,
+              "name": "history",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Plugs in the default history implementation from aurelia-history-browser.",
+                "returns": "Returns the current Plugins instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "history"
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "name": "Plugins",
+                "id": 3,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "name": "plugin",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 12,
+              "name": "plugin",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Configures an external, 3rd party plugin before Aurelia starts.",
+                "returns": "Returns the current Plugins instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "plugin"
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "id": 13,
+                  "name": "plugin",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The ID of the 3rd party plugin to configure."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "string"
+                  }
+                },
+                {
+                  "id": 14,
+                  "name": "config",
+                  "kind": 32768,
+                  "kindString": "Parameter",
+                  "flags": {},
+                  "comment": {
+                    "text": "The configuration for the specified plugin."
+                  },
+                  "type": {
+                    "type": "instrinct",
+                    "name": "any"
+                  }
+                }
+              ],
+              "type": {
+                "type": "reference",
+                "name": "Plugins",
+                "id": 3,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "name": "router",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 18,
+              "name": "router",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Plugs in the router from aurelia-templating-router.",
+                "returns": "Returns the current Plugins instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "router"
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "name": "Plugins",
+                "id": 3,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        },
+        {
+          "id": 25,
+          "name": "standardConfiguration",
+          "kind": 2048,
+          "kindString": "Method",
+          "flags": {
+            "isExported": true
+          },
+          "signatures": [
+            {
+              "id": 26,
+              "name": "standardConfiguration",
+              "kind": 4096,
+              "kindString": "Call signature",
+              "flags": {},
+              "comment": {
+                "shortText": "Sets up the Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().history().router().eventAggregator();`",
+                "returns": "Returns the current Plugins instance.\n",
+                "tags": [
+                  {
+                    "tag": "method",
+                    "text": "standardConfiguration"
+                  }
+                ]
+              },
+              "type": {
+                "type": "reference",
+                "name": "Plugins",
+                "id": 3,
+                "moduleName": "\"aurelia-framework\""
+              }
+            }
+          ]
+        }
+      ],
+      "groups": [
+        {
+          "title": "Constructors",
+          "kind": 512,
+          "children": [
+            4
+          ]
+        },
+        {
+          "title": "Methods",
+          "kind": 2048,
+          "children": [
+            15,
+            21,
+            27,
+            23,
+            7,
+            19,
+            11,
+            17,
+            25
+          ]
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "name": "LogManager",
+      "kind": 32,
+      "kindString": "Variable",
+      "flags": {
+        "isExported": true
+      },
+      "type": {
+        "type": "instrinct",
+        "name": "any"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "title": "Classes",
+      "kind": 128,
+      "children": [
+        29,
+        3
+      ]
+    },
+    {
+      "title": "Variables",
+      "kind": 32,
+      "children": [
+        74
+      ]
+    }
+  ]
+}
