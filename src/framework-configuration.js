@@ -1,4 +1,4 @@
-import core from 'core-js';
+import * as core from 'core-js';
 import * as TheLogManager from 'aurelia-logging';
 import {Metadata} from 'aurelia-metadata';
 import {ViewEngine} from 'aurelia-templating';

@@ -1,4 +1,4 @@
-import core from 'core-js';
+import * as core from 'core-js';
 import * as TheLogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
