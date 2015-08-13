@@ -80,9 +80,9 @@ export class FrameworkConfiguration {
    * @method instance
    * @param {Class} type The object type of the dependency that the framework will inject.
    * @param {Object} instance The existing instance of the dependency that the framework will inject.
-   * @return {Plugins} Returns the current Aurelia instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
    */
-  instance(type:any, instance:any):Plugins{
+  instance(type:any, instance:any):FrameworkConfiguration{
     this.container.registerInstance(type, instance);
     return this;
   }
@@ -93,9 +93,9 @@ export class FrameworkConfiguration {
    * @method singleton
    * @param {Class} type The object type of the dependency that the framework will inject.
    * @param {Object} implementation The constructor function of the dependency that the framework will inject.
-   * @return {Plugins} Returns the current Aurelia instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
    */
-  singleton(type:any, implementation?:Function):Plugins{
+  singleton(type:any, implementation?:Function):FrameworkConfiguration{
     this.container.registerSingleton(type, implementation);
     return this;
   }
@@ -106,9 +106,9 @@ export class FrameworkConfiguration {
    * @method transient
    * @param {Class} type The object type of the dependency that the framework will inject.
    * @param {Object} implementation The constructor function of the dependency that the framework will inject.
-   * @return {Plugins} Returns the current Aurelia instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
    */
-  transient(type:any, implementation?:Function):Plugins{
+  transient(type:any, implementation?:Function):FrameworkConfiguration{
     this.container.registerTransient(type, implementation);
     return this;
   }
@@ -118,9 +118,9 @@ export class FrameworkConfiguration {
    *
    * @method addPreStartTask
    * @param {Function} task The function to run before start.
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
    */
-  preTask(task:Function):Plugins{
+  preTask(task:Function):FrameworkConfiguration{
     assertProcessed(this);
     this.preTasks.push(task);
     return this;
@@ -131,9 +131,9 @@ export class FrameworkConfiguration {
    *
    * @method addPostStartTask
    * @param {Function} task The function to run after start.
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
    */
-  postTask(task:Function):Plugins{
+  postTask(task:Function):FrameworkConfiguration{
     assertProcessed(this);
     this.postTasks.push(task);
     return this;
@@ -145,9 +145,9 @@ export class FrameworkConfiguration {
    * @method feature
    * @param {string} plugin The folder for the internal plugin to configure (expects an index.js in that folder).
    * @param {config} config The configuration for the specified plugin.
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  feature(plugin:string, config:any):Plugins{
+  feature(plugin:string, config:any):FrameworkConfiguration{
     plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
     return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: plugin, config: config || {} });
   }
@@ -157,9 +157,9 @@ export class FrameworkConfiguration {
    *
    * @method globalResources
    * @param {Object|Array} resources The relative module id to the resource. (Relative to the plugin's installer.)
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
    */
-   globalResources(resources:string|string[]):Plugins{
+   globalResources(resources:string|string[]):FrameworkConfiguration{
     assertProcessed(this);
 
     let toAdd = Array.isArray(resources) ? resources : arguments,
@@ -185,9 +185,9 @@ export class FrameworkConfiguration {
    * @method globalName
    * @param {String} resourcePath The path to the resource.
    * @param {String} newName The new name.
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
    */
-  globalName(resourcePath:string, newName:string):Plugins{
+  globalName(resourcePath:string, newName:string):FrameworkConfiguration{
     assertProcessed(this);
     this.resourcesToLoad[resourcePath] = newName;
     return this;
@@ -199,9 +199,9 @@ export class FrameworkConfiguration {
    * @method plugin
    * @param {string} plugin The ID of the 3rd party plugin to configure.
    * @param {config} config The configuration for the specified plugin.
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
  */
-  plugin(plugin:string, config:any):Plugins{
+  plugin(plugin:string, config:any):FrameworkConfiguration{
     assertProcessed(this);
 
     if(typeof(plugin) === 'string'){
@@ -235,9 +235,9 @@ export class FrameworkConfiguration {
    * Plugs in the default binding language from aurelia-templating-binding.
    *
    * @method defaultBindingLanguage
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  defaultBindingLanguage():Plugins{
+  defaultBindingLanguage():FrameworkConfiguration{
     return this._addNormalizedPlugin('aurelia-templating-binding');
   };
 
@@ -245,9 +245,9 @@ export class FrameworkConfiguration {
    * Plugs in the router from aurelia-templating-router.
    *
    * @method router
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  router():Plugins{
+  router():FrameworkConfiguration{
     return this._addNormalizedPlugin('aurelia-templating-router');
   }
 
@@ -255,9 +255,9 @@ export class FrameworkConfiguration {
    * Plugs in the default history implementation from aurelia-history-browser.
    *
    * @method history
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  history():Plugins{
+  history():FrameworkConfiguration{
     return this._addNormalizedPlugin('aurelia-history-browser');
   }
 
@@ -265,9 +265,9 @@ export class FrameworkConfiguration {
    * Plugs in the default templating resources (if, repeat, show, compose, etc.) from aurelia-templating-resources.
    *
    * @method defaultResources
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  defaultResources():Plugins{
+  defaultResources():FrameworkConfiguration{
     return this._addNormalizedPlugin('aurelia-templating-resources');
   }
 
@@ -275,9 +275,9 @@ export class FrameworkConfiguration {
    * Plugs in the event aggregator from aurelia-event-aggregator.
    *
    * @method eventAggregator
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  eventAggregator():Plugins{
+  eventAggregator():FrameworkConfiguration{
     return this._addNormalizedPlugin('aurelia-event-aggregator');
   }
 
@@ -285,9 +285,9 @@ export class FrameworkConfiguration {
    * Sets up the Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().history().router().eventAggregator();`
    *
    * @method standardConfiguration
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  standardConfiguration():Plugins{
+  standardConfiguration():FrameworkConfiguration{
     return this.aurelia.use
       .defaultBindingLanguage()
       .defaultResources()
@@ -300,9 +300,9 @@ export class FrameworkConfiguration {
    * Plugs in the ConsoleAppender and sets the log level to debug.
    *
    * @method developmentLogging
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  developmentLogging():Plugins{
+  developmentLogging():FrameworkConfiguration{
     this.preTask(() => {
       return System.normalize('aurelia-logging-console', this.bootstrapperName).then(name => {
         return this.aurelia.loader.loadModule(name).then(m => {
