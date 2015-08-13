@@ -14,7 +14,7 @@ var jsName = paths.packageName + '.js';
 
 gulp.task('build-index', function(){
   var importsToAdd = [];
-  var files = ['plugins.js', 'aurelia.js', 'index.js'].map(function(file){
+  var files = ['framework-configuration.js', 'aurelia.js', 'index.js'].map(function(file){
     return paths.root + file;
   });
 

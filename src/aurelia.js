@@ -2,8 +2,7 @@ import core from 'core-js';
 import * as TheLogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
-import {join,relativeToFile} from 'aurelia-path';
-import {Plugins} from './plugins';
+import {FrameworkConfiguration} from './framework-configuration';
 import {
   BindingLanguage,
   ViewEngine,
@@ -45,31 +44,6 @@ function preventActionlessFormSubmit() {
   });
 }
 
-function loadResources(container, resourcesToLoad, appResources){
-  var viewEngine = container.get(ViewEngine),
-      importIds = Object.keys(resourcesToLoad),
-      names = new Array(importIds.length),
-      i, ii;
-
-  for(i = 0, ii = importIds.length; i < ii; ++i){
-    names[i] = resourcesToLoad[importIds[i]];
-  }
-
-  return viewEngine.importViewResources(importIds, names, appResources);
-}
-
-function runTasks(aurelia, tasks){
-  let current, next = () => {
-    if(current = tasks.shift()){
-      return Promise.resolve(current(aurelia)).then(next);
-    }
-
-    return Promise.resolve();
-  };
-
-  return next();
-}
-
 /**
  * The framework core that provides the main Aurelia object.
  *
@@ -83,125 +57,20 @@ export class Aurelia {
   loader:Loader;
   container:Container;
   resources:ViewResources;
-  use:Plugins;
+  use:FrameworkConfiguration;
 
   constructor(loader?:Loader, container?:Container, resources?:ViewResources){
-    this.hostConfigured = false;
-    this.host = null;
-    this.resourcesToLoad = {};
-    this.preStartTasks = [];
-    this.postStartTasks = [];
     this.loader = loader || new window.AureliaLoader();
     this.container = container || new Container();
     this.resources = resources || new ViewResources();
-    this.use = new Plugins(this);
+    this.use = new FrameworkConfiguration(this);
+    this.hostConfigured = false;
+    this.host = null;
 
-    this.withInstance(Aurelia, this);
-    this.withInstance(Loader, this.loader);
-    this.withInstance(ViewResources, this.resources);
-
+    this.use.instance(Aurelia, this);
+    this.use.instance(Loader, this.loader);
+    this.use.instance(ViewResources, this.resources);
     this.container.makeGlobal();
-  }
-
-  /**
-   * Adds an existing object to the framework's dependency injection container.
-   *
-   * @method withInstance
-   * @param {Class} type The object type of the dependency that the framework will inject.
-   * @param {Object} instance The existing instance of the dependency that the framework will inject.
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-  withInstance(type:any, instance:any):Aurelia{
-    this.container.registerInstance(type, instance);
-    return this;
-  }
-
-  /**
-   * Adds a singleton to the framework's dependency injection container.
-   *
-   * @method withSingleton
-   * @param {Class} type The object type of the dependency that the framework will inject.
-   * @param {Object} implementation The constructor function of the dependency that the framework will inject.
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-  withSingleton(type:any, implementation?:Function):Aurelia{
-    this.container.registerSingleton(type, implementation);
-    return this;
-  }
-
-  /**
-   * Adds a transient to the framework's dependency injection container.
-   *
-   * @method withTransient
-   * @param {Class} type The object type of the dependency that the framework will inject.
-   * @param {Object} implementation The constructor function of the dependency that the framework will inject.
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-  withTransient(type:any, implementation?:Function):Aurelia{
-    this.container.registerTransient(type, implementation);
-    return this;
-  }
-
-  /**
-   * Adds globally available view resources to be imported into the Aurelia framework.
-   *
-   * @method globalizeResources
-   * @param {Object|Array} resources The relative module id to the resource. (Relative to the plugin's installer.)
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-   globalizeResources(resources:string|string[]):Aurelia{
-    var toAdd = Array.isArray(resources) ? resources : arguments,
-        i, ii, resource, path,
-        resourcesRelativeTo = this.resourcesRelativeTo || '';
-
-    for(i = 0, ii = toAdd.length; i < ii; ++i){
-      resource = toAdd[i];
-      if(typeof resource != 'string'){
-        throw new Error(`Invalid resource path [${resource}]. Resources must be specified as relative module IDs.`);
-      }
-
-      path = join(resourcesRelativeTo, resource);
-      this.resourcesToLoad[path] = this.resourcesToLoad[path];
-    }
-
-    return this;
-  }
-
-  /**
-   * Renames a global resource that was imported.
-   *
-   * @method renameGlobalResource
-   * @param {String} resourcePath The path to the resource.
-   * @param {String} newName The new name.
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-  renameGlobalResource(resourcePath:string, newName:string):Aurelia{
-    this.resourcesToLoad[resourcePath] = newName;
-    return this;
-  }
-
-  /**
-   * Adds an async function that runs before the plugins are run.
-   *
-   * @method addPreStartTask
-   * @param {Function} task The function to run before start.
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-  addPreStartTask(task:Function):Aurelia{
-    this.preStartTasks.push(task);
-    return this;
-  }
-
-  /**
-   * Adds an async function that runs after the plugins are run.
-   *
-   * @method addPostStartTask
-   * @param {Function} task The function to run after start.
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-  addPostStartTask(task:Function):Aurelia{
-    this.postStartTasks.push(task);
-    return this;
   }
 
   /**
@@ -218,29 +87,23 @@ export class Aurelia {
     this.started = true;
     logger.info('Aurelia Starting');
 
-    preventActionlessFormSubmit();
+    return this.use.apply().then(() => {
+      preventActionlessFormSubmit();
 
-    return runTasks(this, this.preStartTasks).then(() => {
-      return this.use._process().then(() => {
-        if(!this.container.hasHandler(BindingLanguage)){
-          var message = 'You must configure Aurelia with a BindingLanguage implementation.';
-          logger.error(message);
-          throw new Error(message);
-        }
+      if(!this.container.hasHandler(BindingLanguage)){
+        var message = 'You must configure Aurelia with a BindingLanguage implementation.';
+        logger.error(message);
+        throw new Error(message);
+      }
 
-        if(!this.container.hasHandler(Animator)){
-          Animator.configureDefault(this.container);
-        }
+      if(!this.container.hasHandler(Animator)){
+        Animator.configureDefault(this.container);
+      }
 
-        return loadResources(this.container, this.resourcesToLoad, this.resources);
-      }).then(() => {
-        return runTasks(this, this.postStartTasks).then(() => {
-          logger.info('Aurelia Started');
-          var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
-          document.dispatchEvent(evt);
-          return this;
-        });
-      });
+      logger.info('Aurelia Started');
+      var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
+      document.dispatchEvent(evt);
+      return this;
     });
   }
 
