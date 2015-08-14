@@ -1,3 +1,24 @@
+## 0.15.0 (2015-08-14)
+
+
+#### Bug Fixes
+
+* **all:** create a property framework configuration object ([bab4c776](http://github.com/aurelia/framework/commit/bab4c776f4266b727e4cf04b04ba409ead3bfeed))
+* **aurelia:**
+  * enable multiple calls to setRoot ([10708cae](http://github.com/aurelia/framework/commit/10708caefb9e26556c9c45686198f8c343de6a5d))
+  * update to use ViewResources instead of ResourceRegistry ([f458a193](http://github.com/aurelia/framework/commit/f458a193f69dfa1d8174b2424ba81d5b864b7429))
+* **framework:** Use correct import for core-js ([da0756fd](http://github.com/aurelia/framework/commit/da0756fd94f5a60df5218ceaa09fdb3bb0e2ad27))
+* **framework-configuration:** correct type information ([f1fc9987](http://github.com/aurelia/framework/commit/f1fc998735d1821b2a29361bd9247077e646c1bc))
+
+
+#### Features
+
+* **docs:**
+  * generate api.json from .d.ts file ([38c06e2c](http://github.com/aurelia/framework/commit/38c06e2ce93b22244950cf57e97e28493fc2334b))
+  * generate api.json from .d.ts file ([1e2af71b](http://github.com/aurelia/framework/commit/1e2af71bf0aee020033cef33faaca1b869e7b5d9))
+  * generate api.json from .d.ts file ([a6960cbc](http://github.com/aurelia/framework/commit/a6960cbc6e171142c3a3b8dada4915e11b433ecc))
+
+
 ### 0.14.1 (2015-08-08)
 
 

@@ -1,44 +1,144 @@
-import core from 'core-js';
+import * as core from 'core-js';
 import * as TheLogManager from 'aurelia-logging';
 import {Metadata} from 'aurelia-metadata';
+import {ViewEngine,BindingLanguage,ViewSlot,ViewResources,CompositionEngine,Animator,DOMBoundary} from 'aurelia-templating';
+import {join} from 'aurelia-path';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
-import {join,relativeToFile} from 'aurelia-path';
-import {BindingLanguage,ViewEngine,ViewSlot,ResourceRegistry,CompositionEngine,Animator,DOMBoundary} from 'aurelia-templating';
 
 var logger = TheLogManager.getLogger('aurelia');
 
-function loadPlugin(aurelia, loader, info){
+function runTasks(config, tasks){
+  let current, next = () => {
+    if(current = tasks.shift()){
+      return Promise.resolve(current(config)).then(next);
+    }
+
+    return Promise.resolve();
+  };
+
+  return next();
+}
+
+function loadPlugin(config, loader, info){
   logger.debug(`Loading plugin ${info.moduleId}.`);
-  aurelia.resourcesRelativeTo = info.resourcesRelativeTo;
+  config.resourcesRelativeTo = info.resourcesRelativeTo;
 
   return loader.loadModule(info.moduleId).then(m => {
     if('configure' in m){
-      return Promise.resolve(m.configure(aurelia, info.config || {})).then(() => {
-        aurelia.resourcesRelativeTo = null;
+      return Promise.resolve(m.configure(config, info.config || {})).then(() => {
+        config.resourcesRelativeTo = null;
         logger.debug(`Configured plugin ${info.moduleId}.`);
       });
     }else{
-      aurelia.resourcesRelativeTo = null;
+      config.resourcesRelativeTo = null;
       logger.debug(`Loaded plugin ${info.moduleId}.`);
     }
   });
 }
 
+function loadResources(container, resourcesToLoad, appResources){
+  var viewEngine = container.get(ViewEngine),
+      importIds = Object.keys(resourcesToLoad),
+      names = new Array(importIds.length),
+      i, ii;
+
+  for(i = 0, ii = importIds.length; i < ii; ++i){
+    names[i] = resourcesToLoad[importIds[i]];
+  }
+
+  return viewEngine.importViewResources(importIds, names, appResources);
+}
+
+function assertProcessed(plugins){
+  if(plugins.processed) {
+    throw new Error('This config instance has already been applied. To load more plugins or global resources, create a new FrameworkConfiguration instance.')
+  }
+}
+
 /**
- * Manages loading and configuring plugins.
+ * Manages configuring the aurelia framework instance.
  *
- * @class Plugins
+ * @class FrameworkConfiguration
  * @constructor
  * @param {Aurelia} aurelia An instance of Aurelia.
  */
-export class Plugins {
+export class FrameworkConfiguration {
   constructor(aurelia:Aurelia){
     this.aurelia = aurelia;
+    this.container = aurelia.container;
     this.info = [];
     this.processed = false;
+    this.preTasks = [];
+    this.postTasks = [];
+    this.resourcesToLoad = {};
+    this.preTask(() => System.normalize('aurelia-bootstrapper').then(bootstrapperName => this.bootstrapperName = bootstrapperName));
+    this.postTask(() => loadResources(aurelia.container, this.resourcesToLoad, aurelia.resources));
+  }
 
-    aurelia.addPreStartTask(() => System.normalize('aurelia-bootstrapper').then(bootstrapperName => this.bootstrapperName = bootstrapperName));
+  /**
+   * Adds an existing object to the framework's dependency injection container.
+   *
+   * @method instance
+   * @param {Class} type The object type of the dependency that the framework will inject.
+   * @param {Object} instance The existing instance of the dependency that the framework will inject.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
+   */
+  instance(type:any, instance:any):FrameworkConfiguration{
+    this.container.registerInstance(type, instance);
+    return this;
+  }
+
+  /**
+   * Adds a singleton to the framework's dependency injection container.
+   *
+   * @method singleton
+   * @param {Class} type The object type of the dependency that the framework will inject.
+   * @param {Object} implementation The constructor function of the dependency that the framework will inject.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
+   */
+  singleton(type:any, implementation?:Function):FrameworkConfiguration{
+    this.container.registerSingleton(type, implementation);
+    return this;
+  }
+
+  /**
+   * Adds a transient to the framework's dependency injection container.
+   *
+   * @method transient
+   * @param {Class} type The object type of the dependency that the framework will inject.
+   * @param {Object} implementation The constructor function of the dependency that the framework will inject.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
+   */
+  transient(type:any, implementation?:Function):FrameworkConfiguration{
+    this.container.registerTransient(type, implementation);
+    return this;
+  }
+
+  /**
+   * Adds an async function that runs before the plugins are run.
+   *
+   * @method addPreStartTask
+   * @param {Function} task The function to run before start.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
+   */
+  preTask(task:Function):FrameworkConfiguration{
+    assertProcessed(this);
+    this.preTasks.push(task);
+    return this;
+  }
+
+  /**
+   * Adds an async function that runs after the plugins are run.
+   *
+   * @method addPostStartTask
+   * @param {Function} task The function to run after start.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
+   */
+  postTask(task:Function):FrameworkConfiguration{
+    assertProcessed(this);
+    this.postTasks.push(task);
+    return this;
   }
 
   /**
@@ -47,11 +147,52 @@ export class Plugins {
    * @method feature
    * @param {string} plugin The folder for the internal plugin to configure (expects an index.js in that folder).
    * @param {config} config The configuration for the specified plugin.
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  feature(plugin:string, config:any):Plugins{
+  feature(plugin:string, config:any):FrameworkConfiguration{
     plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
     return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: plugin, config: config || {} });
+  }
+
+  /**
+   * Adds globally available view resources to be imported into the Aurelia framework.
+   *
+   * @method globalResources
+   * @param {Object|Array} resources The relative module id to the resource. (Relative to the plugin's installer.)
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
+   */
+   globalResources(resources:string|string[]):FrameworkConfiguration{
+    assertProcessed(this);
+
+    let toAdd = Array.isArray(resources) ? resources : arguments,
+        i, ii, resource, path,
+        resourcesRelativeTo = this.resourcesRelativeTo || '';
+
+    for(i = 0, ii = toAdd.length; i < ii; ++i){
+      resource = toAdd[i];
+      if(typeof resource != 'string'){
+        throw new Error(`Invalid resource path [${resource}]. Resources must be specified as relative module IDs.`);
+      }
+
+      path = join(resourcesRelativeTo, resource);
+      this.resourcesToLoad[path] = this.resourcesToLoad[path];
+    }
+
+    return this;
+  }
+
+  /**
+   * Renames a global resource that was imported.
+   *
+   * @method globalName
+   * @param {String} resourcePath The path to the resource.
+   * @param {String} newName The new name.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
+   */
+  globalName(resourcePath:string, newName:string):FrameworkConfiguration{
+    assertProcessed(this);
+    this.resourcesToLoad[resourcePath] = newName;
+    return this;
   }
 
   /**
@@ -60,20 +201,17 @@ export class Plugins {
    * @method plugin
    * @param {string} plugin The ID of the 3rd party plugin to configure.
    * @param {config} config The configuration for the specified plugin.
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
  */
-  plugin(plugin:string, config:any):Plugins{
+  plugin(plugin:string, config:any):FrameworkConfiguration{
+    assertProcessed(this);
+
     if(typeof(plugin) === 'string'){
       plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
       return this.plugin({ moduleId: plugin, resourcesRelativeTo: plugin, config: config || {} });
     }
 
-    if (this.processed) {
-      loadPlugin(this.aurelia, this.aurelia.loader, plugin);
-    } else {
-      this.info.push(plugin);
-    }
-
+    this.info.push(plugin);
     return this;
   }
 
@@ -81,8 +219,7 @@ export class Plugins {
     var plugin = { moduleId: name, resourcesRelativeTo: name, config: config || {} };
 
     this.plugin(plugin);
-
-    this.aurelia.addPreStartTask(() => {
+    this.preTask(() => {
       return System.normalize(name, this.bootstrapperName).then(normalizedName => {
         normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts')
           ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
@@ -100,9 +237,9 @@ export class Plugins {
    * Plugs in the default binding language from aurelia-templating-binding.
    *
    * @method defaultBindingLanguage
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  defaultBindingLanguage():Plugins{
+  defaultBindingLanguage():FrameworkConfiguration{
     return this._addNormalizedPlugin('aurelia-templating-binding');
   };
 
@@ -110,9 +247,9 @@ export class Plugins {
    * Plugs in the router from aurelia-templating-router.
    *
    * @method router
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  router():Plugins{
+  router():FrameworkConfiguration{
     return this._addNormalizedPlugin('aurelia-templating-router');
   }
 
@@ -120,9 +257,9 @@ export class Plugins {
    * Plugs in the default history implementation from aurelia-history-browser.
    *
    * @method history
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  history():Plugins{
+  history():FrameworkConfiguration{
     return this._addNormalizedPlugin('aurelia-history-browser');
   }
 
@@ -130,9 +267,9 @@ export class Plugins {
    * Plugs in the default templating resources (if, repeat, show, compose, etc.) from aurelia-templating-resources.
    *
    * @method defaultResources
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  defaultResources():Plugins{
+  defaultResources():FrameworkConfiguration{
     return this._addNormalizedPlugin('aurelia-templating-resources');
   }
 
@@ -140,9 +277,9 @@ export class Plugins {
    * Plugs in the event aggregator from aurelia-event-aggregator.
    *
    * @method eventAggregator
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  eventAggregator():Plugins{
+  eventAggregator():FrameworkConfiguration{
     return this._addNormalizedPlugin('aurelia-event-aggregator');
   }
 
@@ -150,9 +287,9 @@ export class Plugins {
    * Sets up the Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().history().router().eventAggregator();`
    *
    * @method standardConfiguration
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  standardConfiguration():Plugins{
+  standardConfiguration():FrameworkConfiguration{
     return this.aurelia.use
       .defaultBindingLanguage()
       .defaultResources()
@@ -165,10 +302,10 @@ export class Plugins {
    * Plugs in the ConsoleAppender and sets the log level to debug.
    *
    * @method developmentLogging
-   * @return {Plugins} Returns the current Plugins instance.
+   * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  developmentLogging():Plugins{
-    this.aurelia.addPreStartTask(() => {
+  developmentLogging():FrameworkConfiguration{
+    this.preTask(() => {
       return System.normalize('aurelia-logging-console', this.bootstrapperName).then(name => {
         return this.aurelia.loader.loadModule(name).then(m => {
           TheLogManager.addAppender(new m.ConsoleAppender());
@@ -180,26 +317,33 @@ export class Plugins {
     return this;
   }
 
-  _process(){
-    var aurelia = this.aurelia,
-        loader = aurelia.loader,
-        info = this.info,
-        current;
-
+  /**
+   * Loads and configures the plugins registered with this instance.
+   *
+   * @method apply
+   * @return Returns a promise which resolves when all plugins are loaded and configured.
+  */
+  apply():Promise<void>{
     if(this.processed){
-      return;
+      return Promise.resolve();
     }
 
-    var next = () => {
-      if(current = info.shift()){
-        return loadPlugin(aurelia, loader, current).then(next);
-      }
+    return runTasks(this, this.preTasks).then(() => {
+      let loader = this.aurelia.loader,
+          info = this.info,
+          current;
 
-      this.processed = true;
-      return Promise.resolve();
-    };
+      let next = () => {
+        if(current = info.shift()){
+          return loadPlugin(this, loader, current).then(next);
+        }
 
-    return next();
+        this.processed = true;
+        return Promise.resolve();
+      };
+
+      return next().then(() => runTasks(this, this.postTasks));
+    });
   }
 }
 
@@ -234,31 +378,6 @@ function preventActionlessFormSubmit() {
   });
 }
 
-function loadResources(container, resourcesToLoad, appResources){
-  var viewEngine = container.get(ViewEngine),
-      importIds = Object.keys(resourcesToLoad),
-      names = new Array(importIds.length),
-      i, ii;
-
-  for(i = 0, ii = importIds.length; i < ii; ++i){
-    names[i] = resourcesToLoad[importIds[i]];
-  }
-
-  return viewEngine.importViewResources(importIds, names, appResources);
-}
-
-function runTasks(aurelia, tasks){
-  let current, next = () => {
-    if(current = tasks.shift()){
-      return Promise.resolve(current(aurelia)).then(next);
-    }
-
-    return Promise.resolve();
-  };
-
-  return next();
-}
-
 /**
  * The framework core that provides the main Aurelia object.
  *
@@ -266,129 +385,26 @@ function runTasks(aurelia, tasks){
  * @constructor
  * @param {Loader} loader The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use a defaultLoader.
  * @param {Container} container The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty container.
- * @param {ResourceRegistry} resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
+ * @param {ViewResources} resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
  */
 export class Aurelia {
   loader:Loader;
   container:Container;
-  resources:ResourceRegistry;
-  use:Plugins;
+  resources:ViewResources;
+  use:FrameworkConfiguration;
 
-  constructor(loader?:Loader, container?:Container, resources?:ResourceRegistry){
-    this.resourcesToLoad = {};
-    this.preStartTasks = [];
-    this.postStartTasks = [];
+  constructor(loader?:Loader, container?:Container, resources?:ViewResources){
     this.loader = loader || new window.AureliaLoader();
     this.container = container || new Container();
-    this.resources = resources || new ResourceRegistry();
-    this.use = new Plugins(this);
+    this.resources = resources || new ViewResources();
+    this.use = new FrameworkConfiguration(this);
+    this.hostConfigured = false;
+    this.host = null;
 
-    this.withInstance(Aurelia, this);
-    this.withInstance(Loader, this.loader);
-    this.withInstance(ResourceRegistry, this.resources);
-
+    this.use.instance(Aurelia, this);
+    this.use.instance(Loader, this.loader);
+    this.use.instance(ViewResources, this.resources);
     this.container.makeGlobal();
-  }
-
-  /**
-   * Adds an existing object to the framework's dependency injection container.
-   *
-   * @method withInstance
-   * @param {Class} type The object type of the dependency that the framework will inject.
-   * @param {Object} instance The existing instance of the dependency that the framework will inject.
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-  withInstance(type:any, instance:any):Aurelia{
-    this.container.registerInstance(type, instance);
-    return this;
-  }
-
-  /**
-   * Adds a singleton to the framework's dependency injection container.
-   *
-   * @method withSingleton
-   * @param {Class} type The object type of the dependency that the framework will inject.
-   * @param {Object} implementation The constructor function of the dependency that the framework will inject.
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-  withSingleton(type:any, implementation?:Function):Aurelia{
-    this.container.registerSingleton(type, implementation);
-    return this;
-  }
-
-  /**
-   * Adds a transient to the framework's dependency injection container.
-   *
-   * @method withTransient
-   * @param {Class} type The object type of the dependency that the framework will inject.
-   * @param {Object} implementation The constructor function of the dependency that the framework will inject.
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-  withTransient(type:any, implementation?:Function):Aurelia{
-    this.container.registerTransient(type, implementation);
-    return this;
-  }
-
-  /**
-   * Adds globally available view resources to be imported into the Aurelia framework.
-   *
-   * @method globalizeResources
-   * @param {Object|Array} resources The relative module id to the resource. (Relative to the plugin's installer.)
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-   globalizeResources(resources:string|string[]):Aurelia{
-    var toAdd = Array.isArray(resources) ? resources : arguments,
-        i, ii, resource, path,
-        resourcesRelativeTo = this.resourcesRelativeTo || '';
-
-    for(i = 0, ii = toAdd.length; i < ii; ++i){
-      resource = toAdd[i];
-      if(typeof resource != 'string'){
-        throw new Error(`Invalid resource path [${resource}]. Resources must be specified as relative module IDs.`);
-      }
-
-      path = join(resourcesRelativeTo, resource);
-      this.resourcesToLoad[path] = this.resourcesToLoad[path];
-    }
-
-    return this;
-  }
-
-  /**
-   * Renames a global resource that was imported.
-   *
-   * @method renameGlobalResource
-   * @param {String} resourcePath The path to the resource.
-   * @param {String} newName The new name.
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-  renameGlobalResource(resourcePath:string, newName:string):Aurelia{
-    this.resourcesToLoad[resourcePath] = newName;
-    return this;
-  }
-
-  /**
-   * Adds an async function that runs before the plugins are run.
-   *
-   * @method addPreStartTask
-   * @param {Function} task The function to run before start.
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-  addPreStartTask(task:Function):Aurelia{
-    this.preStartTasks.push(task);
-    return this;
-  }
-
-  /**
-   * Adds an async function that runs after the plugins are run.
-   *
-   * @method addPostStartTask
-   * @param {Function} task The function to run after start.
-   * @return {Aurelia} Returns the current Aurelia instance.
-   */
-  addPostStartTask(task:Function):Aurelia{
-    this.postStartTasks.push(task);
-    return this;
   }
 
   /**
@@ -405,29 +421,23 @@ export class Aurelia {
     this.started = true;
     logger.info('Aurelia Starting');
 
-    preventActionlessFormSubmit();
+    return this.use.apply().then(() => {
+      preventActionlessFormSubmit();
 
-    return runTasks(this, this.preStartTasks).then(() => {
-      return this.use._process().then(() => {
-        if(!this.container.hasHandler(BindingLanguage)){
-          var message = 'You must configure Aurelia with a BindingLanguage implementation.';
-          logger.error(message);
-          throw new Error(message);
-        }
+      if(!this.container.hasHandler(BindingLanguage)){
+        var message = 'You must configure Aurelia with a BindingLanguage implementation.';
+        logger.error(message);
+        throw new Error(message);
+      }
 
-        if(!this.container.hasHandler(Animator)){
-          Animator.configureDefault(this.container);
-        }
+      if(!this.container.hasHandler(Animator)){
+        Animator.configureDefault(this.container);
+      }
 
-        return loadResources(this.container, this.resourcesToLoad, this.resources);
-      }).then(() => {
-        return runTasks(this, this.postStartTasks).then(() => {
-          logger.info('Aurelia Started');
-          var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
-          document.dispatchEvent(evt);
-          return this;
-        });
-      });
+      logger.info('Aurelia Started');
+      var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
+      document.dispatchEvent(evt);
+      return this;
     });
   }
 
@@ -467,8 +477,7 @@ export class Aurelia {
     compositionEngine = this.container.get(CompositionEngine);
     instruction.viewModel = root;
     instruction.container = instruction.childContainer = this.container;
-    instruction.viewSlot = new ViewSlot(this.host, true);
-    instruction.viewSlot.transformChildNodesIntoView();
+    instruction.viewSlot = this.hostSlot;
     instruction.host = this.host;
 
     return compositionEngine.compose(instruction).then(root => {
@@ -480,6 +489,10 @@ export class Aurelia {
   }
 
   _configureHost(applicationHost){
+    if(this.hostConfigured){
+      return;
+    }
+
     applicationHost = applicationHost || this.host;
 
     if (!applicationHost || typeof applicationHost == 'string') {
@@ -488,7 +501,10 @@ export class Aurelia {
       this.host = applicationHost;
     }
 
+    this.hostConfigured = true;
     this.host.aurelia = this;
+    this.hostSlot = new ViewSlot(this.host, true);
+    this.hostSlot.transformChildNodesIntoView();
     this.container.registerInstance(DOMBoundary, this.host);
   }
 
