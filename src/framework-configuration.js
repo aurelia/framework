@@ -288,12 +288,7 @@ export class FrameworkConfiguration {
    * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
   standardConfiguration():FrameworkConfiguration{
-    return this.aurelia.use
-      .defaultBindingLanguage()
-      .defaultResources()
-      .history()
-      .router()
-      .eventAggregator();
+    return this.defaultBindingLanguage().defaultResources().history().router().eventAggregator();
   }
 
   /**
