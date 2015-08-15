@@ -63,7 +63,7 @@
     "karma-chrome-launcher": "^0.1.7",
     "karma-coverage": "^0.3.1",
     "karma-jasmine": "^0.3.5",
-    "karma-jspm": "^1.1.5",
+    "karma-jspm": "^2.0.1-beta.2",
     "object.assign": "^1.0.3",
     "require-dir": "^0.1.0",
     "run-sequence": "^1.0.2",
