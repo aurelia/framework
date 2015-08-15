@@ -201,7 +201,7 @@ export class FrameworkConfiguration {
    * @param {config} config The configuration for the specified plugin.
    * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
  */
-  plugin(plugin:string, config:any):FrameworkConfiguration{
+  plugin(plugin:string, config?:any):FrameworkConfiguration{
     assertProcessed(this);
 
     if(typeof(plugin) === 'string'){
