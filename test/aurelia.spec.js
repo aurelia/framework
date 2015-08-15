@@ -9,7 +9,7 @@ describe('aurelia', () => {
 
     it("should have good defaults", () => {
       let mockLoader = {};
-      window.AureliaLoader = function(){
+      window.AureliaLoader = function() {
         return mockLoader;
       }
       let aurelia = new Aurelia();
