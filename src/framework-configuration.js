@@ -147,7 +147,7 @@ export class FrameworkConfiguration {
    * @param {config} config The configuration for the specified plugin.
    * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  feature(plugin:string, config:any):FrameworkConfiguration{
+  feature(plugin:string, config?:any):FrameworkConfiguration{
     plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
     return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: plugin, config: config || {} });
   }
@@ -201,7 +201,7 @@ export class FrameworkConfiguration {
    * @param {config} config The configuration for the specified plugin.
    * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
  */
-  plugin(plugin:string, config:any):FrameworkConfiguration{
+  plugin(plugin:string, config?:any):FrameworkConfiguration{
     assertProcessed(this);
 
     if(typeof(plugin) === 'string'){
