@@ -79,7 +79,7 @@ export class Aurelia {
    * @method start
    * @return {Promise<Aurelia>} Returns the started Aurelia instance.
    */
-  start():Promise<Aurelia>{
+  start() : Promise<Aurelia> {
     if(this.started){
       return Promise.resolve(this);
     }
@@ -115,7 +115,7 @@ export class Aurelia {
    * @param {string|Object} applicationHost The DOM object that Aurelia will enhance.
    * @return {Promise<Aurelia>} Returns the current Aurelia instance.
    */
-  enhance(bindingContext:Object={}, applicationHost=null):Promise<Aurelia>{
+  enhance(bindingContext: Object={}, applicationHost=null) : Promise<Aurelia> {
     this._configureHost(applicationHost);
 
     return new Promise((resolve) => {
@@ -135,7 +135,7 @@ export class Aurelia {
    * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
    * @return {Promise<Aurelia>} Returns the current Aurelia instance.
    */
-  setRoot(root:string='app', applicationHost=null):Promise<Aurelia>{
+  setRoot(root : string='app', applicationHost=null) : Promise<Aurelia> {
     var compositionEngine, instruction = {};
 
     this._configureHost(applicationHost);
