@@ -1,3 +1,4 @@
+/*eslint no-unused-vars:0*/
 import * as core from 'core-js';
 import * as TheLogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
@@ -13,18 +14,15 @@ import {
   DOMBoundary
 } from 'aurelia-templating';
 
-var logger = TheLogManager.getLogger('aurelia'),
-    slice = Array.prototype.slice;
-
 if (!window.CustomEvent || typeof window.CustomEvent !== 'function') {
-  var CustomEvent = function(event, params) {
-    var params = params || {
+  let CustomEvent = function(event, params) {
+    params = params || {
       bubbles: false,
       cancelable: false,
       detail: undefined
     };
 
-    var evt = document.createEvent("CustomEvent");
+    let evt = document.createEvent('CustomEvent');
     evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
     return evt;
   };
@@ -38,7 +36,7 @@ function preventActionlessFormSubmit() {
     const target = evt.target;
     const action = target.action;
 
-    if (target.tagName.toLowerCase() === 'form' && !action){
+    if (target.tagName.toLowerCase() === 'form' && !action) {
       evt.preventDefault();
     }
   });
@@ -46,24 +44,22 @@ function preventActionlessFormSubmit() {
 
 /**
  * The framework core that provides the main Aurelia object.
- *
- * @class Aurelia
- * @constructor
- * @param {Loader} loader The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use a defaultLoader.
- * @param {Container} container The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty container.
- * @param {ViewResources} resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
+ * @param loader The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use a defaultLoader.
+ * @param container The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty container.
+ * @param resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
  */
 export class Aurelia {
-  loader:Loader;
-  container:Container;
-  resources:ViewResources;
-  use:FrameworkConfiguration;
+  loader: Loader;
+  container: Container;
+  resources: ViewResources;
+  use: FrameworkConfiguration;
 
-  constructor(loader?:Loader, container?:Container, resources?:ViewResources){
+  constructor(loader?: Loader, container?: Container, resources?: ViewResources) {
     this.loader = loader || new window.AureliaLoader();
     this.container = container || new Container();
     this.resources = resources || new ViewResources();
     this.use = new FrameworkConfiguration(this);
+    this.logger = TheLogManager.getLogger('aurelia');
     this.hostConfigured = false;
     this.host = null;
 
@@ -75,33 +71,31 @@ export class Aurelia {
 
   /**
    * Loads plugins, then resources, and then starts the Aurelia instance.
-   *
-   * @method start
-   * @return {Promise<Aurelia>} Returns the started Aurelia instance.
+   * @return Returns the started Aurelia instance.
    */
-  start():Promise<Aurelia>{
-    if(this.started){
+  start(): Promise<Aurelia> {
+    if (this.started) {
       return Promise.resolve(this);
     }
 
     this.started = true;
-    logger.info('Aurelia Starting');
+    this.logger.info('Aurelia Starting');
 
     return this.use.apply().then(() => {
       preventActionlessFormSubmit();
 
-      if(!this.container.hasHandler(BindingLanguage)){
-        var message = 'You must configure Aurelia with a BindingLanguage implementation.';
-        logger.error(message);
+      if (!this.container.hasHandler(BindingLanguage)) {
+        let message = 'You must configure Aurelia with a BindingLanguage implementation.';
+        this.logger.error(message);
         throw new Error(message);
       }
 
-      if(!this.container.hasHandler(Animator)){
+      if (!this.container.hasHandler(Animator)) {
         Animator.configureDefault(this.container);
       }
 
-      logger.info('Aurelia Started');
-      var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
+      this.logger.info('Aurelia Started');
+      let evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
       document.dispatchEvent(evt);
       return this;
     });
@@ -109,16 +103,14 @@ export class Aurelia {
 
   /**
    * Enhances the host's existing elements with behaviors and bindings.
-   *
-   * @method enhance
-   * @param {Object} bindingContext A binding context for the enhanced elements.
-   * @param {string|Object} applicationHost The DOM object that Aurelia will enhance.
-   * @return {Promise<Aurelia>} Returns the current Aurelia instance.
+   * @param bindingContext A binding context for the enhanced elements.
+   * @param applicationHost The DOM object that Aurelia will enhance.
+   * @return Returns the current Aurelia instance.
    */
-  enhance(bindingContext:Object={}, applicationHost=null):Promise<Aurelia>{
+  enhance(bindingContext: Object = {}, applicationHost = null): Promise<Aurelia> {
     this._configureHost(applicationHost);
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       let viewEngine = this.container.get(ViewEngine);
       this.root = viewEngine.enhance(this.container, this.host, this.resources, bindingContext);
       this.root.attached();
@@ -129,14 +121,13 @@ export class Aurelia {
 
   /**
    * Instantiates the root view-model and view and add them to the DOM.
-   *
-   * @method setRoot
-   * @param {Object} root The root view-model to load upon bootstrap.
-   * @param {string|Object} applicationHost The DOM object that Aurelia will attach to.
-   * @return {Promise<Aurelia>} Returns the current Aurelia instance.
+   * @param root The root view-model to load upon bootstrap.
+   * @param applicationHost The DOM object that Aurelia will attach to.
+   * @return Returns the current Aurelia instance.
    */
-  setRoot(root:string='app', applicationHost=null):Promise<Aurelia>{
-    var compositionEngine, instruction = {};
+  setRoot(root: string = 'app', applicationHost = null): Promise<Aurelia> {
+    let compositionEngine;
+    let instruction = {};
 
     this._configureHost(applicationHost);
 
@@ -146,22 +137,22 @@ export class Aurelia {
     instruction.viewSlot = this.hostSlot;
     instruction.host = this.host;
 
-    return compositionEngine.compose(instruction).then(root => {
-      this.root = root;
+    return compositionEngine.compose(instruction).then(r => {
+      this.root = r;
       instruction.viewSlot.attached();
       this._onAureliaComposed();
       return this;
     });
   }
 
-  _configureHost(applicationHost){
-    if(this.hostConfigured){
+  _configureHost(applicationHost) {
+    if (this.hostConfigured) {
       return;
     }
 
     applicationHost = applicationHost || this.host;
 
-    if (!applicationHost || typeof applicationHost == 'string') {
+    if (!applicationHost || typeof applicationHost === 'string') {
       this.host = document.getElementById(applicationHost || 'applicationHost') || document.body;
     } else {
       this.host = applicationHost;
@@ -174,8 +165,8 @@ export class Aurelia {
     this.container.registerInstance(DOMBoundary, this.host);
   }
 
-  _onAureliaComposed(){
-    var evt = new window.CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
+  _onAureliaComposed() {
+    let evt = new window.CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
     setTimeout(() => document.dispatchEvent(evt), 1);
   }
 }
