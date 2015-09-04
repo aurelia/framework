@@ -6,7 +6,7 @@
   "flags": {},
   "children": [
     {
-      "id": 56,
+      "id": 58,
       "name": "Aurelia",
       "kind": 128,
       "kindString": "Class",
@@ -35,7 +35,7 @@
       },
       "children": [
         {
-          "id": 61,
+          "id": 63,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -44,14 +44,14 @@
           },
           "signatures": [
             {
-              "id": 62,
+              "id": 64,
               "name": "new Aurelia",
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 63,
+                  "id": 65,
                   "name": "loader",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -61,12 +61,12 @@
                   "type": {
                     "type": "reference",
                     "name": "Loader",
-                    "id": 1471,
+                    "id": 1520,
                     "moduleName": "\"aurelia-loader\""
                   }
                 },
                 {
-                  "id": 64,
+                  "id": 66,
                   "name": "container",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -76,12 +76,12 @@
                   "type": {
                     "type": "reference",
                     "name": "Container",
-                    "id": 1365,
+                    "id": 1367,
                     "moduleName": "\"aurelia-dependency-injection\""
                   }
                 },
                 {
-                  "id": 65,
+                  "id": 67,
                   "name": "resources",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -91,7 +91,7 @@
                   "type": {
                     "type": "reference",
                     "name": "ViewResources",
-                    "id": 1905,
+                    "id": 1891,
                     "moduleName": "\"aurelia-templating\""
                   }
                 }
@@ -99,14 +99,14 @@
               "type": {
                 "type": "reference",
                 "name": "Aurelia",
-                "id": 56,
+                "id": 58,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 58,
+          "id": 60,
           "name": "container",
           "kind": 1024,
           "kindString": "Property",
@@ -116,12 +116,12 @@
           "type": {
             "type": "reference",
             "name": "Container",
-            "id": 1365,
+            "id": 1367,
             "moduleName": "\"aurelia-dependency-injection\""
           }
         },
         {
-          "id": 57,
+          "id": 59,
           "name": "loader",
           "kind": 1024,
           "kindString": "Property",
@@ -131,12 +131,12 @@
           "type": {
             "type": "reference",
             "name": "Loader",
-            "id": 1471,
+            "id": 1520,
             "moduleName": "\"aurelia-loader\""
           }
         },
         {
-          "id": 59,
+          "id": 61,
           "name": "resources",
           "kind": 1024,
           "kindString": "Property",
@@ -146,12 +146,12 @@
           "type": {
             "type": "reference",
             "name": "ViewResources",
-            "id": 1905,
+            "id": 1891,
             "moduleName": "\"aurelia-templating\""
           }
         },
         {
-          "id": 60,
+          "id": 62,
           "name": "use",
           "kind": 1024,
           "kindString": "Property",
@@ -166,7 +166,7 @@
           }
         },
         {
-          "id": 68,
+          "id": 70,
           "name": "enhance",
           "kind": 2048,
           "kindString": "Method",
@@ -175,7 +175,7 @@
           },
           "signatures": [
             {
-              "id": 69,
+              "id": 71,
               "name": "enhance",
               "kind": 4096,
               "kindString": "Call signature",
@@ -186,7 +186,7 @@
               },
               "parameters": [
                 {
-                  "id": 70,
+                  "id": 72,
                   "name": "bindingContext",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -202,7 +202,7 @@
                   }
                 },
                 {
-                  "id": 71,
+                  "id": 73,
                   "name": "applicationHost",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -225,7 +225,7 @@
                   {
                     "type": "reference",
                     "name": "Aurelia",
-                    "id": 56
+                    "id": 58
                   }
                 ]
               }
@@ -233,7 +233,7 @@
           ]
         },
         {
-          "id": 72,
+          "id": 74,
           "name": "setRoot",
           "kind": 2048,
           "kindString": "Method",
@@ -242,7 +242,7 @@
           },
           "signatures": [
             {
-              "id": 73,
+              "id": 75,
               "name": "setRoot",
               "kind": 4096,
               "kindString": "Call signature",
@@ -253,7 +253,7 @@
               },
               "parameters": [
                 {
-                  "id": 74,
+                  "id": 76,
                   "name": "root",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -269,7 +269,7 @@
                   }
                 },
                 {
-                  "id": 75,
+                  "id": 77,
                   "name": "applicationHost",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -292,7 +292,7 @@
                   {
                     "type": "reference",
                     "name": "Aurelia",
-                    "id": 56
+                    "id": 58
                   }
                 ]
               }
@@ -300,7 +300,7 @@
           ]
         },
         {
-          "id": 66,
+          "id": 68,
           "name": "start",
           "kind": 2048,
           "kindString": "Method",
@@ -309,7 +309,7 @@
           },
           "signatures": [
             {
-              "id": 67,
+              "id": 69,
               "name": "start",
               "kind": 4096,
               "kindString": "Call signature",
@@ -325,7 +325,7 @@
                   {
                     "type": "reference",
                     "name": "Aurelia",
-                    "id": 56
+                    "id": 58
                   }
                 ]
               }
@@ -338,26 +338,26 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            61
+            63
           ]
         },
         {
           "title": "Properties",
           "kind": 1024,
           "children": [
-            58,
-            57,
+            60,
             59,
-            60
+            61,
+            62
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            68,
-            72,
-            66
+            70,
+            74,
+            68
           ]
         }
       ]
@@ -382,7 +382,7 @@
       },
       "children": [
         {
-          "id": 4,
+          "id": 6,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -391,14 +391,14 @@
           },
           "signatures": [
             {
-              "id": 5,
+              "id": 7,
               "name": "new FrameworkConfiguration",
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 6,
+                  "id": 8,
                   "name": "aurelia",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -406,7 +406,7 @@
                   "type": {
                     "type": "reference",
                     "name": "Aurelia",
-                    "id": 56,
+                    "id": 58,
                     "moduleName": "\"aurelia-framework\""
                   }
                 }
@@ -421,7 +421,37 @@
           ]
         },
         {
-          "id": 54,
+          "id": 5,
+          "name": "aurelia",
+          "kind": 1024,
+          "kindString": "Property",
+          "flags": {
+            "isExported": true
+          },
+          "type": {
+            "type": "reference",
+            "name": "Aurelia",
+            "id": 58,
+            "moduleName": "\"aurelia-framework\""
+          }
+        },
+        {
+          "id": 4,
+          "name": "container",
+          "kind": 1024,
+          "kindString": "Property",
+          "flags": {
+            "isExported": true
+          },
+          "type": {
+            "type": "reference",
+            "name": "Container",
+            "id": 1367,
+            "moduleName": "\"aurelia-dependency-injection\""
+          }
+        },
+        {
+          "id": 56,
           "name": "apply",
           "kind": 2048,
           "kindString": "Method",
@@ -430,7 +460,7 @@
           },
           "signatures": [
             {
-              "id": 55,
+              "id": 57,
               "name": "apply",
               "kind": 4096,
               "kindString": "Call signature",
@@ -453,7 +483,7 @@
           ]
         },
         {
-          "id": 40,
+          "id": 42,
           "name": "defaultBindingLanguage",
           "kind": 2048,
           "kindString": "Method",
@@ -462,7 +492,7 @@
           },
           "signatures": [
             {
-              "id": 41,
+              "id": 43,
               "name": "defaultBindingLanguage",
               "kind": 4096,
               "kindString": "Call signature",
@@ -481,7 +511,7 @@
           ]
         },
         {
-          "id": 46,
+          "id": 48,
           "name": "defaultResources",
           "kind": 2048,
           "kindString": "Method",
@@ -490,7 +520,7 @@
           },
           "signatures": [
             {
-              "id": 47,
+              "id": 49,
               "name": "defaultResources",
               "kind": 4096,
               "kindString": "Call signature",
@@ -509,7 +539,7 @@
           ]
         },
         {
-          "id": 52,
+          "id": 54,
           "name": "developmentLogging",
           "kind": 2048,
           "kindString": "Method",
@@ -518,7 +548,7 @@
           },
           "signatures": [
             {
-              "id": 53,
+              "id": 55,
               "name": "developmentLogging",
               "kind": 4096,
               "kindString": "Call signature",
@@ -537,7 +567,7 @@
           ]
         },
         {
-          "id": 48,
+          "id": 50,
           "name": "eventAggregator",
           "kind": 2048,
           "kindString": "Method",
@@ -546,7 +576,7 @@
           },
           "signatures": [
             {
-              "id": 49,
+              "id": 51,
               "name": "eventAggregator",
               "kind": 4096,
               "kindString": "Call signature",
@@ -565,7 +595,7 @@
           ]
         },
         {
-          "id": 25,
+          "id": 27,
           "name": "feature",
           "kind": 2048,
           "kindString": "Method",
@@ -574,7 +604,7 @@
           },
           "signatures": [
             {
-              "id": 26,
+              "id": 28,
               "name": "feature",
               "kind": 4096,
               "kindString": "Call signature",
@@ -585,7 +615,7 @@
               },
               "parameters": [
                 {
-                  "id": 27,
+                  "id": 29,
                   "name": "plugin",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -599,7 +629,7 @@
                   }
                 },
                 {
-                  "id": 28,
+                  "id": 30,
                   "name": "config",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -625,7 +655,7 @@
           ]
         },
         {
-          "id": 32,
+          "id": 34,
           "name": "globalName",
           "kind": 2048,
           "kindString": "Method",
@@ -634,7 +664,7 @@
           },
           "signatures": [
             {
-              "id": 33,
+              "id": 35,
               "name": "globalName",
               "kind": 4096,
               "kindString": "Call signature",
@@ -645,7 +675,7 @@
               },
               "parameters": [
                 {
-                  "id": 34,
+                  "id": 36,
                   "name": "resourcePath",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -659,7 +689,7 @@
                   }
                 },
                 {
-                  "id": 35,
+                  "id": 37,
                   "name": "newName",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -683,7 +713,7 @@
           ]
         },
         {
-          "id": 29,
+          "id": 31,
           "name": "globalResources",
           "kind": 2048,
           "kindString": "Method",
@@ -692,7 +722,7 @@
           },
           "signatures": [
             {
-              "id": 30,
+              "id": 32,
               "name": "globalResources",
               "kind": 4096,
               "kindString": "Call signature",
@@ -703,7 +733,7 @@
               },
               "parameters": [
                 {
-                  "id": 31,
+                  "id": 33,
                   "name": "resources",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -737,7 +767,7 @@
           ]
         },
         {
-          "id": 44,
+          "id": 46,
           "name": "history",
           "kind": 2048,
           "kindString": "Method",
@@ -746,7 +776,7 @@
           },
           "signatures": [
             {
-              "id": 45,
+              "id": 47,
               "name": "history",
               "kind": 4096,
               "kindString": "Call signature",
@@ -765,7 +795,7 @@
           ]
         },
         {
-          "id": 7,
+          "id": 9,
           "name": "instance",
           "kind": 2048,
           "kindString": "Method",
@@ -774,7 +804,7 @@
           },
           "signatures": [
             {
-              "id": 8,
+              "id": 10,
               "name": "instance",
               "kind": 4096,
               "kindString": "Call signature",
@@ -785,7 +815,7 @@
               },
               "parameters": [
                 {
-                  "id": 9,
+                  "id": 11,
                   "name": "type",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -799,7 +829,7 @@
                   }
                 },
                 {
-                  "id": 10,
+                  "id": 12,
                   "name": "instance",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -823,7 +853,7 @@
           ]
         },
         {
-          "id": 36,
+          "id": 38,
           "name": "plugin",
           "kind": 2048,
           "kindString": "Method",
@@ -832,7 +862,7 @@
           },
           "signatures": [
             {
-              "id": 37,
+              "id": 39,
               "name": "plugin",
               "kind": 4096,
               "kindString": "Call signature",
@@ -843,7 +873,7 @@
               },
               "parameters": [
                 {
-                  "id": 38,
+                  "id": 40,
                   "name": "plugin",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -857,7 +887,7 @@
                   }
                 },
                 {
-                  "id": 39,
+                  "id": 41,
                   "name": "config",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -883,7 +913,7 @@
           ]
         },
         {
-          "id": 22,
+          "id": 24,
           "name": "postTask",
           "kind": 2048,
           "kindString": "Method",
@@ -892,7 +922,7 @@
           },
           "signatures": [
             {
-              "id": 23,
+              "id": 25,
               "name": "postTask",
               "kind": 4096,
               "kindString": "Call signature",
@@ -903,7 +933,7 @@
               },
               "parameters": [
                 {
-                  "id": 24,
+                  "id": 26,
                   "name": "task",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -927,7 +957,7 @@
           ]
         },
         {
-          "id": 19,
+          "id": 21,
           "name": "preTask",
           "kind": 2048,
           "kindString": "Method",
@@ -936,7 +966,7 @@
           },
           "signatures": [
             {
-              "id": 20,
+              "id": 22,
               "name": "preTask",
               "kind": 4096,
               "kindString": "Call signature",
@@ -947,7 +977,7 @@
               },
               "parameters": [
                 {
-                  "id": 21,
+                  "id": 23,
                   "name": "task",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -971,7 +1001,7 @@
           ]
         },
         {
-          "id": 42,
+          "id": 44,
           "name": "router",
           "kind": 2048,
           "kindString": "Method",
@@ -980,7 +1010,7 @@
           },
           "signatures": [
             {
-              "id": 43,
+              "id": 45,
               "name": "router",
               "kind": 4096,
               "kindString": "Call signature",
@@ -999,7 +1029,7 @@
           ]
         },
         {
-          "id": 11,
+          "id": 13,
           "name": "singleton",
           "kind": 2048,
           "kindString": "Method",
@@ -1008,7 +1038,7 @@
           },
           "signatures": [
             {
-              "id": 12,
+              "id": 14,
               "name": "singleton",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1019,7 +1049,7 @@
               },
               "parameters": [
                 {
-                  "id": 13,
+                  "id": 15,
                   "name": "type",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1033,7 +1063,7 @@
                   }
                 },
                 {
-                  "id": 14,
+                  "id": 16,
                   "name": "implementation",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1059,7 +1089,7 @@
           ]
         },
         {
-          "id": 50,
+          "id": 52,
           "name": "standardConfiguration",
           "kind": 2048,
           "kindString": "Method",
@@ -1068,7 +1098,7 @@
           },
           "signatures": [
             {
-              "id": 51,
+              "id": 53,
               "name": "standardConfiguration",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1087,7 +1117,7 @@
           ]
         },
         {
-          "id": 15,
+          "id": 17,
           "name": "transient",
           "kind": 2048,
           "kindString": "Method",
@@ -1096,7 +1126,7 @@
           },
           "signatures": [
             {
-              "id": 16,
+              "id": 18,
               "name": "transient",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1107,7 +1137,7 @@
               },
               "parameters": [
                 {
-                  "id": 17,
+                  "id": 19,
                   "name": "type",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1121,7 +1151,7 @@
                   }
                 },
                 {
-                  "id": 18,
+                  "id": 20,
                   "name": "implementation",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1152,6 +1182,14 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
+            6
+          ]
+        },
+        {
+          "title": "Properties",
+          "kind": 1024,
+          "children": [
+            5,
             4
           ]
         },
@@ -1159,29 +1197,29 @@
           "title": "Methods",
           "kind": 2048,
           "children": [
-            54,
-            40,
-            46,
-            52,
-            48,
-            25,
-            32,
-            29,
-            44,
-            7,
-            36,
-            22,
-            19,
+            56,
             42,
-            11,
+            48,
+            54,
             50,
-            15
+            27,
+            34,
+            31,
+            46,
+            9,
+            38,
+            24,
+            21,
+            44,
+            13,
+            52,
+            17
           ]
         }
       ]
     },
     {
-      "id": 76,
+      "id": 78,
       "name": "LogManager",
       "kind": 32,
       "kindString": "Variable",
@@ -1199,7 +1237,7 @@
       "title": "Classes",
       "kind": 128,
       "children": [
-        56,
+        58,
         3
       ]
     },
@@ -1207,7 +1245,7 @@
       "title": "Variables",
       "kind": 32,
       "children": [
-        76
+        78
       ]
     }
   ]

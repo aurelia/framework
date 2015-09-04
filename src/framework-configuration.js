@@ -3,6 +3,7 @@ import * as core from 'core-js';
 import * as TheLogManager from 'aurelia-logging';
 import {ViewEngine} from 'aurelia-templating';
 import {join} from 'aurelia-path';
+import {Container} from 'aurelia-dependency-injection';
 
 const logger = TheLogManager.getLogger('aurelia');
 
@@ -59,6 +60,9 @@ function assertProcessed(plugins) {
  * @param {Aurelia} aurelia An instance of Aurelia.
  */
 export class FrameworkConfiguration {
+  container: Container;
+  aurelia: Aurelia;
+
   constructor(aurelia: Aurelia) {
     this.aurelia = aurelia;
     this.container = aurelia.container;
