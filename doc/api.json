@@ -61,7 +61,7 @@
                   "type": {
                     "type": "reference",
                     "name": "Loader",
-                    "id": 1520,
+                    "id": 1473,
                     "moduleName": "\"aurelia-loader\""
                   }
                 },
@@ -91,7 +91,7 @@
                   "type": {
                     "type": "reference",
                     "name": "ViewResources",
-                    "id": 1891,
+                    "id": 1907,
                     "moduleName": "\"aurelia-templating\""
                   }
                 }
@@ -131,7 +131,7 @@
           "type": {
             "type": "reference",
             "name": "Loader",
-            "id": 1520,
+            "id": 1473,
             "moduleName": "\"aurelia-loader\""
           }
         },
@@ -146,7 +146,7 @@
           "type": {
             "type": "reference",
             "name": "ViewResources",
-            "id": 1891,
+            "id": 1907,
             "moduleName": "\"aurelia-templating\""
           }
         },

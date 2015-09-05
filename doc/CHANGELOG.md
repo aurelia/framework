@@ -1,3 +1,15 @@
+## 0.16.0 (2015-09-05)
+
+
+#### Bug Fixes
+
+* **build:** update linting, testing and tools ([ed65edc6](http://github.com/aurelia/framework/commit/ed65edc6cc7d6e6250ac6885f02780c0ea640cb4))
+* **framework-configuration:**
+  * add public properties ([a5b32853](http://github.com/aurelia/framework/commit/a5b3285341063578cdc8631533bf7c92ff7fe354), closes [#199](http://github.com/aurelia/framework/issues/199))
+  * parameter config in feature and plugin method is optional ([b07c4817](http://github.com/aurelia/framework/commit/b07c481744746d95f60f0c5bebb3caf3306dea55))
+  * improve standardConfiguration ([c91ea2b9](http://github.com/aurelia/framework/commit/c91ea2b9cf5e36042930bf48b27b7287f425067c))
+
+
 ## 0.15.0 (2015-08-14)
 
 

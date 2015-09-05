@@ -1,4 +1,4 @@
-define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-templating', 'aurelia-path', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-binding', 'aurelia-task-queue'], function (exports, _coreJs, _aureliaLogging, _aureliaMetadata, _aureliaTemplating, _aureliaPath, _aureliaDependencyInjection, _aureliaLoader, _aureliaBinding, _aureliaTaskQueue) {
+define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-path', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-binding', 'aurelia-metadata', 'aurelia-task-queue'], function (exports, _coreJs, _aureliaLogging, _aureliaTemplating, _aureliaPath, _aureliaDependencyInjection, _aureliaLoader, _aureliaBinding, _aureliaMetadata, _aureliaTaskQueue) {
   'use strict';
 
   exports.__esModule = true;
@@ -12,8 +12,8 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-te
   var logger = _aureliaLogging.getLogger('aurelia');
 
   function runTasks(config, tasks) {
-    var current = undefined,
-        next = function next() {
+    var current = undefined;
+    var next = function next() {
       if (current = tasks.shift()) {
         return Promise.resolve(current(config)).then(next);
       }
@@ -34,21 +34,19 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-te
           config.resourcesRelativeTo = null;
           logger.debug('Configured plugin ' + info.moduleId + '.');
         });
-      } else {
-        config.resourcesRelativeTo = null;
-        logger.debug('Loaded plugin ' + info.moduleId + '.');
       }
+
+      config.resourcesRelativeTo = null;
+      logger.debug('Loaded plugin ' + info.moduleId + '.');
     });
   }
 
   function loadResources(container, resourcesToLoad, appResources) {
-    var viewEngine = container.get(_aureliaTemplating.ViewEngine),
-        importIds = Object.keys(resourcesToLoad),
-        names = new Array(importIds.length),
-        i,
-        ii;
+    var viewEngine = container.get(_aureliaTemplating.ViewEngine);
+    var importIds = Object.keys(resourcesToLoad);
+    var names = new Array(importIds.length);
 
-    for (i = 0, ii = importIds.length; i < ii; ++i) {
+    for (var i = 0, ii = importIds.length; i < ii; ++i) {
       names[i] = resourcesToLoad[importIds[i]];
     }
 
@@ -119,16 +117,14 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-te
     FrameworkConfiguration.prototype.globalResources = function globalResources(resources) {
       assertProcessed(this);
 
-      var toAdd = Array.isArray(resources) ? resources : arguments,
-          i = undefined,
-          ii = undefined,
-          resource = undefined,
-          path = undefined,
-          resourcesRelativeTo = this.resourcesRelativeTo || '';
+      var toAdd = Array.isArray(resources) ? resources : arguments;
+      var resource = undefined;
+      var path = undefined;
+      var resourcesRelativeTo = this.resourcesRelativeTo || '';
 
-      for (i = 0, ii = toAdd.length; i < ii; ++i) {
+      for (var i = 0, ii = toAdd.length; i < ii; ++i) {
         resource = toAdd[i];
-        if (typeof resource != 'string') {
+        if (typeof resource !== 'string') {
           throw new Error('Invalid resource path [' + resource + ']. Resources must be specified as relative module IDs.');
         }
 
@@ -197,7 +193,7 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-te
     };
 
     FrameworkConfiguration.prototype.standardConfiguration = function standardConfiguration() {
-      return this.aurelia.use.defaultBindingLanguage().defaultResources().history().router().eventAggregator();
+      return this.defaultBindingLanguage().defaultResources().history().router().eventAggregator();
     };
 
     FrameworkConfiguration.prototype.developmentLogging = function developmentLogging() {
@@ -223,9 +219,9 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-te
       }
 
       return runTasks(this, this.preTasks).then(function () {
-        var loader = _this4.aurelia.loader,
-            info = _this4.info,
-            current = undefined;
+        var loader = _this4.aurelia.loader;
+        var info = _this4.info;
+        var current = undefined;
 
         var next = function next() {
           if (current = info.shift()) {
@@ -247,24 +243,21 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-te
 
   exports.FrameworkConfiguration = FrameworkConfiguration;
 
-  var logger = _aureliaLogging.getLogger('aurelia'),
-      slice = Array.prototype.slice;
-
   if (!window.CustomEvent || typeof window.CustomEvent !== 'function') {
-    var CustomEvent = function CustomEvent(event, params) {
-      var params = params || {
+    var _CustomEvent = function _CustomEvent(event, params) {
+      params = params || {
         bubbles: false,
         cancelable: false,
         detail: undefined
       };
 
-      var evt = document.createEvent("CustomEvent");
+      var evt = document.createEvent('CustomEvent');
       evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
       return evt;
     };
 
-    CustomEvent.prototype = window.Event.prototype;
-    window.CustomEvent = CustomEvent;
+    _CustomEvent.prototype = window.Event.prototype;
+    window.CustomEvent = _CustomEvent;
   }
 
   function preventActionlessFormSubmit() {
@@ -286,6 +279,7 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-te
       this.container = container || new _aureliaDependencyInjection.Container();
       this.resources = resources || new _aureliaTemplating.ViewResources();
       this.use = new FrameworkConfiguration(this);
+      this.logger = _aureliaLogging.getLogger('aurelia');
       this.hostConfigured = false;
       this.host = null;
 
@@ -303,14 +297,14 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-te
       }
 
       this.started = true;
-      logger.info('Aurelia Starting');
+      this.logger.info('Aurelia Starting');
 
       return this.use.apply().then(function () {
         preventActionlessFormSubmit();
 
         if (!_this5.container.hasHandler(_aureliaTemplating.BindingLanguage)) {
           var message = 'You must configure Aurelia with a BindingLanguage implementation.';
-          logger.error(message);
+          _this5.logger.error(message);
           throw new Error(message);
         }
 
@@ -318,7 +312,7 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-te
           _aureliaTemplating.Animator.configureDefault(_this5.container);
         }
 
-        logger.info('Aurelia Started');
+        _this5.logger.info('Aurelia Started');
         var evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
         document.dispatchEvent(evt);
         return _this5;
@@ -348,8 +342,8 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-te
       var root = arguments.length <= 0 || arguments[0] === undefined ? 'app' : arguments[0];
       var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
-      var compositionEngine,
-          instruction = {};
+      var compositionEngine = undefined;
+      var instruction = {};
 
       this._configureHost(applicationHost);
 
@@ -359,8 +353,8 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-te
       instruction.viewSlot = this.hostSlot;
       instruction.host = this.host;
 
-      return compositionEngine.compose(instruction).then(function (root) {
-        _this7.root = root;
+      return compositionEngine.compose(instruction).then(function (r) {
+        _this7.root = r;
         instruction.viewSlot.attached();
         _this7._onAureliaComposed();
         return _this7;
@@ -374,7 +368,7 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-metadata', 'aurelia-te
 
       applicationHost = applicationHost || this.host;
 
-      if (!applicationHost || typeof applicationHost == 'string') {
+      if (!applicationHost || typeof applicationHost === 'string') {
         this.host = document.getElementById(applicationHost || 'applicationHost') || document.body;
       } else {
         this.host = applicationHost;
