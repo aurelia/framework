@@ -71,7 +71,7 @@ export class FrameworkConfiguration {
     this.preTasks = [];
     this.postTasks = [];
     this.resourcesToLoad = {};
-    this.preTask(() => System.normalize('aurelia-bootstrapper').then(bootstrapperName => this.bootstrapperName = bootstrapperName));
+    this.preTask(() => this.bootstrapperName = aurelia.loader.normalizeSync('aurelia-bootstrapper'));
     this.postTask(() => loadResources(aurelia.container, this.resourcesToLoad, aurelia.resources));
   }
 
@@ -202,14 +202,13 @@ export class FrameworkConfiguration {
 
     this.plugin(plugin);
     this.preTask(() => {
-      return System.normalize(name, this.bootstrapperName).then(normalizedName => {
-        normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts')
-          ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
+      let normalizedName = this.aurelia.loader.normalizeSync(name, this.bootstrapperName);
+      normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts')
+        ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
 
-        plugin.moduleId = normalizedName;
-        plugin.resourcesRelativeTo = normalizedName;
-        System.map[name] = normalizedName;
-      });
+      plugin.moduleId = normalizedName;
+      plugin.resourcesRelativeTo = normalizedName;
+      this.aurelia.loader.map(name, normalizedName);
     });
 
     return this;
@@ -269,11 +268,10 @@ export class FrameworkConfiguration {
   */
   developmentLogging(): FrameworkConfiguration {
     this.preTask(() => {
-      return System.normalize('aurelia-logging-console', this.bootstrapperName).then(name => {
-        return this.aurelia.loader.loadModule(name).then(m => {
-          TheLogManager.addAppender(new m.ConsoleAppender());
-          TheLogManager.setLevel(TheLogManager.logLevel.debug);
-        });
+      let name = this.aurelia.loader.normalizeSync('aurelia-logging-console', this.bootstrapperName);
+      return this.aurelia.loader.loadModule(name).then(m => {
+        TheLogManager.addAppender(new m.ConsoleAppender());
+        TheLogManager.setLevel(TheLogManager.logLevel.debug);
       });
     });
 
