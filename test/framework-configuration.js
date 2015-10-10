@@ -1,8 +1,11 @@
 import {FrameworkConfiguration} from '../src/framework-configuration';
 import {Aurelia} from '../src/aurelia';
 import {Metadata} from 'aurelia-metadata';
+import {initialize} from 'aurelia-pal-browser';
 
 describe('the framework config', () => {
+  beforeAll(() => initialize());
+
   it('should initialize', () => {
     let aureliaMock = jasmine.createSpyObj('aureliaMock', ['loader']);
     let config = new FrameworkConfiguration(aureliaMock);
@@ -71,8 +74,8 @@ describe('the framework config', () => {
         resolve();
       }));
 
-      mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'hasHandler', 'get', 'makeGlobal']);
-      mockContainer.hasHandler.and.returnValue(true);
+      mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'hasResolver', 'get', 'makeGlobal']);
+      mockContainer.hasResolver.and.returnValue(true);
       mockContainer.get.and.returnValue(mockViewEngine);
 
       aurelia = new Aurelia(mockLoader, mockContainer, mockResources);
@@ -89,6 +92,7 @@ describe('the framework config', () => {
         });
       });
 
+      aurelia.loader.normalizeSync = jasmine.createSpy('normalizeSync').and.callFake(input => input);
       aurelia.loader.loadModule = loadModule;
     });
 
@@ -182,10 +186,11 @@ describe('the framework config', () => {
         resolve();
       }));
 
-      mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'hasHandler', 'get', 'makeGlobal']);
-      mockContainer.hasHandler.and.returnValue(true);
+      mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'hasResolver', 'get', 'makeGlobal']);
+      mockContainer.hasResolver.and.returnValue(true);
       mockContainer.get.and.returnValue(mockViewEngine);
 
+      mockLoader.normalizeSync = jasmine.createSpy('normalizeSync').and.callFake(input => input);
       aurelia = new Aurelia(mockLoader, mockContainer, mockResources);
     });
 

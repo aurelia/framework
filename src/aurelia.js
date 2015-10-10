@@ -1,5 +1,5 @@
 /*eslint no-unused-vars:0*/
-import * as core from 'core-js';
+import 'core-js';
 import * as TheLogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
@@ -10,29 +10,12 @@ import {
   ViewSlot,
   ViewResources,
   CompositionEngine,
-  Animator,
-  DOMBoundary
+  Animator
 } from 'aurelia-templating';
-
-if (!window.CustomEvent || typeof window.CustomEvent !== 'function') {
-  let CustomEvent = function(event, params) {
-    params = params || {
-      bubbles: false,
-      cancelable: false,
-      detail: undefined
-    };
-
-    let evt = document.createEvent('CustomEvent');
-    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-    return evt;
-  };
-
-  CustomEvent.prototype = window.Event.prototype;
-  window.CustomEvent = CustomEvent;
-}
+import {DOM} from 'aurelia-pal';
 
 function preventActionlessFormSubmit() {
-  document.body.addEventListener('submit', evt => {
+  DOM.addEventListener('submit', evt => {
     const target = evt.target;
     const action = target.action;
 
@@ -84,19 +67,19 @@ export class Aurelia {
     return this.use.apply().then(() => {
       preventActionlessFormSubmit();
 
-      if (!this.container.hasHandler(BindingLanguage)) {
+      if (!this.container.hasResolver(BindingLanguage)) {
         let message = 'You must configure Aurelia with a BindingLanguage implementation.';
         this.logger.error(message);
         throw new Error(message);
       }
 
-      if (!this.container.hasHandler(Animator)) {
+      if (!this.container.hasResolver(Animator)) {
         Animator.configureDefault(this.container);
       }
 
       this.logger.info('Aurelia Started');
-      let evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
-      document.dispatchEvent(evt);
+      let evt = DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
+      DOM.dispatchEvent(evt);
       return this;
     });
   }
@@ -153,20 +136,24 @@ export class Aurelia {
     applicationHost = applicationHost || this.host;
 
     if (!applicationHost || typeof applicationHost === 'string') {
-      this.host = document.getElementById(applicationHost || 'applicationHost') || document.body;
+      this.host = DOM.getElementById(applicationHost || 'applicationHost');
     } else {
       this.host = applicationHost;
+    }
+
+    if (!this.host) {
+      throw new Error('No applicationHost was specified.');
     }
 
     this.hostConfigured = true;
     this.host.aurelia = this;
     this.hostSlot = new ViewSlot(this.host, true);
     this.hostSlot.transformChildNodesIntoView();
-    this.container.registerInstance(DOMBoundary, this.host);
+    this.container.registerInstance(DOM.boundary, this.host);
   }
 
   _onAureliaComposed() {
-    let evt = new window.CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
-    setTimeout(() => document.dispatchEvent(evt), 1);
+    let evt = DOM.createCustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
+    setTimeout(() => DOM.dispatchEvent(evt), 1);
   }
 }

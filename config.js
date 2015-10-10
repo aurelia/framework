@@ -19,6 +19,8 @@ System.config({
     "aurelia-loader": "github:aurelia/loader@0.9.0",
     "aurelia-logging": "github:aurelia/logging@0.7.0",
     "aurelia-metadata": "github:aurelia/metadata@0.8.0",
+    "aurelia-pal": "github:aurelia/pal@0.1.10",
+    "aurelia-pal-browser": "github:aurelia/pal-browser@0.1.13",
     "aurelia-path": "github:aurelia/path@0.9.0",
     "aurelia-task-queue": "github:aurelia/task-queue@0.7.0",
     "aurelia-templating": "github:aurelia/templating@0.15.0",
@@ -44,6 +46,9 @@ System.config({
     },
     "github:aurelia/metadata@0.8.0": {
       "core-js": "npm:core-js@0.9.18"
+    },
+    "github:aurelia/pal-browser@0.1.13": {
+      "aurelia-pal": "github:aurelia/pal@0.1.10"
     },
     "github:aurelia/templating@0.15.0": {
       "aurelia-binding": "github:aurelia/binding@0.9.0",

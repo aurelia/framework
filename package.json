@@ -30,12 +30,14 @@
       "aurelia-loader": "github:aurelia/loader@^0.9.0",
       "aurelia-logging": "github:aurelia/logging@^0.7.0",
       "aurelia-metadata": "github:aurelia/metadata@^0.8.0",
+      "aurelia-pal": "github:aurelia/pal@^0.1.10",
       "aurelia-path": "github:aurelia/path@^0.9.0",
       "aurelia-task-queue": "github:aurelia/task-queue@^0.7.0",
       "aurelia-templating": "github:aurelia/templating@^0.15.0",
       "core-js": "npm:core-js@^0.9.5"
     },
     "devDependencies": {
+      "aurelia-pal-browser": "github:aurelia/pal-browser@^0.1.13",
       "babel": "npm:babel-core@^5.1.13",
       "babel-runtime": "npm:babel-runtime@^5.1.13",
       "core-js": "npm:core-js@^0.9.5"
