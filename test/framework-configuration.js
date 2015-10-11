@@ -24,7 +24,7 @@ describe('the framework config', () => {
     }
 
     beforeEach(() => {
-      mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'registerSingleton', 'makeGlobal']);
+      mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'registerSingleton', 'makeGlobal', 'get']);
       aurelia = new Aurelia({}, mockContainer);
       testInstance = new TestClass();
     });

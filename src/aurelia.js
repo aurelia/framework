@@ -13,6 +13,7 @@ import {
   Animator
 } from 'aurelia-templating';
 import {DOM, PLATFORM} from 'aurelia-pal';
+import {BindingSystem} from 'aurelia-binding';
 
 function preventActionlessFormSubmit() {
   DOM.addEventListener('submit', evt => {
@@ -49,6 +50,8 @@ export class Aurelia {
     this.use.instance(Aurelia, this);
     this.use.instance(Loader, this.loader);
     this.use.instance(ViewResources, this.resources);
+    BindingSystem.initialize(this.container);
+    this.use.instance(BindingSystem);
     this.container.makeGlobal();
   }
 

@@ -5,6 +5,7 @@ import {BindingLanguage, ViewSlot, ViewResources, CompositionEngine} from 'aurel
 import {FrameworkConfiguration} from '../src/framework-configuration';
 import {initialize} from 'aurelia-pal-browser';
 import {PLATFORM} from 'aurelia-pal';
+import {BindingSystem} from 'aurelia-binding';
 
 describe('aurelia', () => {
   beforeAll(() => initialize());
@@ -28,7 +29,7 @@ describe('aurelia', () => {
     it("will take in a loader, container and resource registry", () => {
       let mockLoader = jasmine.createSpy('loader');
       let mockResources = jasmine.createSpy('viewResources');
-      let mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'makeGlobal']);
+      let mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'makeGlobal', 'get']);
 
       let aurelia = new Aurelia(mockLoader, mockContainer, mockResources);
       expect(aurelia.loader).toBe(mockLoader);
@@ -41,6 +42,7 @@ describe('aurelia', () => {
       expect(mockContainer.registerInstance).toHaveBeenCalledWith(Aurelia, aurelia);
       expect(mockContainer.registerInstance).toHaveBeenCalledWith(Loader, mockLoader);
       expect(mockContainer.registerInstance).toHaveBeenCalledWith(ViewResources, mockResources);
+      expect(mockContainer.registerInstance).toHaveBeenCalledWith(BindingSystem, undefined);
     });
 
   });
