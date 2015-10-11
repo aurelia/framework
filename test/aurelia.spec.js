@@ -4,6 +4,7 @@ import {Loader} from 'aurelia-loader';
 import {BindingLanguage, ViewSlot, ViewResources, CompositionEngine} from 'aurelia-templating';
 import {FrameworkConfiguration} from '../src/framework-configuration';
 import {initialize} from 'aurelia-pal-browser';
+import {PLATFORM} from 'aurelia-pal';
 
 describe('aurelia', () => {
   beforeAll(() => initialize());
@@ -12,7 +13,7 @@ describe('aurelia', () => {
 
     it("should have good defaults", () => {
       let mockLoader = {};
-      window.AureliaLoader = function(){
+      PLATFORM.Loader = function(){
         return mockLoader;
       }
       let aurelia = new Aurelia();

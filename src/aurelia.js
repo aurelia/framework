@@ -12,7 +12,7 @@ import {
   CompositionEngine,
   Animator
 } from 'aurelia-templating';
-import {DOM} from 'aurelia-pal';
+import {DOM, PLATFORM} from 'aurelia-pal';
 
 function preventActionlessFormSubmit() {
   DOM.addEventListener('submit', evt => {
@@ -38,7 +38,7 @@ export class Aurelia {
   use: FrameworkConfiguration;
 
   constructor(loader?: Loader, container?: Container, resources?: ViewResources) {
-    this.loader = loader || new window.AureliaLoader();
+    this.loader = loader || new PLATFORM.Loader();
     this.container = container || new Container();
     this.resources = resources || new ViewResources();
     this.use = new FrameworkConfiguration(this);
