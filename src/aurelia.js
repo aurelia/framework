@@ -3,16 +3,10 @@ import 'core-js';
 import * as TheLogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
-import {FrameworkConfiguration} from './framework-configuration';
-import {
-  BindingLanguage,
-  ViewEngine,
-  ViewSlot,
-  ViewResources,
-  CompositionEngine,
-  Animator
-} from 'aurelia-templating';
+import {BindingLanguage, ViewEngine, ViewSlot, ViewResources, CompositionEngine, Animator} from 'aurelia-templating';
 import {DOM, PLATFORM} from 'aurelia-pal';
+import {bindingSystem} from 'aurelia-binding';
+import {FrameworkConfiguration} from './framework-configuration';
 
 function preventActionlessFormSubmit() {
   DOM.addEventListener('submit', evt => {
@@ -76,6 +70,8 @@ export class Aurelia {
       if (!this.container.hasResolver(Animator)) {
         Animator.configureDefault(this.container);
       }
+
+      bindingSystem.initialize(this.container);
 
       this.logger.info('Aurelia Started');
       let evt = DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
