@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
@@ -25,19 +25,19 @@
       "lib": "dist/amd"
     },
     "dependencies": {
-      "aurelia-binding": "github:aurelia/binding@^0.9.0",
-      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.10.0",
-      "aurelia-loader": "github:aurelia/loader@^0.9.0",
-      "aurelia-logging": "github:aurelia/logging@^0.7.0",
-      "aurelia-metadata": "github:aurelia/metadata@^0.8.0",
-      "aurelia-pal": "github:aurelia/pal@^0.1.10",
-      "aurelia-path": "github:aurelia/path@^0.9.0",
-      "aurelia-task-queue": "github:aurelia/task-queue@^0.7.0",
-      "aurelia-templating": "github:aurelia/templating@^0.15.0",
+      "aurelia-binding": "github:aurelia/binding@^0.10.0",
+      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.11.0",
+      "aurelia-loader": "github:aurelia/loader@^0.10.0",
+      "aurelia-logging": "github:aurelia/logging@^0.8.0",
+      "aurelia-metadata": "github:aurelia/metadata@^0.9.0",
+      "aurelia-pal": "github:aurelia/pal@^0.2.0",
+      "aurelia-path": "github:aurelia/path@^0.10.0",
+      "aurelia-task-queue": "github:aurelia/task-queue@^0.8.0",
+      "aurelia-templating": "github:aurelia/templating@^0.16.0",
       "core-js": "npm:core-js@^0.9.5"
     },
     "devDependencies": {
-      "aurelia-pal-browser": "github:aurelia/pal-browser@^0.1.13",
+      "aurelia-pal-browser": "github:aurelia/pal-browser@^0.2.0",
       "babel": "npm:babel-core@^5.1.13",
       "babel-runtime": "npm:babel-runtime@^5.1.13",
       "core-js": "npm:core-js@^0.9.5"
@@ -74,30 +74,8 @@
     "yargs": "^2.1.1"
   },
   "aurelia": {
-    "usedBy": [
-      "aurelia-bootstrapper"
-    ],
     "documentation": {
-      "links": [
-        {
-          "rel": "license",
-          "mediaType": "text/plain",
-          "title": "The MIT License (MIT)",
-          "href": "LICENSE"
-        },
-        {
-          "rel": "describedby",
-          "mediaType": "application/aurelia-doc+json",
-          "title": "API",
-          "href": "doc/api.json"
-        },
-        {
-          "rel": "version-history",
-          "mediaType": "text/markdown",
-          "title": "Change Log",
-          "href": "doc/CHANGELOG.md"
-        }
-      ]
+      "articles": []
     }
   }
 }

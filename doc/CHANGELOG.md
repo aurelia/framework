@@ -1,3 +1,113 @@
+## 0.17.0 (2015-10-13)
+
+
+#### Bug Fixes
+
+* **all:**
+  * create a property framework configuration object ([bab4c776](http://github.com/aurelia/framework/commit/bab4c776f4266b727e4cf04b04ba409ead3bfeed))
+  * update compiler and metadata plugin ([50e3afe0](http://github.com/aurelia/framework/commit/50e3afe0e5a4c6c0e15242433007e4fe068e35fc))
+  * load resources by module id only ([655192b2](http://github.com/aurelia/framework/commit/655192b26f7c8b47fb57ad1522e85af58d971443))
+* **aurelia:**
+  * switch window loader check to platform loader check ([471d8c51](http://github.com/aurelia/framework/commit/471d8c516a423baf56e3af1f834f9c19fceb2808))
+  * enable multiple calls to setRoot ([10708cae](http://github.com/aurelia/framework/commit/10708caefb9e26556c9c45686198f8c343de6a5d))
+  * update to use ViewResources instead of ResourceRegistry ([f458a193](http://github.com/aurelia/framework/commit/f458a193f69dfa1d8174b2424ba81d5b864b7429))
+  * throw a descriptive error when globalizeResources is called with non-strings ([09038c83](http://github.com/aurelia/framework/commit/09038c83b4ca02f2e55b30804b330c59207f682d))
+  * update to use latest animator default config api ([5dea25b5](http://github.com/aurelia/framework/commit/5dea25b57512ccf4701daf6520c0156582a5182b))
+  * update to use new view engine ([e6d20c42](http://github.com/aurelia/framework/commit/e6d20c42ead1f74652fb1bce5b5ae728b4b6bb77))
+  * update to load global resources through new resource pipeline ([bdbca554](http://github.com/aurelia/framework/commit/bdbca554e8d0e7ee839fb1b3b8269f590bc7aa97))
+  * global resources left out ([4bb098a3](http://github.com/aurelia/framework/commit/4bb098a36ea226dedc5343f3c629d889f9028580))
+  * custom event undefined in local scope ([c3594bf9](http://github.com/aurelia/framework/commit/c3594bf9ae0b9836ef433d857f422131e65674c5))
+  * ensure plugin resources are loaded first ([bffcd614](http://github.com/aurelia/framework/commit/bffcd6146167b1169d9d43acf4857be84636ccc7))
+  * ensure all start code paths return a promise ([02752512](http://github.com/aurelia/framework/commit/0275251243271e30a7a484903ff0dd5a0da8eb80))
+  * load groups of resources in order ([2d936e5f](http://github.com/aurelia/framework/commit/2d936e5f6d1750841e99180d72078416926326f1))
+  * directly use app container to create root view model ([d86665b3](http://github.com/aurelia/framework/commit/d86665b390dbfa65f8c53c148adfc740d7e8ebb2))
+  * remove dependency on event aggregator ([424fa2bf](http://github.com/aurelia/framework/commit/424fa2bf3b9d2a4b79c2bb5cec5ad45d87273327))
+  * plugin loading module id fix ([ba79cb93](http://github.com/aurelia/framework/commit/ba79cb933e86e9cea6d391cb3664c82a31231f7e))
+* **build:**
+  * update linting, testing and tools ([ed65edc6](http://github.com/aurelia/framework/commit/ed65edc6cc7d6e6250ac6885f02780c0ea640cb4))
+  * add missing bower bump ([111797ae](http://github.com/aurelia/framework/commit/111797ae2f669b3eb9a86538c23f5e537fc259c5))
+* **dts:** update promise-based apis ([94548514](http://github.com/aurelia/framework/commit/94548514165b1cb8ba0629f5e775d0d758630ce9))
+* **framework:** Use correct import for core-js ([da0756fd](http://github.com/aurelia/framework/commit/da0756fd94f5a60df5218ceaa09fdb3bb0e2ad27))
+* **framework-configuration:**
+  * add public properties ([a5b32853](http://github.com/aurelia/framework/commit/a5b3285341063578cdc8631533bf7c92ff7fe354), closes [#199](http://github.com/aurelia/framework/issues/199))
+  * parameter config in feature and plugin method is optional ([b07c4817](http://github.com/aurelia/framework/commit/b07c481744746d95f60f0c5bebb3caf3306dea55))
+  * improve standardConfiguration ([c91ea2b9](http://github.com/aurelia/framework/commit/c91ea2b9cf5e36042930bf48b27b7287f425067c))
+  * correct type information ([f1fc9987](http://github.com/aurelia/framework/commit/f1fc998735d1821b2a29361bd9247077e646c1bc))
+* **index:** ensure export of path module api ([17cf46cd](http://github.com/aurelia/framework/commit/17cf46cdfbf4081e08c41db3c20a0590c885d254))
+* **package:**
+  * change jspm directories ([37f2670b](http://github.com/aurelia/framework/commit/37f2670b5498618a4b0602234008c2ed779bca4f))
+  * update dependencies ([79feec43](http://github.com/aurelia/framework/commit/79feec432b8f3afd7a2ca90fc4eec2445e34940f))
+  * update deps and fix bower semver ranges ([3f05b27e](http://github.com/aurelia/framework/commit/3f05b27ed1c7961fc5049f848ea2f220949d7414))
+  * update dependencies ([b52b1b05](http://github.com/aurelia/framework/commit/b52b1b050a3d5809f7b0f602ebc8479f3d57eecb))
+  * update Aurelia dependencies ([f9df6e55](http://github.com/aurelia/framework/commit/f9df6e55ab139d8589516d8ebdf4f27ae3f83b90))
+  * update dependencies to latest ([bfcd292e](http://github.com/aurelia/framework/commit/bfcd292e5c26bde6b7064e866db566201f280b4f))
+  * update templating to latest version ([63d4c5f6](http://github.com/aurelia/framework/commit/63d4c5f6db58a50f6e1776b2b4939ca81ce4edf5))
+  * update templating to latest version ([5d1305e6](http://github.com/aurelia/framework/commit/5d1305e637d827f83c97df3e08db4f60f47915df))
+  * update templating to latest version ([1e981956](http://github.com/aurelia/framework/commit/1e9819565f1e4fa024c38c1d08f05cc00757b96f))
+  * update dependencies to latest versions ([12f0f9a8](http://github.com/aurelia/framework/commit/12f0f9a8af4d8178e80e87fc4ce7d9a8a53eba85))
+  * update dependencies to latest versions ([5ca82ad1](http://github.com/aurelia/framework/commit/5ca82ad11adf1163e984e3fe05cd64a132990624))
+  * update dependencies to their latest versions ([fe83ef37](http://github.com/aurelia/framework/commit/fe83ef37fdcdf878dd79564ed9b97ee56de8d621))
+* **plugin:**
+  * add feature api and prepare for jspm beta ([5f0b7cf3](http://github.com/aurelia/framework/commit/5f0b7cf35c7c7b445f06b237aab704ceb44c88ae))
+  * make api use configure like other apis in framework ([cbfdaad7](http://github.com/aurelia/framework/commit/cbfdaad764abca997a15302073819d0723ccd32a), closes [#96](http://github.com/aurelia/framework/issues/96))
+* **plugins:**
+  * preserve built-in plugin load order ([25a35297](http://github.com/aurelia/framework/commit/25a35297cb330bdbac7796a20b4ad6842e8de477))
+  * address changes in jspm/system.js beta ([90afee4d](http://github.com/aurelia/framework/commit/90afee4de0770c576fb8fd4f0af5fb3191833f0f))
+  * removed unnecessary es5 helper support ([710499a8](http://github.com/aurelia/framework/commit/710499a896ccbc6d787b29aa8da8aeb373bfae8f))
+  * set es5 computed properties correctly ([f1b140d9](http://github.com/aurelia/framework/commit/f1b140d9d2c846cc75e986d6fb967132d82df5e1))
+  * enable relative path plugins ([7cbe4d22](http://github.com/aurelia/framework/commit/7cbe4d22e47ef586a4800d1104ff90d15ff93b98))
+  * language helpers should return this for chaining ([d8817425](http://github.com/aurelia/framework/commit/d8817425e1ca618d752e9708e76674a3fb6e1191))
+  * install sequentially ([cc78f9a0](http://github.com/aurelia/framework/commit/cc78f9a07974df00c1dcd88b6c71afcf1e52fcc9))
+  * ensure plugin installation can only happen once ([9b37c848](http://github.com/aurelia/framework/commit/9b37c8485ce7d966e1f10eb66f088e341d9a4d4e))
+
+
+#### Features
+
+* **all:**
+  * incorporate pal ([4bc75161](http://github.com/aurelia/framework/commit/4bc75161d39696e0db11582dea8c4693d0852869))
+  * update to new loader apis to remove global System ([07bd2982](http://github.com/aurelia/framework/commit/07bd29827df73ba52cdf67450469efcda39cda59))
+* **aurelia:**
+  * initialize new templatingEngine api ([e60e5163](http://github.com/aurelia/framework/commit/e60e516310ac8eb2ee3b69915ad82d36949bc324))
+  * initialize the binding system ([d6f569f7](http://github.com/aurelia/framework/commit/d6f569f70879bfabd4a09d543495d0335b582bd9))
+  * add preliminary enhance api ([f970c65c](http://github.com/aurelia/framework/commit/f970c65c2053391a5b6bd79079102fde8c750612))
+  * configure host as root dom boundary ([5a99ab02](http://github.com/aurelia/framework/commit/5a99ab0284813eba42b579058e3059a756ca485d))
+  * update to use composition host instruction value ([bd456bc5](http://github.com/aurelia/framework/commit/bd456bc5411ed7f122bc14a2ecc0d7b0cc2f192b))
+  * take advantage of previously configured host ([0c5bbcd7](http://github.com/aurelia/framework/commit/0c5bbcd799be99958dcea3c3a1f850bdd43700a4))
+  * add parameter default to setRoot ([f3955d22](http://github.com/aurelia/framework/commit/f3955d228483758ce8b385bba14d99e053468612))
+  * ensure animator implementation ([e3ab3ab0](http://github.com/aurelia/framework/commit/e3ab3ab08aac022d0c7b58ddef7b8632f2e5f980))
+  * raise DOM events for start and compose ([feed2a3a](http://github.com/aurelia/framework/commit/feed2a3a05fe8cd9f5463a84ddb692aba4912193))
+  * enable splash screen swaps on load ([c2135d41](http://github.com/aurelia/framework/commit/c2135d41333328a2c7a6acfe4e0325d5c6bfb090))
+  * set root sets element in container and uses composition engine ([9f6fa60d](http://github.com/aurelia/framework/commit/9f6fa60d27dc7e9d418970925df2fc23514c1422))
+* **build:**
+  * add command line argument for semver bump. resolve #28 ([39652c80](http://github.com/aurelia/framework/commit/39652c8026dd26e459ed5e84a0924e1f58724d53))
+  * update compiler and switch to register module format ([63c5d367](http://github.com/aurelia/framework/commit/63c5d367ed576a4350fcf6bfc3d87b4d55370372))
+* **docs:**
+  * generate api.json from .d.ts file ([38c06e2c](http://github.com/aurelia/framework/commit/38c06e2ce93b22244950cf57e97e28493fc2334b))
+  * generate api.json from .d.ts file ([1e2af71b](http://github.com/aurelia/framework/commit/1e2af71bf0aee020033cef33faaca1b869e7b5d9))
+  * generate api.json from .d.ts file ([a6960cbc](http://github.com/aurelia/framework/commit/a6960cbc6e171142c3a3b8dada4915e11b433ecc))
+* **framework:**
+  * prevent forms without [action] from submiting ([a5805257](http://github.com/aurelia/framework/commit/a58052571281cce001089bc065858e47ee595874))
+  * enable plugin loading and config ([f3b02ea9](http://github.com/aurelia/framework/commit/f3b02ea96c0a607b77bb7fbc7e0389748fb07c12))
+* **index:** export all from pal ([10ca62bb](http://github.com/aurelia/framework/commit/10ca62bbd93c06ffac05f6dc060b65fa62d57369))
+* **plugins:**
+  * better api by moving some bootstrapper code directly into aurelia ([f76baf08](http://github.com/aurelia/framework/commit/f76baf084f382c168d3a2225df091df5d36f9a50))
+  * remove AtScript support ([f1adb01a](http://github.com/aurelia/framework/commit/f1adb01ab32afcd8ba3b427e9274f72fb4d56fda))
+  * update to use new metadata locator function ([4b09490d](http://github.com/aurelia/framework/commit/4b09490daf7f351e1001557c8e8a8032bdadbf1c))
+  * support legacy atscript annotation location ([37463681](http://github.com/aurelia/framework/commit/374636810d3e5249b3f1d8d6b4767f97c21a1240))
+  * update atscript helper to use new metadata api ([c9b4fb99](http://github.com/aurelia/framework/commit/c9b4fb99b1ac32fb71a69ad8e945cd4a208ca1eb))
+  * enable loading after bootstrapped ([790c9da2](http://github.com/aurelia/framework/commit/790c9da2ba89018d25f1dcf6c929b421f47c0b73))
+  * new plugin api including explicit support for es5 and at script ([b5c588bc](http://github.com/aurelia/framework/commit/b5c588bc716955273833ebbeabb33deb431bda5d))
+  * track plugin id for relative resource loading without system hack ([3465e849](http://github.com/aurelia/framework/commit/3465e84963e871b713cc4c3ca049eb459023ec9e))
+
+
+#### Breaking Changes
+
+* If you were using ES5 and used the computed helper on
+function, this will affect you as that is no longer present.
+
+ ([710499a8](http://github.com/aurelia/framework/commit/710499a896ccbc6d787b29aa8da8aeb373bfae8f))
+
+
 ## 0.16.0 (2015-09-05)
 
 

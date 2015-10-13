@@ -1,9 +1,10 @@
-import * as core from 'core-js';
+import 'core-js';
 import * as TheLogManager from 'aurelia-logging';
-import {ViewEngine,BindingLanguage,ViewSlot,ViewResources,CompositionEngine,Animator,DOMBoundary} from 'aurelia-templating';
+import {ViewEngine,BindingLanguage,ViewSlot,ViewResources,CompositionEngine,Animator,templatingEngine} from 'aurelia-templating';
 import {join} from 'aurelia-path';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
+import {DOM,PLATFORM} from 'aurelia-pal';
 
 /*eslint no-unused-vars:0, no-cond-assign:0*/
 const logger = TheLogManager.getLogger('aurelia');
@@ -72,7 +73,7 @@ export class FrameworkConfiguration {
     this.preTasks = [];
     this.postTasks = [];
     this.resourcesToLoad = {};
-    this.preTask(() => System.normalize('aurelia-bootstrapper').then(bootstrapperName => this.bootstrapperName = bootstrapperName));
+    this.preTask(() => this.bootstrapperName = aurelia.loader.normalizeSync('aurelia-bootstrapper'));
     this.postTask(() => loadResources(aurelia.container, this.resourcesToLoad, aurelia.resources));
   }
 
@@ -203,14 +204,13 @@ export class FrameworkConfiguration {
 
     this.plugin(plugin);
     this.preTask(() => {
-      return System.normalize(name, this.bootstrapperName).then(normalizedName => {
-        normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts')
-          ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
+      let normalizedName = this.aurelia.loader.normalizeSync(name, this.bootstrapperName);
+      normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts')
+        ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
 
-        plugin.moduleId = normalizedName;
-        plugin.resourcesRelativeTo = normalizedName;
-        System.map[name] = normalizedName;
-      });
+      plugin.moduleId = normalizedName;
+      plugin.resourcesRelativeTo = normalizedName;
+      this.aurelia.loader.map(name, normalizedName);
     });
 
     return this;
@@ -270,11 +270,10 @@ export class FrameworkConfiguration {
   */
   developmentLogging(): FrameworkConfiguration {
     this.preTask(() => {
-      return System.normalize('aurelia-logging-console', this.bootstrapperName).then(name => {
-        return this.aurelia.loader.loadModule(name).then(m => {
-          TheLogManager.addAppender(new m.ConsoleAppender());
-          TheLogManager.setLevel(TheLogManager.logLevel.debug);
-        });
+      let name = this.aurelia.loader.normalizeSync('aurelia-logging-console', this.bootstrapperName);
+      return this.aurelia.loader.loadModule(name).then(m => {
+        TheLogManager.addAppender(new m.ConsoleAppender());
+        TheLogManager.setLevel(TheLogManager.logLevel.debug);
       });
     });
 
@@ -310,25 +309,8 @@ export class FrameworkConfiguration {
 }
 
 /*eslint no-unused-vars:0*/
-if (!window.CustomEvent || typeof window.CustomEvent !== 'function') {
-  let CustomEvent = function(event, params) {
-    params = params || {
-      bubbles: false,
-      cancelable: false,
-      detail: undefined
-    };
-
-    let evt = document.createEvent('CustomEvent');
-    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-    return evt;
-  };
-
-  CustomEvent.prototype = window.Event.prototype;
-  window.CustomEvent = CustomEvent;
-}
-
 function preventActionlessFormSubmit() {
-  document.body.addEventListener('submit', evt => {
+  DOM.addEventListener('submit', evt => {
     const target = evt.target;
     const action = target.action;
 
@@ -351,7 +333,7 @@ export class Aurelia {
   use: FrameworkConfiguration;
 
   constructor(loader?: Loader, container?: Container, resources?: ViewResources) {
-    this.loader = loader || new window.AureliaLoader();
+    this.loader = loader || new PLATFORM.Loader();
     this.container = container || new Container();
     this.resources = resources || new ViewResources();
     this.use = new FrameworkConfiguration(this);
@@ -380,19 +362,21 @@ export class Aurelia {
     return this.use.apply().then(() => {
       preventActionlessFormSubmit();
 
-      if (!this.container.hasHandler(BindingLanguage)) {
+      if (!this.container.hasResolver(BindingLanguage)) {
         let message = 'You must configure Aurelia with a BindingLanguage implementation.';
         this.logger.error(message);
         throw new Error(message);
       }
 
-      if (!this.container.hasHandler(Animator)) {
+      if (!this.container.hasResolver(Animator)) {
         Animator.configureDefault(this.container);
       }
 
+      templatingEngine.initialize(this.container);
+
       this.logger.info('Aurelia Started');
-      let evt = new window.CustomEvent('aurelia-started', { bubbles: true, cancelable: true });
-      document.dispatchEvent(evt);
+      let evt = DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
+      DOM.dispatchEvent(evt);
       return this;
     });
   }
@@ -449,21 +433,25 @@ export class Aurelia {
     applicationHost = applicationHost || this.host;
 
     if (!applicationHost || typeof applicationHost === 'string') {
-      this.host = document.getElementById(applicationHost || 'applicationHost') || document.body;
+      this.host = DOM.getElementById(applicationHost || 'applicationHost');
     } else {
       this.host = applicationHost;
+    }
+
+    if (!this.host) {
+      throw new Error('No applicationHost was specified.');
     }
 
     this.hostConfigured = true;
     this.host.aurelia = this;
     this.hostSlot = new ViewSlot(this.host, true);
     this.hostSlot.transformChildNodesIntoView();
-    this.container.registerInstance(DOMBoundary, this.host);
+    this.container.registerInstance(DOM.boundary, this.host);
   }
 
   _onAureliaComposed() {
-    let evt = new window.CustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
-    setTimeout(() => document.dispatchEvent(evt), 1);
+    let evt = DOM.createCustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
+    setTimeout(() => DOM.dispatchEvent(evt), 1);
   }
 }
 
@@ -474,5 +462,6 @@ export * from 'aurelia-templating';
 export * from 'aurelia-loader';
 export * from 'aurelia-task-queue';
 export * from 'aurelia-path';
+export * from 'aurelia-pal';
 
 export const LogManager = TheLogManager;
