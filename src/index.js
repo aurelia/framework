@@ -5,6 +5,7 @@ export * from 'aurelia-templating';
 export * from 'aurelia-loader';
 export * from 'aurelia-task-queue';
 export * from 'aurelia-path';
+export * from 'aurelia-pal';
 
 import * as TheLogManager from 'aurelia-logging';
 export const LogManager = TheLogManager;
