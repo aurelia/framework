@@ -5,7 +5,7 @@ import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
 import {BindingLanguage, ViewEngine, ViewSlot, ViewResources, CompositionEngine, Animator} from 'aurelia-templating';
 import {DOM, PLATFORM} from 'aurelia-pal';
-import {bindingSystem} from 'aurelia-binding';
+import {bindingEngine} from 'aurelia-binding';
 import {FrameworkConfiguration} from './framework-configuration';
 
 function preventActionlessFormSubmit() {
@@ -71,7 +71,7 @@ export class Aurelia {
         Animator.configureDefault(this.container);
       }
 
-      bindingSystem.initialize(this.container);
+      bindingEngine.initialize(this.container);
 
       this.logger.info('Aurelia Started');
       let evt = DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
