@@ -3,7 +3,7 @@ import 'core-js';
 import * as TheLogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
-import {BindingLanguage, ViewEngine, ViewSlot, ViewResources, CompositionEngine, Animator, templatingEngine} from 'aurelia-templating';
+import {BindingLanguage, ViewEngine, ViewSlot, ViewResources, CompositionEngine, Animator} from 'aurelia-templating';
 import {DOM, PLATFORM} from 'aurelia-pal';
 import {FrameworkConfiguration} from './framework-configuration';
 
@@ -69,8 +69,6 @@ export class Aurelia {
       if (!this.container.hasResolver(Animator)) {
         Animator.configureDefault(this.container);
       }
-
-      templatingEngine.initialize(this.container);
 
       this.logger.info('Aurelia Started');
       let evt = DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
