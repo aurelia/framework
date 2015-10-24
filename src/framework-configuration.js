@@ -57,12 +57,22 @@ function assertProcessed(plugins) {
 
 /**
  * Manages configuring the aurelia framework instance.
- * @param {Aurelia} aurelia An instance of Aurelia.
  */
 export class FrameworkConfiguration {
+  /**
+   * The root DI container used by the application.
+   */
   container: Container;
+
+  /**
+   * The aurelia instance.
+   */
   aurelia: Aurelia;
 
+  /**
+   * Creates an instance of FrameworkConfiguration.
+   * @param aurelia An instance of Aurelia.
+   */
   constructor(aurelia: Aurelia) {
     this.aurelia = aurelia;
     this.container = aurelia.container;

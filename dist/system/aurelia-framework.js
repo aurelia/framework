@@ -305,7 +305,7 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-pa
           _classCallCheck(this, Aurelia);
 
           this.loader = loader || new PLATFORM.Loader();
-          this.container = container || new Container();
+          this.container = container || new Container().makeGlobal();
           this.resources = resources || new ViewResources();
           this.use = new FrameworkConfiguration(this);
           this.logger = TheLogManager.getLogger('aurelia');
@@ -315,7 +315,6 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-pa
           this.use.instance(Aurelia, this);
           this.use.instance(Loader, this.loader);
           this.use.instance(ViewResources, this.resources);
-          this.container.makeGlobal();
         }
 
         Aurelia.prototype.start = function start() {

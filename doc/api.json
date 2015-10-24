@@ -14,24 +14,7 @@
         "isExported": true
       },
       "comment": {
-        "shortText": "The framework core that provides the main Aurelia object.",
-        "tags": [
-          {
-            "tag": "param",
-            "text": "The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use a defaultLoader.",
-            "param": "loader"
-          },
-          {
-            "tag": "param",
-            "text": "The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty container.",
-            "param": "container"
-          },
-          {
-            "tag": "param",
-            "text": "The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.\n",
-            "param": "resources"
-          }
-        ]
+        "shortText": "The framework core that provides the main Aurelia object."
       },
       "children": [
         {
@@ -42,6 +25,9 @@
           "flags": {
             "isExported": true
           },
+          "comment": {
+            "shortText": "Creates an instance of Aurelia."
+          },
           "signatures": [
             {
               "id": 64,
@@ -49,6 +35,9 @@
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
+              "comment": {
+                "shortText": "Creates an instance of Aurelia."
+              },
               "parameters": [
                 {
                   "id": 65,
@@ -57,6 +46,9 @@
                   "kindString": "Parameter",
                   "flags": {
                     "isOptional": true
+                  },
+                  "comment": {
+                    "shortText": "The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use the loader type specified by PLATFORM.Loader."
                   },
                   "type": {
                     "type": "reference",
@@ -73,6 +65,9 @@
                   "flags": {
                     "isOptional": true
                   },
+                  "comment": {
+                    "shortText": "The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty, global container."
+                  },
                   "type": {
                     "type": "reference",
                     "name": "Container",
@@ -87,6 +82,9 @@
                   "kindString": "Parameter",
                   "flags": {
                     "isOptional": true
+                  },
+                  "comment": {
+                    "shortText": "The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.\n"
                   },
                   "type": {
                     "type": "reference",
@@ -113,6 +111,9 @@
           "flags": {
             "isExported": true
           },
+          "comment": {
+            "shortText": "The root DI container used by the application."
+          },
           "type": {
             "type": "reference",
             "name": "Container",
@@ -127,6 +128,9 @@
           "kindString": "Property",
           "flags": {
             "isExported": true
+          },
+          "comment": {
+            "shortText": "The loader used by the application."
           },
           "type": {
             "type": "reference",
@@ -143,6 +147,9 @@
           "flags": {
             "isExported": true
           },
+          "comment": {
+            "shortText": "The global view resources used by the application."
+          },
           "type": {
             "type": "reference",
             "name": "ViewResources",
@@ -157,6 +164,9 @@
           "kindString": "Property",
           "flags": {
             "isExported": true
+          },
+          "comment": {
+            "shortText": "The configuration used during application startup."
           },
           "type": {
             "type": "reference",
@@ -182,7 +192,7 @@
               "flags": {},
               "comment": {
                 "shortText": "Enhances the host's existing elements with behaviors and bindings.",
-                "returns": "Returns the current Aurelia instance.\n"
+                "returns": "Returns a Promise for the current Aurelia instance.\n"
               },
               "parameters": [
                 {
@@ -213,8 +223,17 @@
                     "text": "The DOM object that Aurelia will enhance."
                   },
                   "type": {
-                    "type": "instrinct",
-                    "name": "any"
+                    "type": "union",
+                    "types": [
+                      {
+                        "type": "instrinct",
+                        "name": "string"
+                      },
+                      {
+                        "type": "reference",
+                        "name": "Element"
+                      }
+                    ]
                   }
                 }
               ],
@@ -248,8 +267,8 @@
               "kindString": "Call signature",
               "flags": {},
               "comment": {
-                "shortText": "Instantiates the root view-model and view and add them to the DOM.",
-                "returns": "Returns the current Aurelia instance.\n"
+                "shortText": "Instantiates the root component and adds it to the DOM.",
+                "returns": "Returns a Promise of the current Aurelia instance.\n"
               },
               "parameters": [
                 {
@@ -261,7 +280,7 @@
                     "isOptional": true
                   },
                   "comment": {
-                    "text": "The root view-model to load upon bootstrap."
+                    "text": "The root component to load upon bootstrap."
                   },
                   "type": {
                     "type": "instrinct",
@@ -280,8 +299,17 @@
                     "text": "The DOM object that Aurelia will attach to."
                   },
                   "type": {
-                    "type": "instrinct",
-                    "name": "any"
+                    "type": "union",
+                    "types": [
+                      {
+                        "type": "instrinct",
+                        "name": "string"
+                      },
+                      {
+                        "type": "reference",
+                        "name": "Element"
+                      }
+                    ]
                   }
                 }
               ],
@@ -316,7 +344,7 @@
               "flags": {},
               "comment": {
                 "shortText": "Loads plugins, then resources, and then starts the Aurelia instance.",
-                "returns": "Returns the started Aurelia instance.\n"
+                "returns": "Returns a Promise with the started Aurelia instance.\n"
               },
               "type": {
                 "type": "reference",
@@ -371,14 +399,7 @@
         "isExported": true
       },
       "comment": {
-        "shortText": "Manages configuring the aurelia framework instance.",
-        "tags": [
-          {
-            "tag": "param",
-            "text": "An instance of Aurelia.\n",
-            "param": "aurelia"
-          }
-        ]
+        "shortText": "Manages configuring the aurelia framework instance."
       },
       "children": [
         {
@@ -389,6 +410,9 @@
           "flags": {
             "isExported": true
           },
+          "comment": {
+            "shortText": "Creates an instance of FrameworkConfiguration."
+          },
           "signatures": [
             {
               "id": 7,
@@ -396,6 +420,9 @@
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
+              "comment": {
+                "shortText": "Creates an instance of FrameworkConfiguration."
+              },
               "parameters": [
                 {
                   "id": 8,
@@ -403,6 +430,9 @@
                   "kind": 32768,
                   "kindString": "Parameter",
                   "flags": {},
+                  "comment": {
+                    "shortText": "An instance of Aurelia.\n"
+                  },
                   "type": {
                     "type": "reference",
                     "name": "Aurelia",
@@ -428,6 +458,9 @@
           "flags": {
             "isExported": true
           },
+          "comment": {
+            "shortText": "The aurelia instance."
+          },
           "type": {
             "type": "reference",
             "name": "Aurelia",
@@ -442,6 +475,9 @@
           "kindString": "Property",
           "flags": {
             "isExported": true
+          },
+          "comment": {
+            "shortText": "The root DI container used by the application."
           },
           "type": {
             "type": "reference",
@@ -1225,6 +1261,9 @@
       "kindString": "Variable",
       "flags": {
         "isExported": true
+      },
+      "comment": {
+        "shortText": "The log manager."
       },
       "type": {
         "type": "instrinct",

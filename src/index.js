@@ -8,4 +8,8 @@ export * from 'aurelia-path';
 export * from 'aurelia-pal';
 
 import * as TheLogManager from 'aurelia-logging';
+
+/**
+ * The log manager.
+ */
 export const LogManager = TheLogManager;

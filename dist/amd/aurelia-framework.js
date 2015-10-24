@@ -255,7 +255,7 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-
       _classCallCheck(this, Aurelia);
 
       this.loader = loader || new _aureliaPal.PLATFORM.Loader();
-      this.container = container || new _aureliaDependencyInjection.Container();
+      this.container = container || new _aureliaDependencyInjection.Container().makeGlobal();
       this.resources = resources || new _aureliaTemplating.ViewResources();
       this.use = new FrameworkConfiguration(this);
       this.logger = _aureliaLogging.getLogger('aurelia');
@@ -265,7 +265,6 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-
       this.use.instance(Aurelia, this);
       this.use.instance(_aureliaLoader.Loader, this.loader);
       this.use.instance(_aureliaTemplating.ViewResources, this.resources);
-      this.container.makeGlobal();
     }
 
     Aurelia.prototype.start = function start() {
