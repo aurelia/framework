@@ -1,6 +1,6 @@
 import 'core-js';
 import * as TheLogManager from 'aurelia-logging';
-import {ViewEngine,BindingLanguage,ViewSlot,ViewResources,CompositionEngine,Animator,templatingEngine} from 'aurelia-templating';
+import {ViewEngine,BindingLanguage,ViewSlot,ViewResources,TemplatingEngine} from 'aurelia-templating';
 import {join} from 'aurelia-path';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
@@ -393,12 +393,6 @@ export class Aurelia {
         throw new Error(message);
       }
 
-      if (!this.container.hasResolver(Animator)) {
-        Animator.configureDefault(this.container);
-      }
-
-      templatingEngine.initialize(this.container);
-
       this.logger.info('Aurelia Started');
       let evt = DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
       DOM.dispatchEvent(evt);
@@ -416,8 +410,8 @@ export class Aurelia {
     this._configureHost(applicationHost);
 
     return new Promise(resolve => {
-      let viewEngine = this.container.get(ViewEngine);
-      this.root = viewEngine.enhance(this.container, this.host, this.resources, bindingContext);
+      let engine = this.container.get(TemplatingEngine);
+      this.root = engine.enhance({container: this.container, element: this.host, resources: this.resources, bindingContext: bindingContext});
       this.root.attached();
       this._onAureliaComposed();
       return this;
@@ -431,18 +425,18 @@ export class Aurelia {
    * @return Returns a Promise of the current Aurelia instance.
    */
   setRoot(root: string = 'app', applicationHost: string | Element = null): Promise<Aurelia> {
-    let compositionEngine;
+    let engine;
     let instruction = {};
 
     this._configureHost(applicationHost);
 
-    compositionEngine = this.container.get(CompositionEngine);
+    engine = this.container.get(TemplatingEngine);
     instruction.viewModel = root;
     instruction.container = instruction.childContainer = this.container;
     instruction.viewSlot = this.hostSlot;
     instruction.host = this.host;
 
-    return compositionEngine.compose(instruction).then(r => {
+    return engine.compose(instruction).then(r => {
       this.root = r;
       instruction.viewSlot.attached();
       this._onAureliaComposed();

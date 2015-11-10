@@ -1,3 +1,11 @@
+## 0.18.0 (2015-11-10)
+
+
+#### Bug Fixes
+
+* **all:** update to work with latest TemplatingEngine ([edf2b5f8](http://github.com/aurelia/framework/commit/edf2b5f8e5a47984219e2be26d7b762b9d7eab7c))
+
+
 ## 0.17.0 (2015-10-13)
 
 

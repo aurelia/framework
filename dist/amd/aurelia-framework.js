@@ -286,12 +286,6 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-
           throw new Error(message);
         }
 
-        if (!_this5.container.hasResolver(_aureliaTemplating.Animator)) {
-          _aureliaTemplating.Animator.configureDefault(_this5.container);
-        }
-
-        _aureliaTemplating.templatingEngine.initialize(_this5.container);
-
         _this5.logger.info('Aurelia Started');
         var evt = _aureliaPal.DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
         _aureliaPal.DOM.dispatchEvent(evt);
@@ -308,8 +302,8 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-
       this._configureHost(applicationHost);
 
       return new Promise(function (resolve) {
-        var viewEngine = _this6.container.get(_aureliaTemplating.ViewEngine);
-        _this6.root = viewEngine.enhance(_this6.container, _this6.host, _this6.resources, bindingContext);
+        var engine = _this6.container.get(_aureliaTemplating.TemplatingEngine);
+        _this6.root = engine.enhance({ container: _this6.container, element: _this6.host, resources: _this6.resources, bindingContext: bindingContext });
         _this6.root.attached();
         _this6._onAureliaComposed();
         return _this6;
@@ -322,18 +316,18 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-
       var root = arguments.length <= 0 || arguments[0] === undefined ? 'app' : arguments[0];
       var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
-      var compositionEngine = undefined;
+      var engine = undefined;
       var instruction = {};
 
       this._configureHost(applicationHost);
 
-      compositionEngine = this.container.get(_aureliaTemplating.CompositionEngine);
+      engine = this.container.get(_aureliaTemplating.TemplatingEngine);
       instruction.viewModel = root;
       instruction.container = instruction.childContainer = this.container;
       instruction.viewSlot = this.hostSlot;
       instruction.host = this.host;
 
-      return compositionEngine.compose(instruction).then(function (r) {
+      return engine.compose(instruction).then(function (r) {
         _this7.root = r;
         instruction.viewSlot.attached();
         _this7._onAureliaComposed();

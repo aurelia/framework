@@ -1,7 +1,7 @@
 System.register(['core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-path', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-pal', 'aurelia-binding', 'aurelia-metadata', 'aurelia-task-queue'], function (_export) {
   'use strict';
 
-  var TheLogManager, ViewEngine, BindingLanguage, ViewSlot, ViewResources, CompositionEngine, Animator, templatingEngine, join, Container, Loader, DOM, PLATFORM, logger, FrameworkConfiguration, Aurelia, LogManager;
+  var TheLogManager, ViewEngine, BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, join, Container, Loader, DOM, PLATFORM, logger, FrameworkConfiguration, Aurelia, LogManager;
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
@@ -72,9 +72,7 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-pa
       BindingLanguage = _aureliaTemplating.BindingLanguage;
       ViewSlot = _aureliaTemplating.ViewSlot;
       ViewResources = _aureliaTemplating.ViewResources;
-      CompositionEngine = _aureliaTemplating.CompositionEngine;
-      Animator = _aureliaTemplating.Animator;
-      templatingEngine = _aureliaTemplating.templatingEngine;
+      TemplatingEngine = _aureliaTemplating.TemplatingEngine;
 
       for (var _key4 in _aureliaTemplating) {
         if (_key4 !== 'default') _export(_key4, _aureliaTemplating[_key4]);
@@ -336,12 +334,6 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-pa
               throw new Error(message);
             }
 
-            if (!_this5.container.hasResolver(Animator)) {
-              Animator.configureDefault(_this5.container);
-            }
-
-            templatingEngine.initialize(_this5.container);
-
             _this5.logger.info('Aurelia Started');
             var evt = DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
             DOM.dispatchEvent(evt);
@@ -358,8 +350,8 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-pa
           this._configureHost(applicationHost);
 
           return new Promise(function (resolve) {
-            var viewEngine = _this6.container.get(ViewEngine);
-            _this6.root = viewEngine.enhance(_this6.container, _this6.host, _this6.resources, bindingContext);
+            var engine = _this6.container.get(TemplatingEngine);
+            _this6.root = engine.enhance({ container: _this6.container, element: _this6.host, resources: _this6.resources, bindingContext: bindingContext });
             _this6.root.attached();
             _this6._onAureliaComposed();
             return _this6;
@@ -372,18 +364,18 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-pa
           var root = arguments.length <= 0 || arguments[0] === undefined ? 'app' : arguments[0];
           var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
-          var compositionEngine = undefined;
+          var engine = undefined;
           var instruction = {};
 
           this._configureHost(applicationHost);
 
-          compositionEngine = this.container.get(CompositionEngine);
+          engine = this.container.get(TemplatingEngine);
           instruction.viewModel = root;
           instruction.container = instruction.childContainer = this.container;
           instruction.viewSlot = this.hostSlot;
           instruction.host = this.host;
 
-          return compositionEngine.compose(instruction).then(function (r) {
+          return engine.compose(instruction).then(function (r) {
             _this7.root = r;
             instruction.viewSlot.attached();
             _this7._onAureliaComposed();

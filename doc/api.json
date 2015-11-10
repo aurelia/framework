@@ -53,7 +53,7 @@
                   "type": {
                     "type": "reference",
                     "name": "Loader",
-                    "id": 1506,
+                    "id": 1714,
                     "moduleName": "\"aurelia-loader\""
                   }
                 },
@@ -71,7 +71,7 @@
                   "type": {
                     "type": "reference",
                     "name": "Container",
-                    "id": 1386,
+                    "id": 1593,
                     "moduleName": "\"aurelia-dependency-injection\""
                   }
                 },
@@ -89,7 +89,7 @@
                   "type": {
                     "type": "reference",
                     "name": "ViewResources",
-                    "id": 2074,
+                    "id": 2261,
                     "moduleName": "\"aurelia-templating\""
                   }
                 }
@@ -117,7 +117,7 @@
           "type": {
             "type": "reference",
             "name": "Container",
-            "id": 1386,
+            "id": 1593,
             "moduleName": "\"aurelia-dependency-injection\""
           }
         },
@@ -135,7 +135,7 @@
           "type": {
             "type": "reference",
             "name": "Loader",
-            "id": 1506,
+            "id": 1714,
             "moduleName": "\"aurelia-loader\""
           }
         },
@@ -153,7 +153,7 @@
           "type": {
             "type": "reference",
             "name": "ViewResources",
-            "id": 2074,
+            "id": 2261,
             "moduleName": "\"aurelia-templating\""
           }
         },
@@ -482,7 +482,7 @@
           "type": {
             "type": "reference",
             "name": "Container",
-            "id": 1386,
+            "id": 1593,
             "moduleName": "\"aurelia-dependency-injection\""
           }
         },
