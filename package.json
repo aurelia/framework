@@ -25,27 +25,27 @@
       "lib": "dist/amd"
     },
     "dependencies": {
-      "aurelia-binding": "github:aurelia/binding@^0.10.0",
-      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.11.0",
-      "aurelia-loader": "github:aurelia/loader@^0.10.0",
-      "aurelia-logging": "github:aurelia/logging@^0.8.0",
-      "aurelia-metadata": "github:aurelia/metadata@^0.9.0",
-      "aurelia-pal": "github:aurelia/pal@^0.2.0",
-      "aurelia-path": "github:aurelia/path@^0.10.0",
-      "aurelia-task-queue": "github:aurelia/task-queue@^0.8.0",
-      "aurelia-templating": "github:aurelia/templating@^0.16.0",
-      "core-js": "npm:core-js@^0.9.5"
+      "aurelia-binding": "github:aurelia/binding@^0.11.0",
+      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.12.0",
+      "aurelia-loader": "github:aurelia/loader@^0.11.0",
+      "aurelia-logging": "github:aurelia/logging@^0.9.0",
+      "aurelia-metadata": "github:aurelia/metadata@^0.10.0",
+      "aurelia-pal": "github:aurelia/pal@^0.3.0",
+      "aurelia-path": "github:aurelia/path@^0.11.0",
+      "aurelia-task-queue": "github:aurelia/task-queue@^0.9.0",
+      "aurelia-templating": "github:aurelia/templating@^0.17.0",
+      "core-js": "npm:core-js@^1.2.6"
     },
     "devDependencies": {
-      "aurelia-pal-browser": "github:aurelia/pal-browser@^0.2.0",
+      "aurelia-pal-browser": "github:aurelia/pal-browser@^0.3.0",
       "babel": "npm:babel-core@^5.1.13",
       "babel-runtime": "npm:babel-runtime@^5.1.13",
-      "core-js": "npm:core-js@^0.9.5"
+      "core-js": "npm:core-js@^1.2.6"
     }
   },
   "devDependencies": {
     "aurelia-tools": "^0.1.12",
-    "babel-dts-generator": "^0.2.9",
+    "babel-dts-generator": "^0.2.16",
     "babel-eslint": "^4.1.1",
     "conventional-changelog": "0.0.11",
     "del": "^1.1.0",
