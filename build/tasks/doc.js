@@ -5,7 +5,7 @@ var typedocExtractor = require("gulp-typedoc-extractor");
 var runSequence = require('run-sequence');
 
 gulp.task('doc-generate', function(){
-  return gulp.src([paths.output + '*.d.ts', paths.doc + '/core-js.d.ts', './jspm_packages/github/aurelia/*/*.d.ts'])
+  return gulp.src([paths.output + '*.d.ts', paths.doc + '/core-js.d.ts', './jspm_packages/npm/*/*.d.ts'])
     .pipe(typedoc({
             target: "es6",
             includeDeclarations: true,

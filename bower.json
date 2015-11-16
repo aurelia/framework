@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "0.18.0",
+  "version": "1.0.0-beta.1",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
@@ -17,15 +17,15 @@
     "url": "http://github.com/aurelia/framework"
   },
   "dependencies": {
-    "aurelia-binding": "^0.11.0",
-    "aurelia-dependency-injection": "^0.12.0",
-    "aurelia-loader": "^0.11.0",
-    "aurelia-logging": "^0.9.0",
-    "aurelia-metadata": "^0.10.0",
-    "aurelia-pal": "^0.3.0",
-    "aurelia-path": "^0.11.0",
-    "aurelia-task-queue": "^0.9.0",
-    "aurelia-templating": "^0.17.0",
+    "aurelia-binding": "^1.0.0-beta.1.0.1",
+    "aurelia-dependency-injection": "^1.0.0-beta.1",
+    "aurelia-loader": "^1.0.0-beta.1",
+    "aurelia-logging": "^1.0.0-beta.1",
+    "aurelia-metadata": "^1.0.0-beta.1",
+    "aurelia-pal": "^1.0.0-beta.1",
+    "aurelia-path": "^1.0.0-beta.1",
+    "aurelia-task-queue": "^1.0.0-beta.1",
+    "aurelia-templating": "^1.0.0-beta.1",
     "core-js": "zloirock/core-js"
   }
 }

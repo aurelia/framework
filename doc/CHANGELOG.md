@@ -1,3 +1,6 @@
+### 1.0.0-beta.1 (2015-11-16)
+
+
 ## 0.18.0 (2015-11-10)
 
 
@@ -458,4 +461,3 @@ function, this will affect you as that is no longer present.
 #### Bug Fixes
 
 * **package:** update dependencies to their latest versions ([fe83ef37](http://github.com/aurelia/framework/commit/fe83ef37fdcdf878dd79564ed9b97ee56de8d621))
-
