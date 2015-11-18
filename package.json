@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.1.0.1",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
@@ -88,7 +88,40 @@
   },
   "aurelia": {
     "documentation": {
-      "articles": []
+      "articles": [
+        {
+          "title": "What is Aurelia?",
+          "href": "doc/article/en-US/what-is-aurelia.html"
+        },
+        {
+          "title": "Getting Started",
+          "href": "doc/article/en-US/getting-started.html"
+        },
+        {
+          "title": "A Production Setup",
+          "href": "doc/article/en-US/a-production-setup.html"
+        },
+        {
+          "title": "Creating Components",
+          "href": "doc/article/en-US/creating-components.html"
+        },
+        {
+          "title": "Cheat Sheet",
+          "href": "doc/article/en-US/cheat-sheet.html"
+        },
+        {
+          "title": "Getting Help",
+          "href": "doc/article/en-US/getting-help.html"
+        },
+        {
+          "title": "Technical Benefits",
+          "href": "doc/article/en-US/technical-benefits.html"
+        },
+        {
+          "title": "Business Advantages",
+          "href": "doc/article/en-US/business-advantages.html"
+        }
+      ]
     }
   }
 }
