@@ -175,10 +175,10 @@
       Components have a well-defined lifecycle:
 
       1. `constructor()` - The view-model's constructor is called first.
-      2. `created(owningView: View, myView: View)` - If the view-model implements the `created` callback it is invoked next. At this point in time, the view has also been created and both the view-model and the view are connected to their controller. The created callback will recieve the instance of the "owningView". This is the view that the compoment is declared inside of. If the component itself has a view, this will be passed second.
-      3. `bind(bindingContext: Object, overrideContext: Object)` - Databinding is then activated on the view and view-model. If the view-model has a `bind` callback, it will be invoked at this time. The "binding context" to which the component is being boudn will be passed first. An "override context" will be passed second. The override context contains information used to travers the parent hierarchy and can also be used to add any contextual properties that the component wants to add.
+      2. `created(owningView: View, myView: View)` - If the view-model implements the `created` callback it is invoked next. At this point in time, the view has also been created and both the view-model and the view are connected to their controller. The created callback will receive the instance of the "owningView". This is the view that the component is declared inside of. If the component itself has a view, this will be passed second.
+      3. `bind(bindingContext: Object, overrideContext: Object)` - Databinding is then activated on the view and view-model. If the view-model has a `bind` callback, it will be invoked at this time. The "binding context" to which the component is being bound will be passed first. An "override context" will be passed second. The override context contains information used to traverse the parent hierarchy and can also be used to add any contextual properties that the component wants to add.
       4. `attached()` - Next, the component is attached to the DOM (in document). If the view-model has an `attached` callback, it will be invoked at this time.
-      5. `detached()` - At some point in the future, the component may be removed from the DOM. If/When this happens, and if the view-model has a `detached` callback, this is when it will be invoked.
+      5. `detached()` - At some point in the future, the component may be removed from the DOM. If/When this happens, and the view-model has a `detached` callback, this is when it will be invoked.
       6. `unbind()` - After a component is detached, it's usually unbound. If your view-model has the `unbind` callback, it will be invoked during this process.
     </narrative>
 
@@ -397,9 +397,9 @@
 
       Use on any HTML attribute.
 
-      * `.bind` - Users the default binding. One-way binding for eveything but form controls, which use two-way binding.
-      * `.one-way` - Flows data one direction: from the view-model to the view.
-      * `.two-way` - Flows data both ways: from view-model to view and from view to view-model.
+      * `.bind` - Uses the default binding. One-way binding for everything with exception of form controls, which use two-way binding.
+      * `.one-way` - Data flows in one direction: from the view-model to the view.
+      * `.two-way` - Data flows both ways: from view-model to view and from view to view-model.
       * `.one-time` - Renders data once, but does not synchronize changes after the initial render.
     </narrative>
 
@@ -420,7 +420,7 @@
       Use on any native or custom DOM event. (Do not include the "on" prefix in the event name.)
 
       * `.trigger` - Attaches an even handler directly to the element. When the even fires, the expression will be invoked.
-      * `.delegate` - Attaches a single event handler to the document (or nearest shadow DOM boundary) which handles all events of the specified type, properly dispatching them back to their original targers for invocation of the associated expression.
+      * `.delegate` - Attaches a single event handler to the document (or nearest shadow DOM boundary) which handles all events of the specified type, properly dispatching them back to their original targets for invocation of the associated expression.
 
       > **Note:** The `$event` property can be passed as an argument to a delegate/trigger function call if you need to access the event object.
 
@@ -454,8 +454,8 @@
 
       Creates a reference to an HTML element, a component or a component's parts.
 
-      * `attribute-name.ref="someIdentifier"`- Create a reference to a custom attribute's view-model.
-      * `element-name.ref="someIdentifier"`- Create a reference to a custom element's view-model.
+      * `attribute-name.ref="someIdentifier"`- Create a reference to a custom attributes view-model.
+      * `element-name.ref="someIdentifier"`- Create a reference to a custom elements view-model.
       * `ref="someIdentifier"` - Create a reference to the HTMLElement in the DOM.
     </narrative>
 
@@ -470,7 +470,7 @@
     <narrative uid="11" version="1.0">
       ### String Interpolation
 
-      Used in an element's content. Can be used inside attributes, particularly useful in the `class` and `css` attributes.
+      Used in an elements content. Can be used inside attributes, particularly useful in the `class` and `css` attributes.
     </narrative>
 
     <example title="String Interpolation  Example">
@@ -620,7 +620,7 @@
 
       Always use HTML sanitization. We provide a simple converter that can be used. You're encouraged to use a more complete html sanitizer such as [sanitize-html](https://www.npmjs.com/package/sanitize-html).
 
-      > NOTE:  Binding using the `innerhtml` attribute simply sets the element's `innerHTML` property.  The markup does not pass through Aurelia's templating system.  Binding expressions and require elements will not be evaluated.
+      > NOTE:  Binding using the `innerhtml` attribute simply sets the elements `innerHTML` property.  The markup does not pass through Aurelia's templating system.  Binding expressions and require elements will not be evaluated.
     </narrative>
 
     <example title="Binding innerHTML">
@@ -653,7 +653,7 @@
   <narrative uid="16" version="1.0">
     ### Binding Style
 
-    You can bind a css string or object to an element's `style` attribute. Use the `style` attribute's alias, `css` when doing string interpolation to ensure your application is compatible with Internet Explorer.
+    You can bind a css string or object to an elements `style` attribute. Use the `style` attributes alias, `css` when doing string interpolation to ensure your application is compatible with Internet Explorer.
   </narrative>
 
   <example title="Style Binding Data">
@@ -824,7 +824,7 @@
   <narrative uid="19" version="1.0">
     > **Note:**: Like the `if` attribute, you can also use a `template` tag to group a collection of elements that don't have a parent element and place the `repeat` on the `template` element.
 
-    Contextual items availabe inside a repeat template:
+    Contextual items available inside a repeat template:
 
     * `$index` - The index of the item in the array.
     * `$first` - True if the item is the first item in the array.
@@ -914,7 +914,7 @@
     * `canDeactivate()` - Implement this hook if you want to control whether or not the router _can navigate away_ from your view-model when moving to a new route. Return a boolean value, a promise for a boolean value, or a navigation command.
     * `deactivate()` - Implement this hook if you want to perform custom logic when your view-model is being navigated away from. You can optionally return a promise to tell the router to wait until after your finish your work.
 
-    > **Note:** A _Navigation Command_ is any object with a `navigate(router)` method. When one is encountered, the navigation will be cancelled and control will be passed to the navigation command. One navigation command is provided out of the box: `Redirect`.
+    > **Note:** A _Navigation Command_ is any object with a `navigate(router)` method. When one is encountered, the navigation will be canceled and control will be passed to the navigation command. One navigation command is provided out of the box: `Redirect`.
 
     The `params` object will have a property for each parameter of the route that was parsed, as well as a property for each query string value. `routeConfig` will be the original route configuration object that you set up. `routeConfig` will also have a new `navModel` property, which can be used to change the document title for data loaded by your view-model. For example:
   </narrative>
@@ -1556,18 +1556,18 @@
   <narrative uid="28" version="1.0">
     ### Custom Element Options
 
-    * `@children(selector)` - Decorates a property to create an array on your class that has its items automatically synchronized based on a query selector against the element's immediate child content.
+    * `@children(selector)` - Decorates a property to create an array on your class that has its items automatically synchronized based on a query selector against the elements immediate child content.
     * `@child(selector)` - Decorates a property to create a reference to a single immediate child content element.
-    *  `@processContent(false|Function)` - Tells the compiler that the element's content requires special processing. If you provide `false` to the decorator, the the compiler will not process the content of your custom element. It is expected that you will do custom processing yourself. But, you can also supply a custom function that lets you process the content during the view's compilation. That function can then return true/false to indicate whether or not the compiler should also process the content. The function takes the following form `function(compiler, resources, node, instruction):boolean`
+    *  `@processContent(false|Function)` - Tells the compiler that the elements content requires special processing. If you provide `false` to the decorator, the the compiler will not process the content of your custom element. It is expected that you will do custom processing yourself. But, you can also supply a custom function that lets you process the content during the view's compilation. That function can then return true/false to indicate whether or not the compiler should also process the content. The function takes the following form `function(compiler, resources, node, instruction):boolean`
     *  `@useView(path)` - Specifies a different view to use.
     *  `@noView()` - Indicates that this custom element does not have a view and that the author intends for the element to handle its own rendering internally.
     * `@inlineView(markup, dependencies?)` - Allows the developer to provide a string that will be compiled into the view.
-    * `@containerless()` - Causes the element's view to be rendered without the custom element container wrapping it. This cannot be used in conjunction with `@sync` or `@useShadowDOM`. It also cannot be uses with surrogate behaviors.
+    * `@containerless()` - Causes the elements view to be rendered without the custom element container wrapping it. This cannot be used in conjunction with `@sync` or `@useShadowDOM`. It also cannot be uses with surrogate behaviors.
     * `@useShadowDOM()` - Causes the view to be rendered in the ShadowDOM. When an element is rendered to ShadowDOM, a special `DOMBoundary` instance can optionally be injected into the constructor. This represents the shadow root.
 
     ### SVG Elements
 
-    SVG (scalable vector graphic) tags can support Aurelia's custom element `<template>` tags by  nesting the templated code inside a second `<svg>` tag. For example if you had a base `<svg>` element and wanted to add a templated `<rect ../>` inside it, you would first put your custom tag inside the main `<svg>` tag. Also, make sure the custom element class uses the `@containerless()` decorator.
+    SVG (scalable vector graphics) tags can support Aurelia's custom element `<template>` tags by  nesting the templated code inside a second `<svg>` tag. For example if you had a base `<svg>` element and wanted to add a templated `<rect ../>` inside it, you would first put your custom tag inside the main `<svg>` tag. Also, make sure the custom element class uses the `@containerless()` decorator.
   </narrative>
 
   <example title="SVG Custom Element View-Model Declaratation">
