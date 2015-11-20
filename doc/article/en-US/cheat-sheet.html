@@ -454,9 +454,11 @@
 
       Creates a reference to an HTML element, a component or a component's parts.
 
+      * `ref="someIdentifier"` or `element.ref="someIdentifier"` - Create a reference to the HTMLElement in the DOM.
       * `attribute-name.ref="someIdentifier"`- Create a reference to a custom attribute's view-model.
-      * `element-name.ref="someIdentifier"`- Create a reference to a custom element's view-model.
-      * `ref="someIdentifier"` - Create a reference to the HTMLElement in the DOM.
+      * `view-model.ref="someIdentifier"`- Create a reference to a custom element's view-model.
+      * `view.ref="someIdentifier"`- Create a reference to a custom element's view instance (not an HTML Element).
+      * `controller.ref="someIdentifier"`- Create a reference to a custom element's controller instance.
     </narrative>
 
     <example title="Ref Example">
