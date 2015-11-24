@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "1.0.0-beta.1.0.1",
+  "version": "1.0.0-beta.1.0.2",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
@@ -104,6 +104,10 @@
         {
           "title": "Creating Components",
           "href": "doc/article/en-US/creating-components.html"
+        },
+        {
+          "title": "App Configuration and Startup",
+          "href": "doc/article/en-US/app-configuration-and-startup.html"
         },
         {
           "title": "Cheat Sheet",
