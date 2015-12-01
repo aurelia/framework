@@ -220,10 +220,7 @@
 
         @autoinject
         export class CustomerDetail {
-          constructor(private dep1: Dep1, private dep2: Dep2){
-            this.dep1 = dep1;
-            this.dep2 = dep2;
-          }
+          constructor(private dep1: Dep1, private dep2: Dep2){ }
         }
       </source-code>
     </example>
@@ -258,9 +255,7 @@
 
         @inject(Lazy.of(HttpClient))
         export class CustomerDetail {
-          constructor(private getHTTP: () => HttpClient){
-            this.getHTTP = getHTTP;
-          }
+          constructor(private getHTTP: () => HttpClient){ }
         }
       </source-code>
     </example>
@@ -309,9 +304,7 @@
         @transient()
         @autoinject
         export class CustomerDetail {
-          constructor(private http: HttpClient) {
-            this.http = http;
-          }
+          constructor(private http: HttpClient) { }
         }
       </source-code>
     </example>
@@ -965,9 +958,7 @@
 
       @autoinject
       export class UserEditScreen {
-        constructor(userService: UserService) {
-          this.userService = userService;
-        }
+        constructor(userService: UserService) { }
 
         activate(params: any, routeConfig: RouteConfig): Promise<any> {
           return this.userService.getUser(params.id)
@@ -1463,10 +1454,7 @@
       @templateController
       @autoinject
       export class NaiveIf {
-        constructor(viewFactory: BoundViewFactory, viewSlot: ViewSlot) {
-          this.viewFactory = viewFactory;
-          this.viewSlot = viewSlot;
-        }
+        constructor(private viewFactory: BoundViewFactory, private viewSlot: ViewSlot) { }
 
         valueChanged(newValue: any): void {
           if (newValue) {
