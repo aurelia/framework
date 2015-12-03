@@ -53,7 +53,7 @@
                   "type": {
                     "type": "reference",
                     "name": "Loader",
-                    "id": 740,
+                    "id": 605,
                     "moduleName": "\"aurelia-loader\""
                   }
                 },
@@ -135,7 +135,7 @@
           "type": {
             "type": "reference",
             "name": "Loader",
-            "id": 740,
+            "id": 605,
             "moduleName": "\"aurelia-loader\""
           }
         },
