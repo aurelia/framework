@@ -383,7 +383,7 @@ Components have a well-defined lifecycle:
 
 Use on any HTML attribute.
 
-* `.bind` - Users the default binding. One-way binding for everything but form controls, which use two-way binding.
+* `.bind` - Uses the default binding. One-way binding for everything but form controls, which use two-way binding.
 * `.one-way` - Flows data one direction: from the view-model to the view.
 * `.two-way` - Flows data both ways: from view-model to view and from view to view-model.
 * `.one-time` - Renders data once, but does not synchronize changes after the initial render.
