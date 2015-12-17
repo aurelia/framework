@@ -91,39 +91,43 @@
       "articles": [
         {
           "title": "What is Aurelia?",
-          "href": "doc/article/en-US/what-is-aurelia.html"
+          "href": "doc/article/en-US/what-is-aurelia.md"
         },
         {
           "title": "Getting Started",
-          "href": "doc/article/en-US/getting-started.html"
+          "href": "doc/article/en-US/getting-started.md"
         },
         {
           "title": "A Production Setup",
-          "href": "doc/article/en-US/a-production-setup.html"
+          "href": "doc/article/en-US/a-production-setup.md"
         },
         {
           "title": "Creating Components",
-          "href": "doc/article/en-US/creating-components.html"
+          "href": "doc/article/en-US/creating-components.md"
         },
         {
           "title": "App Configuration and Startup",
-          "href": "doc/article/en-US/app-configuration-and-startup.html"
+          "href": "doc/article/en-US/app-configuration-and-startup.md"
+        },
+        {
+          "title": "Bundling Your App for Deploy",
+          "href": "doc/article/en-US/bundling-your-app-for-deploy.md"
         },
         {
           "title": "Cheat Sheet",
-          "href": "doc/article/en-US/cheat-sheet.html"
+          "href": "doc/article/en-US/cheat-sheet.md"
         },
         {
           "title": "Getting Help",
-          "href": "doc/article/en-US/getting-help.html"
+          "href": "doc/article/en-US/getting-help.md"
         },
         {
           "title": "Technical Benefits",
-          "href": "doc/article/en-US/technical-benefits.html"
+          "href": "doc/article/en-US/technical-benefits.md"
         },
         {
           "title": "Business Advantages",
-          "href": "doc/article/en-US/business-advantages.html"
+          "href": "doc/article/en-US/business-advantages.md"
         }
       ]
     }
