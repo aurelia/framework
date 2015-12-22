@@ -53,7 +53,7 @@
                   "type": {
                     "type": "reference",
                     "name": "Loader",
-                    "id": 605,
+                    "id": 736,
                     "moduleName": "\"aurelia-loader\""
                   }
                 },
@@ -71,7 +71,7 @@
                   "type": {
                     "type": "reference",
                     "name": "Container",
-                    "id": 484,
+                    "id": 208,
                     "moduleName": "\"aurelia-dependency-injection\""
                   }
                 },
@@ -117,7 +117,7 @@
           "type": {
             "type": "reference",
             "name": "Container",
-            "id": 484,
+            "id": 208,
             "moduleName": "\"aurelia-dependency-injection\""
           }
         },
@@ -135,7 +135,7 @@
           "type": {
             "type": "reference",
             "name": "Loader",
-            "id": 605,
+            "id": 736,
             "moduleName": "\"aurelia-loader\""
           }
         },
@@ -482,7 +482,7 @@
           "type": {
             "type": "reference",
             "name": "Container",
-            "id": 484,
+            "id": 208,
             "moduleName": "\"aurelia-dependency-injection\""
           }
         },
