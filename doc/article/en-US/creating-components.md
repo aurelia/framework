@@ -15,11 +15,11 @@
 ---
 ## [Creating A Component](aurelia-doc://section/1/version/1.0.0)
 
-In Aurelia, user interface components are composed of _view_ and _view-model_ pairs. The view is written with HTML and is rendered into the DOM. The view-model is written with JavaScript and provides data and behavior to the view. The Templating Engine along with Dependency Injection are responsible for creating these pairs and enforcing a predictable lifecycle for the component. Once instantiated, Aurelia's powerful _databinding_ links the two pieces together allowing changes in your view-model to be reflected in the view and changes in your view to reflected in your view-model. This Separation of Concerns is great for developer/designer collaboration, maintainability, architectural flexibility, and even source control.
+In Aurelia, user interface components are composed of _view_ and _view-model_ pairs. The view is written with HTML and is rendered into the DOM. The view-model is written with ${context.language.name} and provides data and behavior to the view. The Templating Engine along with Dependency Injection are responsible for creating these pairs and enforcing a predictable lifecycle for the component. Once instantiated, Aurelia's powerful _databinding_ links the two pieces together allowing changes in your view-model to be reflected in the view and changes in your view to reflected in your view-model. This Separation of Concerns is great for developer/designer collaboration, maintainability, architectural flexibility, and even source control.
 
-To create a UI component, you need only create two files, one for each of the component parts. Let's create a simple "Hello" component. To do that we'll need a _hello.js_ for our view-model and _hello.html_ for our view. Here's the source for each:
+To create a UI component, you need only create two files, one for each of the component parts. Let's create a simple "Hello" component. To do that we'll need a _hello${context.language.fileExtension}_ for our view-model and _hello.html_ for our view. Here's the source for each:
 
-<code-listing heading="hello.js">
+<code-listing heading="hello${context.language.fileExtension}">
   <source-code lang="ES 2016">
     export class Hello {
       firstName = 'John';
@@ -86,7 +86,7 @@ View-models and other interface elements, such as Custom Elements and Custom Att
 
 In order to leverage DI, you simply decorate your class to tell the framework what it should pass to its constructor. Here's an example of a CustomDetail component that depends on Aurelia's fetch client.
 
-<code-listing heading="customer-detail.js">
+<code-listing heading="customer-detail${context.language.fileExtension}">
   <source-code lang="ES 2016">
     import {inject} from 'aurelia-framework';
     import {HttpClient} from 'aurelia-fetch-client';

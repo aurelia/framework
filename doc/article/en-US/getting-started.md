@@ -62,19 +62,19 @@ Let's start with the script tags. First we have _system.js_, our standards-based
 
 Once we have our module loader and its configuration, we load the `aurelia-bootstrapper` module with a call to `System.import`.
 
-When the bootstrapper loads it inspects the HTML document for _aurelia-app_ attributes. In this case it will find that the body has an `aurelia-app` attribute. This tells the bootstrapper to load our _app_ view-model and its view, conventionally located in _app.js_ and _app.html_ and then compose them as an Aurelia application in the DOM.
+When the bootstrapper loads it inspects the HTML document for _aurelia-app_ attributes. In this case it will find that the body has an `aurelia-app` attribute. This tells the bootstrapper to load our _app_ view-model and its view, conventionally located in _app${context.language.fileExtension}_ and _app.html_ and then compose them as an Aurelia application in the DOM.
 
 Wait a minute....we don't have an _app_ view-model or view. Ummm...WHAT NOW!?
 
 ## [Creating Your First Screen](aurelia-doc://section/3/version/1.0.0)
 
-In Aurelia, user interface components have two parts: a _view_ and a _view-model_. The _view_ is written with HTML and is rendered into the DOM. The _view-model_ is written with JavaScript/TypeScript and provides data and behavior to the _view_. Aurelia's powerful _databinding_ links the two pieces together allowing changes in your data to be reflected in the _view_ and vice versa. This Separation of Concerns is great for developer/designer collaboration, maintainability, architectural flexibility and even source control.
+In Aurelia, user interface components have two parts: a _view_ and a _view-model_. The _view_ is written with HTML and is rendered into the DOM. The _view-model_ is written with ${context.language.name} and provides data and behavior to the _view_. Aurelia's powerful _databinding_ links the two pieces together allowing changes in your data to be reflected in the _view_ and vice versa. This Separation of Concerns is great for developer/designer collaboration, maintainability, architectural flexibility and even source control.
 
 Let's see how it works...
 
-In the _src_ folder find the _app.html_ and _app.js_ files. This is the app component's view and view-model, the files that the bootstrapper is loading. Let's start by replacing the _view-model_ with a simple class to hold a _firstName_ and _lastName_. We'll also add a computed property for _fullName_ and a method to "submit" the person. Here's what your _app.js_ file should look like after you have made the changes:
+In the _src_ folder find the _app.html_ and _app${context.language.fileExtension}_ files. This is the app component's view and view-model, the files that the bootstrapper is loading. Let's start by replacing the _view-model_ with a simple class to hold a _firstName_ and _lastName_. We'll also add a computed property for _fullName_ and a method to "submit" the person. Here's what your _app${context.language.fileExtension}_ file should look like after you have made the changes:
 
-<code-listing heading="app.js">
+<code-listing heading="app${context.language.fileExtension}">
   <source-code lang="ES 2015">
     export class Welcome {
       constructor() {
@@ -158,14 +158,14 @@ There are a couple more interesting things in this example. In the last form gro
 
 Let's refresh our browser to see the updated app in action. Pretty cool, yes!?
 
-> Info
+> Info: Binding Commands
 > The `.bind` command uses the default binding behavior for any property. The default is one-way binding (model to view) for everything except form controls, which default to two-way. You can always override this by using the explicit binding commands `.one-way`, `.two-way` and `.one-time`. Similarly, you can use `.delegate` for event delegation in place of `.trigger`.
 
 ## [Adding Navigation](aurelia-doc://section/4/version/1.0.0)
 
-A one page app isn't very interesting. We should probably add some more screens and set up a client-side router, don't you think? Let's begin by renaming our _app.js_ and _app.html_ to _welcome.js_ and _welcome.html_ respectively. This will be the first screen of our multi-screen app. Now, lets create a new _app.js_ and _app.html_ which will serve as our "layout",  "master page" or "root component". The view will contain our navigation UI and the content placeholder for the current screen and the view-model will configure a router instance with our routes. We'll start with the view-model so you can see how to set up the router:
+A one page app isn't very interesting. We should probably add some more screens and set up a client-side router, don't you think? Let's begin by renaming our _app${context.language.fileExtension}_ and _app.html_ to _welcome${context.language.fileExtension}_ and _welcome.html_ respectively. This will be the first screen of our multi-screen app. Now, lets create a new _app${context.language.fileExtension}_ and _app.html_ which will serve as our "layout",  "master page" or "root component". The view will contain our navigation UI and the content placeholder for the current screen and the view-model will configure a router instance with our routes. We'll start with the view-model so you can see how to set up the router:
 
-<code-listing heading="app.js">
+<code-listing heading="app${context.language.fileExtension}">
   <source-code lang="ES 2015/2016">
     export class App {
       configureRouter(config, router) {
@@ -250,7 +250,8 @@ Following our simple app-building convention, the `App` class will be databound 
 
 Since you've seen basic binding and string interpolation already, let's focus on the new stuff. Take a look at the navbar-nav `ul` element. Its `li` demonstrates how to use a repeater with the following expression `repeat.for="row of router.navigation"`. This will create one `li` for each item in the `router.navigation` array. The local variable is _row_ and you can see that used throughout the `li` and its child elements.
 
-> **Note:** The `navigation` property on the router is an array populated with all the routes you marked as `nav:true` in your route config. Aurelia models its `repeat.for` syntax after the new standard ES2015 `for..of` loop. So, you can think of looping over the array of navigable routes and generating UI for each.
+> Info
+> The `navigation` property on the router is an array populated with all the routes you marked as `nav:true` in your route config. Aurelia models its `repeat.for` syntax after the new standard ES2015 `for..of` loop. So, you can think of looping over the array of navigable routes and generating UI for each.
 
 Also on the `li` you can see a demonstration of how to use string interpolation to dynamically add/remove classes. Further down in the view, there's a second `ul`. See the binding on its single child `li`? `if.bind="router.isNavigating"` This conditionally adds/removes the `li` based on the value of the bound expression. Conveniently, the router will update its `isNavigating` property whenever it is....navigating.
 
@@ -264,7 +265,7 @@ Well, we've technically got a navigation application now...but it's not very int
 
 Let's display some users from Github. To do that, let's first configure our router for the hypothetical screen:
 
-<code-listing heading="app.js (updated)">
+<code-listing heading="app${context.language.fileExtension} (updated)">
   <source-code lang="ES 2015/2016">
     export class App {
       configureRouter(config, router){
@@ -297,9 +298,9 @@ Let's display some users from Github. To do that, let's first configure our rout
   </source-code>
 </code-listing>
 
-If you guessed that we need to create a _users.js_ and _users.html_ file, you are correct. Here's the source:
+If you guessed that we need to create a _users${context.language.fileExtension}_ and _users.html_ file, you are correct. Here's the source:
 
-<code-listing heading="users.js">
+<code-listing heading="users${context.language.fileExtension}">
   <source-code lang="ES 2015">
     import {HttpClient} from 'aurelia-fetch-client';
     import 'fetch';
@@ -393,13 +394,13 @@ If you are using TypeScript >= 1.5, you can add the `@autoinject` decorator to y
 
 Aurelia's router enforces a lifecycle on view-models whenever routes change. This is referred to as the "Screen Activation Lifecycle" or "Navigation Lifecycle". View-models can optionally hook into various parts of the lifecycle to control flow into and out of the route. When your route is ready to activate the router will call the `activate` hook, if present. In the above code, we use this hook to call the GitHub API and get some users back. Notice that we return the result of the http request back from our `activate` method. All the `HttpClient` APIs return a `Promise`. The router will detect a `Promise` and wait to complete navigation until after it resolves. So, in this way, you can optionally force the router to delay displaying the page until it is populated with data.
 
-> Info
+> Info: Navigation Lifecycle Hooks
 > The full navigation lifecycle includes `canActivate`, `activate`, `canDeactivate` and `deactivate` hooks. The can* methods can return a boolean (or Promise of boolean) to accept or reject the transition into or out of the current screen.
 
 > Info
 > If you aren't familiar with [Promises](http://www.html5rocks.com/en/tutorials/es6/promises/), these are a new feature of ES2015 designed to improve asynchronous programming. A `Promise` is an object that represents a future result. Essentially, it represents a "promise" to complete some work or to provide some data at some point in the future.
 
-<source-code heading="users.html">
+<code-listing heading="users.html">
   <source-code lang="HTML">
     <template>
       <section>
@@ -421,15 +422,13 @@ Aurelia's router enforces a lifecycle on view-models whenever routes change. Thi
       </section>
     </template>
   </source-code>
-</source-code>
+</code-listing>
 
-The view for this screen is pretty straight forward. There's nothing you haven't seen before.
-
-Once you've got all this in place, go ahead and run your app again. You should now see two items in the nav bar and be able to switch back and forth between them. Huzzah!
+The view for this screen is pretty straight forward. There's nothing you haven't seen before. Once you've got all this in place, go ahead and run your app again. You should now see two items in the nav bar and be able to switch back and forth between them. Huzzah!
 
 Let's recap. To add a page to your app:
 
-1. Add the route configuration to the _app.js_ router.
+1. Add the route configuration to the _app${context.language.fileExtension}_ router.
 2. Add a view-model.
 3. Add a view with the same name (but with an .html extension).
 4. Celebrate.
@@ -456,9 +455,9 @@ Look at you, you overachiever! I see you're interested in learning some extra aw
 
 This code requires a `nav-bar` element from "nav-bar" and once it's available in the view, we can use it like any other element, including databinding to its custom properties (like _router_). So, how do we get to this end product?
 
-Guess what? Our simple view-model/view conventions still apply for custom elements. Let's create a _nav-bar.js_ and a _nav-bar.html_. Here's the code for the view-model first:
+Guess what? Our simple view-model/view conventions still apply for custom elements. Let's create a _nav-bar${context.language.fileExtension}_ and a _nav-bar.html_. Here's the code for the view-model first:
 
-<code-listing heading="nav-bar.js">
+<code-listing heading="nav-bar${context.language.fileExtension}">
   <source-code lang="ES 2015">
     import {bindable, decorators} from 'aurelia-framework';
 
@@ -522,13 +521,13 @@ To create a custom element, you create and export a class. Since this class is g
   </source-code>
 </code-listing>
 
-This looks almost identical to the navbar HTML in our original _app.html_ file. We've basically extracted that and put it into this template. Instead of binding to _app.js_ though, it's now binding to _nav-bar.js_.
+This looks almost identical to the navbar HTML in our original _app.html_ file. We've basically extracted that and put it into this template. Instead of binding to _app${context.language.fileExtension}_ though, it's now binding to _nav-bar${context.language.fileExtension}_.
 
 This is a very simple custom element with no real behavior, but it is complete and usable as shown above.
 
-Wait! I know what you are thinking. This custom element is so simple...it seems a bit silly to require a JavaScript class just to define the single `router` property. Couldn't we get rid of that somehow? Well, the answer is YES. For very simple elements which have no behavior but simply provide a view that can be bound to a set of properties, we can omit the JavaScript file altogether. Let's see how that works.
+Wait! I know what you are thinking. This custom element is so simple...it seems a bit silly to require a ${context.language.name} class just to define the single `router` property. Couldn't we get rid of that somehow? Well, the answer is YES. For very simple elements which have no behavior but simply provide a view that can be bound to a set of properties, we can omit the ${context.language.name} file altogether. Let's see how that works.
 
-First, delete the _nav-bar.js_ file. Next, we need to make one change to the _nav-bar.html_ file. On the template element, we can declare the bindable properties of our element like this:
+First, delete the _nav-bar${context.language.fileExtension}_ file. Next, we need to make one change to the _nav-bar.html_ file. On the template element, we can declare the bindable properties of our element like this:
 
 <code-listing heading="nav-bar.html">
   <source-code lang="HTML">
@@ -556,8 +555,8 @@ We can have more than one property by separating them by commas. Finally, we nee
   </source-code>
 </code-listing>
 
-> Info
-> Anything required into a view with the `require` element is local to the view. As a result, you don't have to worry about name conflicts. You can also load app-wide elements and other behaviors for convenience so you don't have to require common resources in every view.
+> Info: View Encapsulation
+> Anything required into a view with the `require` element has visibility only inside that view. As a result, you don't have to worry about name conflicts between various view resources. For convenience, you can also load app-wide elements and other behaviors during your application's bootstrapping phase.
 
 You may wonder how Aurelia determines the name of the custom element. By convention, it will use the export name of the class, lowered and hyphenated. In our html-only scenario, it will use the file name.
 
@@ -567,9 +566,9 @@ In addition to creating custom elements, you can also create custom attributes w
 
 Can't get enough can you? Well, I've got a treat for you. Let's add a third page to our app...with its own router! We call this a child router. Child routers have their own route configuration and navigate relative to the parent router. Prepare thyself for insanity....
 
-First, let's update our _app.js_ with the new configuration. Here's what it should look like:
+First, let's update our _app${context.language.fileExtension}_ with the new configuration. Here's what it should look like:
 
-<code-listing heading="app.js (updated...again)">
+<code-listing heading="app${context.language.fileExtension} (updated...again)">
   <source-code lang="ES 2015/2016">
     export class App {
       configureRouter(config, router) {
@@ -604,9 +603,9 @@ First, let's update our _app.js_ with the new configuration. Here's what it shou
   </source-code>
 </code-listing>
 
-Nothing new there. The interesting part is what's inside _child-router.js_...
+Nothing new there. The interesting part is what's inside _child-router${context.language.fileExtension}_...
 
-<code-listing heading="child-router.js">
+<code-listing heading="child-router${context.language.fileExtension}">
   <source-code lang="ES 2016">
     export class ChildRouter {
       heading = 'Child Router';

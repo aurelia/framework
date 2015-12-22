@@ -17,6 +17,7 @@
 
 * The only framework fully written in standards-based ES 2015 and ES 2016.
 * Forward compatible with JavaScript technology that is 2-3 years in the future.
+* Full support for TypeScript.
 
 ## [Modern DOM](aurelia-doc://section/2/version/1.0.0)
 

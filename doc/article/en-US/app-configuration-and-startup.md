@@ -15,7 +15,7 @@
 ---
 ## [Bootstrapping Aurelia](aurelia-doc://section/1/version/1.0.0)
 
-Most platforms have a "main" or entry point for code execution. Aurelia is no different. If you've read the Getting Started Guide, then you've seen the `aurelia-app` attribute. Simply place this on an HTML element and Aurelia's bootstrapper will load an _app.js_ and _app.html_, databind them together and inject them into the DOM element on which you placed that attribute.
+Most platforms have a "main" or entry point for code execution. Aurelia is no different. If you've read the Getting Started Guide, then you've seen the `aurelia-app` attribute. Simply place this on an HTML element and Aurelia's bootstrapper will load an _app${context.language.fileExtension}_ and _app.html_, databind them together and inject them into the DOM element on which you placed that attribute.
 
 Often times you want to configure the framework or run some code prior to displaying anything to the user though. So chances are, as your project progresses, you will migrate towards needing some startup configuration. In order to do this, you can provide a value for the `aurelia-app` attribute that points to a configuration module. This module should export a single function named `configure`. Aurelia invokes your `configure` function, passing it the Aurelia object which you can then use to configure the framework yourself and decide what, when, and where to display your UI. Here's an example configuration file showing the standard configuration, the same configuration that is equivalent to what you would get when using `aurelia-app` without a value:
 
@@ -116,7 +116,7 @@ Once you've configured the framework, you need to start things up by calling `au
 
 ## [Rendering the Root Component](aurelia-doc://section/2/version/1.0.0)
 
-The root component is set by calling `aurelia.setRoot()`. If no values are provided, this defaults to treating the element with the `aurelia-app` attribute as the DOM host for your app and `app.js`/`app.html` as the source for the root component. However, you can specify whatever you want, just like this:
+The root component is set by calling `aurelia.setRoot()`. If no values are provided, this defaults to treating the element with the `aurelia-app` attribute as the DOM host for your app and `app${context.language.fileExtension}`/`app.html` as the source for the root component. However, you can specify whatever you want, just like this:
 
 <code-listing heading="Manual Root Component">
   <source-code lang="ES 2015/2016">
@@ -141,7 +141,7 @@ The root component is set by calling `aurelia.setRoot()`. If no values are provi
   </source-code>
 </code-listing>
 
-This causes the `my-root.js`/`my-root.html` to be loaded as the root component and injected into the `some-element` HTML element.
+This causes the `my-root${context.language.fileExtension}`/`my-root.html` to be loaded as the root component and injected into the `some-element` HTML element.
 
 ## [Bootstrapping Older Browsers](aurelia-doc://section/3/version/1.0.0)
 
@@ -236,9 +236,9 @@ Sometimes you have whole groups of components or related functionality that coll
 
 Imagine, as above, that we have a `my-component` component. Imagine that that was then one of a dozen components that formed a logical feature in your app called `my-feature`. Rather than place the feature's configuration logic inside the app's configuration module, we can place the feature's configuration inside its own feature configuration module.
 
-To create a "feature", simply create a folder in your app; in the case of our example: `my-feature`. Inside that folder, place all the components and other code that pertain to that feature. Finally, create an `index.js` file at the root of the `my-feature` folder. The `index.js` file should export a single `configure` function. Here's what our code might look like for our hypothetical `my-feature` feature:
+To create a "feature", simply create a folder in your app; in the case of our example: `my-feature`. Inside that folder, place all the components and other code that pertain to that feature. Finally, create an `index${context.language.fileExtension}` file at the root of the `my-feature` folder. The `index${context.language.fileExtension}` file should export a single `configure` function. Here's what our code might look like for our hypothetical `my-feature` feature:
 
-<code-listing heading="A Feature Module (index)">
+<code-listing heading="A Feature Module (index${context.language.fileExtension})">
   <source-code lang="ES 2015/2016">
     export function configure(config) {
       config.globalResources('./my-component', './my-component-2', 'my-component-3', 'etc.');
@@ -253,7 +253,7 @@ To create a "feature", simply create a folder in your app; in the case of our ex
   </source-code>
 </code-listing>
 
-The `configure` method receives an instance of the same `FrameworkConfiguration` object as the `aurelia.use` property. So, the feature can configure your app in any way it needs. An important note is that resources should be configured using paths relative to the `index.js` itself.
+The `configure` method receives an instance of the same `FrameworkConfiguration` object as the `aurelia.use` property. So, the feature can configure your app in any way it needs. An important note is that resources should be configured using paths relative to the `index${context.language.fileExtension}` itself.
 
 How then do we turn this feature on in our app? Here's an app configuration file that shows:
 
@@ -398,7 +398,7 @@ There are many things you may want to customize or configure as part of your app
 
 ### Configuring the View Location Convention
 
-Aureia uses a _View Strategy_ to locate the view that is associated with a particular component's view-model. If the component doesn't specify its own view strategy, then Aurelia's `ViewLocator` service will use a fallback view strategy. The fallback strategy that is used is named `ConventionalViewStrategy`. This strategy uses the view-model's module id to conventionally map to its view id. For example, if the module id is "welcome.js" then this strategy will look for the view at "welcome.html". The conventional strategy's mapping logic can be changed if a different convention is desired. To do this, during bootstrap, import the `ViewLocator` and replace its `convertOriginToViewUrl` method with your own implementation. Here's some example code:
+Aureia uses a _View Strategy_ to locate the view that is associated with a particular component's view-model. If the component doesn't specify its own view strategy, then Aurelia's `ViewLocator` service will use a fallback view strategy. The fallback strategy that is used is named `ConventionalViewStrategy`. This strategy uses the view-model's module id to conventionally map to its view id. For example, if the module id is "welcome${context.language.fileExtension}" then this strategy will look for the view at "welcome.html". The conventional strategy's mapping logic can be changed if a different convention is desired. To do this, during bootstrap, import the `ViewLocator` and replace its `convertOriginToViewUrl` method with your own implementation. Here's some example code:
 
 <code-listing heading="Custom View Location Convention">
   <source-code lang="ES 2015/2016">

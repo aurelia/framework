@@ -365,7 +365,7 @@ We have changed the source code (src/main.js), so we need to rebuild our app. Th
 Now, let's run `gulp bundle` from another console/tab. If we now refresh/reload our app from the browser, keeping the developer tools open, we should see the difference.
 
 > Warning
-> Note that the order of running the tasks is important here. The `build` clears/removes all the files in `dist` folder. So, any bundle file in that folder will be deleted too. This is why we always have to run the `gulp bundle` after the `build` task is finished. If you are using `watch` you will have to be extra careful because every change you make in the source file will trigger a `build` task that clears the `dist` folder and any bundles as well.
+> The order in which the tasks are run is important. The `build` removes all the files in `dist` folder. As a result, any bundle file in that folder will be deleted too. This is why we always have to run the `gulp bundle` after the `build` task is finished. If you are using `watch` you will have to be extra careful here. Every change you make in the source file will trigger a `build` task that clears the `dist` folder and any bundles as well.
 
 Let's examine the configuration one property at a time:
 

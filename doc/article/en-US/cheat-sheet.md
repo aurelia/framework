@@ -143,7 +143,7 @@
 
 ## [Creating Components](aurelia-doc://section/2/version/1.0.0)
 
-UI components consist of two parts: a view-model and a view. Simply create each part in its own file. Use the same file name but different file extensions for the two parts. For example: _hello.js_ and _hello.html_.
+UI components consist of two parts: a view-model and a view. Simply create each part in its own file. Use the same file name but different file extensions for the two parts. For example: _hello${context.language.fileExtension}_ and _hello.html_.
 
 <code-listing heading="Explicit Configuration">
   <source-code lang="ES 2015">
@@ -407,7 +407,7 @@ Use on any native or custom DOM event. (Do not include the "on" prefix in the ev
 * `.delegate` - Attaches a single event handler to the document (or nearest shadow DOM boundary) which handles all events of the specified type, properly dispatching them back to their original targers for invocation of the associated expression.
 
 > Info
-> The `$event` property can be passed as an argument to a delegate/trigger function call if you need to access the event object.
+> The `$event` value can be passed as an argument to a `delegate` or `trigger` function call if you need to access the event object.
 
 <code-listing heading="Event Binding Examples">
   <source-code lang="HTML">
@@ -591,12 +591,6 @@ A typical select element is rendered using a combination of `value.bind` and `re
 
 ### Binding innerHTML and textContext
 
-> Danger
-> Always use HTML sanitization. We provide a simple converter that can be used. You're encouraged to use a more complete html sanitizer such as [sanitize-html](https://www.npmjs.com/package/sanitize-html).
-
-> Warning
-> Binding using the `innerhtml` attribute simply sets the element's `innerHTML` property.  The markup does not pass through Aurelia's templating system.  Binding expressions and require elements will not be evaluated.
-
 <code-listing heading="Binding innerHTML">
   <source-code lang="HTML">
     <template>
@@ -605,6 +599,12 @@ A typical select element is rendered using a combination of `value.bind` and `re
     </template>
   </source-code>
 </code-listing>
+
+> Danger
+> Always use HTML sanitization. We provide a simple converter that can be used. You are encouraged to use a more complete HTML sanitizer such as [sanitize-html](https://www.npmjs.com/package/sanitize-html).
+
+> Warning
+> Binding using the `innerhtml` attribute simply sets the element's `innerHTML` property.  The markup does not pass through Aurelia's templating system.  Binding expressions and require elements will not be evaluated.
 
 <code-listing heading="Binding textContent">
   <source-code lang="HTML">
@@ -788,9 +788,6 @@ You can bind a css string or object to an element's `style` attribute. Use the `
   </source-code>
 </code-listing>
 
-> Info
-> Like the `if` attribute, you can also use a `template` tag to group a collection of elements that don't have a parent element and place the `repeat` on the `template` element.
-
 Contextual items availabe inside a repeat template:
 
 * `$index` - The index of the item in the array.
@@ -798,6 +795,9 @@ Contextual items availabe inside a repeat template:
 * `$last` - True if the item is the last item in the array.
 * `$even` - True if the item has an even numbered index.
 * `$odd` - True if the item has an odd numbered index.
+
+> Info: Containerless Template Controllers
+> The `if` and `repeat` attributes are usually placed on the HTML elements that they affect. However, you can also use a `template` tag to group a collection of elements that don't have a parent element and place the `if` or `repeat` on the `template` element instead.
 
 <code-listing heading="Dynamically render UI into the DOM based on data.">
   <source-code lang="HTML">
@@ -877,8 +877,8 @@ Contextual items availabe inside a repeat template:
 * `canDeactivate()` - Implement this hook if you want to control whether or not the router _can navigate away_ from your view-model when moving to a new route. Return a boolean value, a promise for a boolean value, or a navigation command.
 * `deactivate()` - Implement this hook if you want to perform custom logic when your view-model is being navigated away from. You can optionally return a promise to tell the router to wait until after your finish your work.
 
-> Info
-> A _Navigation Command_ is any object with a `navigate(router)` method. When one is encountered, the navigation will be cancelled and control will be passed to the navigation command. One navigation command is provided out of the box: `Redirect`.
+> Info: Navigation Commands
+> A _Navigation Command_ is any object with a `navigate(router: Router)` method. When a navigation command is encountered, the current navigation will be cancelled and control will be passed to the navigation command so it can determine the correct action. Aurelia provides one navigation command out of the box: `Redirect`.
 
 The `params` object will have a property for each parameter of the route that was parsed, as well as a property for each query string value. `routeConfig` will be the original route configuration object that you set up. `routeConfig` will also have a new `navModel` property, which can be used to change the document title for data loaded by your view-model. For example:
 
@@ -1028,9 +1028,6 @@ The `params` object will have a property for each parameter of the route that wa
 
 Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) to the head of your html document. If you're using JSPM, you will also need to configure it with a `baseURL` corresponding to your base tag's `href`.
 
-> Warning
-> Don't forget to configure your server appropriately.
-
 <code-listing heading="Push State">
   <source-code lang="ES 2015/2016">
     export class App {
@@ -1063,6 +1060,9 @@ Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base)
     }
   </source-code>
 </code-listing>
+
+> Warning
+> PushState requires server-side support. Don't forget to configure your server appropriately.
 
 ### Reusing an existing VM
 
@@ -1508,8 +1508,8 @@ Since the VM's life-cycle is called only once you may have problems recognizing 
 * `@useView(path)` - Specifies a different view to use.
 * `@noView()` - Indicates that this custom element does not have a view and that the author intends for the element to handle its own rendering internally.
 * `@inlineView(markup, dependencies?)` - Allows the developer to provide a string that will be compiled into the view.
-* `@containerless()` - Causes the element's view to be rendered without the custom element container wrapping it. This cannot be used in conjunction with `@sync` or `@useShadowDOM`. It also cannot be uses with surrogate behaviors.
 * `@useShadowDOM()` - Causes the view to be rendered in the ShadowDOM. When an element is rendered to ShadowDOM, a special `DOMBoundary` instance can optionally be injected into the constructor. This represents the shadow root.
+* `@containerless()` - Causes the element's view to be rendered without the custom element container wrapping it. This cannot be used in conjunction with `@child`, `@children` or `@useShadowDOM` decorators. It also cannot be uses with surrogate behaviors. Use sparingly.
 
 ### SVG Elements
 
