@@ -52,7 +52,8 @@ Now, let's create a `bundle.js` file in `build/tasks/bundle.js` as follows:
 
     var config = {
       force: true,
-      packagePath: '.',
+      baseURL: '.',                   // baseURL of the application
+      configPath: './config.js',      // config.js file. Must be within `baseURL`
       bundles: {
         "dist/app-build": {
           includes: [
@@ -105,7 +106,7 @@ gulp bundle
 Here are the things that should have happened after Gulp is finished executing the bundle task:
 
 * A file, `dist/app-build.js` is created.
-* A file, `dist/aurelia.js` is created.
+* A file, `dist/vendor-build.js` is created.
 * `config.js` is updated.
 
 Now, if we refresh/reload the app from the browser, we will see much less network traffic. This means that our app is properly bundled.
