@@ -37,14 +37,13 @@ npm install -g jspm
 
 ## [Setting up the Project Structure and Build](aurelia-doc://section/2/version/1.0.0)
 
-With the tooling installed, we can now turn our attention to setting up a basic structure for your app. Begin by downloading the navigation skeleton. We've got two versions available to you: one uses ECMAScript 2016 (JavaScript vNext) and the other one uses TypeScript. Choose one now by clicking one of the buttons below.
+With the tooling installed, we can now turn our attention to setting up a basic structure for your app. Begin by downloading a skeleton. We've got several versions available for you based on your language and tooling preferences. Please download them now by clicking the button below.
 
 <div style="text-align: center;">
-  <a class="au-button" href="https://github.com/aurelia/skeleton-navigation/releases/latest" style="text-decoration: none; margin: 32px 8px 42px 8px;" target="_blank">Download the ES 2016 Skeleton</a>
-  <a class="au-button" href="https://github.com/aurelia/skeleton-navigation-typescript/releases/latest" style="text-decoration: none; margin: 32px 8px 42px 8px;" target="_blank">Download the TypeScript Skeleton</a>
+  <a class="au-button" href="https://github.com/aurelia/skeleton-navigation/releases/latest" style="text-decoration: none; margin: 32px 8px 42px 8px;" target="_blank">Download the Skeletons</a>
 </div>
 
-Unzip it and rename the folder to appropriately represent the app you want to build. Based on your selection, you'll want to configure this documentation to show the appropriate language for all samples. Look at the top of this page. You will see a language selector. Be sure to select the language that matches the package that you downloaded.
+Once the download has completed, unzip it and look inside. The readme file contained therein will explain the various options available to you. Please select one of the skeletons and copy it to the location on your file system that you wish your code to reside. Be sure to rename the folder to appropriately represent the app you want to build. Based on your selection, you'll want to configure this documentation to show the appropriate programming language for all samples. Look at the top of this page. You will see a language selector. Be sure to select the language that matches the package that you downloaded.
 
 You will now find everything you need inside the folder, including a basic build, package configuration, styles and more. With all this in place, let's run some commands.
 
