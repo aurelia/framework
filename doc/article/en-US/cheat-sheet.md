@@ -29,6 +29,9 @@
   </source-code>
 </code-listing>
 
+> Warning: Promises in Edge
+> Currently, the Edge browser has a serious performance problem with its Promise implementation. This deficiency can greatly increase startup time of your app. If you are targeting the Edge browser, it is highly recommended that you use the [bluebird promise](http://bluebirdjs.com/docs/getting-started.html) library to replace Edge's native implementation. You can do this by simply referencing the library prior to loading system.js.
+
 <code-listing heading="Standard Startup Configuration">
   <source-code lang="ES 2015/2016">
     export function configure(aurelia) {

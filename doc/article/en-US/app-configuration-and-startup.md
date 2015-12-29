@@ -169,6 +169,9 @@ Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Fi
   </source-code>
 </code-listing>
 
+> Warning: Promises in Edge
+> Currently, the Edge browser has a serious performance problem with its Promise implementation. This deficiency can greatly increase startup time of your app. If you are targeting the Edge browser, it is highly recommended that you use the [bluebird promise](http://bluebirdjs.com/docs/getting-started.html) library to replace Edge's native implementation. You can do this by simply referencing the library prior to loading system.js.
+
 ## [Manual Bootstrapping](aurelia-doc://section/4/version/1.0.0)
 
 So far, we've been bootstrapping our app declaratively by using the `aurelia-app` attribute. That's not the only way though. You can manually bootstrap the framework as well. Here's how you would change your HTML file to use manual bootstrapping:
