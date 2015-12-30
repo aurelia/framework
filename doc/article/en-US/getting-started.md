@@ -325,7 +325,7 @@ If you guessed that we need to create a _users${context.language.fileExtension}_
           .then(response => response.json())
           .then(users => this.users = users);
       }
-    });
+    }
   </source-code>
   <source-code lang="ES 2016">
     import {inject} from 'aurelia-framework';
