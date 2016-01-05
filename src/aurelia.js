@@ -116,6 +116,11 @@ export class Aurelia {
     let engine;
     let instruction = {};
 
+    if (this.root && this.root.viewModel && this.root.viewModel.router) {
+      this.root.viewModel.router.deactivate();
+      this.root.viewModel.router.reset();
+    }
+
     this._configureHost(applicationHost);
 
     engine = this.container.get(TemplatingEngine);
