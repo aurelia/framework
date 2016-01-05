@@ -193,7 +193,7 @@ So far, we've been bootstrapping our app declaratively by using the `aurelia-app
                 .standardConfiguration()
                 .developmentLogging();
 
-              aurelia.start().then(() => aurelia.setRoot('app', document.body);
+              aurelia.start().then(() => aurelia.setRoot('app', document.body));
             });
           });
         </script>
