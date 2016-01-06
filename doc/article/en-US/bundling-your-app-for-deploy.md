@@ -345,7 +345,7 @@ We will also change the first bundle a little bit to exclude all the `html` and 
           options: {
             inject: {
               indexFile : 'index.html',
-              destFile : 'dest_index.html',
+              destFile : 'dest_index.html'
             }
           }
         }
