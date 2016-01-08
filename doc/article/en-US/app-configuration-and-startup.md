@@ -394,7 +394,7 @@ Optionally, you can provide an object instance to use as the data-binding contex
   </source-code>
 </code-listing>
 
-## [Customizing Conventions](aurelia-doc://section/8/version/1.0.0)
+## [Customizing Conventions](aurelia-doc://section/9/version/1.0.0)
 
 There are many things you may want to customize or configure as part of your application's bootstrap process. Once you have your main `configure` method in place and `aurelia-app` is pointing to that module, you can do just about anything you want. One of the most common aspects of Aurelia that developers may want to customize, is its conventions.
 
@@ -479,7 +479,7 @@ In addition to customizing the mapping logic of the `ConventionalViewStrategy` y
   </source-code>
 </code-listing>
 
-## [Logging](aurelia-doc://section/9/version/1.0.0)
+## [Logging](aurelia-doc://section/10/version/1.0.0)
 
 Aurelia has a simple logging abstraction that the framework itself uses. By default it is a no-op. The configuration in the above examples shows how to install an appender which will take the log data and output it to the console. Here's the code again, for convenience:
 
