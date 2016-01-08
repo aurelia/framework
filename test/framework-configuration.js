@@ -92,7 +92,7 @@ describe('the framework config', () => {
         });
       });
 
-      aurelia.loader.normalizeSync = jasmine.createSpy('normalizeSync').and.callFake(input => input);
+      aurelia.loader.normalize = jasmine.createSpy('normalize').and.callFake(input => Promise.resolve(input));
       aurelia.loader.loadModule = loadModule;
     });
 
@@ -190,7 +190,7 @@ describe('the framework config', () => {
       mockContainer.hasResolver.and.returnValue(true);
       mockContainer.get.and.returnValue(mockViewEngine);
 
-      mockLoader.normalizeSync = jasmine.createSpy('normalizeSync').and.callFake(input => input);
+      mockLoader.normalize = jasmine.createSpy('normalize').and.callFake(input => Promise.resolve(input));
       aurelia = new Aurelia(mockLoader, mockContainer, mockResources);
     });
 
