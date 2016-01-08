@@ -136,6 +136,10 @@
         {
           "title": "Integrating with Polymer",
           "href": "doc/article/en-US/integrating-with-polymer.md"
+        },
+        {
+          "title": "End-to-End Testing",
+          "href": "doc/article/en-US/end-to-end-testing.md"
         }
       ]
     }
