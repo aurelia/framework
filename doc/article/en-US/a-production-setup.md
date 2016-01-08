@@ -37,7 +37,7 @@ npm install -g jspm
 
 ## [Setting up the Project Structure and Build](aurelia-doc://section/2/version/1.0.0)
 
-With the tooling installed, we can now turn our attention to setting up a basic structure for your app. Begin by downloading a skeleton. We've got several versions available for you based on your language and tooling preferences. Please download them now by clicking the button below.
+With the tooling installed, we can now turn our attention to setting up a basic structure for your app. We'll begin by downloading a skeleton. We've got several versions available for you based on your language and tooling preferences. Please download the latest skeletons now.
 
 <div style="text-align: center;">
   <a class="au-button" href="https://github.com/aurelia/skeleton-navigation/releases/latest" style="text-decoration: none; margin: 32px 8px 42px 8px;" target="_blank">Download the Skeletons</a>
