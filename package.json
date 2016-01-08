@@ -110,6 +110,10 @@
           "href": "doc/article/en-US/app-configuration-and-startup.md"
         },
         {
+          "title": "Securing Your App",
+          "href": "doc/article/en-US/securing-your-app.md"
+        },
+        {
           "title": "Bundling Your App for Deploy",
           "href": "doc/article/en-US/bundling-your-app-for-deploy.md"
         },
@@ -128,6 +132,10 @@
         {
           "title": "Business Advantages",
           "href": "doc/article/en-US/business-advantages.md"
+        },
+        {
+          "title": "Integrating with Polymer",
+          "href": "doc/article/en-US/integrating-with-polymer.md"
         }
       ]
     }
