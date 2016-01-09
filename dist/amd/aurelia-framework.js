@@ -73,7 +73,9 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-
       this.postTasks = [];
       this.resourcesToLoad = {};
       this.preTask(function () {
-        return _this.bootstrapperName = aurelia.loader.normalizeSync('aurelia-bootstrapper');
+        return aurelia.loader.normalize('aurelia-bootstrapper').then(function (name) {
+          return _this.bootstrapperName = name;
+        });
       });
       this.postTask(function () {
         return loadResources(aurelia.container, _this.resourcesToLoad, aurelia.resources);
@@ -158,12 +160,13 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-
 
       this.plugin(plugin);
       this.preTask(function () {
-        var normalizedName = _this2.aurelia.loader.normalizeSync(name, _this2.bootstrapperName);
-        normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts') ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
+        return _this2.aurelia.loader.normalize(name, _this2.bootstrapperName).then(function (normalizedName) {
+          normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts') ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
 
-        plugin.moduleId = normalizedName;
-        plugin.resourcesRelativeTo = normalizedName;
-        _this2.aurelia.loader.map(name, normalizedName);
+          plugin.moduleId = normalizedName;
+          plugin.resourcesRelativeTo = normalizedName;
+          _this2.aurelia.loader.map(name, normalizedName);
+        });
       });
 
       return this;
@@ -197,10 +200,11 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-
       var _this3 = this;
 
       this.preTask(function () {
-        var name = _this3.aurelia.loader.normalizeSync('aurelia-logging-console', _this3.bootstrapperName);
-        return _this3.aurelia.loader.loadModule(name).then(function (m) {
-          _aureliaLogging.addAppender(new m.ConsoleAppender());
-          _aureliaLogging.setLevel(_aureliaLogging.logLevel.debug);
+        return _this3.aurelia.loader.normalize('aurelia-logging-console', _this3.bootstrapperName).then(function (name) {
+          return _this3.aurelia.loader.loadModule(name).then(function (m) {
+            _aureliaLogging.addAppender(new m.ConsoleAppender());
+            _aureliaLogging.setLevel(_aureliaLogging.logLevel.debug);
+          });
         });
       });
 
@@ -318,6 +322,11 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-
 
       var engine = undefined;
       var instruction = {};
+
+      if (this.root && this.root.viewModel && this.root.viewModel.router) {
+        this.root.viewModel.router.deactivate();
+        this.root.viewModel.router.reset();
+      }
 
       this._configureHost(applicationHost);
 

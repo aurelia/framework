@@ -83,7 +83,7 @@ export class FrameworkConfiguration {
     this.preTasks = [];
     this.postTasks = [];
     this.resourcesToLoad = {};
-    this.preTask(() => this.bootstrapperName = aurelia.loader.normalizeSync('aurelia-bootstrapper'));
+    this.preTask(() => aurelia.loader.normalize('aurelia-bootstrapper').then(name => this.bootstrapperName = name));
     this.postTask(() => loadResources(aurelia.container, this.resourcesToLoad, aurelia.resources));
   }
 
@@ -214,13 +214,14 @@ export class FrameworkConfiguration {
 
     this.plugin(plugin);
     this.preTask(() => {
-      let normalizedName = this.aurelia.loader.normalizeSync(name, this.bootstrapperName);
-      normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts')
-        ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
+      return this.aurelia.loader.normalize(name, this.bootstrapperName).then(normalizedName => {
+        normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts')
+          ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
 
-      plugin.moduleId = normalizedName;
-      plugin.resourcesRelativeTo = normalizedName;
-      this.aurelia.loader.map(name, normalizedName);
+        plugin.moduleId = normalizedName;
+        plugin.resourcesRelativeTo = normalizedName;
+        this.aurelia.loader.map(name, normalizedName);
+      });
     });
 
     return this;
@@ -280,10 +281,11 @@ export class FrameworkConfiguration {
   */
   developmentLogging(): FrameworkConfiguration {
     this.preTask(() => {
-      let name = this.aurelia.loader.normalizeSync('aurelia-logging-console', this.bootstrapperName);
-      return this.aurelia.loader.loadModule(name).then(m => {
-        TheLogManager.addAppender(new m.ConsoleAppender());
-        TheLogManager.setLevel(TheLogManager.logLevel.debug);
+      return this.aurelia.loader.normalize('aurelia-logging-console', this.bootstrapperName).then(name => {
+        return this.aurelia.loader.loadModule(name).then(m => {
+          TheLogManager.addAppender(new m.ConsoleAppender());
+          TheLogManager.setLevel(TheLogManager.logLevel.debug);
+        });
       });
     });
 
@@ -427,6 +429,11 @@ export class Aurelia {
   setRoot(root: string = 'app', applicationHost: string | Element = null): Promise<Aurelia> {
     let engine;
     let instruction = {};
+
+    if (this.root && this.root.viewModel && this.root.viewModel.router) {
+      this.root.viewModel.router.deactivate();
+      this.root.viewModel.router.reset();
+    }
 
     this._configureHost(applicationHost);
 

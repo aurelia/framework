@@ -1,3 +1,12 @@
+### 1.0.0-beta.1.0.8 (2016-01-08)
+
+
+#### Features
+
+* **all:** switch normalizeSync to normalize api ([4d5b1f6b](http://github.com/aurelia/framework/commit/4d5b1f6b48368cfc4d545c1f3ae3a7d50fc23e4b))
+* **aurelia:** detect router on successive setRoot calls ([0f83b9b3](http://github.com/aurelia/framework/commit/0f83b9b3a25fb420e055ed402d02bcb3e77a2377))
+
+
 ### 1.0.0-beta.1.0.7 (2015-12-29)
 
 * docs update
