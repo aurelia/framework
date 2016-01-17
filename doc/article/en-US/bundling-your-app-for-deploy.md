@@ -55,9 +55,9 @@ Now, let's create a `bundle.js` file in `build/tasks/bundle.js` as follows:
       baseURL: '.',                   // baseURL of the application
       configPath: './config.js',      // config.js file. Must be within `baseURL`
       bundles: {
-        "dist/app-build": {
+        "dist/app-build": {           // bundle name/path. Must be within `baseURL`. Final path is: `baseURL/dist/app-build.js`.
           includes: [
-            '[*]',
+            '[*.js]',
             '*.html!text',
             '*.css!text',        
           ],
@@ -147,14 +147,14 @@ Let us now take a closer look at the `config` object. We will skip `force` and `
     bundles: {
       "dist/app-build": {
         includes: [
-          '[*]',
+          '[*.js]',
           '*.html!text',
           '*.css!text',        
         ],
   </source-code>
 </code-listing>
 
-Please pay attention to the pattern `[*]`. The bundler supports some glob patterns like `*`, `*/**` etc. `*` here means, we are interested in bundling all the `js` assets in the `dist` folder (considering the `path` in `config.js`). So what does `[*]` mean here? Well, as we know, the bundler will trace the module dependencies from the import statements. Lot's of our code refers to the modules of `Aurelia` via `import` statements. For example:
+Please pay attention to the pattern `[*.js]`. The bundler supports some glob patterns like `*.js`, `*/**/*.js` etc. `*.js` here means, we are interested in bundling all the `js` assets in the `dist` folder (considering the `path` in `config.js`). So what does `[*.js]` mean here? Well, as we know, the bundler will trace the module dependencies from the import statements. Lot's of our code refers to the modules of `Aurelia` via `import` statements. For example:
 
 <code-listing heading="users.js">
   <source-code lang="JavaScript">
@@ -193,18 +193,18 @@ When the bundler analyzes this file it will find `aurelia-framework` and `aureli
     bundles: {
       "dist/app-build": {
         includes: [
-          '*',
+          '*.js',
           '*.html!text',
           '*.css!text',        
         ],
   </source-code>
 </code-listing>
 
-Having `*` in the above config will create a bundle containing lots of `Aurelia` libraries including `aurelia-framework` and `aurelia-fetch-client`. If we consider the second bundle config `dist/vendor-build`, we have 'aurelia-bootstrapper' and 'aurelia-fetch-client'. `aurelia-bootstrapper` will yield `aurelia-framework`. Ultimately, we will end up with duplicate modules in both the bundles.
+Having `*.js` in the above config will create a bundle containing lots of `Aurelia` libraries including `aurelia-framework` and `aurelia-fetch-client`. If we consider the second bundle config `dist/vendor-build`, we have 'aurelia-bootstrapper' and 'aurelia-fetch-client'. `aurelia-bootstrapper` will yield `aurelia-framework`. Ultimately, we will end up with duplicate modules in both the bundles.
 
-Our goal is to create a bundle of our application code only. We have to somehow instruct the bundler not to recursively trace the dependencies. Guess what? `[*]` is how we do it.   
+Our goal is to create a bundle of our application code only. We have to somehow instruct the bundler not to recursively trace the dependencies. Guess what? `[*.js]` is how we do it.   
 
-`[*]` will exclude the dependencies of each module that the glob pattern `*` yields. In the above case it will exclude `aurelia-framework`, `aurelia-fetch-client` and so on.
+`[*.js]` will exclude the dependencies of each module that the glob pattern `*.js` yields. In the above case it will exclude `aurelia-framework`, `aurelia-fetch-client` and so on.
 
 ## [Bundle Configuration](aurelia-doc://section/6/version/1.0.0)
 
@@ -214,7 +214,7 @@ Here is a typical bundle configuration in all its glory:
   <source-code lang="JavaScript">
     "dist/app-build": {
       includes: [
-        '[*]',
+        '[*.js]',
         '*.html!text',
         '*.css!text',
         'bootstrap/css/bootstrap.css!text'
@@ -314,7 +314,7 @@ We will also change the first bundle a little bit to exclude all the `html` and 
       bundles: {
         "dist/app-build": {
           includes: [
-            '[*]'
+            '[*.js]'
           ],
           options: {
             inject: true,
