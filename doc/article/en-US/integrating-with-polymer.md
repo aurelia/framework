@@ -2,7 +2,7 @@
 {
   "name": "Integrating with Polymer",
   "culture": "en-US",
-  "description": "Polymer is a library for creating reusable web components declaratively with extra features like databinding and property observation. In many ways, it is similar to Aurelia's component support. However, Polymer also includes an extensive catalog of custom elements for everything from material design to credit card forms to embedding Google services like Google Maps and YouTube. With a bit of work, these components can be incorporated into Aurelia applications as well.",
+  "description": "Polymer is a library for creating reusable web components declaratively with extra features like data binding and property observation. In many ways, it is similar to Aurelia's component support. However, Polymer also includes an extensive catalog of custom elements for everything from material design to credit card forms to embedding Google services like Google Maps and YouTube. With a bit of work, these components can be incorporated into Aurelia applications as well.",
   "engines" : { "aurelia-doc" : "^1.0.0" },
   "author": {
   	"name": "Ben Navetta",
@@ -201,7 +201,7 @@ that Polymer input elements are submitted along with native HTML elements.
 
 Note that the `<paper-input>` elements have `.two-way` bindings, not just `.bind`.
 With the exception of native HTML form elements, Aurelia defaults to one-way bindings,
-so two-way databinding must be specified explicitly.
+so two-way data binding must be specified explicitly.
 
 A normal `<button>` element is used with Aurelia's `submit.delegate` binding, since
 Polymer elements cannot submit forms.
@@ -214,3 +214,70 @@ use a `click.delegate` on a Polymer button instead.
     <paper-button raised click.delegate="submit()">Submit</paper-button>
   </source-code>
 </code-listing>
+
+## [How the Plugin Works](aurelia-doc://section/5/version/1.0.0)
+
+The `aurelia-polymer` plugin is fairly simple. For each Polymer element, it
+registers the element's properties and what events they support with the
+`EventManager` in Aurelia's binding component. The core of the plugin, the
+[`registerElement`](https://github.com/roguePanda/aurelia-polymer/blob/1.0.0-beta.1.0.1/src/index.js#L7)
+function, loops over all properties of the element and any behavior it implements
+so that the Aurelia binding engine will register event listeners properly.
+
+<code-listing heading="Element Registration">
+  <source-code lang="ES 2015/2016">
+    var propertyConfig = {'bind-value': ['change', 'input']}; // Not explicitly listed for all elements that use it
+
+    function handleProp(propName, prop) {
+      if (prop.notify) {
+        propertyConfig[propName] = ['change', 'input'];
+      }
+    }
+
+    Object.keys(prototype.properties).forEach(propName => handleProp(propName, prototype.properties[propName]));
+
+    prototype.behaviors.forEach(behavior => {
+      if (typeof behavior.properties != 'undefined') {
+        Object.keys(behavior.properties).forEach(propName => handleProp(propName, behavior.properties[propName]));
+      }
+    });
+
+    eventManager.registerElementConfig({
+      tagName: prototype.is,
+      properties: propertyConfig
+    });
+  </source-code>
+  <source-code lang="TypeScript">
+    var propertyConfig = {'bind-value': ['change', 'input']}; // Not explicitly listed for all elements that use it
+
+    function handleProp(propName, prop) {
+      if (prop.notify) {
+        propertyConfig[propName] = ['change', 'input'];
+      }
+    }
+
+    Object.keys(prototype.properties).forEach(propName => handleProp(propName, prototype.properties[propName]));
+
+    prototype.behaviors.forEach(behavior => {
+      if (typeof behavior.properties != 'undefined') {
+        Object.keys(behavior.properties).forEach(propName => handleProp(propName, behavior.properties[propName]));
+      }
+    });
+
+    eventManager.registerElementConfig({
+      tagName: prototype.is,
+      properties: propertyConfig
+    });
+  </source-code>
+</code-listing>
+
+Element properties marked with `notify` are eligible for Polymer's two-way data
+binding system and also trigger a `{property-name}-changed` event. This corresponds
+to the `input` and `change` events in Aurelia.
+
+Whenever a Polymer element is imported, it triggers a call to `Polymer.telemetry._registrate`,
+which adds the element prototype to a list of registered Polymer elements. The
+`aurelia-polymer` plugin replaces this registration function with one that also
+calls `registerElement` on the prototype so that it is configured with Aurelia
+as well. The need to override this function is why Polymer must be loaded before
+the plugin is.
