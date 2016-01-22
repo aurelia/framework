@@ -33,7 +33,7 @@ npm install -g jspm
 ```
 
 > Info
-> Don't want to use jspm? No problem. All Aurelia packages are available via [Bower](http://bower.io/), GiHub and NPM.
+> Don't want to use jspm? No problem. All Aurelia packages are available via [Bower](http://bower.io/), GitHub and NPM.
 
 ## [Setting up the Project Structure and Build](aurelia-doc://section/2/version/1.0.0)
 
