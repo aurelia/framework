@@ -89,7 +89,7 @@
                   "type": {
                     "type": "reference",
                     "name": "ViewResources",
-                    "id": 1179,
+                    "id": 1180,
                     "moduleName": "\"aurelia-templating\""
                   }
                 }
@@ -153,7 +153,7 @@
           "type": {
             "type": "reference",
             "name": "ViewResources",
-            "id": 1179,
+            "id": 1180,
             "moduleName": "\"aurelia-templating\""
           }
         },

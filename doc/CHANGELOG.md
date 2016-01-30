@@ -1,3 +1,17 @@
+### 1.0.0-beta.1.1.0 (2016-01-29)
+
+
+#### Bug Fixes
+
+* bundle config ([1bb9e69b](http://github.com/aurelia/framework/commit/1bb9e69b8b209690c20812a5b24d0a0f7c9e4a8a))
+* **docs:** fix GiHub typo ([6adea363](http://github.com/aurelia/framework/commit/6adea3637f2c1da64cc76f9b0fba3973bb3c726f))
+
+
+#### Features
+
+* **all:** update jspm meta; core-js; aurelia deps ([be9776e3](http://github.com/aurelia/framework/commit/be9776e3fb0ce94fe8c1539965112ee16fb2d323))
+
+
 ### 1.0.0-beta.1.0.8 (2016-01-08)
 
 
