@@ -49,7 +49,7 @@ If you've followed along this far, you now have everything set up to help you le
         <script src="jspm_packages/system.js"></script>
         <script src="config.js"></script>
         <script>
-          System.import('aurelia-bootstrapper');
+          SystemJS.import('aurelia-bootstrapper');
         </script>
       </body>
     </html>
@@ -60,7 +60,7 @@ Yes, that's it. This is the only HTML page in our application. The head of the d
 
 Let's start with the script tags. First we have _system.js_, our standards-based module loader. It's what loads the Aurelia library as well as your own code. Next we have _config.js_. This contains configuration for the loader. It's generated automatically whenever you install packages with our tools. We've gone ahead and pre-installed everything for you in this tutorial, so you don't need to worry about that yet.
 
-Once we have our module loader and its configuration, we load the `aurelia-bootstrapper` module with a call to `System.import`.
+Once we have our module loader and its configuration, we load the `aurelia-bootstrapper` module with a call to `SystemJS.import`.
 
 When the bootstrapper loads it inspects the HTML document for _aurelia-app_ attributes. In this case it will find that the body has an `aurelia-app` attribute. This tells the bootstrapper to load our _app_ view-model and its view, conventionally located in _app${context.language.fileExtension}_ and _app.html_ and then compose them as an Aurelia application in the DOM.
 

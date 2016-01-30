@@ -158,10 +158,10 @@ Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Fi
         <script src="jspm_packages/system.js"></script>
         <script src="config.js"></script>
         <script>
-          System.import('core-js').then(function() {
-            return System.import('polymer/mutationobservers');
+          SystemJS.import('core-js').then(function() {
+            return SystemJS.import('polymer/mutationobservers');
           }).then(function() {
-            System.import('aurelia-bootstrapper');
+            SystemJS.import('aurelia-bootstrapper');
           });
         </script>
       </body>
@@ -187,7 +187,7 @@ So far, we've been bootstrapping our app declaratively by using the `aurelia-app
         <script src="jspm_packages/system.js"></script>
         <script src="config.js"></script>
         <script>
-          System.import('aurelia-bootstrapper').then(bootstrapper => {
+          SystemJS.import('aurelia-bootstrapper').then(bootstrapper => {
             bootstrapper.bootstrap(function(aurelia) {
               aurelia.use
                 .standardConfiguration()
@@ -339,7 +339,7 @@ All this is possible with Aurelia, using a single method call: `enhance`. Instea
         <script src="jspm_packages/system.js"></script>
         <script src="config.js"></script>
         <script>
-          System.import('aurelia-bootstrapper').then(bootstrapper => {
+          SystemJS.import('aurelia-bootstrapper').then(bootstrapper => {
             bootstrapper.bootstrap(function(aurelia){
               aurelia.use
                 .defaultBindingLanguage()
@@ -373,7 +373,7 @@ Optionally, you can provide an object instance to use as the data-binding contex
         <script src="jspm_packages/system.js"></script>
         <script src="config.js"></script>
         <script>
-          System.import('aurelia-bootstrapper').then(bootstrapper => {
+          SystemJS.import('aurelia-bootstrapper').then(bootstrapper => {
             bootstrapper.bootstrap(function(aurelia){
               aurelia.use
                 .defaultBindingLanguage()
