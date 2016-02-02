@@ -771,7 +771,7 @@ You can bind a css string or object to an element's `style` attribute. Use the `
   </source-code>
 </code-listing>
 
-<code-listing heading="Render an map with a template.">
+<code-listing heading="Render a map with a template.">
   <source-code lang="HTML">
     <template>
       <ul>
@@ -781,7 +781,7 @@ You can bind a css string or object to an element's `style` attribute. Use the `
   </source-code>
 </code-listing>
 
-<code-listing heading="Render an template N times.">
+<code-listing heading="Render a template N times.">
   <source-code lang="HTML">
     <template>
       <ul>
@@ -791,7 +791,7 @@ You can bind a css string or object to an element's `style` attribute. Use the `
   </source-code>
 </code-listing>
 
-Contextual items availabe inside a repeat template:
+Contextual items available inside a repeat template:
 
 * `$index` - The index of the item in the array.
 * `$first` - True if the item is the first item in the array.
