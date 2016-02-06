@@ -407,7 +407,7 @@ Use on any HTML attribute.
 Use on any native or custom DOM event. (Do not include the "on" prefix in the event name.)
 
 * `.trigger` - Attaches an event handler directly to the element. When the event fires, the expression will be invoked.
-* `.delegate` - Attaches a single event handler to the document (or nearest shadow DOM boundary) which handles all events of the specified type, properly dispatching them back to their original targers for invocation of the associated expression.
+* `.delegate` - Attaches a single event handler to the document (or nearest shadow DOM boundary) which handles all events of the specified type, properly dispatching them back to their original targets for invocation of the associated expression.
 
 > Info
 > The `$event` value can be passed as an argument to a `delegate` or `trigger` function call if you need to access the event object.
