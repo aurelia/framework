@@ -28,7 +28,7 @@ Now that you've downloaded a starter package, you need to unzip it on your hard 
 
 * **Visual Studio** - Open Visual Studio 2015. Using the main menu, select File > Open > Web site... In the resulting dialog, choose the starter kit folder then click the Open button. The folder contents will be displayed in the Visual Studio Solution Explorer window. Right click on index.html in Solution Explorer and select "View in Browser". This will fire up IISExpress and serve index.html.
 * **NodeJS** - To start up a simple web server in the app folder, first globally install the http-server command with `npm install http-server -g`. (In some environments you many need to use `sudo`). Once that is installed, change directory to the starter kit folder. You can now spin up the server from within the folder with the following command `http-server -o -c-1`.
-* **Firefox** - If you don't want to worry about setting up a web server, Firefox is flexible enough to serve the app directly from your hard drive. Simply open the `index.html` file with Firefox.
+* **Firefox** - For the ES 2016 kit only, if you don't want to worry about setting up a web server, Firefox is flexible enough to serve the app directly from your hard drive. Simply open the `index.html` file with Firefox.
 
 Once you've got your web server set up, navigate to the `index.html` page using your favorite browser. If everything is working correctly, you should see the message "Welcome to Aurelia!" displayed.
 
