@@ -1503,6 +1503,30 @@ Since the VM's life-cycle is called only once you may have problems recognizing 
   </source-code>
 </code-listing>
 
+### Custom Element Without View-Model Declaration
+
+Aurelia will not search for javascript file if you reference component with html extension.
+
+<code-listing heading="Declare Custom Element Without View-Model With Binding">
+  <source-code lang="HTML">
+    <template bindable="name">
+       Say Hello To ${name}
+    </template>
+  </source-code>
+</code-listing>
+
+<code-listing heading="Add Global Custom Element Without View-Model">
+  <source-code lang="ES 2016">
+aurelia.globalResources('./js-less-component.html');
+  </source-code>
+</code-listing>
+
+<code-listing heading="Require Custom Element Without View-Model">
+  <source-code lang="HTML">
+    <require from="./js-less-component.html"></require>
+  </source-code>
+</code-listing>
+
 ### Custom Element Options
 
 * `@children(selector)` - Decorates a property to create an array on your class that has its items automatically synchronized based on a query selector against the element's immediate child content.
