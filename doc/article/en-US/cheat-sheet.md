@@ -1517,7 +1517,7 @@ Aurelia will not search for javascript file if you reference component with html
 
 <code-listing heading="Add Global Custom Element Without View-Model">
   <source-code lang="ES 2016">
-aurelia.globalResources('./js-less-component.html');
+aurelia.use.globalResources('./js-less-component.html');
   </source-code>
 </code-listing>
 
