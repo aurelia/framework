@@ -402,6 +402,9 @@ Use on any HTML attribute.
   </source-code>
 </code-listing>
 
+> Info
+> At the moment inheritance of bindables is not supported. For use cases where `class B extends A` and `B` is used as custom Element/Attribute `@bindable` properties cannot be defined only on `class A`. If inheritance is used, `@bindable` properties should be defined on the instantiated class.
+
 ### delegate, trigger
 
 Use on any native or custom DOM event. (Do not include the "on" prefix in the event name.)
