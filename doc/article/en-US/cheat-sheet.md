@@ -364,8 +364,8 @@ Components have a well-defined lifecycle:
       <select>
         <template repeat.for="customer of customers">
           <option>...</option>
-        </select>
-      </table>
+        </template>
+      </select>
     </template>
   </source-code>
 </code-listing>
@@ -375,7 +375,7 @@ Components have a well-defined lifecycle:
     <template>
       <select>
         <option repeat.for="customer of customers">...</option>
-      </table>
+      </select>
     </template>
   </source-code>
 </code-listing>
