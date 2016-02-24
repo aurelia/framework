@@ -1508,7 +1508,7 @@ Since the VM's life-cycle is called only once you may have problems recognizing 
 
 ### Custom Element Without View-Model Declaration
 
-Aurelia will not search for javascript file if you reference component with html extension.
+Aurelia will not search for a JavaScript file if you reference a component with an .html extension.
 
 <code-listing heading="Declare Custom Element Without View-Model With Binding">
   <source-code lang="HTML">
@@ -1519,14 +1519,16 @@ Aurelia will not search for javascript file if you reference component with html
 </code-listing>
 
 <code-listing heading="Add Global Custom Element Without View-Model">
-  <source-code lang="ES 2016">
-aurelia.use.globalResources('./js-less-component.html');
+  <source-code lang="ES 2015/ES 2016/TypeScript">
+    aurelia.use.globalResources('./js-less-component.html');
   </source-code>
 </code-listing>
 
-<code-listing heading="Require Custom Element Without View-Model">
+<code-listing heading="Use Custom Element Without View-Model">
   <source-code lang="HTML">
     <require from="./js-less-component.html"></require>
+    
+    <js-less-component name.bind="someProperty"></js-less-component>
   </source-code>
 </code-listing>
 
