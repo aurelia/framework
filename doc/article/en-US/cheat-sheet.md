@@ -881,7 +881,7 @@ Contextual items available inside a repeat template:
 * `canActivate(params, routeConfig, navigationInstruction)` - Implement this hook if you want to control whether or not your view-model _can be navigated to_. Return a boolean value, a promise for a boolean value, or a navigation command.
 * `activate(params, routeConfig, navigationInstruction)` - Implement this hook if you want to perform custom logic just before your view-model is displayed. You can optionally return a promise to tell the router to wait to bind and attach the view until after you finish your work.
 * `canDeactivate()` - Implement this hook if you want to control whether or not the router _can navigate away_ from your view-model when moving to a new route. Return a boolean value, a promise for a boolean value, or a navigation command.
-* `deactivate()` - Implement this hook if you want to perform custom logic when your view-model is being navigated away from. You can optionally return a promise to tell the router to wait until after your finish your work.
+* `deactivate()` - Implement this hook if you want to perform custom logic when your view-model is being navigated away from. You can optionally return a promise to tell the router to wait until after you finish your work.
 
 > Info: Navigation Commands
 > A _Navigation Command_ is any object with a `navigate(router: Router)` method. When a navigation command is encountered, the current navigation will be cancelled and control will be passed to the navigation command so it can determine the correct action. Aurelia provides one navigation command out of the box: `Redirect`.
