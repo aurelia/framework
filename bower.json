@@ -25,7 +25,6 @@
     "aurelia-pal": "^1.0.0-beta.1.1.1",
     "aurelia-path": "^1.0.0-beta.1.1.0",
     "aurelia-task-queue": "^1.0.0-beta.1.1.0",
-    "aurelia-templating": "^1.0.0-beta.1.1.0",
-    "core-js": "zloirock/core-js"
+    "aurelia-templating": "^1.0.0-beta.1.1.0"
   }
 }
