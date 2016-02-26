@@ -1,5 +1,4 @@
 /*eslint no-unused-vars:0, no-cond-assign:0*/
-import 'core-js';
 import * as TheLogManager from 'aurelia-logging';
 import {ViewEngine} from 'aurelia-templating';
 import {join} from 'aurelia-path';

@@ -1,11 +1,9 @@
+import './setup';
 import {FrameworkConfiguration} from '../src/framework-configuration';
 import {Aurelia} from '../src/aurelia';
 import {Metadata} from 'aurelia-metadata';
-import {initialize} from 'aurelia-pal-browser';
 
 describe('the framework config', () => {
-  beforeAll(() => initialize());
-
   it('should initialize', () => {
     let aureliaMock = jasmine.createSpyObj('aureliaMock', ['loader']);
     let config = new FrameworkConfiguration(aureliaMock);

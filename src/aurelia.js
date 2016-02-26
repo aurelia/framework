@@ -1,5 +1,4 @@
 /*eslint no-unused-vars:0*/
-import 'core-js';
 import * as TheLogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';

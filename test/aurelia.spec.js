@@ -1,14 +1,12 @@
+import './setup';
 import {Aurelia} from '../src/aurelia';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
 import {BindingLanguage, ViewSlot, ViewResources, CompositionEngine} from 'aurelia-templating';
 import {FrameworkConfiguration} from '../src/framework-configuration';
-import {initialize} from 'aurelia-pal-browser';
 import {PLATFORM} from 'aurelia-pal';
 
 describe('aurelia', () => {
-  beforeAll(() => initialize());
-
   describe("constructor", () => {
 
     it("should have good defaults", () => {

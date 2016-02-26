@@ -35,8 +35,7 @@
       "aurelia-pal": "^1.0.0-beta.1.1.1",
       "aurelia-path": "^1.0.0-beta.1.1.0",
       "aurelia-task-queue": "^1.0.0-beta.1.1.0",
-      "aurelia-templating": "^1.0.0-beta.1.1.0",
-      "core-js": "^2.0.3"
+      "aurelia-templating": "^1.0.0-beta.1.1.0"
     },
     "dependencies": {
       "aurelia-binding": "^1.0.0-beta.1.1.0",
@@ -47,8 +46,7 @@
       "aurelia-pal": "^1.0.0-beta.1.1.1",
       "aurelia-path": "^1.0.0-beta.1.1.0",
       "aurelia-task-queue": "^1.0.0-beta.1.1.0",
-      "aurelia-templating": "^1.0.0-beta.1.1.0",
-      "core-js": "^2.0.3"
+      "aurelia-templating": "^1.0.0-beta.1.1.0"
     },
     "devDependencies": {
       "aurelia-pal-browser": "^1.0.0-beta.1.1.2",
@@ -66,8 +64,7 @@
     "aurelia-pal": "^1.0.0-beta.1.1.1",
     "aurelia-path": "^1.0.0-beta.1.1.0",
     "aurelia-task-queue": "^1.0.0-beta.1.1.0",
-    "aurelia-templating": "^1.0.0-beta.1.1.0",
-    "core-js": "^2.0.3"
+    "aurelia-templating": "^1.0.0-beta.1.1.0"
   },
   "devDependencies": {
     "aurelia-tools": "^0.1.12",
