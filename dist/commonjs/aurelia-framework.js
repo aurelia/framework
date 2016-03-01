@@ -10,8 +10,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-require('core-js');
-
 var _aureliaLogging = require('aurelia-logging');
 
 var TheLogManager = _interopRequireWildcard(_aureliaLogging);
@@ -337,7 +335,6 @@ var Aurelia = (function () {
     var root = arguments.length <= 0 || arguments[0] === undefined ? 'app' : arguments[0];
     var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
-    var engine = undefined;
     var instruction = {};
 
     if (this.root && this.root.viewModel && this.root.viewModel.router) {
@@ -347,7 +344,10 @@ var Aurelia = (function () {
 
     this._configureHost(applicationHost);
 
-    engine = this.container.get(_aureliaTemplating.TemplatingEngine);
+    var engine = this.container.get(_aureliaTemplating.TemplatingEngine);
+    var transaction = this.container.get(_aureliaTemplating.CompositionTransaction);
+    delete transaction.initialComposition;
+
     instruction.viewModel = root;
     instruction.container = instruction.childContainer = this.container;
     instruction.viewSlot = this.hostSlot;

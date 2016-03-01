@@ -1,4 +1,4 @@
-define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-path', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-pal', 'aurelia-binding', 'aurelia-metadata', 'aurelia-task-queue'], function (exports, _coreJs, _aureliaLogging, _aureliaTemplating, _aureliaPath, _aureliaDependencyInjection, _aureliaLoader, _aureliaPal, _aureliaBinding, _aureliaMetadata, _aureliaTaskQueue) {
+define(['exports', 'aurelia-logging', 'aurelia-templating', 'aurelia-path', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-pal', 'aurelia-binding', 'aurelia-metadata', 'aurelia-task-queue'], function (exports, _aureliaLogging, _aureliaTemplating, _aureliaPath, _aureliaDependencyInjection, _aureliaLoader, _aureliaPal, _aureliaBinding, _aureliaMetadata, _aureliaTaskQueue) {
   'use strict';
 
   exports.__esModule = true;
@@ -320,7 +320,6 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-
       var root = arguments.length <= 0 || arguments[0] === undefined ? 'app' : arguments[0];
       var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
-      var engine = undefined;
       var instruction = {};
 
       if (this.root && this.root.viewModel && this.root.viewModel.router) {
@@ -330,7 +329,10 @@ define(['exports', 'core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-
 
       this._configureHost(applicationHost);
 
-      engine = this.container.get(_aureliaTemplating.TemplatingEngine);
+      var engine = this.container.get(_aureliaTemplating.TemplatingEngine);
+      var transaction = this.container.get(_aureliaTemplating.CompositionTransaction);
+      delete transaction.initialComposition;
+
       instruction.viewModel = root;
       instruction.container = instruction.childContainer = this.container;
       instruction.viewSlot = this.hostSlot;

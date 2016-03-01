@@ -1,3 +1,17 @@
+### 1.0.0-beta.1.1.4 (2016-03-01)
+
+
+#### Bug Fixes
+
+* **all:** remove core-js dependency ([968d6c22](http://github.com/aurelia/framework/commit/968d6c22cab3ddbd03a0104565b178ea2904e189))
+* **bower:** remove core-js ([dd9e082f](http://github.com/aurelia/framework/commit/dd9e082f9f230802b084f47a20ba4262579b1221))
+
+
+#### Features
+
+* **aurelia:** integrate composition transaction ([38851185](http://github.com/aurelia/framework/commit/38851185b57d4b775e8952cff028cb450f0b0d7b))
+
+
 ### 1.0.0-beta.1.1.3 (2016-02-09)
 
 

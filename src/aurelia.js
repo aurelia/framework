@@ -124,7 +124,7 @@ export class Aurelia {
     let engine = this.container.get(TemplatingEngine);
     let transaction = this.container.get(CompositionTransaction);
     delete transaction.initialComposition;
-    
+
     instruction.viewModel = root;
     instruction.container = instruction.childContainer = this.container;
     instruction.viewSlot = this.hostSlot;

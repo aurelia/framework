@@ -1,7 +1,6 @@
 declare module 'aurelia-framework' {
-  import 'core-js';
   import * as TheLogManager from 'aurelia-logging';
-  import { ViewEngine, BindingLanguage, ViewSlot, ViewResources, TemplatingEngine }  from 'aurelia-templating';
+  import { ViewEngine, BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction }  from 'aurelia-templating';
   import { join }  from 'aurelia-path';
   import { Container }  from 'aurelia-dependency-injection';
   import { Loader }  from 'aurelia-loader';

@@ -1,6 +1,5 @@
-import 'core-js';
 import * as TheLogManager from 'aurelia-logging';
-import {ViewEngine,BindingLanguage,ViewSlot,ViewResources,TemplatingEngine} from 'aurelia-templating';
+import {ViewEngine,BindingLanguage,ViewSlot,ViewResources,TemplatingEngine,CompositionTransaction} from 'aurelia-templating';
 import {join} from 'aurelia-path';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
@@ -427,7 +426,6 @@ export class Aurelia {
    * @return Returns a Promise of the current Aurelia instance.
    */
   setRoot(root: string = 'app', applicationHost: string | Element = null): Promise<Aurelia> {
-    let engine;
     let instruction = {};
 
     if (this.root && this.root.viewModel && this.root.viewModel.router) {
@@ -437,7 +435,10 @@ export class Aurelia {
 
     this._configureHost(applicationHost);
 
-    engine = this.container.get(TemplatingEngine);
+    let engine = this.container.get(TemplatingEngine);
+    let transaction = this.container.get(CompositionTransaction);
+    delete transaction.initialComposition;
+
     instruction.viewModel = root;
     instruction.container = instruction.childContainer = this.container;
     instruction.viewSlot = this.hostSlot;

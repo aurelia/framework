@@ -1,7 +1,7 @@
-System.register(['core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-path', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-pal', 'aurelia-binding', 'aurelia-metadata', 'aurelia-task-queue'], function (_export) {
+System.register(['aurelia-logging', 'aurelia-templating', 'aurelia-path', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-pal', 'aurelia-binding', 'aurelia-metadata', 'aurelia-task-queue'], function (_export) {
   'use strict';
 
-  var TheLogManager, ViewEngine, BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, join, Container, Loader, DOM, PLATFORM, logger, FrameworkConfiguration, Aurelia, LogManager;
+  var TheLogManager, ViewEngine, BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction, join, Container, Loader, DOM, PLATFORM, logger, FrameworkConfiguration, Aurelia, LogManager;
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
@@ -65,7 +65,7 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-pa
   }
 
   return {
-    setters: [function (_coreJs) {}, function (_aureliaLogging) {
+    setters: [function (_aureliaLogging) {
       TheLogManager = _aureliaLogging;
     }, function (_aureliaTemplating) {
       ViewEngine = _aureliaTemplating.ViewEngine;
@@ -73,6 +73,7 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-pa
       ViewSlot = _aureliaTemplating.ViewSlot;
       ViewResources = _aureliaTemplating.ViewResources;
       TemplatingEngine = _aureliaTemplating.TemplatingEngine;
+      CompositionTransaction = _aureliaTemplating.CompositionTransaction;
 
       for (var _key4 in _aureliaTemplating) {
         if (_key4 !== 'default') _export(_key4, _aureliaTemplating[_key4]);
@@ -368,7 +369,6 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-pa
           var root = arguments.length <= 0 || arguments[0] === undefined ? 'app' : arguments[0];
           var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
-          var engine = undefined;
           var instruction = {};
 
           if (this.root && this.root.viewModel && this.root.viewModel.router) {
@@ -378,7 +378,10 @@ System.register(['core-js', 'aurelia-logging', 'aurelia-templating', 'aurelia-pa
 
           this._configureHost(applicationHost);
 
-          engine = this.container.get(TemplatingEngine);
+          var engine = this.container.get(TemplatingEngine);
+          var transaction = this.container.get(CompositionTransaction);
+          delete transaction.initialComposition;
+
           instruction.viewModel = root;
           instruction.container = instruction.childContainer = this.container;
           instruction.viewSlot = this.hostSlot;
