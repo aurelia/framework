@@ -20,10 +20,10 @@
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
     <script>
-      System.import('core-js').then(function() {
-        return System.import('polymer/mutationobservers');
+      SystemJS.import('aurelia-polyfills').then(function() {
+        return SystemJS.import('polymer/mutationobservers');
       }).then(function() {
-        System.import('aurelia-bootstrapper');
+        SystemJS.import('aurelia-bootstrapper');
       });
     </script>
   </source-code>

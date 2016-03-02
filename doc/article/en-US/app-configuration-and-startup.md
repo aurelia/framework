@@ -158,7 +158,7 @@ Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Fi
         <script src="jspm_packages/system.js"></script>
         <script src="config.js"></script>
         <script>
-          SystemJS.import('core-js').then(function() {
+          SystemJS.import('aurelia-polyfills').then(function() {
             return SystemJS.import('polymer/mutationobservers');
           }).then(function() {
             SystemJS.import('aurelia-bootstrapper');
