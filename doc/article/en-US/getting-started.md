@@ -170,6 +170,7 @@ A one page app isn't very interesting. We should probably add some more screens 
 
 <code-listing heading="app${context.language.fileExtension}">
   <source-code lang="ES 2015/2016">
+    
     export class App {
       configureRouter(config, router) {
         config.title = 'Aurelia';
@@ -182,6 +183,7 @@ A one page app isn't very interesting. We should probably add some more screens 
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     import {RouterConfiguration, Router} from 'aurelia-router';
 
     export class App {
@@ -209,6 +211,7 @@ Ok, we want to use the router, so we begin by creating and exporting our _App_ c
 
 <code-listing heading="app.html">
   <source-code lang="HTML">
+    
     <template>
       <require from="bootstrap/css/bootstrap.css"></require>
       <require from="font-awesome/css/font-awesome.css"></require>
@@ -270,6 +273,7 @@ Let's display some users from Github. To do that, let's first configure our rout
 
 <code-listing heading="app${context.language.fileExtension} (updated)">
   <source-code lang="ES 2015/2016">
+    
     export class App {
       configureRouter(config, router){
         config.title = 'Aurelia';
@@ -283,6 +287,7 @@ Let's display some users from Github. To do that, let's first configure our rout
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     import {RouterConfiguration, Router} from 'aurelia-router';
 
     export class App {
@@ -305,6 +310,7 @@ If you guessed that we need to create a _users${context.language.fileExtension}_
 
 <code-listing heading="users${context.language.fileExtension}">
   <source-code lang="ES 2015">
+    
     import {HttpClient} from 'aurelia-fetch-client';
     import 'fetch';
 
@@ -331,6 +337,7 @@ If you guessed that we need to create a _users${context.language.fileExtension}_
     }
   </source-code>
   <source-code lang="ES 2016">
+    
     import {inject} from 'aurelia-framework';
     import {HttpClient} from 'aurelia-fetch-client';
     import 'fetch';
@@ -358,6 +365,7 @@ If you guessed that we need to create a _users${context.language.fileExtension}_
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     import {autoinject} from 'aurelia-framework';
     import {HttpClient} from 'aurelia-fetch-client';
     import 'fetch';
@@ -462,6 +470,7 @@ Guess what? Our simple view-model/view conventions still apply for custom elemen
 
 <code-listing heading="nav-bar${context.language.fileExtension}">
   <source-code lang="ES 2015">
+    
     import {bindable, decorators} from 'aurelia-framework';
 
     export let NavBar = decorators(bindable('router')).on(class {
