@@ -76,6 +76,7 @@ In the _src_ folder find the _app.html_ and _app${context.language.fileExtension
 
 <code-listing heading="app${context.language.fileExtension}">
   <source-code lang="ES 2015">
+    
     export class Welcome {
       constructor() {
         this.heading = 'Welcome to Aurelia!';
@@ -93,6 +94,7 @@ In the _src_ folder find the _app.html_ and _app${context.language.fileExtension
     }
   </source-code>
   <source-code lang="ES 2016">
+   
     export class Welcome {
       heading = 'Welcome to Aurelia!';
       firstName = 'John';
@@ -108,6 +110,7 @@ In the _src_ folder find the _app.html_ and _app${context.language.fileExtension
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     export class Welcome {
       heading: string = 'Welcome to Aurelia!';
       firstName: string = 'John';
