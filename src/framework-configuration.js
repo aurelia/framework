@@ -23,29 +23,59 @@ function loadPlugin(config, loader, info) {
   logger.debug(`Loading plugin ${info.moduleId}.`);
   config.resourcesRelativeTo = info.resourcesRelativeTo;
 
-  return loader.loadModule(info.moduleId).then(m => {
-    if ('configure' in m) {
-      return Promise.resolve(m.configure(config, info.config || {})).then(() => {
-        config.resourcesRelativeTo = null;
-        logger.debug(`Configured plugin ${info.moduleId}.`);
+  let id = info.moduleId; // General plugins installed/configured by the end user.
+
+  if(info.resourcesRelativeTo.length > 1 ) { // In case of bootstrapper installed plugins like `aurelia-templating-resources` or `aurelia-history-browser`.
+    return loader.normalize(info.moduleId, info.resourcesRelativeTo[1])
+      .then(id=> {
+         return _loadPlugin(id);
       });
-    }
-
-    config.resourcesRelativeTo = null;
-    logger.debug(`Loaded plugin ${info.moduleId}.`);
-  });
-}
-
-function loadResources(container, resourcesToLoad, appResources) {
-  let viewEngine = container.get(ViewEngine);
-  let importIds = Object.keys(resourcesToLoad);
-  let names = new Array(importIds.length);
-
-  for (let i = 0, ii = importIds.length; i < ii; ++i) {
-    names[i] = resourcesToLoad[importIds[i]];
   }
 
-  return viewEngine.importViewResources(importIds, names, appResources);
+  return _loadPlugin(id);
+
+  function _loadPlugin(id) {
+    return loader.loadModule(id).then(m => {
+      if ('configure' in m) {
+        return Promise.resolve(m.configure(config, info.config || {})).then(() => {
+          config.resourcesRelativeTo = null;
+          logger.debug(`Configured plugin ${info.moduleId}.`);
+        });
+      }
+
+      config.resourcesRelativeTo = null;
+      logger.debug(`Loaded plugin ${info.moduleId}.`);
+    });
+  }
+}
+
+function loadResources(aurelia, resourcesToLoad, appResources) {
+  let viewEngine = aurelia.container.get(ViewEngine);
+
+  return Promise.all(
+    Object.keys(resourcesToLoad)
+     .map(n => _normalize(resourcesToLoad[n])))
+     .then(loads => {
+        let names = [], importIds = [];
+
+        loads.forEach(l => {
+           names.push(undefined);
+           importIds.push(l.importId)
+        });
+     
+        return viewEngine.importViewResources(importIds, names, appResources);
+     });
+
+
+  function _normalize(load) {
+     return aurelia.loader.normalize(load.moduleId, load.relativeTo)
+        .then(normalized => {
+           return {
+              name : load.moduleId,
+              importId : normalized
+           };
+        })
+  }
 }
 
 function assertProcessed(plugins) {
@@ -81,7 +111,7 @@ export class FrameworkConfiguration {
     this.postTasks = [];
     this.resourcesToLoad = {};
     this.preTask(() => aurelia.loader.normalize('aurelia-bootstrapper').then(name => this.bootstrapperName = name));
-    this.postTask(() => loadResources(aurelia.container, this.resourcesToLoad, aurelia.resources));
+    this.postTask(() => loadResources(aurelia, this.resourcesToLoad, aurelia.resources));
   }
 
   /**
@@ -155,7 +185,7 @@ export class FrameworkConfiguration {
    * @param resources The relative module id to the resource. (Relative to the plugin's installer.)
    * @return Returns the current FrameworkConfiguration instance.
    */
-  globalResources(resources: string|string[]): FrameworkConfiguration {
+ globalResources(resources: string|string[]): FrameworkConfiguration {
     assertProcessed(this);
 
     let toAdd = Array.isArray(resources) ? resources : arguments;
@@ -169,8 +199,15 @@ export class FrameworkConfiguration {
         throw new Error(`Invalid resource path [${resource}]. Resources must be specified as relative module IDs.`);
       }
 
-      path = join(resourcesRelativeTo, resource);
-      this.resourcesToLoad[path] = this.resourcesToLoad[path];
+      let parent = resourcesRelativeTo[0];
+      let grandParent = resourcesRelativeTo[1];
+      let name = resource;
+
+      if (resource.startsWith('./') && parent !== '') {
+        name = parent + resource.substr(1);
+      } 
+
+      this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
     }
 
     return this;
@@ -184,9 +221,9 @@ export class FrameworkConfiguration {
    */
   globalName(resourcePath: string, newName: string): FrameworkConfiguration {
     assertProcessed(this);
-    this.resourcesToLoad[resourcePath] = newName;
+    this.resourcesToLoad[resourcePath] = { moduleId: newName, relativeTo: '' };
     return this;
-  }
+  } 
 
   /**
    * Configures an external, 3rd party plugin before Aurelia starts.
@@ -197,9 +234,8 @@ export class FrameworkConfiguration {
   plugin(plugin: string, config?: any): FrameworkConfiguration {
     assertProcessed(this);
 
-    if (typeof(plugin) === 'string') {
-      plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
-      return this.plugin({ moduleId: plugin, resourcesRelativeTo: plugin, config: config || {} });
+    if (typeof (plugin) === 'string') {
+      return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
     }
 
     this.info.push(plugin);
@@ -207,18 +243,15 @@ export class FrameworkConfiguration {
   }
 
   _addNormalizedPlugin(name, config) {
-    let plugin = { moduleId: name, resourcesRelativeTo: name, config: config || {} };
-
+    
+    let plugin = { moduleId: name, resourcesRelativeTo: [name, ''], config: config || {} };
     this.plugin(plugin);
-    this.preTask(() => {
-      return this.aurelia.loader.normalize(name, this.bootstrapperName).then(normalizedName => {
-        normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts')
-          ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
 
-        plugin.moduleId = normalizedName;
-        plugin.resourcesRelativeTo = normalizedName;
-        this.aurelia.loader.map(name, normalizedName);
-      });
+    this.preTask(() => {
+      let relativeTo = [name, this.bootstrapperName];
+      plugin.moduleId = name;
+      plugin.resourcesRelativeTo = relativeTo;
+      return Promise.resolve();
     });
 
     return this;
