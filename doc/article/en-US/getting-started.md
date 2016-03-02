@@ -480,6 +480,7 @@ Guess what? Our simple view-model/view conventions still apply for custom elemen
     });
   </source-code>
   <source-code lang="ES 2016">
+    
     import {bindable} from 'aurelia-framework';
 
     export class NavBar {
@@ -487,6 +488,7 @@ Guess what? Our simple view-model/view conventions still apply for custom elemen
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     import {bindable} from 'aurelia-framework';
     import {Router} from 'aurelia-router';
 
@@ -582,6 +584,7 @@ First, let's update our _app${context.language.fileExtension}_ with the new conf
 
 <code-listing heading="app${context.language.fileExtension} (updated...again)">
   <source-code lang="ES 2015/2016">
+    
     export class App {
       configureRouter(config, router) {
         config.title = 'Aurelia';
@@ -596,6 +599,7 @@ First, let's update our _app${context.language.fileExtension}_ with the new conf
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     import {RouterConfiguration, Router} from 'aurelia-router';
 
     export class App {
@@ -619,6 +623,7 @@ Nothing new there. The interesting part is what's inside _child-router${context.
 
 <code-listing heading="child-router${context.language.fileExtension}">
   <source-code lang="ES 2016">
+    
     export class ChildRouter {
       heading = 'Child Router';
 
@@ -634,6 +639,7 @@ Nothing new there. The interesting part is what's inside _child-router${context.
     }
   </source-code>
   <source-code lang="ES 2015">
+    
     export class ChildRouter {
       constructor() {
         this.heading = 'Child Router';
@@ -651,6 +657,7 @@ Nothing new there. The interesting part is what's inside _child-router${context.
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     import {RouterConfiguration, Router} from 'aurelia-router';
 
     export class ChildRouter {
