@@ -3,17 +3,10 @@
   "name": "Cos'&egrave; Aurelia?",
   "culture": "it-IT",
   "description": "Aurelia &egrave; un framework per UI di nuova generazione. Che si stiano sviluppando applicazioni web, mobile o desktop, Aurelia consente non solo di creare UI accattivanti, ma anche di farlo con un approccio che facilita la manutenzione, la testabilit&agrave; e l'estensibilit&agrave;.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
   "translators": [{
   	"name": "Giorgio Di Nardo",
   	"url": "http://blogs.ugidotnet.org/akelitz"
-  }],
-  "keywords": ["JavaScript", "SPA"]
+  }]
 }
 ---
 ## [Cos'&egrave;?](aurelia-doc://section/1/version/1.0.0)
@@ -32,8 +25,8 @@ Riassumendo, Aurelia &egrave; un insieme di librerie JavaScript moderne e modula
 
 * **Pulito e Non Invasivo** - Aurelia &egrave; l'unico framework che consente di scrivere i propri componenti semplicemente in JavaScript. Il framework &egrave; progettato per lavorare dietro le quinte, cos&igrave; il codice dell'applicazione rimane pulito e semplice da evolvere nel corso del tempo.
 * **Convenzioni dove vuoi, Configurazione dove serve** - Convenzioni semplici ed immediate consentono di seguire pattern di programmazione solidi e di ridurre la quantit&agrave; di codice da scrivere e manutenere. Il che significa potersi focalizzare maggiormente sulla propria applicazione riducendo il tempo speso ad interagire con le API del framework.
-* **Semplice, ma non Banale** - Aurelia &egrave; facile da imparare, ma anche estremamente potente. Grazie al design semplice e coerente, &egrave; sufficiente acquisire padronanza di un insieme abbastanza limitato di pattern e API per avere da subito illimitate possibit&agrave; di sviluppo.
-* **Facilit&agrave; prima di tutto** - Testabilit&agrave;, manutenzione, estensibilit&agrave;, semplicit&agrave; di apprendimento, sono valori sempre in pi&ugrave; importanti nella moderna programmazione. Aurelia &egrave; progettato per facilitare la scrittura di codice che risponda a queste caratteristiche, naturalmente.
+* **Semplice, ma non Banale** - Aurelia &egrave; facile da imparare, ma anche estremamente potente. Grazie al design semplice e coerente, &egrave; sufficiente acquisire padronanza di un insieme abbastanza limitato di pattern e API per avere da subito illimitate possibilit&agrave; di sviluppo.
+* **Facilit&agrave; prima di tutto** - Testabilit&agrave;, manutenzione, estensibilit&agrave;, semplicit&agrave; di apprendimento, sono valori sempre pi&ugrave; importanti nella moderna programmazione. Aurelia &egrave; progettato per facilitare la scrittura di codice che risponda naturalmente a queste caratteristiche.
 * **Incredibilmente Estensibile** - Aurelia &egrave; fortemente modulare ed &egrave; progettato per consentire una facile personalizzazione. Praticamente ogni aspetto di Aurelia &egrave; estendibile, il che garantisce di non trovarsi mai di fronte a "scatole chiuse" o di dover "hackerare" il framework per farlo funzionare nel modo desiderato.
 * **Focalizzato sui Web Standard** - Progettato attorno alla nuova generazione di JavaScript e ai Web Components, con l'obiettivo di evitare astrazioni superflue che nascondano la tecnologia sottostante, Aurelia &egrave; il framework che maggiormente rispetta gli attuali standard di programmazione.
 * **Facile da Integrare** - Grazie al design intrinsecamente estendible di Aurelia e alla possibilit&agrave; di tenere in considerazione tali aspetti gi&agrave; nella fase embrionale dello sviluppo, &egrave; veramente immediato integrare Aurelia con qualsiasi libreria o framework di terze parti. Ad esempio, risulta molto semplice integrarsi con jQuery, React, Polymer, Bootstrap, MaterializeCSS e molte altre ancora.
