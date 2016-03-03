@@ -76,6 +76,7 @@ In the _src_ folder find the _app.html_ and _app${context.language.fileExtension
 
 <code-listing heading="app${context.language.fileExtension}">
   <source-code lang="ES 2015">
+    
     export class Welcome {
       constructor() {
         this.heading = 'Welcome to Aurelia!';
@@ -93,6 +94,7 @@ In the _src_ folder find the _app.html_ and _app${context.language.fileExtension
     }
   </source-code>
   <source-code lang="ES 2016">
+   
     export class Welcome {
       heading = 'Welcome to Aurelia!';
       firstName = 'John';
@@ -108,6 +110,7 @@ In the _src_ folder find the _app.html_ and _app${context.language.fileExtension
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     export class Welcome {
       heading: string = 'Welcome to Aurelia!';
       firstName: string = 'John';
@@ -167,6 +170,7 @@ A one page app isn't very interesting. We should probably add some more screens 
 
 <code-listing heading="app${context.language.fileExtension}">
   <source-code lang="ES 2015/2016">
+    
     export class App {
       configureRouter(config, router) {
         config.title = 'Aurelia';
@@ -179,6 +183,7 @@ A one page app isn't very interesting. We should probably add some more screens 
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     import {RouterConfiguration, Router} from 'aurelia-router';
 
     export class App {
@@ -206,6 +211,7 @@ Ok, we want to use the router, so we begin by creating and exporting our _App_ c
 
 <code-listing heading="app.html">
   <source-code lang="HTML">
+    
     <template>
       <require from="bootstrap/css/bootstrap.css"></require>
       <require from="font-awesome/css/font-awesome.css"></require>
@@ -267,6 +273,7 @@ Let's display some users from Github. To do that, let's first configure our rout
 
 <code-listing heading="app${context.language.fileExtension} (updated)">
   <source-code lang="ES 2015/2016">
+    
     export class App {
       configureRouter(config, router){
         config.title = 'Aurelia';
@@ -280,6 +287,7 @@ Let's display some users from Github. To do that, let's first configure our rout
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     import {RouterConfiguration, Router} from 'aurelia-router';
 
     export class App {
@@ -302,6 +310,7 @@ If you guessed that we need to create a _users${context.language.fileExtension}_
 
 <code-listing heading="users${context.language.fileExtension}">
   <source-code lang="ES 2015">
+    
     import {HttpClient} from 'aurelia-fetch-client';
     import 'fetch';
 
@@ -328,6 +337,7 @@ If you guessed that we need to create a _users${context.language.fileExtension}_
     }
   </source-code>
   <source-code lang="ES 2016">
+    
     import {inject} from 'aurelia-framework';
     import {HttpClient} from 'aurelia-fetch-client';
     import 'fetch';
@@ -355,6 +365,7 @@ If you guessed that we need to create a _users${context.language.fileExtension}_
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     import {autoinject} from 'aurelia-framework';
     import {HttpClient} from 'aurelia-fetch-client';
     import 'fetch';
@@ -459,6 +470,7 @@ Guess what? Our simple view-model/view conventions still apply for custom elemen
 
 <code-listing heading="nav-bar${context.language.fileExtension}">
   <source-code lang="ES 2015">
+    
     import {bindable, decorators} from 'aurelia-framework';
 
     export let NavBar = decorators(bindable('router')).on(class {
@@ -468,6 +480,7 @@ Guess what? Our simple view-model/view conventions still apply for custom elemen
     });
   </source-code>
   <source-code lang="ES 2016">
+    
     import {bindable} from 'aurelia-framework';
 
     export class NavBar {
@@ -475,6 +488,7 @@ Guess what? Our simple view-model/view conventions still apply for custom elemen
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     import {bindable} from 'aurelia-framework';
     import {Router} from 'aurelia-router';
 
@@ -570,6 +584,7 @@ First, let's update our _app${context.language.fileExtension}_ with the new conf
 
 <code-listing heading="app${context.language.fileExtension} (updated...again)">
   <source-code lang="ES 2015/2016">
+    
     export class App {
       configureRouter(config, router) {
         config.title = 'Aurelia';
@@ -584,6 +599,7 @@ First, let's update our _app${context.language.fileExtension}_ with the new conf
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     import {RouterConfiguration, Router} from 'aurelia-router';
 
     export class App {
@@ -607,6 +623,7 @@ Nothing new there. The interesting part is what's inside _child-router${context.
 
 <code-listing heading="child-router${context.language.fileExtension}">
   <source-code lang="ES 2016">
+    
     export class ChildRouter {
       heading = 'Child Router';
 
@@ -622,6 +639,7 @@ Nothing new there. The interesting part is what's inside _child-router${context.
     }
   </source-code>
   <source-code lang="ES 2015">
+    
     export class ChildRouter {
       constructor() {
         this.heading = 'Child Router';
@@ -639,6 +657,7 @@ Nothing new there. The interesting part is what's inside _child-router${context.
     }
   </source-code>
   <source-code lang="TypeScript">
+    
     import {RouterConfiguration, Router} from 'aurelia-router';
 
     export class ChildRouter {
