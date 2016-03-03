@@ -176,8 +176,7 @@ export class FrameworkConfiguration {
    * @return Returns the current FrameworkConfiguration instance.
   */
   feature(plugin: string, config?: any): FrameworkConfiguration {
-    plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
-    return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: plugin, config: config || {} });
+    return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: [plugin, ''], config: config || {} });
   }
 
   /**
