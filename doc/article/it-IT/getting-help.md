@@ -1,22 +1,18 @@
 ---
 {
   "name": "Getting Help",
-  "culture": "en-US",
-  "description": "As you begin to learn Aurelia and build applications, you may find that you need assistance from time to time. Sometimes it may only be an answer to a quick question or a clarification on the docs. Other times it may be a need for more extensive support, architectural advice or even consulting or training.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Help", "Support", "Training", "Community"]
+  "culture": "it-IT",
+  "description": "Cominciando a studiare Aurelia e a costruire applicazioni basate sul framework, ci si potrebbe trovare di quando in quando ad aver bisogno di assistenza. A volte potrebbe trattarsi della risposta ad un semplice dubbio o di un chiarimento sul contenuto di un documento. In altri casi si potrebbe trattare della richiesta di un supporto pi&ugrave; approfondito, di indicazioni architetturali o ancora di consulenza o formazione.",
+  "translators": [{
+  	"name": "Giorgio Di Nardo",
+  	"url": "http://blog.akelitz.net"
+  }],
 }
 ---
-## [Channels](aurelia-doc://section/1/version/1.0.0)
+## [Canali](aurelia-doc://section/1/version/1.0.0)
 
-When you join the Aurelia community, you have access to our entire ecosystem. If you need quick help or an answer clarifying documentation, we hope you'll engage with the community in our Gitter chat room. We have one of the most active Gitter channels in the world, with core team and community members present almost every hour of the day, no matter what part of the world you live in. You can join the channel and get help at [http://www.gitter.im/aurelia/discuss](http://www.gitter.im/aurelia/discuss)
+Entrando a far parte della community di Aurelia, si ha automaticamente accesso al nostro intero ecosistema. Se avete bisogno di un semplice aiuto o di una risposta che chiarisca un aspetto poco chiaro della documentazione, vi invitiamo ad unirvi alla community nella nostra chat Gitter. Abbiamo uno dei canali Gitter pi&ugrave; attivi al mondo, dove membri del team e della community sono disponibili praticamente a ogni ora del giorno, non importa in quale fuso orario ci si trovi. &Egrave; sufficiente iscriversi al canale su [http://www.gitter.im/aurelia/discuss](http://www.gitter.im/aurelia/discuss) per ottenere rapidamente l'aiuto cercato.
 
-If you need architectural advice, consulting or training, you can take advantage of Durandal Inc's services as well as those provided by our global partner network. For inquiries, please contact [consulting@durandal.io](email:consulting@durandal.io). We would love to connect with you, hear your needs and help provide you with the best resources to build your product and business.
+Per indicazioni architetturali, consulenza o formazione, potete confidare sui servizi offerti direttamente da Durandal Inc. come anche dalla nostra rete di partner globali. Per ogni richiesta, si pu&ograve; contattare [consulting@durandal.io](email:consulting@durandal.io). &Egrave; per noi un piacere entrare in contatto con voi, ascoltare le vostre esigenze e aiutarvi a ottenere le migliori condizioni per realizzare il vostro prodotto e supportare il vostro business.
 
-If you need commerical or enterprise support, priority bug fixes and/or a guarnateed SLA on support answers for your team or organization, Durandal Inc. can provide for you. To inquire about establishing a support agreement, please contact [support@durandal.io](email:support@durandal.io).
+Per ogni necessit&agrave; di supporto commerciale, priorit&agrave; nella risoluzione dei bug e/o SLA garantiti per le risposte alle vostre domande, Durandal Inc. &egrave; a vostra completa disposizione. Per maggiori informazioni su come stipulare un accordo di supporto, potete contattare [support@durandal.io](email:support@durandal.io).
