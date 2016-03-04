@@ -21,7 +21,7 @@
     <script src="config.js"></script>
     <script>
       SystemJS.import('aurelia-polyfills').then(function() {
-        return SystemJS.import('polymer/mutationobservers');
+        return SystemJS.import('webcomponents/webcomponentsjs/MutationObserver');
       }).then(function() {
         SystemJS.import('aurelia-bootstrapper');
       });
