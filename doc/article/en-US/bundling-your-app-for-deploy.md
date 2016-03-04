@@ -246,6 +246,9 @@ Here is a typical bundle configuration in all its glory:
   </source-code>
 </code-listing>
 
+> Warning
+> Exlusion of files that we are using in our project but are not part of it(from CDN URLs, URLs relative to the host, etc.) is done automatically. For this to work do not add them to the **excludes**, since it will cause an error.
+
 - **inject**: If set to `true`, this will inject the bundle in `config.js`, so whenever the application needs a file within that bundle, the loader will load the entire bundle the first time. This is how we can achieve lazy bundle loading. For a large app with multiple sub sections, this will help us avoid loading everything upfront.
 - **minify**: As the name suggests, if this is set to `true`, the the source files will be minified as well.
 - **rev**: If this is set to `true`, an unique revision number will be appended to the bundle file name.
