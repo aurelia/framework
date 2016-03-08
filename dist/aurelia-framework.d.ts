@@ -212,5 +212,11 @@ declare module 'aurelia-framework' {
   /**
    * The log manager.
    */
-  export const LogManager: any;
+  export const LogManager: {
+	  logLevel: TheLogManager.LogLevel;
+	  getLogger(id: string): TheLogManager.Logger;
+	  addAppender(appender: TheLogManager.Appender): void;
+	  setLevel(level: number): void;
+	  Logger: TheLogManager.Logger;
+  };
 }
