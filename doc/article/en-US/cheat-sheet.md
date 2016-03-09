@@ -1539,12 +1539,11 @@ It's worth noting that when binding variables to custom elements, use camelCase 
 
 <code-listing heading="Custom Element View-Model Declaration">
   <source-code lang="ES 2016">
-    import {customElement, bindable} from 'aurelia-framework';
+    import {bindable} from 'aurelia-framework';
 
-    @customElement('say-hello')
     export class SayHello {
       @bindable to;
-      @bindable greetingCallback
+      @bindable greetingCallback;
 
       speak(){
         this.greetingCallback(`Hello ${this.to}!`);
@@ -1552,10 +1551,9 @@ It's worth noting that when binding variables to custom elements, use camelCase 
     }
   </source-code>
   <source-code lang="ES 2015">
-    import {customElement, bindable} from 'aurelia-framework';
+    import {bindable} from 'aurelia-framework';
 
     export let SayHello = decorators(
-      customElement('say-hello'),
       bindable('to'),
       bindable('greetingCallback')
     ).on(class {
@@ -1565,12 +1563,11 @@ It's worth noting that when binding variables to custom elements, use camelCase 
     });
   </source-code>
   <source-code lang="TypeScript">
-    import {customElement, bindable} from 'aurelia-framework';
+    import {bindable} from 'aurelia-framework';
 
-    @customElement('say-hello')
     export class SayHello {
       @bindable to: string;
-      @bindable greetingCallback: function;
+      @bindable greetingCallback: Function;
 
       speak(): void {
         this.greetingCallback(`Hello ${this.to}!`);
@@ -1582,10 +1579,10 @@ It's worth noting that when binding variables to custom elements, use camelCase 
 <code-listing heading="Custom Element Use">
   <source-code lang="HTML">
     <template>
-      <require from="say-hello"></require>
+      <require from="./say-hello"></require>
 
       <input type="text" ref="name">
-      <say-hello to.bind="name.value" greeting-callback.call="alert($event)"></say-hello>
+      <say-hello to.bind="name.value" greeting-callback.call="doSomething($event)"></say-hello>
     </template>
   </source-code>
 </code-listing>
