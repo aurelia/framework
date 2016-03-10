@@ -4,7 +4,7 @@ import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
 import {BindingLanguage, ViewSlot, ViewResources, CompositionEngine} from 'aurelia-templating';
 import {FrameworkConfiguration} from '../src/framework-configuration';
-import {PLATFORM} from 'aurelia-pal';
+import {DOM, PLATFORM} from 'aurelia-pal';
 
 describe('aurelia', () => {
   describe("constructor", () => {
@@ -205,4 +205,75 @@ describe('aurelia', () => {
 
     });
   });
+
+  describe('enhance()', () => {
+    let aurelia, mockContainer, mockLoader, mockResources, mockPlugin, mockViewEngine, mockTemplatingEngine;
+    let rootStub = {
+      attached() {}
+    };
+
+    beforeEach(() => {
+      mockLoader = jasmine.createSpy('loader');
+
+      mockViewEngine = jasmine.createSpyObj("viewEngine", ['importViewResources', 'enhance']);
+      mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
+        resolve();
+      }));
+
+      mockViewEngine.enhance.and.returnValue(rootStub);
+
+      mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'hasResolver', 'get', 'makeGlobal']);
+      mockContainer.hasResolver.and.returnValue(true);
+      mockContainer.get.and.returnValue(mockViewEngine);
+
+      mockResources = jasmine.createSpy('viewResources');
+
+      mockPlugin = jasmine.createSpyObj('plugin', ['apply']);
+      mockPlugin.apply.and.returnValue(new Promise((resolve, error) => {
+        resolve();
+      }));
+
+      aurelia = new Aurelia(mockLoader, mockContainer, mockResources);
+      aurelia.use = mockPlugin;
+    });
+
+    describe('when passing in no arguments', () => {
+      let result;
+
+      it('configures body as host', () => {
+        let documentSpy = spyOn(document, "querySelectorAll").and.returnValue([document.body]);
+        spyOn(aurelia, '_configureHost');
+        result = aurelia.enhance();
+        expect(aurelia._configureHost).toHaveBeenCalledWith(document.body);
+      });
+    });
+
+    describe('when passing in bindingContext and string for Id', () => {
+      let result;
+
+      it('configures body as host', () => {
+        let elId = 'Testing';
+        let fakeElement = DOM.createElement('div');
+        fakeElement.setAttribute('id', elId);
+        let documentSpy = spyOn(document, "getElementById").and.returnValue(fakeElement);
+        result = aurelia.enhance({}, elId);
+        expect(aurelia.host).toBe(fakeElement);
+      });
+    });
+
+    describe('when passing in bindingContext and an element', () => {
+      let result;
+
+      it('configures body as host', () => {
+        let elId = 'Testing';
+        let fakeElement = DOM.createElement('div');
+        fakeElement.setAttribute('id', fakeElement);
+        result = aurelia.enhance({}, fakeElement);
+        expect(aurelia.host).toBe(fakeElement);
+      });
+    });
+  });
+
+
+
 });

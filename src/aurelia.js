@@ -94,7 +94,7 @@ export class Aurelia {
    * @return Returns a Promise for the current Aurelia instance.
    */
   enhance(bindingContext: Object = {}, applicationHost: string | Element = null): Promise<Aurelia> {
-    this._configureHost(applicationHost);
+    this._configureHost(applicationHost || DOM.querySelectorAll('body')[0]);
 
     return new Promise(resolve => {
       let engine = this.container.get(TemplatingEngine);
@@ -142,7 +142,6 @@ export class Aurelia {
     if (this.hostConfigured) {
       return;
     }
-
     applicationHost = applicationHost || this.host;
 
     if (!applicationHost || typeof applicationHost === 'string') {
