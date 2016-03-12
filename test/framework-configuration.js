@@ -38,20 +38,27 @@ describe('the framework config', () => {
     });
 
     it("globalResources will add an array of paths", () => {
-      expect(aurelia.use.globalResources(['./someResource'])).toBe(aurelia.use);
-      expect('./someResource' in aurelia.use.resourcesToLoad).toEqual(true);
+      let resourceName = './someResource';
+      expect(aurelia.use.globalResources([resourceName])).toBe(aurelia.use);
+      expect(aurelia.use.resourcesToLoad[resourceName].moduleId).toEqual(resourceName);
     });
 
     it("globalResources will add resources to lookup", () => {
       expect(aurelia.use.globalResources('./someResource', './andAnother')).toBe(aurelia.use);
       expect('./someResource' in aurelia.use.resourcesToLoad).toEqual(true);
-      expect('./someResource' in aurelia.use.resourcesToLoad).toEqual(true);
+      expect('./andAnother' in aurelia.use.resourcesToLoad).toEqual(true);
     });
 
     it('globalResources will make relative to resourcesRelativeTo if set on config', () => {
-      aurelia.use.resourcesRelativeTo = './plugin';
-      expect(aurelia.use.globalResources('./someResource')).toBe(aurelia.use);
+      aurelia.use.resourcesRelativeTo = ['plugin', 'bootstrapper'];
+
+      let resourceName = './someResource';
+
+      expect(aurelia.use.globalResources([resourceName])).toBe(aurelia.use);
+
       expect('plugin/someResource' in aurelia.use.resourcesToLoad).toEqual(true);
+      expect(aurelia.use.resourcesToLoad['plugin/someResource'].relativeTo).toEqual('bootstrapper');
+
     });
 
   });
@@ -193,7 +200,8 @@ describe('the framework config', () => {
     });
 
     it("should load resources that are defined and register them with the resource registry", (done) => {
-      aurelia.use.resourcesToLoad["./aResource"] = undefined;
+      aurelia.use.resourcesToLoad["./aResource"] = {moduleId: './aResource', relativeTo: ''};
+
       let resource = jasmine.createSpyObj("resource", ["register"]);
 
       mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
