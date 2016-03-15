@@ -14,7 +14,7 @@ var jsName = paths.packageName + '.js';
 
 gulp.task('build-index', function(){
   var importsToAdd = [];
-  var files = ['framework-configuration.js', 'aurelia.js', 'index.js'].map(function(file){
+  var files = ['aurelia.js', 'framework-configuration.js', 'index.js'].map(function(file){
     return paths.root + file;
   });
 
@@ -31,33 +31,34 @@ gulp.task('build-index', function(){
     .pipe(gulp.dest(paths.output));
 });
 
-gulp.task('build-es6', function () {
+gulp.task('build-es2015', function () {
   return gulp.src(paths.output + jsName)
-    .pipe(gulp.dest(paths.output + 'es6'));
+    .pipe(to5(assign({}, compilerOptions.es2015())))
+    .pipe(gulp.dest(paths.output + 'es2015'));
 });
 
 gulp.task('build-commonjs', function () {
   return gulp.src(paths.output + jsName)
-    .pipe(to5(assign({}, compilerOptions, {modules:'common'})))
+    .pipe(to5(assign({}, compilerOptions.commonjs())))
     .pipe(gulp.dest(paths.output + 'commonjs'));
 });
 
 gulp.task('build-amd', function () {
   return gulp.src(paths.output + jsName)
-    .pipe(to5(assign({}, compilerOptions, {modules:'amd'})))
+    .pipe(to5(assign({}, compilerOptions.amd())))
     .pipe(gulp.dest(paths.output + 'amd'));
 });
 
 gulp.task('build-system', function () {
   return gulp.src(paths.output + jsName)
-    .pipe(to5(assign({}, compilerOptions, {modules:'system'})))
+    .pipe(to5(assign({}, compilerOptions.system())))
     .pipe(gulp.dest(paths.output + 'system'));
 });
 
 gulp.task('build-dts', function(){
   return gulp.src(paths.output + paths.packageName + '.d.ts')
       .pipe(rename(paths.packageName + '.d.ts'))
-      .pipe(gulp.dest(paths.output + 'es6'))
+      .pipe(gulp.dest(paths.output + 'es2015'))
       .pipe(gulp.dest(paths.output + 'commonjs'))
       .pipe(gulp.dest(paths.output + 'amd'))
       .pipe(gulp.dest(paths.output + 'system'));
@@ -67,7 +68,7 @@ gulp.task('build', function(callback) {
   return runSequence(
     'clean',
     'build-index',
-    ['build-es6', 'build-commonjs', 'build-amd', 'build-system'],
+    ['build-es2015', 'build-commonjs', 'build-amd', 'build-system'],
     'build-dts',
     callback
   );
