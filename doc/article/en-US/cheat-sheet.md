@@ -20,10 +20,10 @@
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
     <script>
-      System.import('core-js').then(function() {
-        return System.import('polymer/mutationobservers');
+      SystemJS.import('aurelia-polyfills').then(function() {
+        return SystemJS.import('webcomponents/webcomponentsjs/MutationObserver');
       }).then(function() {
-        System.import('aurelia-bootstrapper');
+        SystemJS.import('aurelia-bootstrapper');
       });
     </script>
   </source-code>
@@ -1506,6 +1506,7 @@ Since the VM's life-cycle is called only once you may have problems recognizing 
   </source-code>
 </code-listing>
 
+
 ### Custom Element Without View-Model Declaration
 
 Aurelia will not search for a JavaScript file if you reference a component with an .html extension.
@@ -1527,8 +1528,62 @@ Aurelia will not search for a JavaScript file if you reference a component with 
 <code-listing heading="Use Custom Element Without View-Model">
   <source-code lang="HTML">
     <require from="./js-less-component.html"></require>
-    
+
     <js-less-component name.bind="someProperty"></js-less-component>
+  </source-code>
+</code-listing>
+
+### Custom Element Variable Binding
+
+It's worth noting that when binding variables to custom elements, use camelCase inside the custom element's View-Model, and dash-case on the html element. See the following example:
+
+<code-listing heading="Custom Element View-Model Declaration">
+  <source-code lang="ES 2016">
+    import {bindable} from 'aurelia-framework';
+
+    export class SayHello {
+      @bindable to;
+      @bindable greetingCallback;
+
+      speak(){
+        this.greetingCallback(`Hello ${this.to}!`);
+      }
+    }
+  </source-code>
+  <source-code lang="ES 2015">
+    import {bindable} from 'aurelia-framework';
+
+    export let SayHello = decorators(
+      bindable('to'),
+      bindable('greetingCallback')
+    ).on(class {
+      speak(){
+        this.greetingCallback(`Hello ${this.to}!`);
+      }
+    });
+  </source-code>
+  <source-code lang="TypeScript">
+    import {bindable} from 'aurelia-framework';
+
+    export class SayHello {
+      @bindable to: string;
+      @bindable greetingCallback: Function;
+
+      speak(): void {
+        this.greetingCallback(`Hello ${this.to}!`);
+      }
+    }
+  </source-code>
+</code-listing>
+
+<code-listing heading="Custom Element Use">
+  <source-code lang="HTML">
+    <template>
+      <require from="./say-hello"></require>
+
+      <input type="text" ref="name">
+      <say-hello to.bind="name.value" greeting-callback.call="doSomething($event)"></say-hello>
+    </template>
   </source-code>
 </code-listing>
 

@@ -145,7 +145,7 @@ This causes the `my-root${context.language.fileExtension}`/`my-root.html` to be 
 
 ## [Bootstrapping Older Browsers](aurelia-doc://section/3/version/1.0.0)
 
-Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need to add an additional polyfill for MutationObservers. This can be achieved by a jspm install of `github:polymer/mutationobservers`. Then change your `index.html` startup code as follows:
+Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need to add an additional polyfill for MutationObservers. This can be achieved by a jspm install of `github:webcomponents/webcomponentsjs`. Then change your `index.html` startup code as follows:
 
 <code-listing heading="Polyfill Configuration">
   <source-code lang="HTML">
@@ -158,8 +158,8 @@ Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Fi
         <script src="jspm_packages/system.js"></script>
         <script src="config.js"></script>
         <script>
-          SystemJS.import('core-js').then(function() {
-            return SystemJS.import('polymer/mutationobservers');
+          SystemJS.import('aurelia-polyfills').then(function() {
+            return SystemJS.import('webcomponents/webcomponentsjs/MutationObserver');
           }).then(function() {
             SystemJS.import('aurelia-bootstrapper');
           });
