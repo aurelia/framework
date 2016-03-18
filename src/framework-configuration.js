@@ -176,7 +176,15 @@ export class FrameworkConfiguration {
    * @return Returns the current FrameworkConfiguration instance.
   */
   feature(plugin: string, config?: any): FrameworkConfiguration {
+    if(hasExt(plugin)) {
+      return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
+    }
+
     return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: [plugin, ''], config: config || {} });
+
+    function hasExt(name) {
+      return (plugin.split('.')).length > 1;
+    }
   }
 
   /**
