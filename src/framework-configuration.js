@@ -25,17 +25,15 @@ function loadPlugin(config, loader, info) {
 
   let id = info.moduleId; // General plugins installed/configured by the end user.
 
-  if(info.resourcesRelativeTo.length > 1 ) { // In case of bootstrapper installed plugins like `aurelia-templating-resources` or `aurelia-history-browser`.
+  if (info.resourcesRelativeTo.length > 1 ) { // In case of bootstrapper installed plugins like `aurelia-templating-resources` or `aurelia-history-browser`.
     return loader.normalize(info.moduleId, info.resourcesRelativeTo[1])
-      .then(id=> {
-         return _loadPlugin(id);
-      });
+      .then(normalizedId => _loadPlugin(normalizedId));
   }
 
   return _loadPlugin(id);
 
-  function _loadPlugin(id) {
-    return loader.loadModule(id).then(m => {
+  function _loadPlugin(moduleId) {
+    return loader.loadModule(moduleId).then(m => {
       if ('configure' in m) {
         return Promise.resolve(m.configure(config, info.config || {})).then(() => {
           config.resourcesRelativeTo = null;
@@ -52,29 +50,27 @@ function loadPlugin(config, loader, info) {
 function loadResources(aurelia, resourcesToLoad, appResources) {
   let viewEngine = aurelia.container.get(ViewEngine);
 
-  return Promise.all(
-    Object.keys(resourcesToLoad)
-     .map(n => _normalize(resourcesToLoad[n])))
-     .then(loads => {
-        let names = [], importIds = [];
+  return Promise.all(Object.keys(resourcesToLoad).map(n => _normalize(resourcesToLoad[n])))
+    .then(loads => {
+      let names = [];
+      let importIds = [];
 
-        loads.forEach(l => {
-           names.push(undefined);
-           importIds.push(l.importId)
-        });
-     
-        return viewEngine.importViewResources(importIds, names, appResources);
-     });
+      loads.forEach(l => {
+        names.push(undefined);
+        importIds.push(l.importId);
+      });
 
+      return viewEngine.importViewResources(importIds, names, appResources);
+    });
 
   function _normalize(load) {
-     return aurelia.loader.normalize(load.moduleId, load.relativeTo)
-        .then(normalized => {
-           return {
-              name : load.moduleId,
-              importId : normalized
-           };
-        })
+    return aurelia.loader.normalize(load.moduleId, load.relativeTo)
+      .then(normalized => {
+        return {
+          name: load.moduleId,
+          importId: normalized
+        };
+      });
   }
 }
 
@@ -174,9 +170,9 @@ export class FrameworkConfiguration {
    * @param plugin The folder for the internal plugin to configure (expects an index.js in that folder).
    * @param config The configuration for the specified plugin.
    * @return Returns the current FrameworkConfiguration instance.
-  */
+   */
   feature(plugin: string, config?: any): FrameworkConfiguration {
-    if(hasExt(plugin)) {
+    if (hasExt(plugin)) {
       return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
     }
 
@@ -192,7 +188,7 @@ export class FrameworkConfiguration {
    * @param resources The relative module id to the resource. (Relative to the plugin's installer.)
    * @return Returns the current FrameworkConfiguration instance.
    */
- globalResources(resources: string|string[]): FrameworkConfiguration {
+  globalResources(resources: string|string[]): FrameworkConfiguration {
     assertProcessed(this);
 
     let toAdd = Array.isArray(resources) ? resources : arguments;
@@ -212,7 +208,7 @@ export class FrameworkConfiguration {
 
       if (resource.startsWith('./') && parent !== '') {
         name = parent + resource.substr(1);
-      } 
+      }
 
       this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
     }
@@ -230,7 +226,7 @@ export class FrameworkConfiguration {
     assertProcessed(this);
     this.resourcesToLoad[resourcePath] = { moduleId: newName, relativeTo: '' };
     return this;
-  } 
+  }
 
   /**
    * Configures an external, 3rd party plugin before Aurelia starts.
@@ -250,7 +246,6 @@ export class FrameworkConfiguration {
   }
 
   _addNormalizedPlugin(name, config) {
-    
     let plugin = { moduleId: name, resourcesRelativeTo: [name, ''], config: config || {} };
     this.plugin(plugin);
 
