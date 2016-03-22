@@ -1,3 +1,18 @@
+### 1.0.0-beta.1.2.0 (2016-03-22)
+
+
+#### Bug Fixes
+
+* feature configuration ([8d5eaa17](http://github.com/aurelia/framework/commit/8d5eaa17ef0909436b4a00073087653426981005))
+* **feature:** check extension. ([4bfd6c47](http://github.com/aurelia/framework/commit/4bfd6c47a6bd0b0595e037abe617d4a94b2d052f))
+* **test:** fix loadGlobalResource related tests ([8fbd24d5](http://github.com/aurelia/framework/commit/8fbd24d51a3ca605f2bfb175fd1656444900b5bf))
+
+
+#### Features
+
+* **enhance:** use document.body as fallback ([e1cbfcc2](http://github.com/aurelia/framework/commit/e1cbfcc2f4a19741efa1989a8f3fc12f4db5a493))
+
+
 ### 1.0.0-beta.1.1.4 (2016-03-01)
 
 

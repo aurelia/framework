@@ -6,7 +6,7 @@
   "flags": {},
   "children": [
     {
-      "id": 58,
+      "id": 3,
       "name": "Aurelia",
       "kind": 128,
       "kindString": "Class",
@@ -18,7 +18,7 @@
       },
       "children": [
         {
-          "id": 63,
+          "id": 8,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -30,7 +30,7 @@
           },
           "signatures": [
             {
-              "id": 64,
+              "id": 9,
               "name": "new Aurelia",
               "kind": 16384,
               "kindString": "Constructor signature",
@@ -40,7 +40,7 @@
               },
               "parameters": [
                 {
-                  "id": 65,
+                  "id": 10,
                   "name": "loader",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -53,12 +53,12 @@
                   "type": {
                     "type": "reference",
                     "name": "Loader",
-                    "id": 329,
+                    "id": 636,
                     "moduleName": "\"aurelia-loader\""
                   }
                 },
                 {
-                  "id": 66,
+                  "id": 11,
                   "name": "container",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -71,12 +71,12 @@
                   "type": {
                     "type": "reference",
                     "name": "Container",
-                    "id": 208,
+                    "id": 515,
                     "moduleName": "\"aurelia-dependency-injection\""
                   }
                 },
                 {
-                  "id": 67,
+                  "id": 12,
                   "name": "resources",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -89,7 +89,7 @@
                   "type": {
                     "type": "reference",
                     "name": "ViewResources",
-                    "id": 1236,
+                    "id": 1258,
                     "moduleName": "\"aurelia-templating\""
                   }
                 }
@@ -97,14 +97,14 @@
               "type": {
                 "type": "reference",
                 "name": "Aurelia",
-                "id": 58,
+                "id": 3,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 60,
+          "id": 5,
           "name": "container",
           "kind": 1024,
           "kindString": "Property",
@@ -117,12 +117,12 @@
           "type": {
             "type": "reference",
             "name": "Container",
-            "id": 208,
+            "id": 515,
             "moduleName": "\"aurelia-dependency-injection\""
           }
         },
         {
-          "id": 59,
+          "id": 4,
           "name": "loader",
           "kind": 1024,
           "kindString": "Property",
@@ -135,12 +135,12 @@
           "type": {
             "type": "reference",
             "name": "Loader",
-            "id": 329,
+            "id": 636,
             "moduleName": "\"aurelia-loader\""
           }
         },
         {
-          "id": 61,
+          "id": 6,
           "name": "resources",
           "kind": 1024,
           "kindString": "Property",
@@ -153,12 +153,12 @@
           "type": {
             "type": "reference",
             "name": "ViewResources",
-            "id": 1236,
+            "id": 1258,
             "moduleName": "\"aurelia-templating\""
           }
         },
         {
-          "id": 62,
+          "id": 7,
           "name": "use",
           "kind": 1024,
           "kindString": "Property",
@@ -171,12 +171,12 @@
           "type": {
             "type": "reference",
             "name": "FrameworkConfiguration",
-            "id": 3,
+            "id": 23,
             "moduleName": "\"aurelia-framework\""
           }
         },
         {
-          "id": 70,
+          "id": 15,
           "name": "enhance",
           "kind": 2048,
           "kindString": "Method",
@@ -185,7 +185,7 @@
           },
           "signatures": [
             {
-              "id": 71,
+              "id": 16,
               "name": "enhance",
               "kind": 4096,
               "kindString": "Call signature",
@@ -196,7 +196,7 @@
               },
               "parameters": [
                 {
-                  "id": 72,
+                  "id": 17,
                   "name": "bindingContext",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -212,7 +212,7 @@
                   }
                 },
                 {
-                  "id": 73,
+                  "id": 18,
                   "name": "applicationHost",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -244,7 +244,7 @@
                   {
                     "type": "reference",
                     "name": "Aurelia",
-                    "id": 58
+                    "id": 3
                   }
                 ]
               }
@@ -252,7 +252,7 @@
           ]
         },
         {
-          "id": 74,
+          "id": 19,
           "name": "setRoot",
           "kind": 2048,
           "kindString": "Method",
@@ -261,7 +261,7 @@
           },
           "signatures": [
             {
-              "id": 75,
+              "id": 20,
               "name": "setRoot",
               "kind": 4096,
               "kindString": "Call signature",
@@ -272,7 +272,7 @@
               },
               "parameters": [
                 {
-                  "id": 76,
+                  "id": 21,
                   "name": "root",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -288,7 +288,7 @@
                   }
                 },
                 {
-                  "id": 77,
+                  "id": 22,
                   "name": "applicationHost",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -320,7 +320,7 @@
                   {
                     "type": "reference",
                     "name": "Aurelia",
-                    "id": 58
+                    "id": 3
                   }
                 ]
               }
@@ -328,7 +328,7 @@
           ]
         },
         {
-          "id": 68,
+          "id": 13,
           "name": "start",
           "kind": 2048,
           "kindString": "Method",
@@ -337,7 +337,7 @@
           },
           "signatures": [
             {
-              "id": 69,
+              "id": 14,
               "name": "start",
               "kind": 4096,
               "kindString": "Call signature",
@@ -353,7 +353,7 @@
                   {
                     "type": "reference",
                     "name": "Aurelia",
-                    "id": 58
+                    "id": 3
                   }
                 ]
               }
@@ -366,32 +366,32 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            63
+            8
           ]
         },
         {
           "title": "Properties",
           "kind": 1024,
           "children": [
-            60,
-            59,
-            61,
-            62
+            5,
+            4,
+            6,
+            7
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            70,
-            74,
-            68
+            15,
+            19,
+            13
           ]
         }
       ]
     },
     {
-      "id": 3,
+      "id": 23,
       "name": "FrameworkConfiguration",
       "kind": 128,
       "kindString": "Class",
@@ -403,7 +403,7 @@
       },
       "children": [
         {
-          "id": 6,
+          "id": 26,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -415,7 +415,7 @@
           },
           "signatures": [
             {
-              "id": 7,
+              "id": 27,
               "name": "new FrameworkConfiguration",
               "kind": 16384,
               "kindString": "Constructor signature",
@@ -425,7 +425,7 @@
               },
               "parameters": [
                 {
-                  "id": 8,
+                  "id": 28,
                   "name": "aurelia",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -436,7 +436,7 @@
                   "type": {
                     "type": "reference",
                     "name": "Aurelia",
-                    "id": 58,
+                    "id": 3,
                     "moduleName": "\"aurelia-framework\""
                   }
                 }
@@ -444,14 +444,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 5,
+          "id": 25,
           "name": "aurelia",
           "kind": 1024,
           "kindString": "Property",
@@ -464,12 +464,12 @@
           "type": {
             "type": "reference",
             "name": "Aurelia",
-            "id": 58,
+            "id": 3,
             "moduleName": "\"aurelia-framework\""
           }
         },
         {
-          "id": 4,
+          "id": 24,
           "name": "container",
           "kind": 1024,
           "kindString": "Property",
@@ -482,12 +482,12 @@
           "type": {
             "type": "reference",
             "name": "Container",
-            "id": 208,
+            "id": 515,
             "moduleName": "\"aurelia-dependency-injection\""
           }
         },
         {
-          "id": 56,
+          "id": 76,
           "name": "apply",
           "kind": 2048,
           "kindString": "Method",
@@ -496,7 +496,7 @@
           },
           "signatures": [
             {
-              "id": 57,
+              "id": 77,
               "name": "apply",
               "kind": 4096,
               "kindString": "Call signature",
@@ -519,7 +519,7 @@
           ]
         },
         {
-          "id": 42,
+          "id": 62,
           "name": "defaultBindingLanguage",
           "kind": 2048,
           "kindString": "Method",
@@ -528,7 +528,7 @@
           },
           "signatures": [
             {
-              "id": 43,
+              "id": 63,
               "name": "defaultBindingLanguage",
               "kind": 4096,
               "kindString": "Call signature",
@@ -540,14 +540,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 48,
+          "id": 68,
           "name": "defaultResources",
           "kind": 2048,
           "kindString": "Method",
@@ -556,7 +556,7 @@
           },
           "signatures": [
             {
-              "id": 49,
+              "id": 69,
               "name": "defaultResources",
               "kind": 4096,
               "kindString": "Call signature",
@@ -568,14 +568,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 54,
+          "id": 74,
           "name": "developmentLogging",
           "kind": 2048,
           "kindString": "Method",
@@ -584,7 +584,7 @@
           },
           "signatures": [
             {
-              "id": 55,
+              "id": 75,
               "name": "developmentLogging",
               "kind": 4096,
               "kindString": "Call signature",
@@ -596,14 +596,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 50,
+          "id": 70,
           "name": "eventAggregator",
           "kind": 2048,
           "kindString": "Method",
@@ -612,7 +612,7 @@
           },
           "signatures": [
             {
-              "id": 51,
+              "id": 71,
               "name": "eventAggregator",
               "kind": 4096,
               "kindString": "Call signature",
@@ -624,14 +624,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 27,
+          "id": 47,
           "name": "feature",
           "kind": 2048,
           "kindString": "Method",
@@ -640,7 +640,7 @@
           },
           "signatures": [
             {
-              "id": 28,
+              "id": 48,
               "name": "feature",
               "kind": 4096,
               "kindString": "Call signature",
@@ -651,7 +651,7 @@
               },
               "parameters": [
                 {
-                  "id": 29,
+                  "id": 49,
                   "name": "plugin",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -665,7 +665,7 @@
                   }
                 },
                 {
-                  "id": 30,
+                  "id": 50,
                   "name": "config",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -684,14 +684,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 34,
+          "id": 54,
           "name": "globalName",
           "kind": 2048,
           "kindString": "Method",
@@ -700,7 +700,7 @@
           },
           "signatures": [
             {
-              "id": 35,
+              "id": 55,
               "name": "globalName",
               "kind": 4096,
               "kindString": "Call signature",
@@ -711,7 +711,7 @@
               },
               "parameters": [
                 {
-                  "id": 36,
+                  "id": 56,
                   "name": "resourcePath",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -725,7 +725,7 @@
                   }
                 },
                 {
-                  "id": 37,
+                  "id": 57,
                   "name": "newName",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -742,14 +742,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 31,
+          "id": 51,
           "name": "globalResources",
           "kind": 2048,
           "kindString": "Method",
@@ -758,7 +758,7 @@
           },
           "signatures": [
             {
-              "id": 32,
+              "id": 52,
               "name": "globalResources",
               "kind": 4096,
               "kindString": "Call signature",
@@ -769,7 +769,7 @@
               },
               "parameters": [
                 {
-                  "id": 33,
+                  "id": 53,
                   "name": "resources",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -796,14 +796,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 46,
+          "id": 66,
           "name": "history",
           "kind": 2048,
           "kindString": "Method",
@@ -812,7 +812,7 @@
           },
           "signatures": [
             {
-              "id": 47,
+              "id": 67,
               "name": "history",
               "kind": 4096,
               "kindString": "Call signature",
@@ -824,14 +824,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 9,
+          "id": 29,
           "name": "instance",
           "kind": 2048,
           "kindString": "Method",
@@ -840,7 +840,7 @@
           },
           "signatures": [
             {
-              "id": 10,
+              "id": 30,
               "name": "instance",
               "kind": 4096,
               "kindString": "Call signature",
@@ -851,7 +851,7 @@
               },
               "parameters": [
                 {
-                  "id": 11,
+                  "id": 31,
                   "name": "type",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -865,7 +865,7 @@
                   }
                 },
                 {
-                  "id": 12,
+                  "id": 32,
                   "name": "instance",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -882,14 +882,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 38,
+          "id": 58,
           "name": "plugin",
           "kind": 2048,
           "kindString": "Method",
@@ -898,7 +898,7 @@
           },
           "signatures": [
             {
-              "id": 39,
+              "id": 59,
               "name": "plugin",
               "kind": 4096,
               "kindString": "Call signature",
@@ -909,7 +909,7 @@
               },
               "parameters": [
                 {
-                  "id": 40,
+                  "id": 60,
                   "name": "plugin",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -923,7 +923,7 @@
                   }
                 },
                 {
-                  "id": 41,
+                  "id": 61,
                   "name": "config",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -942,14 +942,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 24,
+          "id": 44,
           "name": "postTask",
           "kind": 2048,
           "kindString": "Method",
@@ -958,7 +958,7 @@
           },
           "signatures": [
             {
-              "id": 25,
+              "id": 45,
               "name": "postTask",
               "kind": 4096,
               "kindString": "Call signature",
@@ -969,7 +969,7 @@
               },
               "parameters": [
                 {
-                  "id": 26,
+                  "id": 46,
                   "name": "task",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -986,14 +986,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 21,
+          "id": 41,
           "name": "preTask",
           "kind": 2048,
           "kindString": "Method",
@@ -1002,7 +1002,7 @@
           },
           "signatures": [
             {
-              "id": 22,
+              "id": 42,
               "name": "preTask",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1013,7 +1013,7 @@
               },
               "parameters": [
                 {
-                  "id": 23,
+                  "id": 43,
                   "name": "task",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1030,14 +1030,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 44,
+          "id": 64,
           "name": "router",
           "kind": 2048,
           "kindString": "Method",
@@ -1046,7 +1046,7 @@
           },
           "signatures": [
             {
-              "id": 45,
+              "id": 65,
               "name": "router",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1058,14 +1058,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 13,
+          "id": 33,
           "name": "singleton",
           "kind": 2048,
           "kindString": "Method",
@@ -1074,7 +1074,7 @@
           },
           "signatures": [
             {
-              "id": 14,
+              "id": 34,
               "name": "singleton",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1085,7 +1085,7 @@
               },
               "parameters": [
                 {
-                  "id": 15,
+                  "id": 35,
                   "name": "type",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1099,7 +1099,7 @@
                   }
                 },
                 {
-                  "id": 16,
+                  "id": 36,
                   "name": "implementation",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1118,14 +1118,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 52,
+          "id": 72,
           "name": "standardConfiguration",
           "kind": 2048,
           "kindString": "Method",
@@ -1134,7 +1134,7 @@
           },
           "signatures": [
             {
-              "id": 53,
+              "id": 73,
               "name": "standardConfiguration",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1146,14 +1146,14 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
           ]
         },
         {
-          "id": 17,
+          "id": 37,
           "name": "transient",
           "kind": 2048,
           "kindString": "Method",
@@ -1162,7 +1162,7 @@
           },
           "signatures": [
             {
-              "id": 18,
+              "id": 38,
               "name": "transient",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1173,7 +1173,7 @@
               },
               "parameters": [
                 {
-                  "id": 19,
+                  "id": 39,
                   "name": "type",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1187,7 +1187,7 @@
                   }
                 },
                 {
-                  "id": 20,
+                  "id": 40,
                   "name": "implementation",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1206,7 +1206,7 @@
               "type": {
                 "type": "reference",
                 "name": "FrameworkConfiguration",
-                "id": 3,
+                "id": 23,
                 "moduleName": "\"aurelia-framework\""
               }
             }
@@ -1218,38 +1218,38 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            6
+            26
           ]
         },
         {
           "title": "Properties",
           "kind": 1024,
           "children": [
-            5,
-            4
+            25,
+            24
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            56,
-            42,
-            48,
+            76,
+            62,
+            68,
+            74,
+            70,
+            47,
             54,
-            50,
-            27,
-            34,
-            31,
-            46,
-            9,
-            38,
-            24,
-            21,
+            51,
+            66,
+            29,
+            58,
             44,
-            13,
-            52,
-            17
+            41,
+            64,
+            33,
+            72,
+            37
           ]
         }
       ]
@@ -1276,8 +1276,8 @@
       "title": "Classes",
       "kind": 128,
       "children": [
-        58,
-        3
+        3,
+        23
       ]
     },
     {

@@ -1,9 +1,171 @@
 import * as TheLogManager from 'aurelia-logging';
-import {ViewEngine,BindingLanguage,ViewSlot,ViewResources,TemplatingEngine,CompositionTransaction} from 'aurelia-templating';
-import {join} from 'aurelia-path';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
+import {BindingLanguage,ViewSlot,ViewResources,TemplatingEngine,CompositionTransaction,ViewEngine} from 'aurelia-templating';
 import {DOM,PLATFORM} from 'aurelia-pal';
+import {join} from 'aurelia-path';
+
+/*eslint no-unused-vars:0*/
+function preventActionlessFormSubmit() {
+  DOM.addEventListener('submit', evt => {
+    const target = evt.target;
+    const action = target.action;
+
+    if (target.tagName.toLowerCase() === 'form' && !action) {
+      evt.preventDefault();
+    }
+  });
+}
+
+/**
+ * The framework core that provides the main Aurelia object.
+ */
+export class Aurelia {
+  /**
+   * The loader used by the application.
+   */
+  loader: Loader;
+  /**
+   * The root DI container used by the application.
+   */
+  container: Container;
+  /**
+   * The global view resources used by the application.
+   */
+  resources: ViewResources;
+
+  /**
+   * The configuration used during application startup.
+   */
+  use: FrameworkConfiguration;
+
+  /**
+   * Creates an instance of Aurelia.
+   * @param loader The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use the loader type specified by PLATFORM.Loader.
+   * @param container The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty, global container.
+   * @param resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
+   */
+  constructor(loader?: Loader, container?: Container, resources?: ViewResources) {
+    this.loader = loader || new PLATFORM.Loader();
+    this.container = container || (new Container()).makeGlobal();
+    this.resources = resources || new ViewResources();
+    this.use = new FrameworkConfiguration(this);
+    this.logger = TheLogManager.getLogger('aurelia');
+    this.hostConfigured = false;
+    this.host = null;
+
+    this.use.instance(Aurelia, this);
+    this.use.instance(Loader, this.loader);
+    this.use.instance(ViewResources, this.resources);
+  }
+
+  /**
+   * Loads plugins, then resources, and then starts the Aurelia instance.
+   * @return Returns a Promise with the started Aurelia instance.
+   */
+  start(): Promise<Aurelia> {
+    if (this.started) {
+      return Promise.resolve(this);
+    }
+
+    this.started = true;
+    this.logger.info('Aurelia Starting');
+
+    return this.use.apply().then(() => {
+      preventActionlessFormSubmit();
+
+      if (!this.container.hasResolver(BindingLanguage)) {
+        let message = 'You must configure Aurelia with a BindingLanguage implementation.';
+        this.logger.error(message);
+        throw new Error(message);
+      }
+
+      this.logger.info('Aurelia Started');
+      let evt = DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
+      DOM.dispatchEvent(evt);
+      return this;
+    });
+  }
+
+  /**
+   * Enhances the host's existing elements with behaviors and bindings.
+   * @param bindingContext A binding context for the enhanced elements.
+   * @param applicationHost The DOM object that Aurelia will enhance.
+   * @return Returns a Promise for the current Aurelia instance.
+   */
+  enhance(bindingContext: Object = {}, applicationHost: string | Element = null): Promise<Aurelia> {
+    this._configureHost(applicationHost || DOM.querySelectorAll('body')[0]);
+
+    return new Promise(resolve => {
+      let engine = this.container.get(TemplatingEngine);
+      this.root = engine.enhance({container: this.container, element: this.host, resources: this.resources, bindingContext: bindingContext});
+      this.root.attached();
+      this._onAureliaComposed();
+      return this;
+    });
+  }
+
+  /**
+   * Instantiates the root component and adds it to the DOM.
+   * @param root The root component to load upon bootstrap.
+   * @param applicationHost The DOM object that Aurelia will attach to.
+   * @return Returns a Promise of the current Aurelia instance.
+   */
+  setRoot(root: string = 'app', applicationHost: string | Element = null): Promise<Aurelia> {
+    let instruction = {};
+
+    if (this.root && this.root.viewModel && this.root.viewModel.router) {
+      this.root.viewModel.router.deactivate();
+      this.root.viewModel.router.reset();
+    }
+
+    this._configureHost(applicationHost);
+
+    let engine = this.container.get(TemplatingEngine);
+    let transaction = this.container.get(CompositionTransaction);
+    delete transaction.initialComposition;
+
+    instruction.viewModel = root;
+    instruction.container = instruction.childContainer = this.container;
+    instruction.viewSlot = this.hostSlot;
+    instruction.host = this.host;
+
+    return engine.compose(instruction).then(r => {
+      this.root = r;
+      instruction.viewSlot.attached();
+      this._onAureliaComposed();
+      return this;
+    });
+  }
+
+  _configureHost(applicationHost) {
+    if (this.hostConfigured) {
+      return;
+    }
+    applicationHost = applicationHost || this.host;
+
+    if (!applicationHost || typeof applicationHost === 'string') {
+      this.host = DOM.getElementById(applicationHost || 'applicationHost');
+    } else {
+      this.host = applicationHost;
+    }
+
+    if (!this.host) {
+      throw new Error('No applicationHost was specified.');
+    }
+
+    this.hostConfigured = true;
+    this.host.aurelia = this;
+    this.hostSlot = new ViewSlot(this.host, true);
+    this.hostSlot.transformChildNodesIntoView();
+    this.container.registerInstance(DOM.boundary, this.host);
+  }
+
+  _onAureliaComposed() {
+    let evt = DOM.createCustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
+    setTimeout(() => DOM.dispatchEvent(evt), 1);
+  }
+}
 
 /*eslint no-unused-vars:0, no-cond-assign:0*/
 const logger = TheLogManager.getLogger('aurelia');
@@ -25,29 +187,55 @@ function loadPlugin(config, loader, info) {
   logger.debug(`Loading plugin ${info.moduleId}.`);
   config.resourcesRelativeTo = info.resourcesRelativeTo;
 
-  return loader.loadModule(info.moduleId).then(m => {
-    if ('configure' in m) {
-      return Promise.resolve(m.configure(config, info.config || {})).then(() => {
-        config.resourcesRelativeTo = null;
-        logger.debug(`Configured plugin ${info.moduleId}.`);
-      });
-    }
+  let id = info.moduleId; // General plugins installed/configured by the end user.
 
-    config.resourcesRelativeTo = null;
-    logger.debug(`Loaded plugin ${info.moduleId}.`);
-  });
-}
-
-function loadResources(container, resourcesToLoad, appResources) {
-  let viewEngine = container.get(ViewEngine);
-  let importIds = Object.keys(resourcesToLoad);
-  let names = new Array(importIds.length);
-
-  for (let i = 0, ii = importIds.length; i < ii; ++i) {
-    names[i] = resourcesToLoad[importIds[i]];
+  if (info.resourcesRelativeTo.length > 1 ) { // In case of bootstrapper installed plugins like `aurelia-templating-resources` or `aurelia-history-browser`.
+    return loader.normalize(info.moduleId, info.resourcesRelativeTo[1])
+      .then(normalizedId => _loadPlugin(normalizedId));
   }
 
-  return viewEngine.importViewResources(importIds, names, appResources);
+  return _loadPlugin(id);
+
+  function _loadPlugin(moduleId) {
+    return loader.loadModule(moduleId).then(m => {
+      if ('configure' in m) {
+        return Promise.resolve(m.configure(config, info.config || {})).then(() => {
+          config.resourcesRelativeTo = null;
+          logger.debug(`Configured plugin ${info.moduleId}.`);
+        });
+      }
+
+      config.resourcesRelativeTo = null;
+      logger.debug(`Loaded plugin ${info.moduleId}.`);
+    });
+  }
+}
+
+function loadResources(aurelia, resourcesToLoad, appResources) {
+  let viewEngine = aurelia.container.get(ViewEngine);
+
+  return Promise.all(Object.keys(resourcesToLoad).map(n => _normalize(resourcesToLoad[n])))
+    .then(loads => {
+      let names = [];
+      let importIds = [];
+
+      loads.forEach(l => {
+        names.push(undefined);
+        importIds.push(l.importId);
+      });
+
+      return viewEngine.importViewResources(importIds, names, appResources);
+    });
+
+  function _normalize(load) {
+    return aurelia.loader.normalize(load.moduleId, load.relativeTo)
+      .then(normalized => {
+        return {
+          name: load.moduleId,
+          importId: normalized
+        };
+      });
+  }
 }
 
 function assertProcessed(plugins) {
@@ -83,7 +271,7 @@ export class FrameworkConfiguration {
     this.postTasks = [];
     this.resourcesToLoad = {};
     this.preTask(() => aurelia.loader.normalize('aurelia-bootstrapper').then(name => this.bootstrapperName = name));
-    this.postTask(() => loadResources(aurelia.container, this.resourcesToLoad, aurelia.resources));
+    this.postTask(() => loadResources(aurelia, this.resourcesToLoad, aurelia.resources));
   }
 
   /**
@@ -146,10 +334,17 @@ export class FrameworkConfiguration {
    * @param plugin The folder for the internal plugin to configure (expects an index.js in that folder).
    * @param config The configuration for the specified plugin.
    * @return Returns the current FrameworkConfiguration instance.
-  */
+   */
   feature(plugin: string, config?: any): FrameworkConfiguration {
-    plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
-    return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: plugin, config: config || {} });
+    if (hasExt(plugin)) {
+      return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
+    }
+
+    return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: [plugin, ''], config: config || {} });
+
+    function hasExt(name) {
+      return (plugin.split('.')).length > 1;
+    }
   }
 
   /**
@@ -163,7 +358,7 @@ export class FrameworkConfiguration {
     let toAdd = Array.isArray(resources) ? resources : arguments;
     let resource;
     let path;
-    let resourcesRelativeTo = this.resourcesRelativeTo || '';
+    let resourcesRelativeTo = this.resourcesRelativeTo || ['', ''];
 
     for (let i = 0, ii = toAdd.length; i < ii; ++i) {
       resource = toAdd[i];
@@ -171,8 +366,15 @@ export class FrameworkConfiguration {
         throw new Error(`Invalid resource path [${resource}]. Resources must be specified as relative module IDs.`);
       }
 
-      path = join(resourcesRelativeTo, resource);
-      this.resourcesToLoad[path] = this.resourcesToLoad[path];
+      let parent = resourcesRelativeTo[0];
+      let grandParent = resourcesRelativeTo[1];
+      let name = resource;
+
+      if (resource.startsWith('./') && parent !== '') {
+        name = parent + resource.substr(1);
+      }
+
+      this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
     }
 
     return this;
@@ -186,7 +388,7 @@ export class FrameworkConfiguration {
    */
   globalName(resourcePath: string, newName: string): FrameworkConfiguration {
     assertProcessed(this);
-    this.resourcesToLoad[resourcePath] = newName;
+    this.resourcesToLoad[resourcePath] = { moduleId: newName, relativeTo: '' };
     return this;
   }
 
@@ -199,9 +401,8 @@ export class FrameworkConfiguration {
   plugin(plugin: string, config?: any): FrameworkConfiguration {
     assertProcessed(this);
 
-    if (typeof(plugin) === 'string') {
-      plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
-      return this.plugin({ moduleId: plugin, resourcesRelativeTo: plugin, config: config || {} });
+    if (typeof (plugin) === 'string') {
+      return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
     }
 
     this.info.push(plugin);
@@ -209,18 +410,14 @@ export class FrameworkConfiguration {
   }
 
   _addNormalizedPlugin(name, config) {
-    let plugin = { moduleId: name, resourcesRelativeTo: name, config: config || {} };
-
+    let plugin = { moduleId: name, resourcesRelativeTo: [name, ''], config: config || {} };
     this.plugin(plugin);
-    this.preTask(() => {
-      return this.aurelia.loader.normalize(name, this.bootstrapperName).then(normalizedName => {
-        normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts')
-          ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
 
-        plugin.moduleId = normalizedName;
-        plugin.resourcesRelativeTo = normalizedName;
-        this.aurelia.loader.map(name, normalizedName);
-      });
+    this.preTask(() => {
+      let relativeTo = [name, this.bootstrapperName];
+      plugin.moduleId = name;
+      plugin.resourcesRelativeTo = relativeTo;
+      return Promise.resolve();
     });
 
     return this;
@@ -316,169 +513,6 @@ export class FrameworkConfiguration {
 
       return next().then(() => runTasks(this, this.postTasks));
     });
-  }
-}
-
-/*eslint no-unused-vars:0*/
-function preventActionlessFormSubmit() {
-  DOM.addEventListener('submit', evt => {
-    const target = evt.target;
-    const action = target.action;
-
-    if (target.tagName.toLowerCase() === 'form' && !action) {
-      evt.preventDefault();
-    }
-  });
-}
-
-/**
- * The framework core that provides the main Aurelia object.
- */
-export class Aurelia {
-  /**
-   * The loader used by the application.
-   */
-  loader: Loader;
-  /**
-   * The root DI container used by the application.
-   */
-  container: Container;
-  /**
-   * The global view resources used by the application.
-   */
-  resources: ViewResources;
-
-  /**
-   * The configuration used during application startup.
-   */
-  use: FrameworkConfiguration;
-
-  /**
-   * Creates an instance of Aurelia.
-   * @param loader The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use the loader type specified by PLATFORM.Loader.
-   * @param container The dependency injection container for this Aurelia instance to use. If a container is not specified, Aurelia will create an empty, global container.
-   * @param resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
-   */
-  constructor(loader?: Loader, container?: Container, resources?: ViewResources) {
-    this.loader = loader || new PLATFORM.Loader();
-    this.container = container || (new Container()).makeGlobal();
-    this.resources = resources || new ViewResources();
-    this.use = new FrameworkConfiguration(this);
-    this.logger = TheLogManager.getLogger('aurelia');
-    this.hostConfigured = false;
-    this.host = null;
-
-    this.use.instance(Aurelia, this);
-    this.use.instance(Loader, this.loader);
-    this.use.instance(ViewResources, this.resources);
-  }
-
-  /**
-   * Loads plugins, then resources, and then starts the Aurelia instance.
-   * @return Returns a Promise with the started Aurelia instance.
-   */
-  start(): Promise<Aurelia> {
-    if (this.started) {
-      return Promise.resolve(this);
-    }
-
-    this.started = true;
-    this.logger.info('Aurelia Starting');
-
-    return this.use.apply().then(() => {
-      preventActionlessFormSubmit();
-
-      if (!this.container.hasResolver(BindingLanguage)) {
-        let message = 'You must configure Aurelia with a BindingLanguage implementation.';
-        this.logger.error(message);
-        throw new Error(message);
-      }
-
-      this.logger.info('Aurelia Started');
-      let evt = DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
-      DOM.dispatchEvent(evt);
-      return this;
-    });
-  }
-
-  /**
-   * Enhances the host's existing elements with behaviors and bindings.
-   * @param bindingContext A binding context for the enhanced elements.
-   * @param applicationHost The DOM object that Aurelia will enhance.
-   * @return Returns a Promise for the current Aurelia instance.
-   */
-  enhance(bindingContext: Object = {}, applicationHost: string | Element = null): Promise<Aurelia> {
-    this._configureHost(applicationHost);
-
-    return new Promise(resolve => {
-      let engine = this.container.get(TemplatingEngine);
-      this.root = engine.enhance({container: this.container, element: this.host, resources: this.resources, bindingContext: bindingContext});
-      this.root.attached();
-      this._onAureliaComposed();
-      return this;
-    });
-  }
-
-  /**
-   * Instantiates the root component and adds it to the DOM.
-   * @param root The root component to load upon bootstrap.
-   * @param applicationHost The DOM object that Aurelia will attach to.
-   * @return Returns a Promise of the current Aurelia instance.
-   */
-  setRoot(root: string = 'app', applicationHost: string | Element = null): Promise<Aurelia> {
-    let instruction = {};
-
-    if (this.root && this.root.viewModel && this.root.viewModel.router) {
-      this.root.viewModel.router.deactivate();
-      this.root.viewModel.router.reset();
-    }
-
-    this._configureHost(applicationHost);
-
-    let engine = this.container.get(TemplatingEngine);
-    let transaction = this.container.get(CompositionTransaction);
-    delete transaction.initialComposition;
-
-    instruction.viewModel = root;
-    instruction.container = instruction.childContainer = this.container;
-    instruction.viewSlot = this.hostSlot;
-    instruction.host = this.host;
-
-    return engine.compose(instruction).then(r => {
-      this.root = r;
-      instruction.viewSlot.attached();
-      this._onAureliaComposed();
-      return this;
-    });
-  }
-
-  _configureHost(applicationHost) {
-    if (this.hostConfigured) {
-      return;
-    }
-
-    applicationHost = applicationHost || this.host;
-
-    if (!applicationHost || typeof applicationHost === 'string') {
-      this.host = DOM.getElementById(applicationHost || 'applicationHost');
-    } else {
-      this.host = applicationHost;
-    }
-
-    if (!this.host) {
-      throw new Error('No applicationHost was specified.');
-    }
-
-    this.hostConfigured = true;
-    this.host.aurelia = this;
-    this.hostSlot = new ViewSlot(this.host, true);
-    this.hostSlot.transformChildNodesIntoView();
-    this.container.registerInstance(DOM.boundary, this.host);
-  }
-
-  _onAureliaComposed() {
-    let evt = DOM.createCustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
-    setTimeout(() => DOM.dispatchEvent(evt), 1);
   }
 }
 
