@@ -179,7 +179,7 @@ export class FrameworkConfiguration {
     return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: [plugin, ''], config: config || {} });
 
     function hasExt(name) {
-      return (plugin.split('.')).length > 1;
+      return (name.split('.')).length > 1;
     }
   }
 
