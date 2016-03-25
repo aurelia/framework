@@ -64,13 +64,40 @@ function loadResources(aurelia, resourcesToLoad, appResources) {
     });
 
   function _normalize(load) {
-    return aurelia.loader.normalize(load.moduleId, load.relativeTo)
+    let moduleId = load.moduleId;
+    let ext = getExt(moduleId);
+
+    if(isOtherResource(moduleId)) {
+      moduleId = removeExt(moduleId);
+    }
+
+    return aurelia.loader.normalize(moduleId, load.relativeTo)
       .then(normalized => {
         return {
           name: load.moduleId,
-          importId: normalized
+          importId: isOtherResource(load.moduleId) ? addOriginalExt(normalized, ext) : normalized
         };
       });
+  }
+
+  function isOtherResource(name) {
+    let ext = getExt(name);
+    if(!ext) return false;
+    if(ext === '') return false;
+    if(ext === '.js' || ext === '.ts') return false;
+    return true;
+  }
+
+  function removeExt(name) {
+    return name.replace(/\.[^/.]+$/, "");
+  }
+
+  function getExt(name) {
+    return name.split('.')[1];
+  }
+
+  function addOriginalExt(normalized, ext) {
+    return removeExt(normalized) + '.' + ext; 
   }
 }
 
