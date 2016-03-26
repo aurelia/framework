@@ -67,7 +67,7 @@ function loadResources(aurelia, resourcesToLoad, appResources) {
     let moduleId = load.moduleId;
     let ext = getExt(moduleId);
 
-    if(isOtherResource(moduleId)) {
+    if (isOtherResource(moduleId)) {
       moduleId = removeExt(moduleId);
     }
 
@@ -82,14 +82,14 @@ function loadResources(aurelia, resourcesToLoad, appResources) {
 
   function isOtherResource(name) {
     let ext = getExt(name);
-    if(!ext) return false;
-    if(ext === '') return false;
-    if(ext === '.js' || ext === '.ts') return false;
+    if (!ext) return false;
+    if (ext === '') return false;
+    if (ext === '.js' || ext === '.ts') return false;
     return true;
   }
 
   function removeExt(name) {
-    return name.replace(/\.[^/.]+$/, "");
+    return name.replace(/\.[^/.]+$/, '');
   }
 
   function getExt(name) {
@@ -97,7 +97,7 @@ function loadResources(aurelia, resourcesToLoad, appResources) {
   }
 
   function addOriginalExt(normalized, ext) {
-    return removeExt(normalized) + '.' + ext; 
+    return removeExt(normalized) + '.' + ext;
   }
 }
 
