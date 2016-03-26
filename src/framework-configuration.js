@@ -5,6 +5,7 @@ import {join} from 'aurelia-path';
 import {Container} from 'aurelia-dependency-injection';
 
 const logger = TheLogManager.getLogger('aurelia');
+const extPattern = /\.[^/.]+$/;
 
 function runTasks(config, tasks) {
   let current;
@@ -89,15 +90,18 @@ function loadResources(aurelia, resourcesToLoad, appResources) {
   }
 
   function removeExt(name) {
-    return name.replace(/\.[^/.]+$/, '');
-  }
-
-  function getExt(name) {
-    return name.split('.')[1];
+    return name.replace(extPattern, '');
   }
 
   function addOriginalExt(normalized, ext) {
     return removeExt(normalized) + '.' + ext;
+  }
+}
+
+function getExt(name) {
+  let match = name.match(extPattern);
+  if (match && match.length > 0) {
+    return (match[0].split('.'))[1];
   }
 }
 
@@ -199,15 +203,11 @@ export class FrameworkConfiguration {
    * @return Returns the current FrameworkConfiguration instance.
    */
   feature(plugin: string, config?: any): FrameworkConfiguration {
-    if (hasExt(plugin)) {
+    if (getExt(plugin)) {
       return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
     }
 
     return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: [plugin, ''], config: config || {} });
-
-    function hasExt(name) {
-      return (name.split('.')).length > 1;
-    }
   }
 
   /**
