@@ -32,7 +32,8 @@ Now that you've downloaded a starter package, you need to unzip it on your hard 
 
 Once you've got your web server set up, navigate to the `index.html` page using your favorite browser. If everything is working correctly, you should see the message "Welcome to Aurelia!" displayed.
 
-_**Note:** These getting-started kits are intended to be used as-is. In order to facilitate this, the required packages are already included in the downloaded zip. You'll want to avoid running `jspm install` and instead simply serve the kit in its original form._
+> Info
+> These getting-started kits are intended to be used as-is. In order to facilitate this, the required packages are already included in the downloaded zip. You'll want to avoid running `jspm install` and instead simply serve the kit in its original form.
 
 ## [The Index.html Page](aurelia-doc://section/2/version/1.0.0)
 
