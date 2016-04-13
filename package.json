@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "1.0.0-beta.1.2.1",
+  "version": "1.0.0-beta.1.2.2",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
@@ -159,6 +159,10 @@
         {
           "title": "End-to-End Testing",
           "href": "doc/article/en-US/end-to-end-testing.md"
+        },
+        {
+          "title": "Migrating from Angular 1",
+          "href": "doc/article/en-US/migrating-from-angular-1.md"
         }
       ]
     }

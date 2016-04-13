@@ -53,7 +53,7 @@
                   "type": {
                     "type": "reference",
                     "name": "Loader",
-                    "id": 635,
+                    "id": 392,
                     "moduleName": "\"aurelia-loader\""
                   }
                 },
@@ -71,7 +71,7 @@
                   "type": {
                     "type": "reference",
                     "name": "Container",
-                    "id": 514,
+                    "id": 218,
                     "moduleName": "\"aurelia-dependency-injection\""
                   }
                 },
@@ -89,7 +89,7 @@
                   "type": {
                     "type": "reference",
                     "name": "ViewResources",
-                    "id": 1257,
+                    "id": 1254,
                     "moduleName": "\"aurelia-templating\""
                   }
                 }
@@ -117,7 +117,7 @@
           "type": {
             "type": "reference",
             "name": "Container",
-            "id": 514,
+            "id": 218,
             "moduleName": "\"aurelia-dependency-injection\""
           }
         },
@@ -135,7 +135,7 @@
           "type": {
             "type": "reference",
             "name": "Loader",
-            "id": 635,
+            "id": 392,
             "moduleName": "\"aurelia-loader\""
           }
         },
@@ -153,7 +153,7 @@
           "type": {
             "type": "reference",
             "name": "ViewResources",
-            "id": 1257,
+            "id": 1254,
             "moduleName": "\"aurelia-templating\""
           }
         },
@@ -482,7 +482,7 @@
           "type": {
             "type": "reference",
             "name": "Container",
-            "id": 514,
+            "id": 218,
             "moduleName": "\"aurelia-dependency-injection\""
           }
         },
@@ -1253,6 +1253,22 @@
           ]
         }
       ]
+    },
+    {
+      "id": 78,
+      "name": "LogManager",
+      "kind": 32,
+      "kindString": "Variable",
+      "flags": {
+        "isExported": true
+      },
+      "comment": {
+        "shortText": "The log manager."
+      },
+      "type": {
+        "type": "instrinct",
+        "name": "any"
+      }
     }
   ],
   "groups": [
@@ -1262,6 +1278,13 @@
       "children": [
         3,
         23
+      ]
+    },
+    {
+      "title": "Variables",
+      "kind": 32,
+      "children": [
+        78
       ]
     }
   ]
