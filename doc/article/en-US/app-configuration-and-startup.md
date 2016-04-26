@@ -442,6 +442,45 @@ Aureia uses a _View Strategy_ to locate the view that is associated with a parti
 
 In this example, you would simply replace "..." with your own mapping logic and return the resulting view path that was desired.
 
+If you're using Webpack with a HTML templating engine such as Jade, you'd have to configure Aurelia to look for the `.jade` extension instead of `.html`. This is due to Webpack keeping the original sourcemaps and lets loader plugins take care of transpiling the source. Here's the code to configure Aurelias' `ViewLocator` for Jade:
+
+<code-listing heading="Custom Jade View Location">
+  <source-code lang="ES 2015/2016">
+    import {ViewLocator} from 'aurelia-framework';
+
+    export function configure(aurelia) {
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging();
+
+      ViewLocator.prototype.convertOriginToViewUrl = (origin) => {
+        let moduleId = origin.moduleId;
+        let id = (moduleId.endsWith('.js') || moduleId.endsWith('.ts')) ? moduleId.substring(0, moduleId.length - 3) : moduleId;
+        return id + '.jade';
+      };
+
+      aurelia.start().then(a => a.setRoot());
+    }
+  </source-code>
+  <source-code lang="TypeScript">
+    import {ViewLocator, Aurelia, Origin} from 'aurelia-framework';
+
+    export function configure(aurelia: Aurelia): void {
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging();
+
+      ViewLocator.prototype.convertOriginToViewUrl = (origin: Origin): string => {
+        let moduleId = origin.moduleId;
+        let id = (moduleId.endsWith('.js') || moduleId.endsWith('.ts')) ? moduleId.substring(0, moduleId.length - 3) : moduleId;
+        return id + '.jade';
+      };
+
+      aurelia.start().then(a => a.setRoot());
+    }
+  </source-code>
+</code-listing>
+
 ### Configuring the Fallback View Location Strategy
 
 In addition to customizing the mapping logic of the `ConventionalViewStrategy` you can also replace the entire fallback view strategy. To do this, replace the `createFallbackViewStrategy` of the `ViewLocator` with your own implementation. Here's some sample code for that:
