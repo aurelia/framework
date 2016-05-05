@@ -1692,6 +1692,81 @@ SVG (scalable vector graphic) tags can support Aurelia's custom element `<templa
   </source-code>
 </code-listing>
 
+
+### Observable decorator
+
+Aurelia exposes a decorator named observable to allow watching for changes to a property and reacting to them.  By convention it will look for a matching method name `${name}Changed` -
+
+<code-listing heading="Correct observable usage">
+  <source-code lang="ES 2016">
+    import {observable} from 'aurelia-framework';
+
+    export class MyCustomViewModel {
+      @observable name = 'Hello world';
+      nameChanged(newValue, oldValue) {
+        // react to change
+      }
+    }
+  </source-code>
+  <source-code lang="ES 2015">
+    import {containerless} from 'aurelia-framework';
+
+    export let MyCustomViewModel = decorators(
+      observable('name')
+    ).on(class {
+      nameChanged(newValue, oldValue) {
+        // react to change
+      }
+    });
+  </source-code>
+  <source-code lang="TypeScript">
+    import {observable} from 'aurelia-framework';
+
+    export class MyCustomViewModel {
+      @observable name = 'Hello world';
+      nameChanged(newValue, oldValue) {
+        // react to change
+      }
+    }
+  </source-code>
+</code-listing>
+
+The developer can also specify a different method name to use -
+
+<code-listing heading="Correct observable usage with configured change handler">
+  <source-code lang="ES 2016">
+    import {observable} from 'aurelia-framework';
+
+    export class MyCustomViewModel {
+      @observable({changeHandler: 'nameChanged'}) name = 'Hello world';
+      nameChanged(newValue, oldValue) {
+        // react to change
+      }
+    }
+  </source-code>
+  <source-code lang="ES 2015">
+    import {containerless} from 'aurelia-framework';
+
+    export let MyCustomViewModel = decorators(
+      observable({name:'name', changeHandler: 'nameChanged'})
+    ).on(class {
+      nameChanged(newValue, oldValue) {
+        // react to change
+      }
+    });
+  </source-code>
+  <source-code lang="TypeScript">
+    import {observable} from 'aurelia-framework';
+
+    export class MyCustomViewModel {
+      @observable({changeHandler: 'nameChanged'}) name = 'Hello world';
+      nameChanged(newValue, oldValue) {
+        // react to change
+      }
+    }
+  </source-code>
+</code-listing>
+
 ## [The Event Aggregator](aurelia-doc://section/10/version/1.0.0)
 
 <code-listing heading="Publishing on a Channel">
