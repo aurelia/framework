@@ -291,7 +291,7 @@ Similar to features, you can install 3rd party plugins. The main difference is t
 
 To use a plugin, you first install the package. For example `jspm install my-plugin` would use jspm to install the `my-plugin` package. Once the package is installed, you must configure it in your application. Here's some code that shows how that works.
 
-<code-listing heading="Using a Feature">
+<code-listing heading="Using a Plugin">
   <source-code lang="ES 2015/2016">
     export function configure(aurelia) {
       aurelia.use
