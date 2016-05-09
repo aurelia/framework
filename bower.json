@@ -8,6 +8,8 @@
     "spa"
   ],
   "homepage": "http://aurelia.io",
+  "main": "dist/commonjs/aurelia-framework.js",
+  "moduleType": "node",
   "license": "MIT",
   "authors": [
     "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)"
