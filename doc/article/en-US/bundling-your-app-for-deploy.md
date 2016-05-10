@@ -127,30 +127,33 @@ We can create just a single bundle, if we want, that combines both application c
 
 In a JSPM v0.17 style app, we have two separate config files: `jspm.browser.js` and `jspm.config.js`. In such case the `configPath` in the bundle config should look like: `configPath: ['./jspm.browser.js', './jspm.config.js']`. We also have to add another `injectionConfigPath` to indicate which config file should host the bundle and depCache injection. Here is a typical bundle configuration for a `JSPM v0.17` app.
 
-```javascript
-var config = {
-  force: true,
-  baseURL: '.',             // baseURL of the application
-  configPath: [             // SystemJS/JSPM configuration files
-    './jspm.browser.js', 
-    './jspm.config.js'
-  ],        
-  injectionConfigPath: './jspm.config.js'  // Configuration file path where bundle and depCache meta will be injected. 
-  bundles: {
-    "dist/app-build": {     // bundle name/path. Must be within `baseURL`. Output path will look like: `baseURL/dist/app-build.js`.
-      includes: [
-        '[*.js]',
-        '*.html!text',
-        '*.css!text',        
-      ],
-      options: {
-        inject: true,
-        minify: true
+<code-listing heading="bundle.js">
+  <source-code lang="JavaScript">
+
+    var config = {
+      force: true,
+      baseURL: '.',             // baseURL of the application
+      configPath: [             // SystemJS/JSPM configuration files
+        './jspm.browser.js', 
+        './jspm.config.js'
+      ],        
+      injectionConfigPath: './jspm.config.js'  // Configuration file path where bundle and depCache meta will be injected. 
+      bundles: {
+        "dist/app-build": {     // bundle name/path. Must be within `baseURL`. Output path will look like: `baseURL/dist/app-build.js`.
+          includes: [
+            '[*.js]',
+            '*.html!text',
+            '*.css!text',        
+          ],
+          options: {
+            inject: true,
+            minify: true
+          }
+        }
       }
     }
-  }
-}
-```
+    </source-code>
+  </code-listing>
 
 ## [Duplicate Modules in Multiple Bundles](aurelia-doc://section/5/version/1.0.0)
 
