@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "1.0.0-beta.1.2.0",
+  "version": "1.0.0-beta.1.2.2",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
@@ -8,6 +8,8 @@
     "spa"
   ],
   "homepage": "http://aurelia.io",
+  "main": "dist/commonjs/aurelia-framework.js",
+  "moduleType": "node",
   "license": "MIT",
   "authors": [
     "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)"

@@ -1,3 +1,16 @@
+### 1.0.0-beta.1.2.2 (2016-04-13)
+
+
+### 1.0.0-beta.1.2.1 (2016-03-29)
+
+
+#### Bug Fixes
+
+* **feature:** use proper parameter to check extension ([c179a3e9](http://github.com/aurelia/framework/commit/c179a3e97565a55a059d86ebb73dcee18732ede1))
+* **framework-configuration:** getExt return invalid extension when relative path is supplied ([335f8559](http://github.com/aurelia/framework/commit/335f8559eafaf5df1884489d1e29850669fb2204))
+* **global resource:** load resources other than .ts or .js ([b57f290a](http://github.com/aurelia/framework/commit/b57f290ab97d15cc9e0eedd18ec64af97c004e70))
+
+
 ### 1.0.0-beta.1.2.0 (2016-03-22)
 
 

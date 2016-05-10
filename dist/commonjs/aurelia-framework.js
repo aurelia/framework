@@ -246,6 +246,7 @@ var Aurelia = exports.Aurelia = function () {
 }();
 
 var logger = TheLogManager.getLogger('aurelia');
+var extPattern = /\.[^/.]+$/;
 
 function runTasks(config, tasks) {
   var current = void 0;
@@ -307,12 +308,42 @@ function loadResources(aurelia, resourcesToLoad, appResources) {
   });
 
   function _normalize(load) {
-    return aurelia.loader.normalize(load.moduleId, load.relativeTo).then(function (normalized) {
+    var moduleId = load.moduleId;
+    var ext = getExt(moduleId);
+
+    if (isOtherResource(moduleId)) {
+      moduleId = removeExt(moduleId);
+    }
+
+    return aurelia.loader.normalize(moduleId, load.relativeTo).then(function (normalized) {
       return {
         name: load.moduleId,
-        importId: normalized
+        importId: isOtherResource(load.moduleId) ? addOriginalExt(normalized, ext) : normalized
       };
     });
+  }
+
+  function isOtherResource(name) {
+    var ext = getExt(name);
+    if (!ext) return false;
+    if (ext === '') return false;
+    if (ext === '.js' || ext === '.ts') return false;
+    return true;
+  }
+
+  function removeExt(name) {
+    return name.replace(extPattern, '');
+  }
+
+  function addOriginalExt(normalized, ext) {
+    return removeExt(normalized) + '.' + ext;
+  }
+}
+
+function getExt(name) {
+  var match = name.match(extPattern);
+  if (match && match.length > 0) {
+    return match[0].split('.')[1];
   }
 }
 
@@ -373,15 +404,11 @@ var FrameworkConfiguration = function () {
   };
 
   FrameworkConfiguration.prototype.feature = function feature(plugin, config) {
-    if (hasExt(plugin)) {
+    if (getExt(plugin)) {
       return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
     }
 
     return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: [plugin, ''], config: config || {} });
-
-    function hasExt(name) {
-      return plugin.split('.').length > 1;
-    }
   };
 
   FrameworkConfiguration.prototype.globalResources = function globalResources(resources) {
