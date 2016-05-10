@@ -5,7 +5,7 @@
   "description": "Before deploying your app to production, you'll want to bundle the assets for efficient use of the network.",
   "engines" : { "aurelia-doc" : "^1.0.0" },
   "author": {
-  	"name": "Ahmed Shuhel",
+  	"name": "Shuhel Ahmed",
   	"url": "https://github.com/ahmedshuhel"
   },
   "contributors": [],
@@ -47,6 +47,7 @@ Now, let's create a `bundle.js` file in `build/tasks/bundle.js` as follows:
 
 <code-listing heading="bundle.js">
   <source-code lang="JavaScript">
+
     var gulp = require('gulp');
     var bundle = require('aurelia-bundler').bundle;
 
@@ -94,6 +95,7 @@ Now, let's create a `bundle.js` file in `build/tasks/bundle.js` as follows:
   </source-code>
 </code-listing>
 
+
 > Info
 > The bundle function returns a Promise for proper integration into async task engines like Gulp.
 
@@ -120,6 +122,35 @@ Just 9 requests tells the story. We have also managed to minimize the size from 
 We can create as many bundles as we want. Here we have created two: one for our application code and another for Aurelia and third-party libraries.
 
 We can create just a single bundle, if we want, that combines both application code and third-party libraries. The number of bundles we would like to have mostly depends on our application structure and the usage patterns of our app. For example, if our app was built in a modular fashion, such that it is a collection of child-app/sections, then a `common` bundle for third-party libraries and a `bundle per section` makes much more sense and performs better than a huge single bundle that needs to be loaded up front.
+
+## Bundling JSPM v0.17 style app
+
+In a JSPM v0.17 style app, we have two separate config files: `jspm.browser.js` and `jspm.config.js`. In such case the `configPath` in the bundle config should look like: `configPath: ['./jspm.browser.js', './jspm.config.js']`. We also have to add another `injectionConfigPath` to indicate which config file should host the bundle and depCache injection. Here is a typical bundle configuration for a `JSPM v0.17` app.
+
+```javascript
+var config = {
+  force: true,
+  baseURL: '.',             // baseURL of the application
+  configPath: [             // SystemJS/JSPM configuration files
+    './jspm.browser.js', 
+    './jspm.config.js'
+  ],        
+  injectionConfigPath: './jspm.config.js'  // Configuration file path where bundle and depCache meta will be injected. 
+  bundles: {
+    "dist/app-build": {     // bundle name/path. Must be within `baseURL`. Output path will look like: `baseURL/dist/app-build.js`.
+      includes: [
+        '[*.js]',
+        '*.html!text',
+        '*.css!text',        
+      ],
+      options: {
+        inject: true,
+        minify: true
+      }
+    }
+  }
+}
+```
 
 ## [Duplicate Modules in Multiple Bundles](aurelia-doc://section/5/version/1.0.0)
 
@@ -291,6 +322,7 @@ With this little change Aurelia Loader will now use `HTML Imports` to load all t
 
 <code-listing heading="HTML Import Config">
   <source-code lang="JavaScript">
+
     "dist/view-bundle": {
       htmlimports: true,
       includes: 'dist/*.html',
@@ -308,6 +340,7 @@ We will also change the first bundle a little bit to exclude all the `html` and 
 
 <code-listing heading="Full HTML Import Bundle Config">
   <source-code lang="JavaScript">
+
     var gulp = require('gulp');
     var bundle = require('aurelia-bundler').bundle;
 
