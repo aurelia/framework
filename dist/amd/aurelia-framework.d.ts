@@ -28,6 +28,12 @@ declare module 'aurelia-framework' {
   export class Aurelia {
 
     /**
+       * The DOM Element that Aurelia will attach to.
+       */
+    host: Element;
+
+    /**
+      /**
        * The loader used by the application.
        */
     loader: Loader;
@@ -224,6 +230,7 @@ declare module 'aurelia-framework' {
   export * from 'aurelia-task-queue';
   export * from 'aurelia-path';
   export * from 'aurelia-pal';
+
   /**
    * The log manager.
    */
