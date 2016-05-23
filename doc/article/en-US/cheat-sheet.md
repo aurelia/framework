@@ -332,6 +332,40 @@ Components have a well-defined lifecycle:
   </source-code>
 </code-listing>
 
+> Info: Invalid Table structure when dynamically creating tables
+> When the browser loads in the template it very helpfully validates the structure of the HTML, notices that you have an invalid tag inside your table definition, and very unhelpfully removes it for you before Aurelia even gets a look-in
+
+Use of the `as-element` attribute ensures we have a valid HTML table structure at load time, yet we tell Aurelia to treat its contents as though it were a different tag.
+
+<code-listing heading="Compose an existing object instance with a view.">
+  <source-code lang="HTML">
+    <template>
+      <table>
+        <tr repeat.for="r of ['A','B','A','B']" as-element="compose" view='./template_${r}.html'>
+      </table>
+    <template>
+  </source-code>
+</code-listing>
+
+For the above example we can then programmatically choose the embedded template based on an element of our data:
+
+<code-listing heading="template_A.html">
+  <source-code lang="HTML">
+    <template>
+      <td>I'm an A Row</td><td>Col 2A</td><td>Col 3A</td>
+    </template>
+  </source-code>
+</code-listing>
+<code-listing heading="template_B.html">
+  <source-code lang="HTML">
+    <template>
+      <td>I'm an B Row</td><td>Col 2B</td><td>Col 3B</td>
+    </template>
+  </source-code>
+</code-listing>
+
+Note that when a `containerless` attribute is used, the container is stripped *after* the browser has loaded the DOM elements, and as such this method cannot be used to transform non-HTML compliant structures into compliant ones!
+
 <code-listing heading="Illegal Table Code">
   <source-code lang="HTML">
     <template>
