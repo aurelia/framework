@@ -1709,7 +1709,7 @@ Aurelia exposes a decorator named observable to allow watching for changes to a 
     }
   </source-code>
   <source-code lang="ES 2015">
-    import {containerless} from 'aurelia-framework';
+    import {decorators, observable} from 'aurelia-framework';
 
     export let MyCustomViewModel = decorators(
       observable('name')
@@ -1745,7 +1745,7 @@ The developer can also specify a different method name to use -
     }
   </source-code>
   <source-code lang="ES 2015">
-    import {containerless} from 'aurelia-framework';
+    import {decorators, observable} from 'aurelia-framework';
 
     export let MyCustomViewModel = decorators(
       observable({name:'name', changeHandler: 'nameChanged'})
