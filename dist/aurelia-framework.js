@@ -22,6 +22,11 @@ function preventActionlessFormSubmit() {
  */
 export class Aurelia {
   /**
+   * The DOM Element that Aurelia will attach to.
+   */
+  host: Element;
+  /**
+  /**
    * The loader used by the application.
    */
   loader: Loader;

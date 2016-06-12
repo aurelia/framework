@@ -169,7 +169,7 @@ The property `specs` takes the path to our spec files. Since Aurelia is built fr
 
 Since we'd like to start tests only when Aurelia is fully loaded, we leverage another plugin method called `loadAndWaitForAureliaPage`.
 
-<code-listing heading="Wiating for Aurelia">
+<code-listing heading="Waiting for Aurelia">
   <source-code lang="ES 2015/ES 2016/TypeScript">
     beforeEach(() => {
       browser.loadAndWaitForAureliaPage('http://localhost:9000');

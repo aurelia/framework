@@ -59,7 +59,7 @@ If you've followed along this far, you now have everything set up to help you le
   </source-code>
 </code-listing>
 
-Yes, that's it. This is the only HTML page in our application. The head of the document is pretty straight forward: just a style sheet link and some metadata. It's the body that's interesting.
+Yes, that's it. This is the only HTML page in our application. The head of the document is pretty straightforward: just a style sheet link and some metadata. It's the body that's interesting.
 
 Let's start with the script tags. First we have _system.js_, our standards-based module loader. It's what loads the Aurelia library as well as your own code. Next we have _config.js_. This contains configuration for the loader. It's generated automatically whenever you install packages with our tools. We've gone ahead and pre-installed everything for you in this tutorial, so you don't need to worry about that yet.
 
@@ -166,7 +166,7 @@ Let's refresh our browser to see the updated app in action. Pretty cool, yes!?
 
 ## [Adding Navigation](aurelia-doc://section/4/version/1.0.0)
 
-A one page app isn't very interesting. We should probably add some more screens and set up a client-side router, don't you think? Let's begin by renaming our _app${context.language.fileExtension}_ and _app.html_ to _welcome${context.language.fileExtension}_ and _welcome.html_ respectively. This will be the first screen of our multi-screen app. Now, lets create a new _app${context.language.fileExtension}_ and _app.html_ which will serve as our "layout",  "master page" or "root component". The view will contain our navigation UI and the content placeholder for the current screen and the view-model will configure a router instance with our routes. We'll start with the view-model so you can see how to set up the router:
+A one-page app isn't very interesting. We should probably add some more screens and set up a client-side router, don't you think? Let's begin by renaming our _app${context.language.fileExtension}_ and _app.html_ to _welcome${context.language.fileExtension}_ and _welcome.html_ respectively. This will be the first screen of our multi-screen app. Now, let's create a new _app${context.language.fileExtension}_ and _app.html_ which will serve as our "layout",  "master page" or "root component". The view will contain our navigation UI and the content placeholder for the current screen and the view-model will configure a router instance with our routes. We'll start with the view-model so you can see how to set up the router:
 
 <code-listing heading="app${context.language.fileExtension}">
   <source-code lang="ES 2015/2016">
@@ -427,7 +427,7 @@ Aurelia's router enforces a lifecycle on view-models whenever routes change. Thi
   </source-code>
 </code-listing>
 
-The view for this screen is pretty straight forward. There's nothing you haven't seen before. Once you've got all this in place, go ahead and run your app again. You should now see two items in the nav bar and be able to switch back and forth between them. Huzzah!
+The view for this screen is pretty straightforward. There's nothing you haven't seen before. Once you've got all this in place, go ahead and run your app again. You should now see two items in the nav bar and be able to switch back and forth between them. Huzzah!
 
 Let's recap. To add a page to your app:
 

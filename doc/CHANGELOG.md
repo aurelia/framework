@@ -1,3 +1,7 @@
+### 1.0.0-beta.1.2.5 (2016-05-17)
+
+* Add d.ts update to include `host` property on the `Aurelia` object.
+
 ### 1.0.0-beta.1.2.4 (2016-05-12)
 
 
