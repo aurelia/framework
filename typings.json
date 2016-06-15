@@ -1,0 +1,6 @@
+{
+  "name": "aurelia-framework",
+  "main": "dist/aurelia-framework.d.ts",
+  "homepage": "http://aurelia.io",
+  "version": "1.0.0-beta.2.0.0"
+}
