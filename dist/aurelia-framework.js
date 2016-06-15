@@ -172,7 +172,7 @@ export class Aurelia {
   }
 }
 
-/*eslint no-unused-vars:0, no-cond-assign:0*/
+/*eslint no-unused-vars:0, no-cond-assign:0, consistent-return: 0*/
 const logger = TheLogManager.getLogger('aurelia');
 const extPattern = /\.[^/.]+$/;
 

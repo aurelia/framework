@@ -20,7 +20,7 @@ var paths = {
   e2eSpecsDist: 'test/e2e/dist/',
   packageName: pkg.name,
   ignore: [],
-  useTypeScriptForDTS: true,
+  useTypeScriptForDTS: false,
   importsToAdd: [],
   sort: false
 };

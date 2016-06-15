@@ -97,11 +97,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
     }
   }
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+
 
   function preventActionlessFormSubmit() {
     _aureliaPal.DOM.addEventListener('submit', function (evt) {
@@ -116,7 +112,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
 
   var Aurelia = exports.Aurelia = function () {
     function Aurelia(loader, container, resources) {
-      _classCallCheck(this, Aurelia);
+
 
       this.loader = loader || new _aureliaPal.PLATFORM.Loader();
       this.container = container || new _aureliaDependencyInjection.Container().makeGlobal();
@@ -351,7 +347,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
     function FrameworkConfiguration(aurelia) {
       var _this4 = this;
 
-      _classCallCheck(this, FrameworkConfiguration);
+
 
       this.aurelia = aurelia;
       this.container = aurelia.container;

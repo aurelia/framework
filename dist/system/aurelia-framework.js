@@ -1,13 +1,11 @@
 'use strict';
 
 System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-templating', 'aurelia-pal', 'aurelia-path', 'aurelia-binding', 'aurelia-metadata', 'aurelia-task-queue'], function (_export, _context) {
+  "use strict";
+
   var TheLogManager, Container, Loader, BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction, ViewEngine, DOM, PLATFORM, join, Aurelia, logger, extPattern, FrameworkConfiguration, LogManager;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+
 
   function preventActionlessFormSubmit() {
     DOM.addEventListener('submit', function (evt) {
@@ -207,7 +205,7 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
     execute: function () {
       _export('Aurelia', Aurelia = function () {
         function Aurelia(loader, container, resources) {
-          _classCallCheck(this, Aurelia);
+
 
           this.loader = loader || new PLATFORM.Loader();
           this.container = container || new Container().makeGlobal();
@@ -339,7 +337,7 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
         function FrameworkConfiguration(aurelia) {
           var _this4 = this;
 
-          _classCallCheck(this, FrameworkConfiguration);
+
 
           this.aurelia = aurelia;
           this.container = aurelia.container;
