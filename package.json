@@ -166,10 +166,6 @@
           "href": "doc/article/en-US/integrating-with-polymer.md"
         },
         {
-          "title": "End-to-End Testing",
-          "href": "doc/article/en-US/end-to-end-testing.md"
-        },
-        {
           "title": "Migrating from Angular 1",
           "href": "doc/article/en-US/migrating-from-angular-1.md"
         }
