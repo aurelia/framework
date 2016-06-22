@@ -1,3 +1,8 @@
+<a name="1.0.0-rc.1.0.0"></a>
+# [1.0.0-rc.1.0.0](https://github.com/aurelia/framework/compare/1.0.0-beta.2.0.1...v1.0.0-rc.1.0.0) (2016-06-22)
+
+
+
 ### 1.0.0-beta.1.2.5 (2016-05-17)
 
 * Add d.ts update to include `host` property on the `Aurelia` object.
