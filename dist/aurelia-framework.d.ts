@@ -81,8 +81,6 @@ export declare class Aurelia {
      * @return Returns a Promise of the current Aurelia instance.
      */
   setRoot(root?: string, applicationHost?: string | Element): Promise<Aurelia>;
-  _configureHost(applicationHost?: any): any;
-  _onAureliaComposed(): any;
 }
 
 /**
@@ -174,7 +172,6 @@ export declare class FrameworkConfiguration {
      * @return Returns the current FrameworkConfiguration instance.
    */
   plugin(plugin: string, config?: any): FrameworkConfiguration;
-  _addNormalizedPlugin(name?: any, config?: any): any;
 
   /**
      * Plugs in the default binding language from aurelia-templating-binding.
