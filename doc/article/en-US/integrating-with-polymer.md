@@ -32,6 +32,15 @@ The first step is obtaining Polymer, which is generally done with the [Bower](ht
   </source-code>
 </code-listing>
 
+Make sure Bower is installed and then use Bower to install the packages for each of the Polymer elements.
+
+<code-listing heading="Bower Package Installation">
+  <source-code lang="Shell">
+    $ npm install -g bower
+    $ bower install
+  </source-code>
+</code-listing>
+
 Aurelia must also be configured to use the HTML Imports template loader and the `aurelia-polymer` plugin, both of which can be installed with JSPM.
 
 <code-listing heading="Plugin Installation">
