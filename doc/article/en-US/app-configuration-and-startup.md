@@ -112,7 +112,7 @@ You can see that this code configures the default data-binding language (.bind, 
   </source-code>
 </code-listing>
 
-Once you've configured the framework, you need to start things up by calling `aurelia.start()`. This API returns a promise. Once it's resolved, the framework is ready, including all plugins, and it is now safe to ineract with the services and begin rendering.
+Once you've configured the framework, you need to start things up by calling `aurelia.start()`. This API returns a promise. Once it's resolved, the framework is ready, including all plugins, and it is now safe to interact with the services and begin rendering.
 
 ## [Rendering the Root Component](aurelia-doc://section/2/version/1.0.0)
 
