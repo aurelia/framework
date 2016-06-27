@@ -231,7 +231,12 @@ Your ```index.html``` will look like this:
 
 ### Replace Durandal Usages
 
-Before we can remove Durandal we must first remove all references in the code.
+Before we can remove Durandal we must first remove all references in the code. You can do this manually by refactoring
+all relevant places in your code or you can use [Durelia](https://github.com/josundt/Durelia) to write Aurelia Syntax
+while still using Durandal under the hood. This makes the first steps easier to switch to the Aurelia ecosystem. At
+the time you add Aurelia to your application you should remove Durandal and Durelia and use the
+```aurelia-knockout``` plugin instead like described below.
+
 
 #### App Startup
 
@@ -247,7 +252,7 @@ export function configure(aurelia) => {
 }
 ```
 
-This initializes Aurelia with its default values and redirects to the root view and viewmodel (called "app" here).
+This initializes Aurelia with its default values and redirects to the root view and view-model (called "app" here).
 This root view was called 'shell' in Durandal by default.
 
 
