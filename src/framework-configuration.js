@@ -327,11 +327,19 @@ export class FrameworkConfiguration {
   }
 
   /**
-   * Sets up the Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().history().router().eventAggregator();`
+   * Sets up a basic Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().eventAggregator();`
+   * @return Returns the current FrameworkConfiguration instance.
+  */
+  basicConfiguration(): FrameworkConfiguration {
+    return this.defaultBindingLanguage().defaultResources().eventAggregator();
+  }
+
+  /**
+   * Sets up the standard Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().eventAggregator().history().router();`
    * @return Returns the current FrameworkConfiguration instance.
   */
   standardConfiguration(): FrameworkConfiguration {
-    return this.defaultBindingLanguage().defaultResources().history().router().eventAggregator();
+    return this.basicConfiguration().history().router();
   }
 
   /**
