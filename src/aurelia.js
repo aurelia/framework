@@ -4,6 +4,7 @@ import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
 import {BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction} from 'aurelia-templating';
 import {DOM, PLATFORM} from 'aurelia-pal';
+import {relativeToFile} from 'aurelia-path';
 import {FrameworkConfiguration} from './framework-configuration';
 
 function preventActionlessFormSubmit() {
@@ -116,7 +117,7 @@ export class Aurelia {
    * @param applicationHost The DOM object that Aurelia will attach to.
    * @return Returns a Promise of the current Aurelia instance.
    */
-  setRoot(root: string = 'app', applicationHost: string | Element = null): Promise<Aurelia> {
+  setRoot(root: string = null, applicationHost: string | Element = null): Promise<Aurelia> {
     let instruction = {};
 
     if (this.root && this.root.viewModel && this.root.viewModel.router) {
@@ -129,6 +130,14 @@ export class Aurelia {
     let engine = this.container.get(TemplatingEngine);
     let transaction = this.container.get(CompositionTransaction);
     delete transaction.initialComposition;
+
+    if (!root) {
+      if (this.configModuleId) {
+        root = relativeToFile('./app', this.configModuleId);
+      } else {
+        root = 'app';
+      }
+    }
 
     instruction.viewModel = root;
     instruction.container = instruction.childContainer = this.container;
