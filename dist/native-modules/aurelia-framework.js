@@ -5,7 +5,7 @@ import { Container } from 'aurelia-dependency-injection';
 import { Loader } from 'aurelia-loader';
 import { BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction, ViewEngine } from 'aurelia-templating';
 import { DOM, PLATFORM } from 'aurelia-pal';
-import { join } from 'aurelia-path';
+import { relativeToFile, join } from 'aurelia-path';
 
 function preventActionlessFormSubmit() {
   DOM.addEventListener('submit', function (evt) {
@@ -20,7 +20,7 @@ function preventActionlessFormSubmit() {
 
 export var Aurelia = function () {
   function Aurelia(loader, container, resources) {
-    
+
 
     this.loader = loader || new PLATFORM.Loader();
     this.container = container || new Container().makeGlobal();
@@ -81,7 +81,7 @@ export var Aurelia = function () {
   Aurelia.prototype.setRoot = function setRoot() {
     var _this3 = this;
 
-    var root = arguments.length <= 0 || arguments[0] === undefined ? 'app' : arguments[0];
+    var root = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
     var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
     var instruction = {};
@@ -96,6 +96,14 @@ export var Aurelia = function () {
     var engine = this.container.get(TemplatingEngine);
     var transaction = this.container.get(CompositionTransaction);
     delete transaction.initialComposition;
+
+    if (!root) {
+      if (this.configModuleId) {
+        root = relativeToFile('./app', this.configModuleId);
+      } else {
+        root = 'app';
+      }
+    }
 
     instruction.viewModel = root;
     instruction.container = instruction.childContainer = this.container;
@@ -255,7 +263,7 @@ var FrameworkConfiguration = function () {
   function FrameworkConfiguration(aurelia) {
     var _this4 = this;
 
-    
+
 
     this.aurelia = aurelia;
     this.container = aurelia.container;
@@ -390,8 +398,12 @@ var FrameworkConfiguration = function () {
     return this._addNormalizedPlugin('aurelia-event-aggregator');
   };
 
+  FrameworkConfiguration.prototype.basicConfiguration = function basicConfiguration() {
+    return this.defaultBindingLanguage().defaultResources().eventAggregator();
+  };
+
   FrameworkConfiguration.prototype.standardConfiguration = function standardConfiguration() {
-    return this.defaultBindingLanguage().defaultResources().history().router().eventAggregator();
+    return this.basicConfiguration().history().router();
   };
 
   FrameworkConfiguration.prototype.developmentLogging = function developmentLogging() {

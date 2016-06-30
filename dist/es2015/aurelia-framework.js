@@ -3,7 +3,7 @@ import { Container } from 'aurelia-dependency-injection';
 import { Loader } from 'aurelia-loader';
 import { BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction, ViewEngine } from 'aurelia-templating';
 import { DOM, PLATFORM } from 'aurelia-pal';
-import { join } from 'aurelia-path';
+import { relativeToFile, join } from 'aurelia-path';
 
 function preventActionlessFormSubmit() {
   DOM.addEventListener('submit', evt => {
@@ -67,7 +67,7 @@ export let Aurelia = class Aurelia {
     });
   }
 
-  setRoot(root = 'app', applicationHost = null) {
+  setRoot(root = null, applicationHost = null) {
     let instruction = {};
 
     if (this.root && this.root.viewModel && this.root.viewModel.router) {
@@ -80,6 +80,14 @@ export let Aurelia = class Aurelia {
     let engine = this.container.get(TemplatingEngine);
     let transaction = this.container.get(CompositionTransaction);
     delete transaction.initialComposition;
+
+    if (!root) {
+      if (this.configModuleId) {
+        root = relativeToFile('./app', this.configModuleId);
+      } else {
+        root = 'app';
+      }
+    }
 
     instruction.viewModel = root;
     instruction.container = instruction.childContainer = this.container;
@@ -354,8 +362,12 @@ export let FrameworkConfiguration = class FrameworkConfiguration {
     return this._addNormalizedPlugin('aurelia-event-aggregator');
   }
 
+  basicConfiguration() {
+    return this.defaultBindingLanguage().defaultResources().eventAggregator();
+  }
+
   standardConfiguration() {
-    return this.defaultBindingLanguage().defaultResources().history().router().eventAggregator();
+    return this.basicConfiguration().history().router();
   }
 
   developmentLogging() {

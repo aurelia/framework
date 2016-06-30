@@ -18,6 +18,7 @@ import {
   PLATFORM
 } from 'aurelia-pal';
 import {
+  relativeToFile,
   join
 } from 'aurelia-path';
 
@@ -204,7 +205,13 @@ export declare class FrameworkConfiguration {
   eventAggregator(): FrameworkConfiguration;
 
   /**
-     * Sets up the Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().history().router().eventAggregator();`
+     * Sets up a basic Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().eventAggregator();`
+     * @return Returns the current FrameworkConfiguration instance.
+    */
+  basicConfiguration(): FrameworkConfiguration;
+
+  /**
+     * Sets up the standard Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().eventAggregator().history().router();`
      * @return Returns the current FrameworkConfiguration instance.
     */
   standardConfiguration(): FrameworkConfiguration;
@@ -229,8 +236,7 @@ export * from 'aurelia-loader';
 export * from 'aurelia-task-queue';
 export * from 'aurelia-path';
 export * from 'aurelia-pal';
-
 /**
-   * The log manager.
-   */
-  export const LogManager: any;
+ * The log manager.
+ */
+export const LogManager: any;

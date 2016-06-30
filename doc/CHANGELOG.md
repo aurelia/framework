@@ -1,3 +1,14 @@
+<a name="1.0.0-rc.1.0.1"></a>
+# [1.0.0-rc.1.0.1](https://github.com/aurelia/framework/compare/1.0.0-rc.1.0.0...v1.0.0-rc.1.0.1) (2016-06-30)
+
+
+### Features
+
+* **aurelia:** make default root load relative to config module if defined ([8c2334e](https://github.com/aurelia/framework/commit/8c2334e))
+* **framework-configuration:** add basicConfiguration helper ([6329fc9](https://github.com/aurelia/framework/commit/6329fc9))
+
+
+
 <a name="1.0.0-rc.1.0.0"></a>
 # [1.0.0-rc.1.0.0](https://github.com/aurelia/framework/compare/1.0.0-beta.2.0.1...v1.0.0-rc.1.0.0) (2016-06-22)
 

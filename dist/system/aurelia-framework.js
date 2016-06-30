@@ -3,7 +3,7 @@
 System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-templating', 'aurelia-pal', 'aurelia-path', 'aurelia-binding', 'aurelia-metadata', 'aurelia-task-queue'], function (_export, _context) {
   "use strict";
 
-  var TheLogManager, Container, Loader, BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction, ViewEngine, DOM, PLATFORM, join, Aurelia, logger, extPattern, FrameworkConfiguration, LogManager;
+  var TheLogManager, Container, Loader, BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction, ViewEngine, DOM, PLATFORM, relativeToFile, join, Aurelia, logger, extPattern, FrameworkConfiguration, LogManager;
 
 
 
@@ -169,6 +169,7 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
 
       _export(_exportObj4);
     }, function (_aureliaPath) {
+      relativeToFile = _aureliaPath.relativeToFile;
       join = _aureliaPath.join;
       var _exportObj5 = {};
 
@@ -266,7 +267,7 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
         Aurelia.prototype.setRoot = function setRoot() {
           var _this3 = this;
 
-          var root = arguments.length <= 0 || arguments[0] === undefined ? 'app' : arguments[0];
+          var root = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
           var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
           var instruction = {};
@@ -281,6 +282,14 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
           var engine = this.container.get(TemplatingEngine);
           var transaction = this.container.get(CompositionTransaction);
           delete transaction.initialComposition;
+
+          if (!root) {
+            if (this.configModuleId) {
+              root = relativeToFile('./app', this.configModuleId);
+            } else {
+              root = 'app';
+            }
+          }
 
           instruction.viewModel = root;
           instruction.container = instruction.childContainer = this.container;
@@ -472,8 +481,12 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
           return this._addNormalizedPlugin('aurelia-event-aggregator');
         };
 
+        FrameworkConfiguration.prototype.basicConfiguration = function basicConfiguration() {
+          return this.defaultBindingLanguage().defaultResources().eventAggregator();
+        };
+
         FrameworkConfiguration.prototype.standardConfiguration = function standardConfiguration() {
-          return this.defaultBindingLanguage().defaultResources().history().router().eventAggregator();
+          return this.basicConfiguration().history().router();
         };
 
         FrameworkConfiguration.prototype.developmentLogging = function developmentLogging() {

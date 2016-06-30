@@ -173,7 +173,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
     Aurelia.prototype.setRoot = function setRoot() {
       var _this3 = this;
 
-      var root = arguments.length <= 0 || arguments[0] === undefined ? 'app' : arguments[0];
+      var root = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
       var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
       var instruction = {};
@@ -188,6 +188,14 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
       var engine = this.container.get(_aureliaTemplating.TemplatingEngine);
       var transaction = this.container.get(_aureliaTemplating.CompositionTransaction);
       delete transaction.initialComposition;
+
+      if (!root) {
+        if (this.configModuleId) {
+          root = (0, _aureliaPath.relativeToFile)('./app', this.configModuleId);
+        } else {
+          root = 'app';
+        }
+      }
 
       instruction.viewModel = root;
       instruction.container = instruction.childContainer = this.container;
@@ -482,8 +490,12 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
       return this._addNormalizedPlugin('aurelia-event-aggregator');
     };
 
+    FrameworkConfiguration.prototype.basicConfiguration = function basicConfiguration() {
+      return this.defaultBindingLanguage().defaultResources().eventAggregator();
+    };
+
     FrameworkConfiguration.prototype.standardConfiguration = function standardConfiguration() {
-      return this.defaultBindingLanguage().defaultResources().history().router().eventAggregator();
+      return this.basicConfiguration().history().router();
     };
 
     FrameworkConfiguration.prototype.developmentLogging = function developmentLogging() {

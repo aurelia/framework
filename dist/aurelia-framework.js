@@ -3,7 +3,7 @@ import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
 import {BindingLanguage,ViewSlot,ViewResources,TemplatingEngine,CompositionTransaction,ViewEngine} from 'aurelia-templating';
 import {DOM,PLATFORM} from 'aurelia-pal';
-import {join} from 'aurelia-path';
+import {relativeToFile,join} from 'aurelia-path';
 
 /*eslint no-unused-vars:0*/
 function preventActionlessFormSubmit() {
@@ -116,7 +116,7 @@ export class Aurelia {
    * @param applicationHost The DOM object that Aurelia will attach to.
    * @return Returns a Promise of the current Aurelia instance.
    */
-  setRoot(root: string = 'app', applicationHost: string | Element = null): Promise<Aurelia> {
+  setRoot(root: string = null, applicationHost: string | Element = null): Promise<Aurelia> {
     let instruction = {};
 
     if (this.root && this.root.viewModel && this.root.viewModel.router) {
@@ -129,6 +129,14 @@ export class Aurelia {
     let engine = this.container.get(TemplatingEngine);
     let transaction = this.container.get(CompositionTransaction);
     delete transaction.initialComposition;
+
+    if (!root) {
+      if (this.configModuleId) {
+        root = relativeToFile('./app', this.configModuleId);
+      } else {
+        root = 'app';
+      }
+    }
 
     instruction.viewModel = root;
     instruction.container = instruction.childContainer = this.container;
@@ -496,11 +504,19 @@ export class FrameworkConfiguration {
   }
 
   /**
-   * Sets up the Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().history().router().eventAggregator();`
+   * Sets up a basic Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().eventAggregator();`
+   * @return Returns the current FrameworkConfiguration instance.
+  */
+  basicConfiguration(): FrameworkConfiguration {
+    return this.defaultBindingLanguage().defaultResources().eventAggregator();
+  }
+
+  /**
+   * Sets up the standard Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().eventAggregator().history().router();`
    * @return Returns the current FrameworkConfiguration instance.
   */
   standardConfiguration(): FrameworkConfiguration {
-    return this.defaultBindingLanguage().defaultResources().history().router().eventAggregator();
+    return this.basicConfiguration().history().router();
   }
 
   /**
