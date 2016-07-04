@@ -332,8 +332,8 @@ Components have a well-defined lifecycle:
   </source-code>
 </code-listing>
 
-> Info: Invalid Table structure when dynamically creating tables
-> When the browser loads in the template it very helpfully validates the structure of the HTML, notices that you have an invalid tag inside your table definition, and very unhelpfully removes it for you before Aurelia even gets a look-in
+> Info: Invalid Table Structure When Dynamically Creating Tables
+> When the browser loads in the template it very helpfully validates the structure of the HTML, notices that you have an invalid tag inside your table definition, and very unhelpfully removes it for you before Aurelia even has a chance to examine your template.
 
 Use of the `as-element` attribute ensures we have a valid HTML table structure at load time, yet we tell Aurelia to treat its contents as though it were a different tag.
 
