@@ -145,7 +145,7 @@ This causes the `my-root${context.language.fileExtension}`/`my-root.html` to be 
 
 ## [Bootstrapping Older Browsers](aurelia-doc://section/3/version/1.0.0)
 
-Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need to add an additional polyfill for MutationObservers. This can be achieved by a jspm install of `github:webcomponents/webcomponentsjs`. Then change your `index.html` startup code as follows:
+Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need the [requestAnimationFrame Polyfill](https://www.npmjs.com/package/raf) and the [MutationObserver polyfill](https://github.com/webcomponents/webcomponentsjs/tree/master/src). Once you have installed these, change your `index.html` startup code as follows:
 
 <code-listing heading="Polyfill Configuration">
   <source-code lang="HTML">
@@ -158,7 +158,10 @@ Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Fi
         <script src="jspm_packages/system.js"></script>
         <script src="config.js"></script>
         <script>
-          SystemJS.import('aurelia-polyfills').then(function() {
+          SystemJS.import('raf').then(function(raf) {
+            raf.polyfill();
+            return SystemJS.import('aurelia-polyfills');
+          }).then(function() {
             return SystemJS.import('webcomponents/webcomponentsjs/MutationObserver');
           }).then(function() {
             SystemJS.import('aurelia-bootstrapper');
@@ -170,7 +173,7 @@ Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Fi
 </code-listing>
 
 > Warning: Promises in Edge
-> Currently, the Edge browser has a serious performance problem with its Promise implementation. This deficiency can greatly increase startup time of your app. If you are targeting the Edge browser, it is highly recommended that you use the [bluebird promise](http://bluebirdjs.com/docs/getting-started.html) library to replace Edge's native implementation. You can do this by simply referencing the library prior to loading system.js.
+> Currently, the Edge browser has a serious performance problem with its Promise implementation. This deficiency can greatly increase startup time of your app. If you are targeting the Edge browser, it is highly recommended that you use the [bluebird promise](http://bluebirdjs.com/docs/getting-started.html) library to replace Edge's native implementation. You can do this by simply referencing the library prior to loading other libraries.
 
 ## [Manual Bootstrapping](aurelia-doc://section/4/version/1.0.0)
 
