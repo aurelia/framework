@@ -1066,7 +1066,7 @@ The `params` object will have a property for each parameter of the route that wa
 
 ### Configuring PushState
 
-Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) to the head of your html document. If you're using JSPM, you will also need to configure it with a `baseURL` corresponding to your base tag's `href`.
+Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) to the head of your html document. If you're using JSPM, you will also need to configure it with a `baseURL` corresponding to your base tag's `href`. Finally, be sure to set the `config.options.root` to match your base tag's setting.
 
 <code-listing heading="Push State">
   <source-code lang="ES 2015/2016">
@@ -1074,6 +1074,7 @@ Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base)
       configureRouter(config) {
         config.title = 'Aurelia';
         config.options.pushState = true;
+        config.options.root = '/';
         config.map([
           { route: ['welcome'],    name: 'welcome',     moduleId: 'welcome',      nav: true, title:'Welcome' },
           { route: 'flickr',       name: 'flickr',      moduleId: 'flickr',       nav: true, auth: true },
@@ -1090,6 +1091,7 @@ Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base)
       configureRouter(config: RouterConfiguration): void {
         config.title = 'Aurelia';
         config.options.pushState = true;
+        config.options.root = '/';
         config.map([
           { route: ['welcome'],    name: 'welcome',     moduleId: 'welcome',      nav: true, title:'Welcome' },
           { route: 'flickr',       name: 'flickr',      moduleId: 'flickr',       nav: true, auth: true },
