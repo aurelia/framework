@@ -1,12 +1,5 @@
 System.config({
   defaultJSExtensions: true,
-  transpiler: "babel",
-  babelOptions: {
-    "optional": [
-      "runtime",
-      "es7.decorators"
-    ]
-  },
   paths: {
     "github:*": "jspm_packages/github/*",
     "aurelia-framework/*": "dist/*",
