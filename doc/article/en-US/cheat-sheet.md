@@ -1805,6 +1805,8 @@ The developer can also specify a different method name to use -
 
 ## [The Event Aggregator](aurelia-doc://section/10/version/1.0.0)
 
+If you include the `aurelia-event-aggregator` plugin using "basicConfiguration" or "standardConfiguration" then the singleton EventAggregator's API will be also present on the `Aurelia` object. You can also create additional instances of the EventAggregator, if needed, and "merge" them into any object. To do this, import `includeEventsIn` and invoke it with the object you wish to turn into an event aggregator. For example `includeEventsIn(myObject)`. Now my object has `publish` and `subscribe` methods and can be used in the same way as the global event aggregator, detailed below.
+
 <code-listing heading="Publishing on a Channel">
   <source-code lang="ES 2016">
     import {inject} from 'aurelia-framework';
