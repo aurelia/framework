@@ -60,7 +60,7 @@ Now, let's create a `bundle.js` file in `build/tasks/bundle.js` as follows:
           includes: [
             '[*.js]',
             '*.html!text',
-            '*.css!text',        
+            '*.css!text'        
           ],
           options: {
             inject: true,
@@ -137,13 +137,13 @@ In a JSPM v0.17 style app, we have two separate config files: `jspm.browser.js` 
         './jspm.browser.js',
         './jspm.config.js'
       ],        
-      injectionConfigPath: './jspm.config.js'  // Configuration file path where bundle and depCache meta will be injected.
+      injectionConfigPath: './jspm.config.js',  // Configuration file path where bundle and depCache meta will be injected.
       bundles: {
         "dist/app-build": {     // bundle name/path. Must be within `baseURL`. Output path will look like: `baseURL/dist/app-build.js`.
           includes: [
             '[*.js]',
             '*.html!text',
-            '*.css!text',        
+            '*.css!text'        
           ],
           options: {
             inject: true,
@@ -183,7 +183,7 @@ Let us now take a closer look at the `config` object. We will skip `force` and `
         includes: [
           '[*.js]',
           '*.html!text',
-          '*.css!text',        
+          '*.css!text'        
         ],
   </source-code>
 </code-listing>
@@ -229,7 +229,7 @@ When the bundler analyzes this file it will find `aurelia-framework` and `aureli
         includes: [
           '*.js',
           '*.html!text',
-          '*.css!text',        
+          '*.css!text'        
         ],
   </source-code>
 </code-listing>
@@ -275,7 +275,7 @@ Here is a typical bundle configuration in all its glory:
 <code-listing heading="Excludes">
   <source-code lang="JavaScript">
     excludes : [
-       'app',
+       'app'
     ]
   </source-code>
 </code-listing>
@@ -332,7 +332,7 @@ With this little change Aurelia Loader will now use `HTML Imports` to load all t
       options: {
         inject: {
           indexFile : 'index.html',
-          destFile : 'dest_index.html',
+          destFile : 'dest_index.html'
         }
       }
     }
