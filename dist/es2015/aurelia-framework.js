@@ -301,8 +301,8 @@ export let FrameworkConfiguration = class FrameworkConfiguration {
       let grandParent = resourcesRelativeTo[1];
       let name = resource;
 
-      if (resource.startsWith('./') && parent !== '') {
-        name = parent + resource.substr(1);
+      if ((resource.startsWith('./') || resource.startsWith('../')) && parent !== '') {
+        name = join(parent, resource);
       }
 
       this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };

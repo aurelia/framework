@@ -20,7 +20,7 @@ function preventActionlessFormSubmit() {
 
 export var Aurelia = function () {
   function Aurelia(loader, container, resources) {
-
+    
 
     this.loader = loader || new PLATFORM.Loader();
     this.container = container || new Container().makeGlobal();
@@ -263,7 +263,7 @@ var FrameworkConfiguration = function () {
   function FrameworkConfiguration(aurelia) {
     var _this4 = this;
 
-
+    
 
     this.aurelia = aurelia;
     this.container = aurelia.container;
@@ -335,8 +335,8 @@ var FrameworkConfiguration = function () {
       var grandParent = resourcesRelativeTo[1];
       var name = resource;
 
-      if (resource.startsWith('./') && parent !== '') {
-        name = parent + resource.substr(1);
+      if ((resource.startsWith('./') || resource.startsWith('../')) && parent !== '') {
+        name = join(parent, resource);
       }
 
       this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };

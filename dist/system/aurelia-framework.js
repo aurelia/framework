@@ -418,8 +418,8 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
             var grandParent = resourcesRelativeTo[1];
             var name = resource;
 
-            if (resource.startsWith('./') && parent !== '') {
-              name = parent + resource.substr(1);
+            if ((resource.startsWith('./') || resource.startsWith('../')) && parent !== '') {
+              name = join(parent, resource);
             }
 
             this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };

@@ -427,8 +427,8 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
         var grandParent = resourcesRelativeTo[1];
         var name = resource;
 
-        if (resource.startsWith('./') && parent !== '') {
-          name = parent + resource.substr(1);
+        if ((resource.startsWith('./') || resource.startsWith('../')) && parent !== '') {
+          name = (0, _aureliaPath.join)(parent, resource);
         }
 
         this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
