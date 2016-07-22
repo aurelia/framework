@@ -1,116 +1,14 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.LogManager = exports.FrameworkConfiguration = exports.Aurelia = undefined;
-
-var _aureliaDependencyInjection = require('aurelia-dependency-injection');
-
-Object.keys(_aureliaDependencyInjection).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _aureliaDependencyInjection[key];
-    }
-  });
-});
-
-var _aureliaBinding = require('aurelia-binding');
-
-Object.keys(_aureliaBinding).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _aureliaBinding[key];
-    }
-  });
-});
-
-var _aureliaMetadata = require('aurelia-metadata');
-
-Object.keys(_aureliaMetadata).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _aureliaMetadata[key];
-    }
-  });
-});
-
-var _aureliaTemplating = require('aurelia-templating');
-
-Object.keys(_aureliaTemplating).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _aureliaTemplating[key];
-    }
-  });
-});
-
-var _aureliaLoader = require('aurelia-loader');
-
-Object.keys(_aureliaLoader).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _aureliaLoader[key];
-    }
-  });
-});
-
-var _aureliaTaskQueue = require('aurelia-task-queue');
-
-Object.keys(_aureliaTaskQueue).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _aureliaTaskQueue[key];
-    }
-  });
-});
-
-var _aureliaPath = require('aurelia-path');
-
-Object.keys(_aureliaPath).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _aureliaPath[key];
-    }
-  });
-});
-
-var _aureliaPal = require('aurelia-pal');
-
-Object.keys(_aureliaPal).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _aureliaPal[key];
-    }
-  });
-});
-
-var _aureliaLogging = require('aurelia-logging');
-
-var TheLogManager = _interopRequireWildcard(_aureliaLogging);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 
+import * as TheLogManager from 'aurelia-logging';
+import { Container } from 'aurelia-dependency-injection';
+import { Loader } from 'aurelia-loader';
+import { BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction, ViewEngine } from 'aurelia-templating';
+import { DOM, PLATFORM } from 'aurelia-pal';
+import { relativeToFile, join } from 'aurelia-path';
 
 function preventActionlessFormSubmit() {
-  _aureliaPal.DOM.addEventListener('submit', function (evt) {
+  DOM.addEventListener('submit', function (evt) {
     var target = evt.target;
     var action = target.action;
 
@@ -120,21 +18,21 @@ function preventActionlessFormSubmit() {
   });
 }
 
-var Aurelia = exports.Aurelia = function () {
+export var Aurelia = function () {
   function Aurelia(loader, container, resources) {
+    
 
-
-    this.loader = loader || new _aureliaPal.PLATFORM.Loader();
-    this.container = container || new _aureliaDependencyInjection.Container().makeGlobal();
-    this.resources = resources || new _aureliaTemplating.ViewResources();
+    this.loader = loader || new PLATFORM.Loader();
+    this.container = container || new Container().makeGlobal();
+    this.resources = resources || new ViewResources();
     this.use = new FrameworkConfiguration(this);
     this.logger = TheLogManager.getLogger('aurelia');
     this.hostConfigured = false;
     this.host = null;
 
     this.use.instance(Aurelia, this);
-    this.use.instance(_aureliaLoader.Loader, this.loader);
-    this.use.instance(_aureliaTemplating.ViewResources, this.resources);
+    this.use.instance(Loader, this.loader);
+    this.use.instance(ViewResources, this.resources);
   }
 
   Aurelia.prototype.start = function start() {
@@ -150,15 +48,15 @@ var Aurelia = exports.Aurelia = function () {
     return this.use.apply().then(function () {
       preventActionlessFormSubmit();
 
-      if (!_this.container.hasResolver(_aureliaTemplating.BindingLanguage)) {
+      if (!_this.container.hasResolver(BindingLanguage)) {
         var message = 'You must configure Aurelia with a BindingLanguage implementation.';
         _this.logger.error(message);
         throw new Error(message);
       }
 
       _this.logger.info('Aurelia Started');
-      var evt = _aureliaPal.DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
-      _aureliaPal.DOM.dispatchEvent(evt);
+      var evt = DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
+      DOM.dispatchEvent(evt);
       return _this;
     });
   };
@@ -169,10 +67,10 @@ var Aurelia = exports.Aurelia = function () {
     var bindingContext = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
     var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
-    this._configureHost(applicationHost || _aureliaPal.DOM.querySelectorAll('body')[0]);
+    this._configureHost(applicationHost || DOM.querySelectorAll('body')[0]);
 
     return new Promise(function (resolve) {
-      var engine = _this2.container.get(_aureliaTemplating.TemplatingEngine);
+      var engine = _this2.container.get(TemplatingEngine);
       _this2.root = engine.enhance({ container: _this2.container, element: _this2.host, resources: _this2.resources, bindingContext: bindingContext });
       _this2.root.attached();
       _this2._onAureliaComposed();
@@ -195,13 +93,13 @@ var Aurelia = exports.Aurelia = function () {
 
     this._configureHost(applicationHost);
 
-    var engine = this.container.get(_aureliaTemplating.TemplatingEngine);
-    var transaction = this.container.get(_aureliaTemplating.CompositionTransaction);
+    var engine = this.container.get(TemplatingEngine);
+    var transaction = this.container.get(CompositionTransaction);
     delete transaction.initialComposition;
 
     if (!root) {
       if (this.configModuleId) {
-        root = (0, _aureliaPath.relativeToFile)('./app', this.configModuleId);
+        root = relativeToFile('./app', this.configModuleId);
       } else {
         root = 'app';
       }
@@ -227,7 +125,7 @@ var Aurelia = exports.Aurelia = function () {
     applicationHost = applicationHost || this.host;
 
     if (!applicationHost || typeof applicationHost === 'string') {
-      this.host = _aureliaPal.DOM.getElementById(applicationHost || 'applicationHost');
+      this.host = DOM.getElementById(applicationHost || 'applicationHost');
     } else {
       this.host = applicationHost;
     }
@@ -238,15 +136,15 @@ var Aurelia = exports.Aurelia = function () {
 
     this.hostConfigured = true;
     this.host.aurelia = this;
-    this.hostSlot = new _aureliaTemplating.ViewSlot(this.host, true);
+    this.hostSlot = new ViewSlot(this.host, true);
     this.hostSlot.transformChildNodesIntoView();
-    this.container.registerInstance(_aureliaPal.DOM.boundary, this.host);
+    this.container.registerInstance(DOM.boundary, this.host);
   };
 
   Aurelia.prototype._onAureliaComposed = function _onAureliaComposed() {
-    var evt = _aureliaPal.DOM.createCustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
+    var evt = DOM.createCustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
     setTimeout(function () {
-      return _aureliaPal.DOM.dispatchEvent(evt);
+      return DOM.dispatchEvent(evt);
     }, 1);
   };
 
@@ -299,7 +197,7 @@ function loadPlugin(config, loader, info) {
 }
 
 function loadResources(aurelia, resourcesToLoad, appResources) {
-  var viewEngine = aurelia.container.get(_aureliaTemplating.ViewEngine);
+  var viewEngine = aurelia.container.get(ViewEngine);
 
   return Promise.all(Object.keys(resourcesToLoad).map(function (n) {
     return _normalize(resourcesToLoad[n]);
@@ -365,7 +263,7 @@ var FrameworkConfiguration = function () {
   function FrameworkConfiguration(aurelia) {
     var _this4 = this;
 
-
+    
 
     this.aurelia = aurelia;
     this.container = aurelia.container;
@@ -438,7 +336,7 @@ var FrameworkConfiguration = function () {
       var name = resource;
 
       if ((resource.startsWith('./') || resource.startsWith('../')) && parent !== '') {
-        name = (0, _aureliaPath.join)(parent, resource);
+        name = join(parent, resource);
       }
 
       this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
@@ -553,5 +451,16 @@ var FrameworkConfiguration = function () {
   return FrameworkConfiguration;
 }();
 
-exports.FrameworkConfiguration = FrameworkConfiguration;
-var LogManager = exports.LogManager = TheLogManager;
+export { FrameworkConfiguration };
+
+
+export * from 'aurelia-dependency-injection';
+export * from 'aurelia-binding';
+export * from 'aurelia-metadata';
+export * from 'aurelia-templating';
+export * from 'aurelia-loader';
+export * from 'aurelia-task-queue';
+export * from 'aurelia-path';
+export * from 'aurelia-pal';
+
+export var LogManager = TheLogManager;

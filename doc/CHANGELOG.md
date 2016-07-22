@@ -1,3 +1,72 @@
+<a name="1.0.0-rc.1.0.3"></a>
+# [1.0.0-rc.1.0.3](https://github.com/aurelia/framework/compare/1.0.0-rc.1.0.2...v1.0.0-rc.1.0.3) (2016-07-21)
+
+* documentation update
+
+<a name="1.0.0-rc.1.0.2"></a>
+# [1.0.0-rc.1.0.2](https://github.com/aurelia/framework/compare/1.0.0-rc.1.0.1...v1.0.0-rc.1.0.2) (2016-07-12)
+
+
+### Bug Fixes
+
+* **framework-configuration:** bug in path joining for resources ([b462a79](https://github.com/aurelia/framework/commit/b462a79)), closes [#434](https://github.com/aurelia/framework/issues/434)
+
+
+
+<a name="1.0.0-rc.1.0.1"></a>
+# [1.0.0-rc.1.0.1](https://github.com/aurelia/framework/compare/1.0.0-rc.1.0.0...v1.0.0-rc.1.0.1) (2016-06-30)
+
+
+### Features
+
+* **aurelia:** make default root load relative to config module if defined ([8c2334e](https://github.com/aurelia/framework/commit/8c2334e))
+* **framework-configuration:** add basicConfiguration helper ([6329fc9](https://github.com/aurelia/framework/commit/6329fc9))
+
+
+
+<a name="1.0.0-rc.1.0.0"></a>
+# [1.0.0-rc.1.0.0](https://github.com/aurelia/framework/compare/1.0.0-beta.2.0.1...v1.0.0-rc.1.0.0) (2016-06-22)
+
+
+
+### 1.0.0-beta.1.2.5 (2016-05-17)
+
+* Add d.ts update to include `host` property on the `Aurelia` object.
+
+### 1.0.0-beta.1.2.4 (2016-05-12)
+
+
+### 1.0.0-beta.1.2.3 (2016-05-10)
+
+
+### 1.0.0-beta.1.2.2 (2016-04-13)
+
+
+### 1.0.0-beta.1.2.1 (2016-03-29)
+
+
+#### Bug Fixes
+
+* **feature:** use proper parameter to check extension ([c179a3e9](http://github.com/aurelia/framework/commit/c179a3e97565a55a059d86ebb73dcee18732ede1))
+* **framework-configuration:** getExt return invalid extension when relative path is supplied ([335f8559](http://github.com/aurelia/framework/commit/335f8559eafaf5df1884489d1e29850669fb2204))
+* **global resource:** load resources other than .ts or .js ([b57f290a](http://github.com/aurelia/framework/commit/b57f290ab97d15cc9e0eedd18ec64af97c004e70))
+
+
+### 1.0.0-beta.1.2.0 (2016-03-22)
+
+
+#### Bug Fixes
+
+* feature configuration ([8d5eaa17](http://github.com/aurelia/framework/commit/8d5eaa17ef0909436b4a00073087653426981005))
+* **feature:** check extension. ([4bfd6c47](http://github.com/aurelia/framework/commit/4bfd6c47a6bd0b0595e037abe617d4a94b2d052f))
+* **test:** fix loadGlobalResource related tests ([8fbd24d5](http://github.com/aurelia/framework/commit/8fbd24d51a3ca605f2bfb175fd1656444900b5bf))
+
+
+#### Features
+
+* **enhance:** use document.body as fallback ([e1cbfcc2](http://github.com/aurelia/framework/commit/e1cbfcc2f4a19741efa1989a8f3fc12f4db5a493))
+
+
 ### 1.0.0-beta.1.1.4 (2016-03-01)
 
 

@@ -20,10 +20,10 @@
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
     <script>
-      System.import('core-js').then(function() {
-        return System.import('polymer/mutationobservers');
+      SystemJS.import('aurelia-polyfills').then(function() {
+        return SystemJS.import('webcomponents/webcomponentsjs/MutationObserver');
       }).then(function() {
-        System.import('aurelia-bootstrapper');
+        SystemJS.import('aurelia-bootstrapper');
       });
     </script>
   </source-code>
@@ -180,7 +180,7 @@ Components have a well-defined lifecycle:
 
 1. `constructor()` - The view-model's constructor is called first.
 2. `created(owningView: View, myView: View)` - If the view-model implements the `created` callback it is invoked next. At this point in time, the view has also been created and both the view-model and the view are connected to their controller. The created callback will receive the instance of the "owningView". This is the view that the component is declared inside of. If the component itself has a view, this will be passed second.
-3. `bind(bindingContext: Object, overrideContext: Object)` - Databinding is then activated on the view and view-model. If the view-model has a `bind` callback, it will be invoked at this time. The "binding context" to which the component is being bound will be passed first. An "override context" will be passed second. The override context contains information used to traverse the parent hierarchy and can also be used to add any contextual properties that the component wants to add.
+3. `bind(bindingContext: Object, overrideContext: Object)` - Databinding is then activated on the view and view-model. If the view-model has a `bind` callback, it will be invoked at this time. The "binding context" to which the component is being bound will be passed first. An "override context" will be passed second. The override context contains information used to traverse the parent hierarchy and can also be used to add any contextual properties that the component wants to add. It should be noted that when the view-model has implemented the `bind` callback, the databinding framework will not invoke the changed handlers for the view-model's bindable properties until the "next" time those properties are updated. If you need to perform specific post-processing on your bindable properties, when implementing the `bind` callback, you should do so manually within the callback itself.
 4. `attached()` - Next, the component is attached to the DOM (in document). If the view-model has an `attached` callback, it will be invoked at this time.
 5. `detached()` - At some point in the future, the component may be removed from the DOM. If/When this happens, and if the view-model has a `detached` callback, this is when it will be invoked.
 6. `unbind()` - After a component is detached, it's usually unbound. If your view-model has the `unbind` callback, it will be invoked during this process.
@@ -331,6 +331,40 @@ Components have a well-defined lifecycle:
     </template>
   </source-code>
 </code-listing>
+
+> Info: Invalid Table Structure When Dynamically Creating Tables
+> When the browser loads in the template it very helpfully validates the structure of the HTML, notices that you have an invalid tag inside your table definition, and very unhelpfully removes it for you before Aurelia even has a chance to examine your template.
+
+Use of the `as-element` attribute ensures we have a valid HTML table structure at load time, yet we tell Aurelia to treat its contents as though it were a different tag.
+
+<code-listing heading="Compose an existing object instance with a view.">
+  <source-code lang="HTML">
+    <template>
+      <table>
+        <tr repeat.for="r of ['A','B','A','B']" as-element="compose" view='./template_${r}.html'>
+      </table>
+    <template>
+  </source-code>
+</code-listing>
+
+For the above example we can then programmatically choose the embedded template based on an element of our data:
+
+<code-listing heading="template_A.html">
+  <source-code lang="HTML">
+    <template>
+      <td>I'm an A Row</td><td>Col 2A</td><td>Col 3A</td>
+    </template>
+  </source-code>
+</code-listing>
+<code-listing heading="template_B.html">
+  <source-code lang="HTML">
+    <template>
+      <td>I'm an B Row</td><td>Col 2B</td><td>Col 3B</td>
+    </template>
+  </source-code>
+</code-listing>
+
+Note that when a `containerless` attribute is used, the container is stripped *after* the browser has loaded the DOM elements, and as such this method cannot be used to transform non-HTML compliant structures into compliant ones!
 
 <code-listing heading="Illegal Table Code">
   <source-code lang="HTML">
@@ -1000,7 +1034,7 @@ The `params` object will have a property for each parameter of the route that wa
     }
   </source-code>
   <source-code lang="TypeScript">
-    import {Redirect, NavigationInstruction, RouterConfiguration} from 'aurelia-router';
+    import {Redirect, NavigationInstruction, RouterConfiguration, Next} from 'aurelia-router';
 
     export class App {
       configureRouter(config: RouterConfiguration): void {
@@ -1016,7 +1050,7 @@ The `params` object will have a property for each parameter of the route that wa
     }
 
     class AuthorizeStep {
-      run(navigationInstruction: NavigationInstruction, next: Function): Promise<any> {
+      run(navigationInstruction: NavigationInstruction, next: Next): Promise<any> {
         if (navigationInstruction.getAllInstructions().some(i => i.config.auth)) {
           var isLoggedIn = /* insert magic here */false;
           if (!isLoggedIn) {
@@ -1032,7 +1066,7 @@ The `params` object will have a property for each parameter of the route that wa
 
 ### Configuring PushState
 
-Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) to the head of your html document. If you're using JSPM, you will also need to configure it with a `baseURL` corresponding to your base tag's `href`.
+Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base) to the head of your html document. If you're using JSPM, you will also need to configure it with a `baseURL` corresponding to your base tag's `href`. Finally, be sure to set the `config.options.root` to match your base tag's setting.
 
 <code-listing heading="Push State">
   <source-code lang="ES 2015/2016">
@@ -1040,6 +1074,7 @@ Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base)
       configureRouter(config) {
         config.title = 'Aurelia';
         config.options.pushState = true;
+        config.options.root = '/';
         config.map([
           { route: ['welcome'],    name: 'welcome',     moduleId: 'welcome',      nav: true, title:'Welcome' },
           { route: 'flickr',       name: 'flickr',      moduleId: 'flickr',       nav: true, auth: true },
@@ -1056,6 +1091,7 @@ Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base)
       configureRouter(config: RouterConfiguration): void {
         config.title = 'Aurelia';
         config.options.pushState = true;
+        config.options.root = '/';
         config.map([
           { route: ['welcome'],    name: 'welcome',     moduleId: 'welcome',      nav: true, title:'Welcome' },
           { route: 'flickr',       name: 'flickr',      moduleId: 'flickr',       nav: true, auth: true },
@@ -1072,10 +1108,10 @@ Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base)
 
 ### Reusing an existing VM
 
-Since the VM's life-cycle is called only once you may have problems recognizing that the user switched the route from `Product A` to `Product B` (see below).  To work around this issue implement the method `determineActivationStrategy` in your VM and return hints for the router about what you'd like to happen.
+Since the VM's navigation life-cycle is called only once you may have problems recognizing that the user switched the route from `Product A` to `Product B` (see below).  To work around this issue implement the method `determineActivationStrategy` in your VM and return hints for the router about what you'd like to happen.
 
 > Info
-> Additionally, you can add an `activationStrategy` property to your route config if the strategy is always the same and you don't want that to be in your view-model code. Available values are `replace` and `invokeLifecycle`.
+> Additionally, you can add an `activationStrategy` property to your route config if the strategy is always the same and you don't want that to be in your view-model code. Available values are `replace` and `invokeLifecycle`. Remember, "lifecycle" refers to the navigation lifecycle.
 
 <code-listing heading="Router VM Activation Control">
   <source-code lang="ES 2015/2016">
@@ -1506,6 +1542,7 @@ Since the VM's life-cycle is called only once you may have problems recognizing 
   </source-code>
 </code-listing>
 
+
 ### Custom Element Without View-Model Declaration
 
 Aurelia will not search for a JavaScript file if you reference a component with an .html extension.
@@ -1527,8 +1564,62 @@ Aurelia will not search for a JavaScript file if you reference a component with 
 <code-listing heading="Use Custom Element Without View-Model">
   <source-code lang="HTML">
     <require from="./js-less-component.html"></require>
-    
+
     <js-less-component name.bind="someProperty"></js-less-component>
+  </source-code>
+</code-listing>
+
+### Custom Element Variable Binding
+
+It's worth noting that when binding variables to custom elements, use camelCase inside the custom element's View-Model, and dash-case on the html element. See the following example:
+
+<code-listing heading="Custom Element View-Model Declaration">
+  <source-code lang="ES 2016">
+    import {bindable} from 'aurelia-framework';
+
+    export class SayHello {
+      @bindable to;
+      @bindable greetingCallback;
+
+      speak(){
+        this.greetingCallback(`Hello ${this.to}!`);
+      }
+    }
+  </source-code>
+  <source-code lang="ES 2015">
+    import {bindable} from 'aurelia-framework';
+
+    export let SayHello = decorators(
+      bindable('to'),
+      bindable('greetingCallback')
+    ).on(class {
+      speak(){
+        this.greetingCallback(`Hello ${this.to}!`);
+      }
+    });
+  </source-code>
+  <source-code lang="TypeScript">
+    import {bindable} from 'aurelia-framework';
+
+    export class SayHello {
+      @bindable to: string;
+      @bindable greetingCallback: Function;
+
+      speak(): void {
+        this.greetingCallback(`Hello ${this.to}!`);
+      }
+    }
+  </source-code>
+</code-listing>
+
+<code-listing heading="Custom Element Use">
+  <source-code lang="HTML">
+    <template>
+      <require from="./say-hello"></require>
+
+      <input type="text" ref="name">
+      <say-hello to.bind="name.value" greeting-callback.call="doSomething($event)"></say-hello>
+    </template>
   </source-code>
 </code-listing>
 
@@ -1637,7 +1728,84 @@ SVG (scalable vector graphic) tags can support Aurelia's custom element `<templa
   </source-code>
 </code-listing>
 
+
+### Observable decorator
+
+Aurelia exposes a decorator named observable to allow watching for changes to a property and reacting to them.  By convention it will look for a matching method name `${name}Changed` -
+
+<code-listing heading="Correct observable usage">
+  <source-code lang="ES 2016">
+    import {observable} from 'aurelia-framework';
+
+    export class MyCustomViewModel {
+      @observable name = 'Hello world';
+      nameChanged(newValue, oldValue) {
+        // react to change
+      }
+    }
+  </source-code>
+  <source-code lang="ES 2015">
+    import {decorators, observable} from 'aurelia-framework';
+
+    export let MyCustomViewModel = decorators(
+      observable('name')
+    ).on(class {
+      nameChanged(newValue, oldValue) {
+        // react to change
+      }
+    });
+  </source-code>
+  <source-code lang="TypeScript">
+    import {observable} from 'aurelia-framework';
+
+    export class MyCustomViewModel {
+      @observable name = 'Hello world';
+      nameChanged(newValue, oldValue) {
+        // react to change
+      }
+    }
+  </source-code>
+</code-listing>
+
+The developer can also specify a different method name to use -
+
+<code-listing heading="Correct observable usage with configured change handler">
+  <source-code lang="ES 2016">
+    import {observable} from 'aurelia-framework';
+
+    export class MyCustomViewModel {
+      @observable({changeHandler: 'nameChanged'}) name = 'Hello world';
+      nameChanged(newValue, oldValue) {
+        // react to change
+      }
+    }
+  </source-code>
+  <source-code lang="ES 2015">
+    import {decorators, observable} from 'aurelia-framework';
+
+    export let MyCustomViewModel = decorators(
+      observable({name:'name', changeHandler: 'nameChanged'})
+    ).on(class {
+      nameChanged(newValue, oldValue) {
+        // react to change
+      }
+    });
+  </source-code>
+  <source-code lang="TypeScript">
+    import {observable} from 'aurelia-framework';
+
+    export class MyCustomViewModel {
+      @observable({changeHandler: 'nameChanged'}) name = 'Hello world';
+      nameChanged(newValue, oldValue) {
+        // react to change
+      }
+    }
+  </source-code>
+</code-listing>
+
 ## [The Event Aggregator](aurelia-doc://section/10/version/1.0.0)
+
+If you include the `aurelia-event-aggregator` plugin using "basicConfiguration" or "standardConfiguration" then the singleton EventAggregator's API will be also present on the `Aurelia` object. You can also create additional instances of the EventAggregator, if needed, and "merge" them into any object. To do this, import `includeEventsIn` and invoke it with the object you wish to turn into an event aggregator. For example `includeEventsIn(myObject)`. Now my object has `publish` and `subscribe` methods and can be used in the same way as the global event aggregator, detailed below.
 
 <code-listing heading="Publishing on a Channel">
   <source-code lang="ES 2016">

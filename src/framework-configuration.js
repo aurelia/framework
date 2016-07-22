@@ -1,10 +1,11 @@
-/*eslint no-unused-vars:0, no-cond-assign:0*/
+/*eslint no-unused-vars:0, no-cond-assign:0, consistent-return: 0*/
 import * as TheLogManager from 'aurelia-logging';
 import {ViewEngine} from 'aurelia-templating';
 import {join} from 'aurelia-path';
 import {Container} from 'aurelia-dependency-injection';
 
 const logger = TheLogManager.getLogger('aurelia');
+const extPattern = /\.[^/.]+$/;
 
 function runTasks(config, tasks) {
   let current;
@@ -23,29 +24,85 @@ function loadPlugin(config, loader, info) {
   logger.debug(`Loading plugin ${info.moduleId}.`);
   config.resourcesRelativeTo = info.resourcesRelativeTo;
 
-  return loader.loadModule(info.moduleId).then(m => {
-    if ('configure' in m) {
-      return Promise.resolve(m.configure(config, info.config || {})).then(() => {
-        config.resourcesRelativeTo = null;
-        logger.debug(`Configured plugin ${info.moduleId}.`);
-      });
-    }
+  let id = info.moduleId; // General plugins installed/configured by the end user.
 
-    config.resourcesRelativeTo = null;
-    logger.debug(`Loaded plugin ${info.moduleId}.`);
-  });
-}
-
-function loadResources(container, resourcesToLoad, appResources) {
-  let viewEngine = container.get(ViewEngine);
-  let importIds = Object.keys(resourcesToLoad);
-  let names = new Array(importIds.length);
-
-  for (let i = 0, ii = importIds.length; i < ii; ++i) {
-    names[i] = resourcesToLoad[importIds[i]];
+  if (info.resourcesRelativeTo.length > 1 ) { // In case of bootstrapper installed plugins like `aurelia-templating-resources` or `aurelia-history-browser`.
+    return loader.normalize(info.moduleId, info.resourcesRelativeTo[1])
+      .then(normalizedId => _loadPlugin(normalizedId));
   }
 
-  return viewEngine.importViewResources(importIds, names, appResources);
+  return _loadPlugin(id);
+
+  function _loadPlugin(moduleId) {
+    return loader.loadModule(moduleId).then(m => {
+      if ('configure' in m) {
+        return Promise.resolve(m.configure(config, info.config || {})).then(() => {
+          config.resourcesRelativeTo = null;
+          logger.debug(`Configured plugin ${info.moduleId}.`);
+        });
+      }
+
+      config.resourcesRelativeTo = null;
+      logger.debug(`Loaded plugin ${info.moduleId}.`);
+    });
+  }
+}
+
+function loadResources(aurelia, resourcesToLoad, appResources) {
+  let viewEngine = aurelia.container.get(ViewEngine);
+
+  return Promise.all(Object.keys(resourcesToLoad).map(n => _normalize(resourcesToLoad[n])))
+    .then(loads => {
+      let names = [];
+      let importIds = [];
+
+      loads.forEach(l => {
+        names.push(undefined);
+        importIds.push(l.importId);
+      });
+
+      return viewEngine.importViewResources(importIds, names, appResources);
+    });
+
+  function _normalize(load) {
+    let moduleId = load.moduleId;
+    let ext = getExt(moduleId);
+
+    if (isOtherResource(moduleId)) {
+      moduleId = removeExt(moduleId);
+    }
+
+    return aurelia.loader.normalize(moduleId, load.relativeTo)
+      .then(normalized => {
+        return {
+          name: load.moduleId,
+          importId: isOtherResource(load.moduleId) ? addOriginalExt(normalized, ext) : normalized
+        };
+      });
+  }
+
+  function isOtherResource(name) {
+    let ext = getExt(name);
+    if (!ext) return false;
+    if (ext === '') return false;
+    if (ext === '.js' || ext === '.ts') return false;
+    return true;
+  }
+
+  function removeExt(name) {
+    return name.replace(extPattern, '');
+  }
+
+  function addOriginalExt(normalized, ext) {
+    return removeExt(normalized) + '.' + ext;
+  }
+}
+
+function getExt(name) {
+  let match = name.match(extPattern);
+  if (match && match.length > 0) {
+    return (match[0].split('.'))[1];
+  }
 }
 
 function assertProcessed(plugins) {
@@ -81,7 +138,7 @@ export class FrameworkConfiguration {
     this.postTasks = [];
     this.resourcesToLoad = {};
     this.preTask(() => aurelia.loader.normalize('aurelia-bootstrapper').then(name => this.bootstrapperName = name));
-    this.postTask(() => loadResources(aurelia.container, this.resourcesToLoad, aurelia.resources));
+    this.postTask(() => loadResources(aurelia, this.resourcesToLoad, aurelia.resources));
   }
 
   /**
@@ -144,10 +201,13 @@ export class FrameworkConfiguration {
    * @param plugin The folder for the internal plugin to configure (expects an index.js in that folder).
    * @param config The configuration for the specified plugin.
    * @return Returns the current FrameworkConfiguration instance.
-  */
+   */
   feature(plugin: string, config?: any): FrameworkConfiguration {
-    plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
-    return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: plugin, config: config || {} });
+    if (getExt(plugin)) {
+      return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
+    }
+
+    return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: [plugin, ''], config: config || {} });
   }
 
   /**
@@ -161,7 +221,7 @@ export class FrameworkConfiguration {
     let toAdd = Array.isArray(resources) ? resources : arguments;
     let resource;
     let path;
-    let resourcesRelativeTo = this.resourcesRelativeTo || '';
+    let resourcesRelativeTo = this.resourcesRelativeTo || ['', ''];
 
     for (let i = 0, ii = toAdd.length; i < ii; ++i) {
       resource = toAdd[i];
@@ -169,8 +229,15 @@ export class FrameworkConfiguration {
         throw new Error(`Invalid resource path [${resource}]. Resources must be specified as relative module IDs.`);
       }
 
-      path = join(resourcesRelativeTo, resource);
-      this.resourcesToLoad[path] = this.resourcesToLoad[path];
+      let parent = resourcesRelativeTo[0];
+      let grandParent = resourcesRelativeTo[1];
+      let name = resource;
+
+      if ((resource.startsWith('./') || resource.startsWith('../')) && parent !== '') {
+        name = join(parent, resource);
+      }
+
+      this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
     }
 
     return this;
@@ -184,7 +251,7 @@ export class FrameworkConfiguration {
    */
   globalName(resourcePath: string, newName: string): FrameworkConfiguration {
     assertProcessed(this);
-    this.resourcesToLoad[resourcePath] = newName;
+    this.resourcesToLoad[resourcePath] = { moduleId: newName, relativeTo: '' };
     return this;
   }
 
@@ -197,9 +264,8 @@ export class FrameworkConfiguration {
   plugin(plugin: string, config?: any): FrameworkConfiguration {
     assertProcessed(this);
 
-    if (typeof(plugin) === 'string') {
-      plugin = plugin.endsWith('.js') || plugin.endsWith('.ts') ? plugin.substring(0, plugin.length - 3) : plugin;
-      return this.plugin({ moduleId: plugin, resourcesRelativeTo: plugin, config: config || {} });
+    if (typeof (plugin) === 'string') {
+      return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
     }
 
     this.info.push(plugin);
@@ -207,18 +273,14 @@ export class FrameworkConfiguration {
   }
 
   _addNormalizedPlugin(name, config) {
-    let plugin = { moduleId: name, resourcesRelativeTo: name, config: config || {} };
-
+    let plugin = { moduleId: name, resourcesRelativeTo: [name, ''], config: config || {} };
     this.plugin(plugin);
-    this.preTask(() => {
-      return this.aurelia.loader.normalize(name, this.bootstrapperName).then(normalizedName => {
-        normalizedName = normalizedName.endsWith('.js') || normalizedName.endsWith('.ts')
-          ? normalizedName.substring(0, normalizedName.length - 3) : normalizedName;
 
-        plugin.moduleId = normalizedName;
-        plugin.resourcesRelativeTo = normalizedName;
-        this.aurelia.loader.map(name, normalizedName);
-      });
+    this.preTask(() => {
+      let relativeTo = [name, this.bootstrapperName];
+      plugin.moduleId = name;
+      plugin.resourcesRelativeTo = relativeTo;
+      return Promise.resolve();
     });
 
     return this;
@@ -265,11 +327,19 @@ export class FrameworkConfiguration {
   }
 
   /**
-   * Sets up the Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().history().router().eventAggregator();`
+   * Sets up a basic Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().eventAggregator();`
+   * @return Returns the current FrameworkConfiguration instance.
+  */
+  basicConfiguration(): FrameworkConfiguration {
+    return this.defaultBindingLanguage().defaultResources().eventAggregator();
+  }
+
+  /**
+   * Sets up the standard Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().eventAggregator().history().router();`
    * @return Returns the current FrameworkConfiguration instance.
   */
   standardConfiguration(): FrameworkConfiguration {
-    return this.defaultBindingLanguage().defaultResources().history().router().eventAggregator();
+    return this.basicConfiguration().history().router();
   }
 
   /**

@@ -5,7 +5,7 @@
   "description": "Before deploying your app to production, you'll want to bundle the assets for efficient use of the network.",
   "engines" : { "aurelia-doc" : "^1.0.0" },
   "author": {
-  	"name": "Ahmed Shuhel",
+  	"name": "Shuhel Ahmed",
   	"url": "https://github.com/ahmedshuhel"
   },
   "contributors": [],
@@ -47,6 +47,7 @@ Now, let's create a `bundle.js` file in `build/tasks/bundle.js` as follows:
 
 <code-listing heading="bundle.js">
   <source-code lang="JavaScript">
+
     var gulp = require('gulp');
     var bundle = require('aurelia-bundler').bundle;
 
@@ -59,7 +60,7 @@ Now, let's create a `bundle.js` file in `build/tasks/bundle.js` as follows:
           includes: [
             '[*.js]',
             '*.html!text',
-            '*.css!text',        
+            '*.css!text'        
           ],
           options: {
             inject: true,
@@ -94,6 +95,7 @@ Now, let's create a `bundle.js` file in `build/tasks/bundle.js` as follows:
   </source-code>
 </code-listing>
 
+
 > Info
 > The bundle function returns a Promise for proper integration into async task engines like Gulp.
 
@@ -121,7 +123,39 @@ We can create as many bundles as we want. Here we have created two: one for our 
 
 We can create just a single bundle, if we want, that combines both application code and third-party libraries. The number of bundles we would like to have mostly depends on our application structure and the usage patterns of our app. For example, if our app was built in a modular fashion, such that it is a collection of child-app/sections, then a `common` bundle for third-party libraries and a `bundle per section` makes much more sense and performs better than a huge single bundle that needs to be loaded up front.
 
-## [Duplicate Modules in Multiple Bundles](aurelia-doc://section/5/version/1.0.0)
+## [Bundling a JSPM v0.17 App](aurelia-doc://section/5/version/1.0.0)
+
+In a JSPM v0.17 style app, we have two separate config files: `jspm.browser.js` and `jspm.config.js`. In such case the `configPath` in the bundle config should look like: `configPath: ['./jspm.browser.js', './jspm.config.js']`. We also have to add another `injectionConfigPath` to indicate which config file should host the bundle and depCache injection. Here is a typical bundle configuration for a `JSPM v0.17` app.
+
+<code-listing heading="bundle.js">
+  <source-code lang="JavaScript">
+
+    var config = {
+      force: true,
+      baseURL: '.',             // baseURL of the application
+      configPath: [             // SystemJS/JSPM configuration files
+        './jspm.browser.js',
+        './jspm.config.js'
+      ],        
+      injectionConfigPath: './jspm.config.js',  // Configuration file path where bundle and depCache meta will be injected.
+      bundles: {
+        "dist/app-build": {     // bundle name/path. Must be within `baseURL`. Output path will look like: `baseURL/dist/app-build.js`.
+          includes: [
+            '[*.js]',
+            '*.html!text',
+            '*.css!text'        
+          ],
+          options: {
+            inject: true,
+            minify: true
+          }
+        }
+      }
+    }
+  </source-code>
+</code-listing>
+
+## [Duplicate Modules in Multiple Bundles](aurelia-doc://section/6/version/1.0.0)
 
 Creating multiple bundles requires us to be extra careful because multiple bundles may contain duplicate modules. Before explaining that, we need to understand how bundling works behind the scenes a bit. Let's consider the example modules `A` and `B` below:
 
@@ -149,7 +183,7 @@ Let us now take a closer look at the `config` object. We will skip `force` and `
         includes: [
           '[*.js]',
           '*.html!text',
-          '*.css!text',        
+          '*.css!text'        
         ],
   </source-code>
 </code-listing>
@@ -195,7 +229,7 @@ When the bundler analyzes this file it will find `aurelia-framework` and `aureli
         includes: [
           '*.js',
           '*.html!text',
-          '*.css!text',        
+          '*.css!text'        
         ],
   </source-code>
 </code-listing>
@@ -206,7 +240,7 @@ Our goal is to create a bundle of our application code only. We have to somehow 
 
 `[*.js]` will exclude the dependencies of each module that the glob pattern `*.js` yields. In the above case it will exclude `aurelia-framework`, `aurelia-fetch-client` and so on.
 
-## [Bundle Configuration](aurelia-doc://section/6/version/1.0.0)
+## [Bundle Configuration](aurelia-doc://section/7/version/1.0.0)
 
 Here is a typical bundle configuration in all its glory:
 
@@ -241,10 +275,13 @@ Here is a typical bundle configuration in all its glory:
 <code-listing heading="Excludes">
   <source-code lang="JavaScript">
     excludes : [
-       'app',
+       'app'
     ]
   </source-code>
 </code-listing>
+
+> Warning
+> Exclusion of files that are being used in the project but are not part of it (e.g. CDN URLs, URLs relative to the host, etc.) is done automatically. For bundling to work, do not add them to the **excludes** section. It will cause an error.
 
 - **inject**: If set to `true`, this will inject the bundle in `config.js`, so whenever the application needs a file within that bundle, the loader will load the entire bundle the first time. This is how we can achieve lazy bundle loading. For a large app with multiple sub sections, this will help us avoid loading everything upfront.
 - **minify**: As the name suggests, if this is set to `true`, the the source files will be minified as well.
@@ -252,7 +289,7 @@ Here is a typical bundle configuration in all its glory:
 - **force** : If this is set to `true` the task will overwrite any existing file/bundle with the same name. Set it to false if you are not sure about it.
 - **packagePath** : By default it is `'.'`, You can change this if your `package.json` file is somewhere else other than the base of your app. `aurelia-bundler` uses this file to find `config.js`, `baseURL`, the `jspm_packages` folder and other important project configuration.
 
-## [Bundling HTML Imports](aurelia-doc://section/7/version/1.0.0)
+## [Bundling HTML Imports](aurelia-doc://section/8/version/1.0.0)
 
 At this point, if you are thinking: "Well, this is all good but we have already developed an application that uses Polymer and  `HTML Imports` extensively. We want to bundle them as well." As you may already know, we have created a separate plugin [aurelia-html-import-template-loader](https://github.com/aurelia/html-import-template-loader) exclusively for this use case. We have bundling support for that too. This is how we can do it. It's actually a two part process. First let's install the `aurelia-html-import-template-loader` plugin with the command below:
 
@@ -288,13 +325,14 @@ With this little change Aurelia Loader will now use `HTML Imports` to load all t
 
 <code-listing heading="HTML Import Config">
   <source-code lang="JavaScript">
+
     "dist/view-bundle": {
       htmlimports: true,
       includes: 'dist/*.html',
       options: {
         inject: {
           indexFile : 'index.html',
-          destFile : 'dest_index.html',
+          destFile : 'dest_index.html'
         }
       }
     }
@@ -305,6 +343,7 @@ We will also change the first bundle a little bit to exclude all the `html` and 
 
 <code-listing heading="Full HTML Import Bundle Config">
   <source-code lang="JavaScript">
+
     var gulp = require('gulp');
     var bundle = require('aurelia-bundler').bundle;
 
@@ -391,6 +430,6 @@ The above pattern will bundle all the views in `dist` and its child folders exce
   </source-code>
 </code-listing>
 
-## [Conclusion](aurelia-doc://section/8/version/1.0.0)
+## [Conclusion](aurelia-doc://section/9/version/1.0.0)
 
 In this article, you've learned both the why and how of bundling. We've covered the `bundler` library, how to configure it for use with Gulp and demonstrated several different scenarios. To bundle your own app, we recommend that you begin with one of the configurations above and customize it. You may have a small app that makes sense as a single bundle or a larger one that can be broken down into features. Each application is different, but the bundler will help you to create the optimal deployment for your unique scenarios.

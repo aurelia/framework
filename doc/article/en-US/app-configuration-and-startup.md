@@ -112,7 +112,7 @@ You can see that this code configures the default data-binding language (.bind, 
   </source-code>
 </code-listing>
 
-Once you've configured the framework, you need to start things up by calling `aurelia.start()`. This API returns a promise. Once it's resolved, the framework is ready, including all plugins, and it is now safe to ineract with the services and begin rendering.
+Once you've configured the framework, you need to start things up by calling `aurelia.start()`. This API returns a promise. Once it's resolved, the framework is ready, including all plugins, and it is now safe to interact with the services and begin rendering.
 
 ## [Rendering the Root Component](aurelia-doc://section/2/version/1.0.0)
 
@@ -145,7 +145,7 @@ This causes the `my-root${context.language.fileExtension}`/`my-root.html` to be 
 
 ## [Bootstrapping Older Browsers](aurelia-doc://section/3/version/1.0.0)
 
-Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need to add an additional polyfill for MutationObservers. This can be achieved by a jspm install of `github:polymer/mutationobservers`. Then change your `index.html` startup code as follows:
+Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need the [requestAnimationFrame Polyfill](https://www.npmjs.com/package/raf) and the [MutationObserver polyfill](https://github.com/webcomponents/webcomponentsjs/tree/master/src). Once you have installed these, change your `index.html` startup code as follows:
 
 <code-listing heading="Polyfill Configuration">
   <source-code lang="HTML">
@@ -158,8 +158,11 @@ Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Fi
         <script src="jspm_packages/system.js"></script>
         <script src="config.js"></script>
         <script>
-          SystemJS.import('core-js').then(function() {
-            return SystemJS.import('polymer/mutationobservers');
+          SystemJS.import('raf').then(function(raf) {
+            raf.polyfill();
+            return SystemJS.import('aurelia-polyfills');
+          }).then(function() {
+            return SystemJS.import('webcomponents/webcomponentsjs/MutationObserver');
           }).then(function() {
             SystemJS.import('aurelia-bootstrapper');
           });
@@ -170,7 +173,7 @@ Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Fi
 </code-listing>
 
 > Warning: Promises in Edge
-> Currently, the Edge browser has a serious performance problem with its Promise implementation. This deficiency can greatly increase startup time of your app. If you are targeting the Edge browser, it is highly recommended that you use the [bluebird promise](http://bluebirdjs.com/docs/getting-started.html) library to replace Edge's native implementation. You can do this by simply referencing the library prior to loading system.js.
+> Currently, the Edge browser has a serious performance problem with its Promise implementation. This deficiency can greatly increase startup time of your app. If you are targeting the Edge browser, it is highly recommended that you use the [bluebird promise](http://bluebirdjs.com/docs/getting-started.html) library to replace Edge's native implementation. You can do this by simply referencing the library prior to loading other libraries.
 
 ## [Manual Bootstrapping](aurelia-doc://section/4/version/1.0.0)
 
@@ -235,7 +238,7 @@ When you create a view in Aurelia, it is completely encapsulated. In the same wa
 
 ## [Organizing Your App with Features](aurelia-doc://section/6/version/1.0.0)
 
-Sometimes you have whole groups of components or related functionality that collectively form a "feature". This "feature" may even be owned by a particular set of developers on your team. You want these developers to be able to manage the configuration and resources of their own feature, without interfering with the other parts of the app. For this scenario, Aurelia provides the "feature" feature.
+Sometimes you have whole group of components or related functionality that collectively form a "feature". This "feature" may even be owned by a particular set of developers on your team. You want these developers to be able to manage the configuration and resources of their own feature, without interfering with the other parts of the app. For this scenario, Aurelia provides the "feature" feature.
 
 Imagine, as above, that we have a `my-component` component. Imagine that that was then one of a dozen components that formed a logical feature in your app called `my-feature`. Rather than place the feature's configuration logic inside the app's configuration module, we can place the feature's configuration inside its own feature configuration module.
 
@@ -291,7 +294,7 @@ Similar to features, you can install 3rd party plugins. The main difference is t
 
 To use a plugin, you first install the package. For example `jspm install my-plugin` would use jspm to install the `my-plugin` package. Once the package is installed, you must configure it in your application. Here's some code that shows how that works.
 
-<code-listing heading="Using a Feature">
+<code-listing heading="Using a Plugin">
   <source-code lang="ES 2015/2016">
     export function configure(aurelia) {
       aurelia.use
@@ -441,6 +444,45 @@ Aureia uses a _View Strategy_ to locate the view that is associated with a parti
 </code-listing>
 
 In this example, you would simply replace "..." with your own mapping logic and return the resulting view path that was desired.
+
+If you're using Webpack with a HTML templating engine such as Jade, you'd have to configure Aurelia to look for the `.jade` extension instead of `.html`. This is due to Webpack keeping the original sourcemaps and lets loader plugins take care of transpiling the source. Here's the code to configure Aurelias' `ViewLocator` for Jade:
+
+<code-listing heading="Custom Jade View Location">
+  <source-code lang="ES 2015/2016">
+    import {ViewLocator} from 'aurelia-framework';
+
+    export function configure(aurelia) {
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging();
+
+      ViewLocator.prototype.convertOriginToViewUrl = (origin) => {
+        let moduleId = origin.moduleId;
+        let id = (moduleId.endsWith('.js') || moduleId.endsWith('.ts')) ? moduleId.substring(0, moduleId.length - 3) : moduleId;
+        return id + '.jade';
+      };
+
+      aurelia.start().then(a => a.setRoot());
+    }
+  </source-code>
+  <source-code lang="TypeScript">
+    import {ViewLocator, Aurelia, Origin} from 'aurelia-framework';
+
+    export function configure(aurelia: Aurelia): void {
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging();
+
+      ViewLocator.prototype.convertOriginToViewUrl = (origin: Origin): string => {
+        let moduleId = origin.moduleId;
+        let id = (moduleId.endsWith('.js') || moduleId.endsWith('.ts')) ? moduleId.substring(0, moduleId.length - 3) : moduleId;
+        return id + '.jade';
+      };
+
+      aurelia.start().then(a => a.setRoot());
+    }
+  </source-code>
+</code-listing>
 
 ### Configuring the Fallback View Location Strategy
 
