@@ -206,7 +206,7 @@ Again, it's that simple. Let's review the ideas we modeled:
 
 Here's what's amazing. This is all the ${context.language.name} code for the app. But where is Aurelia? Well, the answer is that Aurelia tries as hard as possible to stay out of your ${context.language.name} code. That's why you don't see it above. It's not needed. Aurelia has the ability to render plain ${context.language.name} objects.
 
-## [Getting Ready to Render](aurelia-doc://section/4/version/1.0.0)
+## [Getting Ready to Render](aurelia-doc://section/5/version/1.0.0)
 
 Ok, now that we've modeled out our application in ${context.language.name}, we need to make Aurelia render it. We weren't completely honest when we said above that we had showed you all the ${context.language.name} code. There's one final piece that gets it all going.
 
@@ -240,7 +240,7 @@ The next thought you might have is "but you didn't say what component to render!
 
 Ok, we're almost ready to run our app. The next piece is to tell Aurelia *how* it should render `app.js`;
 
-## [Rendering the App](aurelia-doc://section/4/version/1.0.0)
+## [Rendering the App](aurelia-doc://section/6/version/1.0.0)
 
 As a brief recap, remember that almost nothing we've done so far is Aurelia-specific. Almost all the code we've written is just vanilla ${context.language.name}. Now that we've added a `main` file to our project and have specified which module exports the root component of our UI hierarchy, Aurelia is ready to render.
 
@@ -380,7 +380,7 @@ Run the application one more time and you should see the expected result:
 
 ![Todo App With CSS](img/todo-app-with-css.png)
 
-## [Conclusion](aurelia-doc://section/8/version/1.0.0)
+## [Conclusion](aurelia-doc://section/7/version/1.0.0)
 
 With its strong focus on developer experience, Aurelia can enable you to not only create amazing applications, but also enjoy the process. We've designed it with simple conventions in mind so you don't need to waste time with tons of configuration or write boilerplate code just to satisfy a stubborn or restrictive framework. You'll never hit a roadblock with Aurelia either. It's been carefully designed to be pluggable and customizable...and most of the time you just write plain ${context.language.name} and forget the framework is even there.
 
