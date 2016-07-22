@@ -384,6 +384,6 @@ Run the application one more time and you should see the expected result:
 
 With its strong focus on developer experience, Aurelia can enable you to not only create amazing applications, but also enjoy the process. We've designed it with simple conventions in mind so you don't need to waste time with tons of configuration or write boilerplate code just to satisfy a stubborn or restrictive framework. You'll never hit a roadblock with Aurelia either. It's been carefully designed to be pluggable and customizable...and most of the time you just write plain ${context.language.name} and forget the framework is even there.
 
-Thanks for taking the time to read through our guide. There's so much more to learn and do! We hope you'll continue on to our "Contact Manager" tutorial to learn how to use the Aurelia CLI to get setup with a production-grad project and use some more advanced features like routing, publish/subscribe and custom elements.
+Thanks for taking the time to read through our guide. There's so much more to learn and do! We hope you'll continue on to our "Contact Manager" tutorial to learn how to use the Aurelia CLI to get setup with a production-grade project and use some more advanced features like routing, publish/subscribe and custom elements.
 
 We're looking forward to seeing what you create!
