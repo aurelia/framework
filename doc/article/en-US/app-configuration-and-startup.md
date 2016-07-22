@@ -238,7 +238,7 @@ When you create a view in Aurelia, it is completely encapsulated. In the same wa
 
 ## [Organizing Your App with Features](aurelia-doc://section/6/version/1.0.0)
 
-Sometimes you have whole groups of components or related functionality that collectively form a "feature". This "feature" may even be owned by a particular set of developers on your team. You want these developers to be able to manage the configuration and resources of their own feature, without interfering with the other parts of the app. For this scenario, Aurelia provides the "feature" feature.
+Sometimes you have whole group of components or related functionality that collectively form a "feature". This "feature" may even be owned by a particular set of developers on your team. You want these developers to be able to manage the configuration and resources of their own feature, without interfering with the other parts of the app. For this scenario, Aurelia provides the "feature" feature.
 
 Imagine, as above, that we have a `my-component` component. Imagine that that was then one of a dozen components that formed a logical feature in your app called `my-feature`. Rather than place the feature's configuration logic inside the app's configuration module, we can place the feature's configuration inside its own feature configuration module.
 
