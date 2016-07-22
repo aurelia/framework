@@ -1111,7 +1111,7 @@ Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base)
 Since the VM's navigation life-cycle is called only once you may have problems recognizing that the user switched the route from `Product A` to `Product B` (see below).  To work around this issue implement the method `determineActivationStrategy` in your VM and return hints for the router about what you'd like to happen.
 
 > Info
-> Additionally, you can add an `activationStrategy` property to your route config if the strategy is always the same and you don't want that to be in your view-model code. Available values are `replace` and `invokeLifecycle`. Remember, "lifecycle" refers to the navigation lifecycle.
+> Additionally, you can add an `activationStrategy` property to your route config if the strategy is always the same and you don't want that to be in your view-model code. Available values are `replace` and `invoke-lifecycle`. Remember, "lifecycle" refers to the navigation lifecycle.
 
 <code-listing heading="Router VM Activation Control">
   <source-code lang="ES 2015/2016">
