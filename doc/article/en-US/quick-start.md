@@ -349,7 +349,7 @@ If you run the application again, you should now see something like this:
 
 ![Todo App With List](img/todo-app-with-list.png)
 
-We're almost there! There's one thing that's missing. Notice that if you check and uncheck the boxes, nothing happens. We would like to have some user feedback in this case. Perhaps crossing out the tod item? Let's make one final version of our view to add that in:
+We're almost there! There's one thing that's missing. Notice that if you check and uncheck the boxes, nothing happens. We would like to have some user feedback in this case. Perhaps crossing out the todo item? Let's make one final version of our view to add that in:
 
 <code-listing heading="app.html">
   <source-code lang="HTML">
@@ -374,7 +374,7 @@ We're almost there! There's one thing that's missing. Notice that if you check a
   </source-code>
 </code-listing>
 
-This final example shows how we can bind css directly on any HTML element. It also shows how we can use our `${}` syntax directly inside any attribute. In this case, we want to add the `text-decoration` of `line-through` whenever the todo's `done` property is true, otherwise we want the `none` value.
+This final example shows how we can bind css directly on any HTML element. It also shows how we can use our `\${}` syntax directly inside any attribute. In this case, we want to add the `text-decoration` of `line-through` whenever the todo's `done` property is true, otherwise we want the `none` value.
 
 Run the application one more time and you should see the expected result:
 
