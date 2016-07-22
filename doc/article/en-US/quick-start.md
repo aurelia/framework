@@ -19,7 +19,7 @@ Aurelia is an amazing framework that embraces simple and clean code without sacr
 
 Before we start writing some code, you'll need to get setup with a basic project structure. There are several ways to setup Aurelia, including using our command line tools, Webpack, Yeoman or our skeletons. However, to start you out, we're going to show you a basic script-tag setup that requires no additional tools or build systems. Please begin by downloading the basic script setup by clicking the button below.
 
-<div style="text-align: center;">
+<div style="text-align: center; margin-bottom: 32px">
   <a class="au-button" href="http://aurelia.io/downloads/basic-aurelia-project.zip" target="_blank">Download the Basic Aurelia Project Setup</a>
 </div>
 
@@ -84,22 +84,30 @@ Yes, that's it. This is the only HTML page in our application. With this in plac
 
 First, you can see that this document is setup as a standard HTML5 document with a doctype, html, head and body. The items of interest to us lie within (and on) the body tag. Let's look at each script tag in turn:
 
-`<script src="scripts/system.js"></script>`
+```
+<script src="scripts/system.js"></script>
+```
 
 This tag is used to load SystemJS, a modern JavaScript module loader. Because Aurelia is a modern framework, it's written as modules and encourages you to create your code in a modular fashion. To use modules in ${context.language.name} you need a loader that understands modular code. That's what SystemJS does. It locates modules, understands their dependencies and ensures that everything is properly loaded at runtime. Aurelia supports a variety of module loaders. Besides SystemJS, Aurelia supports all AMD-based loaders such as RequireJS, Cajon and Dojo. Aurelia also support module-based build systems like Webpack.
 
-`<script src="scripts/config-typescript.js"></script>`
+```
+<script src="scripts/config-typescript.js"></script>
+```
 
 As discussed previously, this line of code configures the programming language you want to use. It's actually a configuration file for the SystemJS module loader that installs a *transpiler* into the loader. As a result, each time a module is loaded, it's able to take your ESNext or TypeScript code and automatically convert it to ES5 code that today's browsers fully understand. Pretty cool right?
 
 > Info
 > In a production app, you wouldn't use a transpiler to transform code on-the-fly in the browser like we're doing here. That would perform quite poorly and require you to distribute an entire transpiler with your app. We're using this technique here to enable you to get started without any tooling or build setup needed. In a later guide, we'll show you how to use the CLI to setup a production-ready project, complete with automatic application builds and bundling.
 
-`<script src="scripts/aurelia-core.min.js"></script>`
+```
+<script src="scripts/aurelia-core.min.js"></script>
+```
 
 This is the core of Aurelia itself, in a single script file. You need to add that to use the framework. That's what's going to enable all the cool capabilities we'll use in this guide.
 
-`SystemJS.import('aurelia-bootstrapper');`
+```
+SystemJS.import('aurelia-bootstrapper');
+```
 
 The last script tag is a bit different. Instead of setting a `src`, it provides some code. The `SystemJS` object is being provided by the SystemJS module loader we mentioned above. Here, we're calling one of it's APIs, `import`. This API tells the loader to load or "import" a module with the specified name. In this case, we're loading `aurelia-bootstrapper` which resides in the `aurelia-core.min.js` linked above. This module contains Aurelia's "bootstrap" or "startup" code. This tells Aurelia to load the framework, configure it and run your application.
 
