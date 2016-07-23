@@ -107,7 +107,7 @@ export class Aurelia {
       this.root = engine.enhance({container: this.container, element: this.host, resources: this.resources, bindingContext: bindingContext});
       this.root.attached();
       this._onAureliaComposed();
-      return this;
+      resolve(this);
     });
   }
 
