@@ -367,7 +367,7 @@ We're almost there! There's one thing that's missing. Notice that if you check a
           <span css="text-decoration: ${todo.done ? 'line-through' : 'none'}">
             ${todo.description}
           </span>
-          <button click.trigger="todo.remove()">Remove</button>
+          <button click.trigger="removeTodo(todo)">Remove</button>
         </li>    
       </ul>
     </template>
