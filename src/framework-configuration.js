@@ -1,4 +1,3 @@
-/*eslint no-unused-vars:0, no-cond-assign:0, consistent-return: 0*/
 import * as TheLogManager from 'aurelia-logging';
 import {ViewEngine} from 'aurelia-templating';
 import {join} from 'aurelia-path';
@@ -10,7 +9,8 @@ const extPattern = /\.[^/.]+$/;
 function runTasks(config, tasks) {
   let current;
   let next = () => {
-    if (current = tasks.shift()) {
+    current = tasks.shift();
+    if (current) {
       return Promise.resolve(current(config)).then(next);
     }
 
@@ -34,7 +34,7 @@ function loadPlugin(config, loader, info) {
   return _loadPlugin(id);
 
   function _loadPlugin(moduleId) {
-    return loader.loadModule(moduleId).then(m => {
+    return loader.loadModule(moduleId).then(m => { // eslint-disable-line consistent-return
       if ('configure' in m) {
         return Promise.resolve(m.configure(config, info.config || {})).then(() => {
           config.resourcesRelativeTo = null;
@@ -98,7 +98,7 @@ function loadResources(aurelia, resourcesToLoad, appResources) {
   }
 }
 
-function getExt(name) {
+function getExt(name) { // eslint-disable-line consistent-return
   let match = name.match(extPattern);
   if (match && match.length > 0) {
     return (match[0].split('.'))[1];
@@ -373,7 +373,8 @@ export class FrameworkConfiguration {
       let current;
 
       let next = () => {
-        if (current = info.shift()) {
+        current = info.shift();
+        if (current) {
           return loadPlugin(this, loader, current).then(next);
         }
 
