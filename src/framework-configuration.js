@@ -220,7 +220,6 @@ export class FrameworkConfiguration {
 
     let toAdd = Array.isArray(resources) ? resources : arguments;
     let resource;
-    let path;
     let resourcesRelativeTo = this.resourcesRelativeTo || ['', ''];
 
     for (let i = 0, ii = toAdd.length; i < ii; ++i) {
