@@ -1,6 +1,6 @@
 ---
 {
-  "name": "JSPM Bundling",
+  "name": "Bundling with JSPM",
   "culture": "en-US",
   "description": "Before deploying your app to production, you'll want to bundle the assets for efficient use of the network.",
   "engines" : { "aurelia-doc" : "^1.0.0" },
