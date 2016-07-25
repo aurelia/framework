@@ -126,8 +126,20 @@
           "href": "doc/article/en-US/quick-start.md"
         },
         {
-          "title": "A Production Setup",
-          "href": "doc/article/en-US/a-production-setup.md"
+          "title": "Contact Manager Tutorial",
+          "href": "doc/article/en-US/contact-manager-tutorial.md"
+        },
+        {
+          "title": "The Aurelia CLI",
+          "href": "doc/article/en-US/the-aurelia-cli.md"
+        },
+        {
+          "title": "JSPM Setup",
+          "href": "doc/article/en-US/jspm-setup.md"
+        },
+        {
+          "title": "JSPM Bundling",
+          "href": "doc/article/en-US/jspm-bundling.md"
         },
         {
           "title": "Creating Components",
@@ -140,10 +152,6 @@
         {
           "title": "Securing Your App",
           "href": "doc/article/en-US/securing-your-app.md"
-        },
-        {
-          "title": "Bundling Your App for Deploy",
-          "href": "doc/article/en-US/bundling-your-app-for-deploy.md"
         },
         {
           "title": "Cheat Sheet",

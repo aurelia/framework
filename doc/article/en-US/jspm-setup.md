@@ -1,8 +1,8 @@
 ---
 {
-  "name": "A Production Setup",
+  "name": "JSPM Setup",
   "culture": "en-US",
-  "description": "If you've completed the Getting Started guide and have had some time to play around with Aurelia, you're probably ready to start building a real application. This guide will help you to get set up with a production-ready starter-kit and show you how to accomplish a few common tasks.",
+  "description": "If you're interested in getting setup with JSPM to build projects, this article will take you through setting up both your machine and a production quality starter project.",
   "engines" : { "aurelia-doc" : "^1.0.0" },
   "author": {
   	"name": "Rob Eisenberg",
@@ -32,9 +32,6 @@ Next, we need to install [jspm](http://jspm.io/). This will serve as our client-
 npm install -g jspm
 ```
 
-> Info
-> Don't want to use jspm? No problem. All Aurelia packages are available via [Bower](http://bower.io/), GitHub and NPM.
-
 ## [Setting up the Project Structure and Build](aurelia-doc://section/2/version/1.0.0)
 
 With the tooling installed, we can now turn our attention to setting up a basic structure for your app. We'll begin by downloading a skeleton. We've got several versions available for you based on your language and tooling preferences. Please download the latest skeletons now.
@@ -43,12 +40,12 @@ With the tooling installed, we can now turn our attention to setting up a basic 
   <a class="au-button" href="https://github.com/aurelia/skeleton-navigation/releases/latest" style="text-decoration: none; margin: 32px 8px 42px 8px;" target="_blank">Download the Skeletons</a>
 </div>
 
-Once the download has completed, unzip it and look inside. The readme file contained therein will explain the various options available to you. Please select one of the skeletons and copy it to the location on your file system that you wish your code to reside. Be sure to rename the folder to appropriately represent the app you want to build. Based on your selection, you'll want to configure this documentation to show the appropriate programming language for all samples. Look at the top of this page. You will see a language selector. Be sure to select the language that matches the package that you downloaded.
+Once the download has completed, unzip it and look inside. The readme file contained therein will explain the various options available to you. Please select one of the skeletons and copy it to the location on your file system that you wish your code to reside. Be sure to rename the folder to appropriately represent the app you want to build.
 
 You will now find everything you need inside the folder, including a basic build, package configuration, styles and more. With all this in place, let's run some commands.
 
 1. Open a console and change directory into your app's directory.
-2. Execute the following command to install the Gulp plugins listed in the _devDependencies_ section of the package manifest:
+2. Execute the following command to install the dependencies listed in the _devDependencies_ section of the package manifest:
   ```shell
   npm install
   ```
@@ -56,7 +53,7 @@ You will now find everything you need inside the folder, including a basic build
   ```shell
   jspm install -y
   ```
-Everything we've done so far is standard Node.js build and package management procedures. It doesn't have anything specific to do with Aurelia itself. We're just walking you through setting up a modern ${context.language.name} project and build configuration from scratch. You may be familiar with this already, but if not then welcome to this new and exciting world!
+Everything we've done so far is standard Node.js build and package management procedures. It doesn't have anything specific to do with Aurelia itself. We're just walking you through setting up a modern ${context.language.name} project and build configuration from scratch.
 
 > Info
 > Bootstrap and Font-Awesome are **not** dependencies of Aurelia. We only leverage them as part of the starter kit in order to help you quickly achieve a decent look out-of-the-box. You can easily replace them with whatever your favorite CSS framework and/or icon library is.
