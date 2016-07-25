@@ -1,6 +1,6 @@
 ---
 {
-  "name": "JSPM Setup",
+  "name": "Setup with JSPM",
   "culture": "en-US",
   "description": "If you're interested in getting setup with JSPM to build projects, this article will take you through setting up both your machine and a production quality starter project.",
   "engines" : { "aurelia-doc" : "^1.0.0" },
