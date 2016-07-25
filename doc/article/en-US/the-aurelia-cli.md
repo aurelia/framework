@@ -127,7 +127,8 @@ Many modules installed through NPM are packages made up of multiple source files
 * `path` - This is a path to the folder where the package's source is located. This path is relative to your application's `src` folder.
 * `main` - This is the main module (entry point) of the package, relative to the `path`. You should not include the file extension. `.js` will be appended automatically.
 
-> Note: We've also shown how to use the `env` setting on a dependency. This can be used on any dependency in the bundle to indicate what environment builds the dependency should be included in. Bey default, dependencies are included in all builds. The example above shows how to include the library only in builds targeting the "dev" environment. You can also specify multiple environments like `dev & stage`.
+> Info: Environment-Specific Dependencies
+> We've also shown how to use the `env` setting on a dependency. This can be used on any dependency in the bundle to indicate what environment builds the dependency should be included in. Bey default, dependencies are included in all builds. The example above shows how to include the library only in builds targeting the "dev" environment. You can also specify multiple environments like `dev & stage`.
 
 ### A Legacy Library
 
@@ -180,7 +181,8 @@ The Bootstrap example above results in the bundling of the JavaScript portions o
 
 Notice that we've added a `resources` array. Here we can provide a list of additional files to be included with the bundle. These files are relative to the `path` designated above and must include the file extension. You can also use glob patterns in place of exact file names.
 
-> Note: Remember that CSS bundled in this was is bundled as a text resource designed to be required in your view. To load the Bootstrap css file in a view, use `<require from="bootstrap/css/bootstrap.css"></require>`. Notice that the module name derives from combining the `name` property with the resource.
+> Info
+> Remember that CSS bundled in this way is bundled as a text resource designed to be required in your view. To load the Bootstrap css file in a view, use `<require from="bootstrap/css/bootstrap.css"></require>`. Notice that the module name derives from combining the `name` property with the resource.
 
 ### A Very Stubborn Legacy Library
 
