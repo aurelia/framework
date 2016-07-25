@@ -15,7 +15,7 @@
 ---
 ## [Bootstrapping Aurelia](aurelia-doc://section/1/version/1.0.0)
 
-Most platforms have a "main" or entry point for code execution. Aurelia is no different. If you've read the Getting Started Guide, then you've seen the `aurelia-app` attribute. Simply place this on an HTML element and Aurelia's bootstrapper will load an _app${context.language.fileExtension}_ and _app.html_, databind them together and inject them into the DOM element on which you placed that attribute.
+Most platforms have a "main" or entry point for code execution. Aurelia is no different. If you've read the Quick Start, then you've seen the `aurelia-app` attribute. Simply place this on an HTML element and Aurelia's bootstrapper will load an _app${context.language.fileExtension}_ and _app.html_, databind them together and inject them into the DOM element on which you placed that attribute.
 
 Often times you want to configure the framework or run some code prior to displaying anything to the user though. So chances are, as your project progresses, you will migrate towards needing some startup configuration. In order to do this, you can provide a value for the `aurelia-app` attribute that points to a configuration module. This module should export a single function named `configure`. Aurelia invokes your `configure` function, passing it the Aurelia object which you can then use to configure the framework yourself and decide what, when, and where to display your UI. Here's an example configuration file showing the standard configuration, the same configuration that is equivalent to what you would get when using `aurelia-app` without a value:
 
@@ -171,6 +171,9 @@ Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Fi
     </html>
   </source-code>
 </code-listing>
+
+> Note: Module Loaders and Bundlers
+> The code in this article demonstrates loading via SystemJS. However, these techniques can be accomplished with other module loaders just as readily. Be sure to lookup the appropriate APIs for your chosen loader or bundler in order to translate these samples into the required code for your own app.
 
 > Warning: Promises in Edge
 > Currently, the Edge browser has a serious performance problem with its Promise implementation. This deficiency can greatly increase startup time of your app. If you are targeting the Edge browser, it is highly recommended that you use the [bluebird promise](http://bluebirdjs.com/docs/getting-started.html) library to replace Edge's native implementation. You can do this by simply referencing the library prior to loading other libraries.
