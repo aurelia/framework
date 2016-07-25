@@ -145,7 +145,21 @@ This causes the `my-root${context.language.fileExtension}`/`my-root.html` to be 
 
 ## [Bootstrapping Older Browsers](aurelia-doc://section/3/version/1.0.0)
 
-Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need the [requestAnimationFrame Polyfill](https://www.npmjs.com/package/raf) and the [MutationObserver polyfill](https://github.com/webcomponents/webcomponentsjs/tree/master/src). Once you have installed these, change your `index.html` startup code as follows:
+Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need the [requestAnimationFrame Polyfill](https://www.npmjs.com/package/raf) and the [MutationObserver polyfill](https://github.com/webcomponents/webcomponentsjs/tree/master/src). Once you have installed these, you'll need to adjust your code to load them before Aurelia is initialized.
+
+In case you are using Webpack, create a bootstrapper file, e.g. `bootstrapper.js`:
+
+<code-listing heading="Polyfill Configuration">
+  <source-code lang="HTML">
+    import 'webcomponents/webcomponentsjs/MutationObserver';
+    import * as raf from 'raf';
+    raf.polyfill();
+  </source-code>
+</code-listing>
+
+After you have created the file, add it as the first file in your `aurelia-bootstrapper` bundle. You can find bundle configuration in the `webpack.config.js` file.
+
+If you are using JSPM change your `index.html` startup code as follows:
 
 <code-listing heading="Polyfill Configuration">
   <source-code lang="HTML">
@@ -180,9 +194,9 @@ Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Fi
 
 ## [Manual Bootstrapping](aurelia-doc://section/4/version/1.0.0)
 
-So far, we've been bootstrapping our app declaratively by using the `aurelia-app` attribute. That's not the only way though. You can manually bootstrap the framework as well. Here's how you would change your HTML file to use manual bootstrapping:
+So far, we've been bootstrapping our app declaratively by using the `aurelia-app` attribute. That's not the only way though. You can manually bootstrap the framework as well. In case of JSPM, here's how you would change your HTML file to use manual bootstrapping:
 
-<code-listing heading="Manual Bootstrapping">
+<code-listing heading="Manual Bootstrapping with JSPM">
   <source-code lang="HTML">
     <!doctype html>
     <html>
@@ -205,6 +219,37 @@ So far, we've been bootstrapping our app declaratively by using the `aurelia-app
         </script>
       </body>
     </html>
+  </source-code>
+</code-listing>
+
+In case you use Webpack, you can replace the `aurelia-boostrapper-webpack` package with the `./src/main` entry file in the `aurelia-boostrapper` bundle defined inside of `webpack.config.js`, and call the boostrapper manually:
+
+
+<code-listing heading="Manual Bootstrapping with Webpack">
+  <source-code lang="ES 2015/2016">
+    import {bootstrap} from 'aurelia-bootstrapper-webpack';
+
+    bootstrap(async aurelia => {
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging();
+
+      await aurelia.start();
+      aurelia.setRoot('app', document.body);
+    });
+  </source-code>
+  <source-code lang="TypeScript">
+    import {Aurelia} from 'aurelia-framework';
+    import {bootstrap} from 'aurelia-bootstrapper-webpack';
+
+    bootstrap(async (aurelia: Aurelia) => {
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging();
+
+      await aurelia.start();
+      aurelia.setRoot('app', document.body);
+    });
   </source-code>
 </code-listing>
 
@@ -330,7 +375,7 @@ So far you've seen Aurelia replacing a portion of the DOM with a root component.
 
 Imagine that you want to generate your home page on the server, including using your server-side templating engine to render out HTML. Perhaps you've got custom components you created with Aurelia, but you want to render the custom elements on the server with some content, in order to make things a bit more SEO friendly. Or perhaps you have an existing, traditional web app, that you want to incrementally start adding Aurelia to. When the HTML is rendered in the browser, you want to progressively enhance that HTML and "bring it to life" by activating all the Aurelia component's rich behavior.
 
-All this is possible with Aurelia, using a single method call: `enhance`. Instead of using `aurelia-app` let's use manual bootstrapping for this example. To progressively enhance the entire `body` of your HTML page, you can do something like this:
+All this is possible with Aurelia, using a single method call: `enhance`. Instead of using `aurelia-app` let's use manual bootstrapping for this example. To progressively enhance the entire `body` of your HTML page, you can do something like this (JSPM-based example):
 
 <code-listing heading="Progressive Enhancement">
   <source-code lang="HTML">
@@ -364,7 +409,7 @@ All this is possible with Aurelia, using a single method call: `enhance`. Instea
 
 It's important to note that, in order for `enhance` to identify components to enhance in your HTML page, you need to declare those components as global resources, as we have above with the `my-component` component.
 
-Optionally, you can provide an object instance to use as the data-binding context for the enhancement, or provide a specific part of the DOM to enhance. Here's an example that shows both:
+Optionally, you can provide an object instance to use as the data-binding context for the enhancement, or provide a specific part of the DOM to enhance. Here's an example that shows both (JSPM-based):
 
 <code-listing heading="Customized Progressive Enhancement">
   <source-code lang="HTML">
