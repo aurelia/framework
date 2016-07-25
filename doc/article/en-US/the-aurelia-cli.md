@@ -80,40 +80,48 @@ Below is some guidance for how to manually configure several different common 3r
 
 If the library you have installed is a single CommonJS or AMD file, you can add an entry similar to the following to the dependencies of yoru bundle:
 
-```javascript
-"dependencies": [
-  {
-    "name": "library-name",
-    "path": "../node_modules/library-name/dist/library-name"
-  }
-]
-```
+<code-listing heading="A Single File Module Dependency">
+  <source-code lang="JavaScript">
+    "dependencies": [
+      {
+        "name": "library-name",
+        "path": "../node_modules/library-name/dist/library-name"
+      }
+    ]
+  </source-code>
+</code-listing>
 
 * `name` - This is the name of the library as you will import it in your JavaScript or TypeScript code.
 * `path` - This is a path to the single module file itself. This path is relative to your application's `src` folder. Also, you should not include the file extension. `.js` will be appended automatically.
 
 If the `main` field of the library's `package.json` points to the single file that you need to bundle, then you can opt for a simplified configuration by just adding the package name to your dependencies directly:
 
-```javascript
-"dependencies": [
-  "library-name"
-]
-```
+<code-listing heading="A Single File Module Dependency via Main">
+  <source-code lang="JavaScript">
+    "dependencies": [
+      "library-name"
+    ]
+  </source-code>
+</code-listing>
+
 
 ### A CommonJS Package
 
 Many modules installed through NPM are packages made up of multiple source files. Configuring a library like this is a bit different than the single-file scenario above. Here's an example configuration for a multi-file package:
 
-```javascript
-"dependencies": [
-  {
-    "name": "aurelia-testing",
-    "path": "../node_modules/aurelia-testing/dist/amd",
-    "main": "aurelia-testing",
-    "env": "dev"
-  }
-]
-```
+<code-listing heading="A CommonJS Package Dependency">
+  <source-code lang="JavaScript">
+    "dependencies": [
+      {
+        "name": "aurelia-testing",
+        "path": "../node_modules/aurelia-testing/dist/amd",
+        "main": "aurelia-testing",
+        "env": "dev"
+      }
+    ]
+  </source-code>
+</code-listing>
+
 
 * `name` - This is the name of the library as you will import it in your JavaScript or TypeScript code.
 * `path` - This is a path to the folder where the package's source is located. This path is relative to your application's `src` folder.
@@ -125,18 +133,20 @@ Many modules installed through NPM are packages made up of multiple source files
 
 Libraries that predate module systems can be a pain because they often rely on global scripts which must be loaded before the library. These libraries also add their own global variables. An example of one such library is [bootstrap](http://getbootstrap.com/css/). Let's take a look at how to handle a legacy library like that.
 
-```javascript
-"dependencies": [
-  "jquery",
-  {
-    "name": "bootstrap",
-    "path": "../node_modules/bootstrap/dist",
-    "main": "js/bootstrap.min",
-    "deps": ["jquery"],
-    "exports": "$"
-  }
-]
-```
+<code-listing heading="A Legacy Library Dependency">
+  <source-code lang="JavaScript">
+    "dependencies": [
+      "jquery",
+      {
+        "name": "bootstrap",
+        "path": "../node_modules/bootstrap/dist",
+        "main": "js/bootstrap.min",
+        "deps": ["jquery"],
+        "exports": "$"
+      }
+    ]
+  </source-code>
+</code-listing>
 
 * `name` - This is the name of the library as you will import it in your JavaScript or TypeScript code.
 * `path` - This is a path to the folder where the package's source is located. This path is relative to your application's `src` folder.
@@ -150,21 +160,23 @@ Notice first that we've included "jquery" as one of our dependencies. We are abl
 
 The Bootstrap example above results in the bundling of the JavaScript portions of the library. But, as you probably know, Bootstrap is mostly about CSS. The CSS files distributed with Bootstrap aren't traceable through the module system so this still doesn't result in the Bootstrap CSS being bundled. Here's how we solve that problem:
 
-```javascript
-"dependencies": [
-  "jquery",
-  {
-    "name": "bootstrap",
-    "path": "../node_modules/bootstrap/dist",
-    "main": "js/bootstrap.min",
-    "deps": ["jquery"],
-    "exports": "$",
-    "resources": [
-      "css/bootstrap.css"
+<code-listing heading="A Library with Additional Resources">
+  <source-code lang="JavaScript">
+    "dependencies": [
+      "jquery",
+      {
+        "name": "bootstrap",
+        "path": "../node_modules/bootstrap/dist",
+        "main": "js/bootstrap.min",
+        "deps": ["jquery"],
+        "exports": "$",
+        "resources": [
+          "css/bootstrap.css"
+        ]
+      }
     ]
-  }
-]
-```
+  </source-code>
+</code-listing>
 
 Notice that we've added a `resources` array. Here we can provide a list of additional files to be included with the bundle. These files are relative to the `path` designated above and must include the file extension. You can also use glob patterns in place of exact file names.
 
@@ -174,88 +186,95 @@ Notice that we've added a `resources` array. Here we can provide a list of addit
 
 Sometimes you can't get a library to work with the module loading system. That's ok. You can still include it in the bundle, using traditional concatenation techniques. In fact, this is how the CLI bundles up the loader and promise polyfills. These items don't go into the `dependencies` section but instead go into the `prepend` section. This is because they aren't module dependencies. They also aren't relative to the `src`, but relative to the project folder. Using the `prepend` section causes the scripts to be prepended to the beginning of the bundle, using normal script concatenation techniques. Here's a full vendor bundle example, showing this and the rest of the techniques listed above.
 
-```javascript
-{
-  "name": "vendor-bundle.js",
-  "prepend": [
-    "node_modules/bluebird/js/browser/bluebird.core.js",
-    "scripts/require.js"
-  ],
-  "dependencies": [
-    "aurelia-binding",
-    "aurelia-bootstrapper",
-    "aurelia-dependency-injection",
-    "aurelia-event-aggregator",
-    "aurelia-framework",
-    "aurelia-history",
-    "aurelia-history-browser",
-    "aurelia-loader",
-    "aurelia-loader-default",
-    "aurelia-logging",
-    "aurelia-logging-console",
-    "aurelia-metadata",
-    "aurelia-pal",
-    "aurelia-pal-browser",
-    "aurelia-path",
-    "aurelia-polyfills",
-    "aurelia-route-recognizer",
-    "aurelia-router",
-    "aurelia-task-queue",
-    "aurelia-templating",
-    "aurelia-templating-binding",
-    "nprogress",
-    "jquery",
+<code-listing heading="A Sample Bundle">
+  <source-code lang="JavaScript">
     {
-      "name": "bootstrap",
-      "path": "../node_modules/bootstrap/dist",
-      "main": "js/bootstrap.min",
-      "deps": ["jquery"],
-      "exports": "$",
-      "resources": [
-        "css/bootstrap.css"
+      "name": "vendor-bundle.js",
+      "prepend": [
+        "node_modules/bluebird/js/browser/bluebird.core.js",
+        "scripts/require.js"
+      ],
+      "dependencies": [
+        "aurelia-binding",
+        "aurelia-bootstrapper",
+        "aurelia-dependency-injection",
+        "aurelia-event-aggregator",
+        "aurelia-framework",
+        "aurelia-history",
+        "aurelia-history-browser",
+        "aurelia-loader",
+        "aurelia-loader-default",
+        "aurelia-logging",
+        "aurelia-logging-console",
+        "aurelia-metadata",
+        "aurelia-pal",
+        "aurelia-pal-browser",
+        "aurelia-path",
+        "aurelia-polyfills",
+        "aurelia-route-recognizer",
+        "aurelia-router",
+        "aurelia-task-queue",
+        "aurelia-templating",
+        "aurelia-templating-binding",
+        "nprogress",
+        "jquery",
+        {
+          "name": "bootstrap",
+          "path": "../node_modules/bootstrap/dist",
+          "main": "js/bootstrap.min",
+          "deps": ["jquery"],
+          "exports": "$",
+          "resources": [
+            "css/bootstrap.css"
+          ]
+        },
+        {
+          "name": "text",
+          "path": "../scripts/text"
+        },
+        {
+          "name": "aurelia-templating-resources",
+          "path": "../node_modules/aurelia-templating-resources/dist/amd",
+          "main": "aurelia-templating-resources"
+        },
+        {
+          "name": "aurelia-templating-router",
+          "path": "../node_modules/aurelia-templating-router/dist/amd",
+          "main": "aurelia-templating-router"
+        },
+        {
+          "name": "aurelia-testing",
+          "path": "../node_modules/aurelia-testing/dist/amd",
+          "main": "aurelia-testing",
+          "env": "dev"
+        }
       ]
-    },
-    {
-      "name": "text",
-      "path": "../scripts/text"
-    },
-    {
-      "name": "aurelia-templating-resources",
-      "path": "../node_modules/aurelia-templating-resources/dist/amd",
-      "main": "aurelia-templating-resources"
-    },
-    {
-      "name": "aurelia-templating-router",
-      "path": "../node_modules/aurelia-templating-router/dist/amd",
-      "main": "aurelia-templating-router"
-    },
-    {
-      "name": "aurelia-testing",
-      "path": "../node_modules/aurelia-testing/dist/amd",
-      "main": "aurelia-testing",
-      "env": "dev"
     }
-  ]
-}
-```
+  </source-code>
+</code-listing>
 
 ## [Styling your Application](aurelia-doc://section/7/version/1.0.0)
 
 There are many ways to style components in Aurelia. The CLI sets up your project to only process styles inside your application's `src` folder. Those styles can then be imported into a view using Aurelia's `require` element.
 
 * If you aren't using any CSS preprocessor, you write css and then simply require it in the view like this:
-    ```html
-    <require from="./path/to/styles.css"></require>
-    ```
+
+<code-listing heading="Requiring styles.css">
+  <source-code lang="HTML">
+    <require from="./styles.css"></require>
+  </source-code>
+</code-listing>
+
 * For projects that use a CSS preprocessor (chosen from the cli setup questions):
   * Write your styles in the format you chose (styl, sass, less ...).
   * Require the style by `[filename].css` instead of `[filename].[extension]`. This is because
       your style file is transpiled into a module that encodes the resulting `css` file extension.
-    ```html
-    <!-- example -->
-    <!-- if you have stylus at: [project_root]/src/styles/main.styl -->
-    <require from ="./styles/main.css"></require>
-    ```
+
+<code-listing heading="Requiring main.sass">
+  <source-code lang="HTML">
+    <require from ="./main.css"></require>
+  </source-code>
+</code-listing>
 
 Bear in mind that you can always configure things any way you want by modifying the tasks in the `aurelia_project/tasks` folder.
 For styling purposes, you can modify the `process-css.js` file.
