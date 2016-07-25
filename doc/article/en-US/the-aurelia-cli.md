@@ -17,7 +17,7 @@
 
 The CLI itself has a couple of prerequisites that you must install first:
 
-* Install NodeJS >= 4.x
+* Install NodeJS version 4.x or above.
     * You can [download it here](https://nodejs.org/en/).
 * Install a Git Client
     * Here's [a nice GUI client](https://desktop.github.com).
@@ -33,7 +33,7 @@ npm install aurelia-cli -g
 > Always run commands from a Bash prompt. Depending on your environment, you may need to use `sudo` when executing npm global installs.
 
 > Warning
-> While creating a new project doesn't require NPM 3, front-end development, in general, requires a flat-package structure, which is not what NPM < 3 provides. It is recommended that you update to NPM 3, which will be able to manage this structural requirement. You can check your NPM version with `npm -v`. If you need to update, run `npm install npm -g`.
+> While creating a new project doesn't require NPM 3, front-end development, in general, requires a flat-package structure, which is not available with NPM versions prior to 3. It is recommended that you update to NPM 3, which will be able to manage this structural requirement. You can check your NPM version with `npm -v`. If you need to update, run `npm install npm -g`.
 
 ## [Creating A New Aurelia Project](aurelia-doc://section/2/version/1.0.0)
 
