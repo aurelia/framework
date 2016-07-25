@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "1.0.0-rc.1.0.8",
+  "version": "1.0.0-rc.1.0.9",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
@@ -135,11 +135,19 @@
         },
         {
           "title": "JSPM Setup",
-          "href": "doc/article/en-US/jspm-setup.md"
+          "href": "doc/article/en-US/setup-jspm.md"
         },
         {
           "title": "JSPM Bundling",
-          "href": "doc/article/en-US/jspm-bundling.md"
+          "href": "doc/article/en-US/bundling-jspm.md"
+        },
+        {
+          "title": "Webpack Setup",
+          "href": "doc/article/en-US/setup-webpack.md"
+        },
+        {
+          "title": "Webpack Bundling",
+          "href": "doc/article/en-US/bundling-webpack.md"
         },
         {
           "title": "Creating Components",
