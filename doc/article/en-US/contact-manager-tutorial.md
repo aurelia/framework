@@ -61,6 +61,9 @@ Copy all of these files to the `src` folder of your project. TypeScript users sh
 
 ## [Building the Application Shell](aurelia-doc://section/4/version/1.0.0)
 
+> Waring
+> Before proceeding any further, please make sure you are familiar with the concepts introduced in the Quick Start Guide or otherwise have some basic experience with Aurelia. Topics covered in the Quick Start will not be explained again here.
+
 Let's start by looking at a picture of the final product of this tutorial. It will help us to see the application's structure and the pieces we need to build.
 
 ![The Final Contact Manager App](img/contact-app-final.png)
@@ -70,7 +73,7 @@ In the picture, you can see that we have a header across the top, a contact list
 To begin, we're going to setup our `App` class by configuring it with a router. We want our browser history to reflect which contact in our list is selected, so we'll introduce a client-side router to handle the navigation from screen to screen. Replace the code in your `app{context.language.fileExtension}` with the following:
 
 <code-listing heading="app${context.language.fileExtension}">
-  <source-code lang="ES 2016/2016">
+  <source-code lang="ES 2015/ES Next">
     export class App {
       configureRouter(config, router){
         config.title = 'Contacts';
@@ -191,7 +194,7 @@ ERROR [app-router] Error: Script error for "no-selection"
 This is actually expected. Why? Well, we have now configured a router, that router is matching on the empty route pattern we defined and it's trying to load the `no-selection` module, but we haven't created that yet. Let's do that now. Create a new file under `src` named `no-selection{context.language.fileExtension}` and give it the following code:
 
 <code-listing heading="no-selection${context.language.fileExtension}">
-  <source-code lang="ES 2016/2016">
+  <source-code lang="ES 2015/ES Next">
     export class NoSelection {
       constructor() {
         this.message = "Please Select a Contact.";
@@ -223,6 +226,288 @@ All it does is provide a container with some styling in order to display our mes
 
 ## [Building Out the Contact List](aurelia-doc://section/6/version/1.0.0)
 
+We've got the basic visual structure of our application in place and routing is now working. We've even created our first screen. However, it's not very interesting. We've got a `div` placeholder for the actual contact list at present. Let's go ahead and build that out, as a `contact-list` custom element.
+
+Aurelia strives to be a self-consistent framework. As such, building a custom element is the same as creating your `App` component and your routed components. To create the `contact-list` custom element, start by creating a new file named `contact-list{context.language.fileExtension}` and add the following code:
+
+<code-listing heading="contact-list${context.language.fileExtension}">
+  <source-code lang="ES 2015">
+    import {WebAPI} from './web-api';
+
+    export class ContactList {
+      static inject() { return [WebAPI] };
+
+      constructor(api){
+        this.api = api;
+        this.contacts = [];
+      }
+
+      created(){
+        this.api.getContactList().then(contacts => this.contacts = contacts);
+      }
+
+      select(contact){
+        this.selectedId = contact.id;
+        return true;
+      }
+    }
+  </source-code>
+  <source-code lang="ES Next">
+    import {WebAPI} from './web-api';
+    import {inject} from 'aurelia-framework';
+
+    @inject(WebAPI)
+    export class ContactList {
+      constructor(api){
+        this.api = api;
+        this.contacts = [];
+      }
+
+      created(){
+        this.api.getContactList().then(contacts => this.contacts = contacts);
+      }
+
+      select(contact){
+        this.selectedId = contact.id;
+        return true;
+      }
+    }
+  </source-code>
+  <source-code lang="TypeScript">
+    import {WebAPI} from './web-api';
+    import {inject} from 'aurelia-framework';
+
+    @inject(WebAPI)
+    export class ContactList {
+      contacts;
+      selectedId = 0;
+
+      constructor(private api: WebAPI){ }
+
+      created(){
+        this.api.getContactList().then(contacts => this.contacts = contacts);
+      }
+
+      select(contact){
+        this.selectedId = contact.id;
+        return true;
+      }
+    }
+  </source-code>
+</code-listing>
+
+The view-model for our custom element has a few notable characteristics. First, we're using dependency injection. Aurelia has its own dependency injection container which it uses to instantiate classes in your app. Classes can declare constructor dependencies through *inject metadata*. This looks a bit different depending on what language you are using. In ES 2015, you can declare an `inject` static method that returns an array of constructor dependencies while in ES Next and TypeScript, you can use an `inject` decorator to declare those dependencies. As you can see here, our `ContactList` class has a dependency on our `WebAPI` class. When Aurelia instantiates the contact list, it will first instantiate (or locate) an instance of the web API and "inject" that into the contact list's constructor.
+
+The second thing to notice is the `created` method. All Aurelia components follow a component life-cycle. A developer can opt into any stage of the life-cycle by implementing the appropriate methods. In this case, we're implementing into the `created` hook which gets called after both the view-model and thew view are created. We're using this as an opportunity to call our API and get back the list of contacts, which we then store in our `contacts` property so we can bind it in the view.
+
+Finally, we have a `select` method for selecting a contact. We'll revisit this shortly, after we take a look at how it's used in the view. On that note, create a `contact-list.html` file and use the following code for the view:
+
+<code-listing heading="no-selection.html">
+  <source-code lang="HTML">
+    <template>
+      <div class="contact-list">
+        <ul class="list-group">
+          <li repeat.for="contact of contacts" class="list-group-item ${contact.id === $parent.selectedId ? 'active' : ''}">
+            <a route-href="route: contacts; params.bind: {id:contact.id}" click.delegate="$parent.select(contact)">
+              <h4 class="list-group-item-heading">${contact.firstName} ${contact.lastName}</h4>
+              <p class="list-group-item-text">${contact.email}</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </template>
+  </source-code>
+</code-listing>
+
+The markup above begins by repeating an `li` for each contact of our contacts array. Take a look at the class attribute on the `li`. We've used an interesting technique here to add an `active` class if the contact's id is the same as the `selectedId` of the contact on our `ContactList` view-model. We've used the `$parent` special value to reach outside of the list's scope and into the parent view-model so we can test against that property. Throughout the list template, we've used basic string interpolation binding to show the `firstName`, 'lastName' and `email` of each contact.
+
+Take special note of the `a` tag. First, we are using a custom attribute provided by Aurelia's routing system: `route-href`. This attribute can generate an href for a route, based on the route's name and a set of parameters. Remember how we named the contacts route in our configuration? Here we're using that by referencing the "contacts" route name and binding the contacts's `id` parameter as the route's `id` parameter. With this information, the router is able to generate the correct `href` on the `a` tag for each contact. Additionally, we've also wired up a `click` event. Why would we do this if the `href` is already going to handle navigating to the correct contact? Well, we're looking for instant user feedback. We want the list selection to happen ASAP, so we don't have to wait on the navigation system or on the loading of the contact data. To accomplish this, we use the `select` method to track the selected contact's `id` which allows us to instantly apply the selection style. Finally, normal use of `.trigger` or `.delegate` causes the default action of the event to be cancelled. But, if you return true from your method, as we have done above, it will be allowed to continue. Thus, when the user clicks on the contact, we immediately select the contact in the list and then the `href` is allowed to trigger the router, causing a navigation to the selected contact.
+
+Ok, now that we've got the contact list built, we need to use it. To do that, update your `app.html` with the following markup:
+
+<code-listing heading="app.html">
+  <source-code lang="HTML">
+  <template>
+    <require from="bootstrap/css/bootstrap.css"></require>
+    <require from="./styles.css"></require>
+    <require from="./contact-list"></require>
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <i class="fa fa-user"></i>
+          <span>Contacts</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <contact-list class="col-md-4">Contact List Placeholder</contact-list>
+        <router-view class="col-md-8"></router-view>
+      </div>
+    </div>
+  </template>
+  </source-code>
+</code-listing>
+
+There are two important additions. First, we've added another `require` element at the top, to import our new `contact-list` into this view. Remember that views are encapsulated, just like modules. So, this makes the `contact-list` visible from within this view. Second, we now use the custom element, right above our `router-view`.
+
+If you go ahead and run the application, you should now see something like this:
+
+![The Contact List](img/contact-app-contact-list.png)
+
 ## [Building Out the Contact Detail Screen](aurelia-doc://section/7/version/1.0.0)
 
+Ok, things are starting to come together, but we still can't view an individual contact. If you try selecting something from the list, you'll see an error like the following in the console:
+
+```
+ERROR [app-router] Error: Script error for "contact-detail"
+```
+
+Again, this is because the router is trying to route to the detail screen, but we have not yet created the component. So, let's do that next. Create a new file named `contact-detail{context.language.fileExtension}` and add the following code:
+
+<code-listing heading="contact-detail${context.language.fileExtension}">
+  <source-code lang="ES 2015">
+    import {WebAPI} from './web-api';
+    import {areEqual} from './utility';
+
+    export class ContactDetail {
+      static inject() { return [WebAPI]; }
+
+      constructor(api){
+        this.api = api;
+      }
+
+      activate(params, routeConfig) {
+        this.routeConfig = routeConfig;
+
+        return this.api.getContactDetails(params.id).then(contact => {
+          this.contact = contact;
+          this.routeConfig.navModel.setTitle(contact.firstName);
+          this.originalContact = JSON.parse(JSON.stringify(contact));
+        });
+      }
+
+      get canSave() {
+        return this.contact.firstName && this.contact.lastName && !this.api.isRequesting;
+      }
+
+      save() {
+        this.api.saveContact(this.contact).then(contact => {
+          this.contact = contact;
+          this.routeConfig.navModel.setTitle(contact.firstName);
+          this.originalContact = JSON.parse(JSON.stringify(contact));
+        });
+      }
+
+      canDeactivate() {
+        if (!areEqual(this.originalContact, this.contact)){
+          return confirm('You have unsaved changes. Are you sure you wish to leave?');
+        }
+
+        return true;
+      }
+    }
+  </source-code>
+  <source-code lang="ES Next">
+    import {inject} from 'aurelia-framework';
+    import {WebAPI} from './web-api';
+    import {areEqual} from './utility';
+
+    @inject(WebAPI)
+    export class ContactDetail {
+      constructor(api){
+        this.api = api;
+      }
+
+      activate(params, routeConfig) {
+        this.routeConfig = routeConfig;
+
+        return this.api.getContactDetails(params.id).then(contact => {
+          this.contact = contact;
+          this.routeConfig.navModel.setTitle(contact.firstName);
+          this.originalContact = JSON.parse(JSON.stringify(contact));
+        });
+      }
+
+      get canSave() {
+        return this.contact.firstName && this.contact.lastName && !this.api.isRequesting;
+      }
+
+      save() {
+        this.api.saveContact(this.contact).then(contact => {
+          this.contact = contact;
+          this.routeConfig.navModel.setTitle(contact.firstName);
+          this.originalContact = JSON.parse(JSON.stringify(contact));
+        });
+      }
+
+      canDeactivate() {
+        if (!areEqual(this.originalContact, this.contact)){
+          return confirm('You have unsaved changes. Are you sure you wish to leave?');
+        }
+
+        return true;
+      }
+    }
+  </source-code>
+  <source-code lang="TypeScript">
+    import {inject} from 'aurelia-framework';
+    import {WebAPI} from './web-api';
+    import {areEqual} from './utility';
+
+    interface Contact {
+      firstName: string;
+      lastName: string;
+      email: string;
+    }
+
+    @inject(WebAPI)
+    export class ContactDetail {
+      routeConfig;
+      contact: Contact;
+      originalContact: Contact;
+
+      constructor(private api: WebAPI) { }
+
+      activate(params, routeConfig) {
+        this.routeConfig = routeConfig;
+
+        return this.api.getContactDetails(params.id).then(contact => {
+          this.contact = <Contact>contact;
+          this.routeConfig.navModel.setTitle(this.contact.firstName);
+          this.originalContact = JSON.parse(JSON.stringify(this.contact));
+        });
+      }
+
+      get canSave() {
+        return this.contact.firstName && this.contact.lastName && !this.api.isRequesting;
+      }
+
+      save() {
+        this.api.saveContact(this.contact).then(contact => {
+          this.contact = <Contact>contact;
+          this.routeConfig.navModel.setTitle(this.contact.firstName);
+          this.originalContact = JSON.parse(JSON.stringify(contact));
+        });
+      }
+
+      canDeactivate() {
+        if (!areEqual(this.originalContact, this.contact)) {
+          return confirm('You have unsaved changes. Are you sure you wish to leave?');
+        }
+
+        return true;
+      }
+    }
+  </source-code>
+</code-listing>
+
+Once again, we are using dependency injection to get an instance of our `WebAPI`. We need this to load the contact detail data. Next, we implement a method named `activate`. Remember when we mentioned that all components have a life-cycle? Well, there are additional life-cycle methods for *routed components*. `activate` is one such method and it gets invoked right before the router is about to activate the component. This is also how the router passes the component the parsed route parameters. Let's dig in a bit more.
+
+
+
 ## [Adding Pub/Sub Messaging](aurelia-doc://section/8/version/1.0.0)
+
+## [Adding A Loading Indicator](aurelia-doc://section/9/version/1.0.0)
