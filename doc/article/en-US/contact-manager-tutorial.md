@@ -327,27 +327,27 @@ Ok, now that we've got the contact list built, we need to use it. To do that, up
 
 <code-listing heading="app.html">
   <source-code lang="HTML">
-  <template>
-    <require from="bootstrap/css/bootstrap.css"></require>
-    <require from="./styles.css"></require>
-    <require from="./contact-list"></require>
+    <template>
+      <require from="bootstrap/css/bootstrap.css"></require>
+      <require from="./styles.css"></require>
+      <require from="./contact-list"></require>
 
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">
-          <i class="fa fa-user"></i>
-          <span>Contacts</span>
-        </a>
-      </div>
-    </nav>
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <i class="fa fa-user"></i>
+            <span>Contacts</span>
+          </a>
+        </div>
+      </nav>
 
-    <div class="container">
-      <div class="row">
-        <contact-list class="col-md-4">Contact List Placeholder</contact-list>
-        <router-view class="col-md-8"></router-view>
+      <div class="container">
+        <div class="row">
+          <contact-list class="col-md-4">Contact List Placeholder</contact-list>
+          <router-view class="col-md-8"></router-view>
+        </div>
       </div>
-    </div>
-  </template>
+    </template>
   </source-code>
 </code-listing>
 
@@ -504,10 +504,391 @@ Again, this is because the router is trying to route to the detail screen, but w
   </source-code>
 </code-listing>
 
-Once again, we are using dependency injection to get an instance of our `WebAPI`. We need this to load the contact detail data. Next, we implement a method named `activate`. Remember when we mentioned that all components have a life-cycle? Well, there are additional life-cycle methods for *routed components*. `activate` is one such method and it gets invoked right before the router is about to activate the component. This is also how the router passes the component the parsed route parameters. Let's dig in a bit more.
+Once again, we are using dependency injection to get an instance of our `WebAPI`. We need this to load the contact detail data. Next, we implement a method named `activate`. Remember when we mentioned that all components have a life-cycle? Well, there are additional life-cycle methods for *routed components*. `activate` is one such method and it gets invoked right before the router is about to activate the component. This is also how the router passes the component its route parameters. Let's dig in a bit more.
 
+The first argument passed to `activate` is the `params` object. This object will have one property for every route param that was parsed as well as a property for each query string parameter. If you recall, our route pattern for the contact details screen was `contacts/:id`. So, our `params` object will have an `id` property with the requested contact's id. Using this `id` we call our `WebAPI` to retrieve the contact data. This API returns a `Promise` which we wait on and then store the loaded contact in a `contact` property so it's easy to bind to. We also make a copy of this object and store it in the `originalContact` property, so we can do some rudimentary checking to see if the data has been edited by the user at a later point.
 
+The second argument passed to `activate` is the `routeConfig`. This is the same configuration object that you created to configure the router itself. You can get access to that here so that you can access any of its properties. The router generates a `navModel` for each `routeConfig`. Using the `navModel` you can dynamically set the title of the document for this route. So, we call `navModel.setTitle()` in order to set up the document's title with the name of the contact that we just loaded.
+
+This screen demonstrates another part of the navigation lifecycle available to routed components: the `canDeactivate` hook. If present, this method is called before navigating away from the current component. It gives your component an opportunity to cancel navigation, if it desires.  In the case of the contact detail screen, we are comparing our `originalContact` to the current `contact`, using our `areEqual` helper method, in order to determine whether or not the user has made any changes to the data. If they have, we show a confirmation dialog to make sure they want to navigate away, since they would lose their changes. If the `canDeactivate` hook returns `true`, navigation is allowed; if false is returned, it is prevented and the route state is reverted.
+
+If we take a brief look at the `save` method, we can see that this is just a brief call to the `WebAPI`'s `saveContact` method. After that succeeds, we update our `originalContact` to the latest version and then we update the document's title with the potentially new contact name.
+
+Finally, we have a `canSave` computed property which we'll use in the view. This will help us show some simple feedback to the user to indicate whether the UI and data are in a state that allows for saving.
+
+With that all in place, let's look at the view that will render this component:
+
+<code-listing heading="app.html">
+  <source-code lang="HTML">
+    <template>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Profile</h3>
+        </div>
+        <div class="panel-body">
+          <form role="form" class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">First Name</label>
+              <div class="col-sm-10">
+                <input type="text" placeholder="first name" class="form-control" value.bind="contact.firstName">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Last Name</label>
+              <div class="col-sm-10">
+                <input type="text" placeholder="last name" class="form-control" value.bind="contact.lastName">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Email</label>
+              <div class="col-sm-10">
+                <input type="text" placeholder="email" class="form-control" value.bind="contact.email">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Phone Number</label>
+              <div class="col-sm-10">
+                <input type="text" placeholder="phone number" class="form-control" value.bind="contact.phoneNumber">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="button-bar">
+        <button class="btn btn-success" click.delegate="save()" disabled.bind="!canSave">Save</button>
+      </div>
+    </template>
+  </source-code>
+</code-listing>
+
+Don't be intimidated by the amount of HTML above. It's mostly all basic form controls and bootstrap structures. If you look at the `input` elements, you will see that they all have a two-way binding to the appropriate contact's properties. The only real interesting part is the `button` element at the bottom. This button invokes `save` when clicked, but notice that it also has its `disabled` attribute bound to our `canSave` property. The result is that the user won't be able to save if the API is in the middle of a request or if there is missing contact information.
+
+You should now be able to select contacts in the list, see their details, edit them, save and even see the confirm dialog on unsaved data navigations. It should look something like this:
+
+![The Contact Details](img/contact-app-contact-detail.png)
 
 ## [Adding Pub/Sub Messaging](aurelia-doc://section/8/version/1.0.0)
+
+If you play around with the application for a bit, you'll notice a few "buggy" behaviors:
+
+* Refreshing the browser with a contact selected results in the correct contact being shown, but not in the correct contact list item being highlighted.
+* If you edit some data, try to navigate away and then cancel, the contact list item selection will go out of sync, highlighting the contact you were going to before you cancelled, but not the current contact.
+* If you edit some data and save, you will notice that changes in the name are not reflected in the list.
+
+The reason for these issues is that we have two separate components, our `contact-list` and our `contact-detail` which both have their own internal data structures and behaviors, but which do have an affect on each other. The router is controlling the contact detail screen, so it's the ultimate source of truth and the contact list should sync with it. To handle this, we're going to increase the amount of information in our system by introducing pub/sub. Let's create a couple of messages that our `contact-detail` component can publish and then let the `contact-list` subscribe to those and respond appropriately.
+
+<code-listing heading="messages${context.language.fileExtension}">
+  <source-code lang="ES 2015">
+    export class ContactUpdated {
+      constructor(contact){
+        this.contact = contact;
+      }
+    }
+
+    export class ContactViewed {
+      constructor(contact){
+        this.contact = contact;
+      }
+    }
+  </source-code>
+  <source-code lang="ES Next">
+    export class ContactUpdated {
+      constructor(contact){
+        this.contact = contact;
+      }
+    }
+
+    export class ContactViewed {
+      constructor(contact){
+        this.contact = contact;
+      }
+    }
+  </source-code>
+  <source-code lang="TypeScript">
+    export class ContactUpdated {
+      constructor(public contact){ }
+    }
+
+    export class ContactViewed {
+      constructor(public contact){ }
+    }
+  </source-code>
+</code-listing>
+
+Whenever the contact detail screen successfully saves a contact, we'll publish the `ContactUpdated` message and whenever the end user begins viewing a new contact, we'll publish the `ContactViewed` message. Each of these messages will carry the contact data along with it so that subscribers have contextual data related to the event. Next, let's update our `contact-detail` code to incorporate Aurelia's `EventAggregator` and publish the messages at the appropriate time:
+
+<code-listing heading="contact-detail${context.language.fileExtension}">
+  <source-code lang="ES 2015">
+    import {EventAggregator} from 'aurelia-event-aggregator';
+    import {WebAPI} from './web-api';
+    import {ContactUpdated,ContactViewed} from './messages';
+    import {areEqual} from './utility';
+
+    export class ContactDetail {
+      static inject = [WebAPI, EventAggregator];
+
+      constructor(api, ea){
+        this.api = api;
+        this.ea = ea;
+      }
+
+      activate(params, routeConfig) {
+        this.routeConfig = routeConfig;
+
+        return this.api.getContactDetails(params.id).then(contact => {
+          this.contact = contact;
+          this.routeConfig.navModel.setTitle(contact.firstName);
+          this.originalContact = JSON.parse(JSON.stringify(contact));
+          this.ea.publish(new ContactViewed(contact));
+        });
+      }
+
+      get canSave() {
+        return this.contact.firstName && this.contact.lastName && !this.api.isRequesting;
+      }
+
+      save() {
+        this.api.saveContact(this.contact).then(contact => {
+          this.contact = contact;
+          this.routeConfig.navModel.setTitle(contact.firstName);
+          this.originalContact = JSON.parse(JSON.stringify(contact));
+          this.ea.publish(new ContactUpdated(this.contact));
+        });
+      }
+
+      canDeactivate() {
+        if(!areEqual(this.originalContact, this.contact)){
+          let result = confirm('You have unsaved changes. Are you sure you wish to leave?');
+
+          if(!result){
+            this.ea.publish(new ContactViewed(this.contact));
+          }
+
+          return result;
+        }
+
+        return true;
+      }
+    }
+  </source-code>
+  <source-code lang="ES Next">
+    import {inject} from 'aurelia-framework';
+    import {EventAggregator} from 'aurelia-event-aggregator';
+    import {WebAPI} from './web-api';
+    import {ContactUpdated,ContactViewed} from './messages';
+    import {areEqual} from './utility';
+
+    @inject(WebAPI, EventAggregator)
+    export class ContactDetail {
+      constructor(api, ea){
+        this.api = api;
+        this.ea = ea;
+      }
+
+      activate(params, routeConfig) {
+        this.routeConfig = routeConfig;
+
+        return this.api.getContactDetails(params.id).then(contact => {
+          this.contact = contact;
+          this.routeConfig.navModel.setTitle(contact.firstName);
+          this.originalContact = JSON.parse(JSON.stringify(contact));
+          this.ea.publish(new ContactViewed(contact));
+        });
+      }
+
+      get canSave() {
+        return this.contact.firstName && this.contact.lastName && !this.api.isRequesting;
+      }
+
+      save() {
+        this.api.saveContact(this.contact).then(contact => {
+          this.contact = contact;
+          this.routeConfig.navModel.setTitle(contact.firstName);
+          this.originalContact = JSON.parse(JSON.stringify(contact));
+          this.ea.publish(new ContactUpdated(this.contact));
+        });
+      }
+
+      canDeactivate() {
+        if(!areEqual(this.originalContact, this.contact)){
+          let result = confirm('You have unsaved changes. Are you sure you wish to leave?');
+
+          if(!result){
+            this.ea.publish(new ContactViewed(this.contact));
+          }
+
+          return result;
+        }
+
+        return true;
+      }
+    }
+  </source-code>
+  <source-code lang="TypeScript">
+    import {inject} from 'aurelia-framework';
+    import {EventAggregator} from 'aurelia-event-aggregator';
+    import {WebAPI} from './web-api';
+    import {ContactUpdated,ContactViewed} from './messages';
+    import {areEqual} from './utility';
+
+    interface Contact {
+      firstName: string;
+      lastName: string;
+      email: string;
+    }
+
+    @inject(WebAPI, EventAggregator)
+    export class ContactDetail {
+      routeConfig;
+      contact: Contact;
+      originalContact: Contact;
+
+      constructor(private api: WebAPI, private ea: EventAggregator) { }
+
+      activate(params, routeConfig) {
+        this.routeConfig = routeConfig;
+
+        return this.api.getContactDetails(params.id).then(contact => {
+          this.contact = <Contact>contact;
+          this.routeConfig.navModel.setTitle(this.contact.firstName);
+          this.originalContact = JSON.parse(JSON.stringify(this.contact));
+          this.ea.publish(new ContactViewed(contact));
+        });
+      }
+
+      get canSave() {
+        return this.contact.firstName && this.contact.lastName && !this.api.isRequesting;
+      }
+
+      save() {
+        this.api.saveContact(this.contact).then(contact => {
+          this.contact = <Contact>contact;
+          this.routeConfig.navModel.setTitle(this.contact.firstName);
+          this.originalContact = JSON.parse(JSON.stringify(contact));
+          this.ea.publish(new ContactUpdated(this.contact));
+        });
+      }
+
+      canDeactivate() {
+        if(!areEqual(this.originalContact, this.contact)){
+          let result = confirm('You have unsaved changes. Are you sure you wish to leave?');
+
+          if(!result){
+            this.ea.publish(new ContactViewed(this.contact));
+          }
+
+          return result;
+        }
+
+        return true;
+      }
+    }
+  </source-code>
+</code-listing>
+
+First, notice that we've both imported Aurelia's `EventAggregator` and configured it to be injected into the constructor of our `ContactDetail` class. We've also imported the two messages we created. Whenever a contact is loaded, we publish the `ContactViewed` message. Whenever a contact is saved, we publish the `ContactUpdated` message. Finally, if the user attempts to navigate away, but cancels, we reflect this by publishing another `ContactViewed` message, representing that they are returning to view the current contact.
+
+With this messages in place, we can now enable any other component in our system to loosely subscribe to the new information in our system and use that data as appropriate to its internal needs. We'll go ahead and update the `contact-list` component to take advantage of this information to ensure that it is always in sync:
+
+<code-listing heading="contact-list${context.language.fileExtension}">
+  <source-code lang="ES 2015">
+    import {EventAggregator} from 'aurelia-event-aggregator';
+    import {WebAPI} from './web-api';
+    import {ContactUpdated, ContactViewed} from './messages';
+
+    export class ContactList {
+      static inject = [WebAPI, EventAggregator];
+
+      constructor(api, ea){
+        this.api = api;
+        this.contacts = [];
+
+        ea.subscribe(ContactViewed, msg => this.select(msg.contact));
+        ea.subscribe(ContactUpdated, msg => {
+          let id = msg.contact.id;
+          let found = this.contacts.find(x => x.id == id);
+          Object.assign(found, msg.contact);
+        });
+      }
+
+      created(){
+        this.api.getContactList().then(contacts => this.contacts = contacts);
+      }
+
+      select(contact){
+        this.selectedId = contact.id;
+        return true;
+      }
+    }
+  </source-code>
+  <source-code lang="ES Next">
+    import {EventAggregator} from 'aurelia-event-aggregator';
+    import {WebAPI} from './web-api';
+    import {ContactUpdated, ContactViewed} from './messages';
+    import {inject} from 'aurelia-framework';
+
+    @inject(WebAPI, EventAggregator)
+    export class ContactList {
+      constructor(api, ea){
+        this.api = api;
+        this.contacts = [];
+
+        ea.subscribe(ContactViewed, msg => this.select(msg.contact));
+        ea.subscribe(ContactUpdated, msg => {
+          let id = msg.contact.id;
+          let found = this.contacts.find(x => x.id == id);
+          Object.assign(found, msg.contact);
+        });
+      }
+
+      created(){
+        this.api.getContactList().then(contacts => this.contacts = contacts);
+      }
+
+      select(contact){
+        this.selectedId = contact.id;
+        return true;
+      }
+    }
+  </source-code>
+  <source-code lang="TypeScript">
+    import {EventAggregator} from 'aurelia-event-aggregator';
+    import {WebAPI} from './web-api';
+    import {ContactUpdated, ContactViewed} from './messages';
+    import {inject} from 'aurelia-framework';
+
+    @inject(WebAPI, EventAggregator)
+    export class ContactList {
+      contacts;
+      selectedId = 0;
+
+      constructor(private api: WebAPI, ea: EventAggregator){
+        ea.subscribe(ContactViewed, msg => this.select(msg.contact));
+        ea.subscribe(ContactUpdated, msg => {
+          let id = msg.contact.id;
+          let found = this.contacts.find(x => x.id == id);
+          Object.assign(found, msg.contact);
+        });
+      }
+
+      created(){
+        this.api.getContactList().then(contacts => this.contacts = contacts);
+      }
+
+      select(contact){
+        this.selectedId = contact.id;
+        return true;
+      }
+    }
+  </source-code>
+</code-listing>
+
+As you can see, we've just imported and injected our `EventAggregator` and then it's as simple as calling the `subscribe` method and passing it the message type and a callback. When the message is published, your callback is fired and passed the instance of the message type. In this case, we use these messages to update our selection as well as the details of the contact that are relevant to our list.
+
+If you run the application now, you should see that everything is working as expected.
 
 ## [Adding A Loading Indicator](aurelia-doc://section/9/version/1.0.0)
