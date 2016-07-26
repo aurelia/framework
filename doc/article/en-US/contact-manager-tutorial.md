@@ -61,7 +61,7 @@ Copy all of these files to the `src` folder of your project. TypeScript users sh
 
 ## [Building the Application Shell](aurelia-doc://section/4/version/1.0.0)
 
-> Waring
+> Warning
 > Before proceeding any further, please make sure you are familiar with the concepts introduced in the Quick Start Guide or otherwise have some basic experience with Aurelia. Topics covered in the Quick Start will not be explained again here.
 
 Let's start by looking at a picture of the final product of this tutorial. It will help us to see the application's structure and the pieces we need to build.
