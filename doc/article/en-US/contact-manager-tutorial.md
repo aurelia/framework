@@ -160,7 +160,7 @@ npm install jquery@^2.2.4 --save
 
 With these libraries installed, we now need to tell Aurelia which application bundle they should be included in and how to properly configure then with the module system. To do this, look in the `aurelia_project` folder and open up the `aurelia.json` file. This file contains all the information that the Aurelia CLI uses to build our project. If you scroll down, you will see a `bundles` section. There are two bundles defined by default: `app-bundle.js`, which contains your code and `vendor-bundle.js` which contains all 3rd party libraries. We need to add a new items to the `dependencies` array of the `app-bundle.js` bundle. Add the following two entries for jQuery and Bootstrap:
 
-<code-listing heading="A Legacy Library Dependency">
+<code-listing heading="jQuery and Bootstrap Bundle Config">
   <source-code lang="JavaScript">
     "dependencies": [
       ...
@@ -343,7 +343,7 @@ Ok, now that we've got the contact list built, we need to use it. To do that, up
 
       <div class="container">
         <div class="row">
-          <contact-list class="col-md-4">Contact List Placeholder</contact-list>
+          <contact-list class="col-md-4"></contact-list>
           <router-view class="col-md-8"></router-view>
         </div>
       </div>
@@ -892,3 +892,230 @@ As you can see, we've just imported and injected our `EventAggregator` and then 
 If you run the application now, you should see that everything is working as expected.
 
 ## [Adding A Loading Indicator](aurelia-doc://section/9/version/1.0.0)
+
+Let's add one more final touch to this application. Whenever we're navigating from screen to screen or making a `WebAPI` request, let's show a loading indicator at the top of our app. To do this, we'll use a 3rd party library and create a custom Aurelia element to wrap it up.
+
+Begin by installing the `nprogress` library with the following command:
+
+```
+npm install nprogress --save
+```
+
+Once this is installed, we'll need to make sure it gets configured in the proper bundle. Open your `aurelia.json` file again, find the bundles section and add the following entry to the dependencies array of the `vendor-bundle.js` bundle:
+
+<code-listing heading="NProgress Bundle Config">
+  <source-code lang="JavaScript">
+    "dependencies": [
+      ...
+      {
+        "name": "nprogress",
+        "path": "../node_modules/nprogress",
+        "main": "nprogress",
+        "resources": [
+          "nprogress.css"
+        ]
+      }
+      ...
+    ]
+  </source-code>
+</code-listing>
+
+As you can see, we've configured the standard JavaScript main but are also including an additional CSS resource, just like we did with Bootstrap.
+
+With that in place, let's create our `loading-indicator` custom element. In the `src/resources/elements` folder create a file named `loading-indicator${context.language.fileExtension}` and use the code below for its implementation:
+
+<code-listing heading="loading-indicator${context.language.fileExtension}">
+  <source-code lang="ES 2015">
+    import * as nprogress from 'nprogress';
+    import {bindable, noView, decorators} from 'aurelia-framework';
+
+    export let LoadingIndicator = decorators(
+      noView(['nprogress/nprogress.css']),
+      bindable({name: 'loading', defaultValue: false})
+    ).on(class {
+      loadingChanged(newValue){
+        if (newValue) {
+          nprogress.start();
+        } else {
+          nprogress.done();
+        }
+      }
+    });
+  </source-code>
+  <source-code lang="ES Next">
+    import * as nprogress from 'nprogress';
+    import {bindable, noView} from 'aurelia-framework';
+
+    @noView(['nprogress/nprogress.css'])
+    export class LoadingIndicator {
+      @bindable loading = false;
+
+      loadingChanged(newValue){
+        if (newValue) {
+          nprogress.start();
+        } else {
+          nprogress.done();
+        }
+      }
+    }
+  </source-code>
+  <source-code lang="TypeScript">
+    import * as nprogress from 'nprogress';
+    import {bindable, noView} from 'aurelia-framework';
+
+    @noView(['nprogress/nprogress.css'])
+    export class LoadingIndicator {
+      @bindable loading = false;
+
+      loadingChanged(newValue){
+        if (newValue) {
+          nprogress.start();
+        } else {
+          nprogress.done();
+        }
+      }
+    }
+  </source-code>
+</code-listing>
+
+This code creates a custom element, but we're doing a few unique things here. First, since the entire rendering job is handled by the NProgress library, we don't need Aurelia's templating engine to render this component at all. So, we use the `noView()` decorator to tell Aurelia not to load a `loading-indicator.html`, compile it or do any of that rendering work. Additionally, the NProgress library requires some CSS to work, so we can declare that in the decorator as well. In the case of `noView`, this works exactly as if you had put this in a `require` element inside the view.
+
+Next, we want our custom HTML element to have a `loading` property that we can bind to via an HTML attribute in the DOM. So, we declare that by using the `bindable` decorator. Whenever you have a `bindable`, by convention, you can optionally declare a *propertyName*Changed method that will be called whenever the binding system updates the property. So, we've added one of those so that we can toggle the NProgress indicator off and on, based on the value of that property.
+
+Previously, when we created the `contact-list` component, we required that into the `app.html` view and used it, since all views are encapsulated. However, we're going to do something different in this case, as an example. Aurelia actually gives you the ability to globlalize view resources, such as custom elements. This is a convenience so that you don't have to require common resources repeatedly into every view. To do this, we need to register our element as a global resources. Open up the `resources/index${context.language.fileExtension}` file that's already in your solution, and change the code so that it has the registration as follows:
+
+<code-listing heading="resources/index${context.language.fileExtension}">
+  <source-code lang="ES 2015">
+    export function configure(config) {
+      config.globalResources(['./elements/loading-indicator']);
+    }
+  </source-code>
+  <source-code lang="ES Next">
+    export function configure(config) {
+      config.globalResources(['./elements/loading-indicator']);
+    }
+  </source-code>
+  <source-code lang="TypeScript">
+    import {FrameworkConfiguration} from 'aurelia-framework';
+
+    export function configure(config: FrameworkConfiguration) {
+      config.globalResources(['./elements/loading-indicator']);
+    }
+  </source-code>
+</code-listing>
+
+With this registration in place, we can now use our new indicator in our `app.html`, but before we do that, we want to make one more change to our `app${context.language.fileExtension}`. We would like to be able to bind the indicator to the request state of our API, so we need to make that available in our `App` class. Update your `app${context.language.fileExtension}` as follows:
+
+<code-listing heading="app${context.language.fileExtension}">
+  <source-code lang="ES 2015">
+    import {WebAPI} from './web-api';
+
+    export class App {
+      static inject() { return [WebAPI]; }
+
+      constructor(api) {
+        this.api = api;
+      }
+
+      configureRouter(config, router){
+        config.title = 'Contacts';
+        config.map([
+          { route: '',              moduleId: 'no-selection',   title: 'Select'},
+          { route: 'contacts/:id',  moduleId: 'contact-detail', name:'contacts' }
+        ]);
+
+        this.router = router;
+      }
+    }
+  </source-code>
+  <source-code lang="ES Next">
+    import {inject} from 'aurelia-framework';
+    import {WebAPI} from './web-api';
+
+    @inject(WebAPI)
+    export class App {
+      constructor(api) {
+        this.api = api;
+      }
+
+      configureRouter(config, router){
+        config.title = 'Contacts';
+        config.map([
+          { route: '',              moduleId: 'no-selection',   title: 'Select'},
+          { route: 'contacts/:id',  moduleId: 'contact-detail', name:'contacts' }
+        ]);
+
+        this.router = router;
+      }
+    }
+  </source-code>
+  <source-code lang="TypeScript">
+    import {Router, RouterConfiguration} from 'aurelia-router';
+    import {inject} from 'aurelia-framework';
+    import {WebAPI} from './web-api';
+
+    @inject(WebAPI)
+    export class App {
+      router: Router;
+
+      constructor(public api: WebAPI) {}
+
+      configureRouter(config: RouterConfiguration, router: Router){
+        config.title = 'Contacts';
+        config.map([
+          { route: '',              moduleId: 'no-selection',   title: 'Select'},
+          { route: 'contacts/:id',  moduleId: 'contact-detail', name:'contacts' }
+        ]);
+
+        this.router = router;
+      }
+    }
+  </source-code>
+</code-listing>
+
+Ok, now that we've got an `api` property we can bind to, update your `app.html` to the final version that adds the `loading-indicator` and binds its `loading` property:
+
+<code-listing heading="app.html">
+  <source-code lang="HTML">
+    <template>
+      <require from="bootstrap/css/bootstrap.css"></require>
+      <require from="./styles.css"></require>
+      <require from="./contact-list"></require>
+
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <i class="fa fa-user"></i>
+            <span>Contacts</span>
+          </a>
+        </div>
+      </nav>
+
+      <loading-indicator loading.bind="router.isNavigating || api.isRequesting"></loading-indicator>
+
+      <div class="container">
+        <div class="row">
+          <contact-list class="col-md-4"></contact-list>
+          <router-view class="col-md-8"></router-view>
+        </div>
+      </div>
+    </template>
+  </source-code>
+</code-listing>
+
+And with that, we've finished our app. Congratulations!
+
+## [Next Steps](aurelia-doc://section/10/version/1.0.0)
+
+Now that you've completed the tutorial, you may want to consider doing some additional research or development exercises to continue your learning and hone your skills. Here are a few ideas:
+
+* Create a real backend for the app and use the [http-client or fetch-client](#/doc/article/aurelia/fetch-client/latest/http-services) to retrieve the data.
+* Extend that application so that new contacts can be added.
+* Extend the contact detail form with data validation.
+* Learn more about [the component life-cycle](#/doc/article/aurelia/framework/latest/creating-components/1).
+* Learn more about [the navigation life-cycle and routing](#/doc/article/aurelia/framework/latest/cheat-sheet/7).
+* Expand your knowledge of [binding](#/doc/article/aurelia/binding/latest/binding-basics) and [templating](#/doc/article/aurelia/templating/latest/templating-basics).
+
+## [Conclusion](aurelia-doc://section/11/version/1.0.0)
+
+This tutorial presents a fairly simply application, but it provides an opportunity to demonstrate a number of interesting techniques. We hope it's helped you along in the process of learning Aurelia and we look forward to seeing what things you will build next.
