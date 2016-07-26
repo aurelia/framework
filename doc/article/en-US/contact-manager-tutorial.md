@@ -48,7 +48,7 @@ Once the dependencies are installed (it will take a few minutes), your project i
 For this tutorial, we're going to be working against a fake, in-memory backend. We've also pre-created the CSS and some utility functions, so we don't have to waste time on that here. Before we begin writing the app, you'll need to download these required assets and add them to your project.
 
 <div style="text-align: center; margin-bottom: 32px">
-  <a class="au-button" href="http://aurelia.io/downloads/contat-manager-assets.zip" target="_blank">Download the Contact Manager Assets</a>
+  <a class="au-button" href="http://aurelia.io/downloads/contact-manager-assets.zip" target="_blank">Download the Contact Manager Assets</a>
 </div>
 
 Once you've downloaded the zip file, extract it and you'll find three files:
