@@ -922,7 +922,7 @@ Once this is installed, we'll need to make sure it gets configured in the proper
 
 As you can see, we've configured the standard JavaScript main but are also including an additional CSS resource, just like we did with Bootstrap.
 
-> Note: TypeScript Definition Files
+> Info: TypeScript Definition Files
 > TypeScript users should note that when using 3rd party libraries, in order to make them work in a TypeScript project, you will either need to install the d.ts files or create them for yourself. In the case of NProgress, there are definition files available via Definitely Typed which can be installed with the Typings CLI. Assuming you have the Typings tool installed, you would install the definition files for NProgress with the following command: `typings install dt~nprogress --global --save
 `
 
