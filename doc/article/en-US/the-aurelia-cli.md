@@ -78,7 +78,7 @@ Below is some guidance for how to manually configure several different common 3r
 
 ### A Single-File Module
 
-If the library you have installed is a single CommonJS or AMD file, you can add an entry similar to the following to the dependencies of yoru bundle:
+If the library you have installed is a single CommonJS or AMD file, you can add an entry similar to the following to the dependencies of your bundle:
 
 <code-listing heading="A Single File Module Dependency">
   <source-code lang="JavaScript">
