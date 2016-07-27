@@ -1,3 +1,13 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/aurelia/framework/compare/1.0.0-rc.1.0.13...v1.0.0) (2016-07-27)
+
+
+### Bug Fixes
+
+* **aurelia:** resolve promise in Aurelia.enhance ([741fa22](https://github.com/aurelia/framework/commit/741fa22)), closes [#480](https://github.com/aurelia/framework/issues/480)
+
+
+
 <a name="1.0.0-rc.1.0.3"></a>
 # [1.0.0-rc.1.0.3](https://github.com/aurelia/framework/compare/1.0.0-rc.1.0.2...v1.0.0-rc.1.0.3) (2016-07-21)
 

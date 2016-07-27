@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "1.0.0-rc.1.0.13",
+  "version": "1.0.0",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
