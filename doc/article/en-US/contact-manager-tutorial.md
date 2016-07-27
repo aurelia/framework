@@ -70,7 +70,7 @@ Let's start by looking at a picture of the final product of this tutorial. It wi
 
 In the picture, you can see that we have a header across the top, a contact list on the left and a detail pane filling the rest of the space. We'll refer to the over-arching application structure, as the shell or layout of our app. Let's begin by putting that in place now.
 
-To begin, we're going to setup our `App` class by configuring it with a router. We want our browser history to reflect which contact in our list is selected, so we'll introduce a client-side router to handle the navigation from screen to screen. Replace the code in your `app{context.language.fileExtension}` with the following:
+To begin, we're going to setup our `App` class by configuring it with a router. We want our browser history to reflect which contact in our list is selected, so we'll introduce a client-side router to handle the navigation from screen to screen. Replace the code in your `app${context.language.fileExtension}` with the following:
 
 <code-listing heading="app${context.language.fileExtension}">
   <source-code lang="ES 2015/ES Next">
@@ -191,7 +191,7 @@ Failed to load resource: the server responded with a status of 404 (Not Found) h
 ERROR [app-router] Error: Script error for "no-selection"
 ```
 
-This is actually expected. Why? Well, we have now configured a router, that router is matching on the empty route pattern we defined and it's trying to load the `no-selection` module, but we haven't created that yet. Let's do that now. Create a new file under `src` named `no-selection{context.language.fileExtension}` and give it the following code:
+This is actually expected. Why? Well, we have now configured a router, that router is matching on the empty route pattern we defined and it's trying to load the `no-selection` module, but we haven't created that yet. Let's do that now. Create a new file under `src` named `no-selection${context.language.fileExtension}` and give it the following code:
 
 <code-listing heading="no-selection${context.language.fileExtension}">
   <source-code lang="ES 2015/ES Next">
@@ -228,7 +228,7 @@ All it does is provide a container with some styling in order to display our mes
 
 We've got the basic visual structure of our application in place and routing is now working. We've even created our first screen. However, it's not very interesting. We've got a `div` placeholder for the actual contact list at present. Let's go ahead and build that out, as a `contact-list` custom element.
 
-Aurelia strives to be a self-consistent framework. As such, building a custom element is the same as creating your `App` component and your routed components. To create the `contact-list` custom element, start by creating a new file named `contact-list{context.language.fileExtension}` and add the following code:
+Aurelia strives to be a self-consistent framework. As such, building a custom element is the same as creating your `App` component and your routed components. To create the `contact-list` custom element, start by creating a new file named `contact-list${context.language.fileExtension}` and add the following code:
 
 <code-listing heading="contact-list${context.language.fileExtension}">
   <source-code lang="ES 2015">
@@ -365,7 +365,7 @@ Ok, things are starting to come together, but we still can't view an individual 
 ERROR [app-router] Error: Script error for "contact-detail"
 ```
 
-Again, this is because the router is trying to route to the detail screen, but we have not yet created the component. So, let's do that next. Create a new file named `contact-detail{context.language.fileExtension}` and add the following code:
+Again, this is because the router is trying to route to the detail screen, but we have not yet created the component. So, let's do that next. Create a new file named `contact-detail${context.language.fileExtension}` and add the following code:
 
 <code-listing heading="contact-detail${context.language.fileExtension}">
   <source-code lang="ES 2015">
