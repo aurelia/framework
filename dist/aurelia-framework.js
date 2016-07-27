@@ -5,7 +5,6 @@ import {BindingLanguage,ViewSlot,ViewResources,TemplatingEngine,CompositionTrans
 import {DOM,PLATFORM} from 'aurelia-pal';
 import {relativeToFile,join} from 'aurelia-path';
 
-/*eslint no-unused-vars:0*/
 function preventActionlessFormSubmit() {
   DOM.addEventListener('submit', evt => {
     const target = evt.target;
@@ -106,7 +105,7 @@ export class Aurelia {
       this.root = engine.enhance({container: this.container, element: this.host, resources: this.resources, bindingContext: bindingContext});
       this.root.attached();
       this._onAureliaComposed();
-      return this;
+      resolve(this);
     });
   }
 
@@ -180,14 +179,14 @@ export class Aurelia {
   }
 }
 
-/*eslint no-unused-vars:0, no-cond-assign:0, consistent-return: 0*/
 const logger = TheLogManager.getLogger('aurelia');
 const extPattern = /\.[^/.]+$/;
 
 function runTasks(config, tasks) {
   let current;
   let next = () => {
-    if (current = tasks.shift()) {
+    current = tasks.shift();
+    if (current) {
       return Promise.resolve(current(config)).then(next);
     }
 
@@ -211,7 +210,7 @@ function loadPlugin(config, loader, info) {
   return _loadPlugin(id);
 
   function _loadPlugin(moduleId) {
-    return loader.loadModule(moduleId).then(m => {
+    return loader.loadModule(moduleId).then(m => { // eslint-disable-line consistent-return
       if ('configure' in m) {
         return Promise.resolve(m.configure(config, info.config || {})).then(() => {
           config.resourcesRelativeTo = null;
@@ -275,7 +274,7 @@ function loadResources(aurelia, resourcesToLoad, appResources) {
   }
 }
 
-function getExt(name) {
+function getExt(name) { // eslint-disable-line consistent-return
   let match = name.match(extPattern);
   if (match && match.length > 0) {
     return (match[0].split('.'))[1];
@@ -397,7 +396,6 @@ export class FrameworkConfiguration {
 
     let toAdd = Array.isArray(resources) ? resources : arguments;
     let resource;
-    let path;
     let resourcesRelativeTo = this.resourcesRelativeTo || ['', ''];
 
     for (let i = 0, ii = toAdd.length; i < ii; ++i) {
@@ -551,7 +549,8 @@ export class FrameworkConfiguration {
       let current;
 
       let next = () => {
-        if (current = info.shift()) {
+        current = info.shift();
+        if (current) {
           return loadPlugin(this, loader, current).then(next);
         }
 

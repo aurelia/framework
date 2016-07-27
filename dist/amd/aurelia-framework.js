@@ -97,7 +97,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
     }
   }
 
-
+  
 
   function preventActionlessFormSubmit() {
     _aureliaPal.DOM.addEventListener('submit', function (evt) {
@@ -112,7 +112,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
 
   var Aurelia = exports.Aurelia = function () {
     function Aurelia(loader, container, resources) {
-
+      
 
       this.loader = loader || new _aureliaPal.PLATFORM.Loader();
       this.container = container || new _aureliaDependencyInjection.Container().makeGlobal();
@@ -166,7 +166,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
         _this2.root = engine.enhance({ container: _this2.container, element: _this2.host, resources: _this2.resources, bindingContext: bindingContext });
         _this2.root.attached();
         _this2._onAureliaComposed();
-        return _this2;
+        resolve(_this2);
       });
     };
 
@@ -249,7 +249,8 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
   function runTasks(config, tasks) {
     var current = void 0;
     var next = function next() {
-      if (current = tasks.shift()) {
+      current = tasks.shift();
+      if (current) {
         return Promise.resolve(current(config)).then(next);
       }
 
@@ -355,7 +356,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
     function FrameworkConfiguration(aurelia) {
       var _this4 = this;
 
-
+      
 
       this.aurelia = aurelia;
       this.container = aurelia.container;
@@ -414,7 +415,6 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
 
       var toAdd = Array.isArray(resources) ? resources : arguments;
       var resource = void 0;
-      var path = void 0;
       var resourcesRelativeTo = this.resourcesRelativeTo || ['', ''];
 
       for (var i = 0, ii = toAdd.length; i < ii; ++i) {
@@ -526,7 +526,8 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
         var current = void 0;
 
         var next = function next() {
-          if (current = info.shift()) {
+          current = info.shift();
+          if (current) {
             return loadPlugin(_this7, loader, current).then(next);
           }
 

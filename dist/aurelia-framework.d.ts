@@ -237,6 +237,6 @@ export * from 'aurelia-task-queue';
 export * from 'aurelia-path';
 export * from 'aurelia-pal';
 /**
- * The log manager.
- */
-export const LogManager: any;
+   * The log manager.
+   */
+  export const LogManager: any;

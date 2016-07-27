@@ -5,7 +5,7 @@ define(['exports', './aurelia-framework'], function (exports, _aureliaFramework)
     value: true
   });
   Object.keys(_aureliaFramework).forEach(function (key) {
-    if (key === "default") return;
+    if (key === "default" || key === "__esModule") return;
     Object.defineProperty(exports, key, {
       enumerable: true,
       get: function () {
