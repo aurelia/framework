@@ -518,7 +518,7 @@ Finally, we have a `canSave` computed property which we'll use in the view. This
 
 With that all in place, let's look at the view that will render this component:
 
-<code-listing heading="app.html">
+<code-listing heading="contact-detail.html">
   <source-code lang="HTML">
     <template>
       <div class="panel panel-primary">
