@@ -39,7 +39,7 @@ npm install aurelia-cli -g
 
 Now, that you've got your machine setup, we can create our contact manager app. To create the project, run `au new` from the command line. You will be presented with a number of options. Name the project "contact-manager" and then select either "Default ESNext" or "Default TypeScript" depending on what is most comfortable for you.
 
-Once you've made your choice, the CLI will show you your selections and ask if you'd like to create the file structure. Hit enter to accpet the default "yes". After that, you'll be asked if you would like to install your new project's dependencies. Press enter to select the default "yes" for this as well.
+Once you've made your choice, the CLI will show you your selections and ask if you'd like to create the file structure. Hit enter to accept the default "yes". After that, you'll be asked if you would like to install your new project's dependencies. Press enter to select the default "yes" for this as well.
 
 Once the dependencies are installed (it will take a few minutes), your project is ready to go. Just change directory into the project folder and run it by typing `au run --watch`. This will run the app and watch the project's source for changes. Open a web browser and navigate to the url indicated in the CLI's output. If you've got everything setup correctly, you should see the message "Hello World!" in the browser.
 
@@ -140,7 +140,7 @@ Now that we've configured our application's navigation structure, we need to put
 
 There are several interesting things to note about this view. First, take a look at the `require` elements at the top of the view. This is how we can "import" or "require" various resources into our view. It's the view equivalent of the ES 2015 "import" syntax. Just as JavaScript is modularized and requires importing of other resources, so do Aurelia views. In this specific case, we're indicating that we want to bring in bootstrap's CSS as well as our own custom styles. Of course, we haven't actually installed Bootstrap yet. We'll get to that in a minute.
 
-Below the `require` elements, you can see a pretty standard structure. We have some HTML to setup a navbar at the top. Below that we have the application's main container div. This has two columns. The first will contain our contact list, indicated byt he placeholder div. The second contains a `router-view` custom element.
+Below the `require` elements, you can see a pretty standard structure. We have some HTML to setup a navbar at the top. Below that we have the application's main container div. This has two columns. The first will contain our contact list, indicated by the placeholder div. The second contains a `router-view` custom element.
 
 The `router-view` is provided by Aurelia and is a placeholder that indicated where the router should render the current route. This allows you to structure your application layout however you want, simply placing the `router-view` wherever you want to see the current page rendered. Whenever you have a `configureRouter` method, the view must also contain a `router-view`.
 
@@ -158,7 +158,7 @@ Next, because Bootstrap uses jQuery, we want to install jQuery as well, like thi
 npm install jquery@^2.2.4 --save
 ```
 
-With these libraries installed, we now need to tell Aurelia which application bundle they should be included in and how to properly configure then with the module system. To do this, look in the `aurelia_project` folder and open up the `aurelia.json` file. This file contains all the information that the Aurelia CLI uses to build our project. If you scroll down, you will see a `bundles` section. There are two bundles defined by default: `app-bundle.js`, which contains your code and `vendor-bundle.js` which contains all 3rd party libraries. We need to add a new items to the `dependencies` array of the `app-bundle.js` bundle. Add the following two entries for jQuery and Bootstrap:
+With these libraries installed, we now need to tell Aurelia which application bundle they should be included in and how to properly configure then with the module system. To do this, look in the `aurelia_project` folder and open up the `aurelia.json` file. This file contains all the information that the Aurelia CLI uses to build our project. If you scroll down, you will see a `bundles` section. There are two bundles defined by default: `app-bundle.js`, which contains your code and `vendor-bundle.js` which contains all 3rd party libraries. We need to add a new items to the `dependencies` array of the `vendor-bundle.js` bundle. Add the following two entries for jQuery and Bootstrap:
 
 <code-listing heading="jQuery and Bootstrap Bundle Config">
   <source-code lang="JavaScript">
@@ -302,7 +302,7 @@ The second thing to notice is the `created` method. All Aurelia components follo
 
 Finally, we have a `select` method for selecting a contact. We'll revisit this shortly, after we take a look at how it's used in the view. On that note, create a `contact-list.html` file and use the following code for the view:
 
-<code-listing heading="no-selection.html">
+<code-listing heading="contact-list.html">
   <source-code lang="HTML">
     <template>
       <div class="contact-list">
@@ -319,7 +319,7 @@ Finally, we have a `select` method for selecting a contact. We'll revisit this s
   </source-code>
 </code-listing>
 
-The markup above begins by repeating an `li` for each contact of our contacts array. Take a look at the class attribute on the `li`. We've used an interesting technique here to add an `active` class if the contact's id is the same as the `selectedId` of the contact on our `ContactList` view-model. We've used the `$parent` special value to reach outside of the list's scope and into the parent view-model so we can test against that property. Throughout the list template, we've used basic string interpolation binding to show the `firstName`, 'lastName' and `email` of each contact.
+The markup above begins by repeating an `li` for each contact of our contacts array. Take a look at the class attribute on the `li`. We've used an interesting technique here to add an `active` class if the contact's id is the same as the `selectedId` of the contact on our `ContactList` view-model. We've used the `$parent` special value to reach outside of the list's scope and into the parent view-model so we can test against that property. Throughout the list template, we've used basic string interpolation binding to show the `firstName`, `lastName` and `email` of each contact.
 
 Take special note of the `a` tag. First, we are using a custom attribute provided by Aurelia's routing system: `route-href`. This attribute can generate an href for a route, based on the route's name and a set of parameters. Remember how we named the contacts route in our configuration? Here we're using that by referencing the "contacts" route name and binding the contacts's `id` parameter as the route's `id` parameter. With this information, the router is able to generate the correct `href` on the `a` tag for each contact. Additionally, we've also wired up a `click` event. Why would we do this if the `href` is already going to handle navigating to the correct contact? Well, we're looking for instant user feedback. We want the list selection to happen ASAP, so we don't have to wait on the navigation system or on the loading of the contact data. To accomplish this, we use the `select` method to track the selected contact's `id` which allows us to instantly apply the selection style. Finally, normal use of `.trigger` or `.delegate` causes the default action of the event to be cancelled. But, if you return true from your method, as we have done above, it will be allowed to continue. Thus, when the user clicks on the contact, we immediately select the contact in the list and then the `href` is allowed to trigger the router, causing a navigation to the selected contact.
 
@@ -518,7 +518,7 @@ Finally, we have a `canSave` computed property which we'll use in the view. This
 
 With that all in place, let's look at the view that will render this component:
 
-<code-listing heading="app.html">
+<code-listing heading="contact-detail.html">
   <source-code lang="HTML">
     <template>
       <div class="panel panel-primary">
@@ -643,7 +643,7 @@ Whenever the contact detail screen successfully saves a contact, we'll publish t
           this.contact = contact;
           this.routeConfig.navModel.setTitle(contact.firstName);
           this.originalContact = JSON.parse(JSON.stringify(contact));
-          this.ea.publish(new ContactViewed(contact));
+          this.ea.publish(new ContactViewed(this.contact));
         });
       }
 
@@ -696,7 +696,7 @@ Whenever the contact detail screen successfully saves a contact, we'll publish t
           this.contact = contact;
           this.routeConfig.navModel.setTitle(contact.firstName);
           this.originalContact = JSON.parse(JSON.stringify(contact));
-          this.ea.publish(new ContactViewed(contact));
+          this.ea.publish(new ContactViewed(this.contact));
         });
       }
 
@@ -756,7 +756,7 @@ Whenever the contact detail screen successfully saves a contact, we'll publish t
           this.contact = <Contact>contact;
           this.routeConfig.navModel.setTitle(this.contact.firstName);
           this.originalContact = JSON.parse(JSON.stringify(this.contact));
-          this.ea.publish(new ContactViewed(contact));
+          this.ea.publish(new ContactViewed(this.contact));
         });
       }
 
