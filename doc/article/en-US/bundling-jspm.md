@@ -99,7 +99,7 @@ Now, let's create a `bundle.js` file in `build/tasks/bundle.js` as follows:
 > Info
 > The bundle function returns a Promise for proper integration into async task engines like Gulp.
 
-With that file in place, let's run the command bellow:
+With that file in place, let's run the command below:
 
 ```shell
 gulp bundle
