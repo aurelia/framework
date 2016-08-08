@@ -516,9 +516,9 @@ If we take a brief look at the `save` method, we can see that this is just a bri
 
 Finally, we have a `canSave` computed property which we'll use in the view. This will help us show some simple feedback to the user to indicate whether the UI and data are in a state that allows for saving.
 
-With that all in place, let's look at the view that will render this component:
+With that all in place, let's look at the view that will render this component. Create a new file named `contact-detail.html`.
 
-<code-listing heading="app.html">
+<code-listing heading="contact-detail.html">
   <source-code lang="HTML">
     <template>
       <div class="panel panel-primary">
