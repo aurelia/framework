@@ -210,7 +210,7 @@ Here's what's amazing. This is all the ${context.language.name} code for the app
 
 Ok, now that we've modeled out our application in ${context.language.name}, we need to make Aurelia render it. We weren't completely honest when we said above that we had showed you all the ${context.language.name} code. There's one final piece that gets it all going.
 
-If you recall, when we looked at `index.html` there was an `aurelia-app` attribute on the `body` element. This attribute tells the `aurelia-bootstrapper` where to render the application and what main file to use to configure the app. The value of that attribute points to `src/main`. So, lets create that file in our `src` folder and see what it does.
+If you recall, when we looked at `index.html` there was an `aurelia-app` attribute on the `body` element. This attribute tells the `aurelia-bootstrapper` where to render the application and what main file to use to configure the app. The value of that attribute points to `src/main`. So, let's create that file in our `src` folder and see what it does.
 
 <code-listing heading="main${context.language.fileExtension}">
   <source-code lang="ES 2015/2016">
