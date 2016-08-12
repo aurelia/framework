@@ -810,7 +810,7 @@ With this messages in place, we can now enable any other component in our system
         ea.subscribe(ContactViewed, msg => this.select(msg.contact));
         ea.subscribe(ContactUpdated, msg => {
           let id = msg.contact.id;
-          let found = this.contacts.find(x => x.id == id);
+          let found = this.contacts.find(x => x.id === id);
           Object.assign(found, msg.contact);
         });
       }
