@@ -158,7 +158,7 @@ Next, because Bootstrap uses jQuery, we want to install jQuery as well, like thi
 npm install jquery@^2.2.4 --save
 ```
 
-With these libraries installed, we now need to tell Aurelia which application bundle they should be included in and how to properly configure then with the module system. To do this, look in the `aurelia_project` folder and open up the `aurelia.json` file. This file contains all the information that the Aurelia CLI uses to build our project. If you scroll down, you will see a `bundles` section. There are two bundles defined by default: `app-bundle.js`, which contains your code and `vendor-bundle.js` which contains all 3rd party libraries. We need to add a new items to the `dependencies` array of the `app-bundle.js` bundle. Add the following two entries for jQuery and Bootstrap:
+With these libraries installed, we now need to tell Aurelia which application bundle they should be included in and how to properly configure then with the module system. To do this, look in the `aurelia_project` folder and open up the `aurelia.json` file. This file contains all the information that the Aurelia CLI uses to build our project. If you scroll down, you will see a `bundles` section. There are two bundles defined by default: `app-bundle.js`, which contains your code and `vendor-bundle.js` which contains all 3rd party libraries. We need to add new items to the `dependencies` array of the `app-bundle.js` bundle. Add the following two entries for jQuery and Bootstrap:
 
 <code-listing heading="jQuery and Bootstrap Bundle Config">
   <source-code lang="JavaScript">
@@ -298,11 +298,11 @@ Aurelia strives to be a self-consistent framework. As such, building a custom el
 
 The view-model for our custom element has a few notable characteristics. First, we're using dependency injection. Aurelia has its own dependency injection container which it uses to instantiate classes in your app. Classes can declare constructor dependencies through *inject metadata*. This looks a bit different depending on what language you are using. In ES 2015, you can declare an `inject` static method that returns an array of constructor dependencies while in ES Next and TypeScript, you can use an `inject` decorator to declare those dependencies. As you can see here, our `ContactList` class has a dependency on our `WebAPI` class. When Aurelia instantiates the contact list, it will first instantiate (or locate) an instance of the web API and "inject" that into the contact list's constructor.
 
-The second thing to notice is the `created` method. All Aurelia components follow a component life-cycle. A developer can opt into any stage of the life-cycle by implementing the appropriate methods. In this case, we're implementing into the `created` hook which gets called after both the view-model and thew view are created. We're using this as an opportunity to call our API and get back the list of contacts, which we then store in our `contacts` property so we can bind it in the view.
+The second thing to notice is the `created` method. All Aurelia components follow a component life-cycle. A developer can opt into any stage of the life-cycle by implementing the appropriate methods. In this case, we're implementing into the `created` hook which gets called after both the view-model and the view are created. We're using this as an opportunity to call our API and get back the list of contacts, which we then store in our `contacts` property so we can bind it in the view.
 
 Finally, we have a `select` method for selecting a contact. We'll revisit this shortly, after we take a look at how it's used in the view. On that note, create a `contact-list.html` file and use the following code for the view:
 
-<code-listing heading="no-selection.html">
+<code-listing heading="contact-list.html">
   <source-code lang="HTML">
     <template>
       <div class="contact-list">
