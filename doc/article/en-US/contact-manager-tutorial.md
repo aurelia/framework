@@ -302,7 +302,7 @@ The second thing to notice is the `created` method. All Aurelia components follo
 
 Finally, we have a `select` method for selecting a contact. We'll revisit this shortly, after we take a look at how it's used in the view. On that note, create a `contact-list.html` file and use the following code for the view:
 
-<code-listing heading="no-selection.html">
+<code-listing heading="contact-list.html">
   <source-code lang="HTML">
     <template>
       <div class="contact-list">
