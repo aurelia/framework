@@ -302,7 +302,7 @@ The second thing to notice is the `created` method. All Aurelia components follo
 
 Finally, we have a `select` method for selecting a contact. We'll revisit this shortly, after we take a look at how it's used in the view. On that note, create a `contact-list.html` file and use the following code for the view:
 
-<code-listing heading="no-selection.html">
+<code-listing heading="contact-list.html">
   <source-code lang="HTML">
     <template>
       <div class="contact-list">
@@ -516,9 +516,9 @@ If we take a brief look at the `save` method, we can see that this is just a bri
 
 Finally, we have a `canSave` computed property which we'll use in the view. This will help us show some simple feedback to the user to indicate whether the UI and data are in a state that allows for saving.
 
-With that all in place, let's look at the view that will render this component:
+With that all in place, let's look at the view that will render this component by creating a file called `contact-detail.html` and populating it with the following:
 
-<code-listing heading="app.html">
+<code-listing heading="contact-detail.html">
   <source-code lang="HTML">
     <template>
       <div class="panel panel-primary">
