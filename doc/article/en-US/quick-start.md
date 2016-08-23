@@ -88,7 +88,7 @@ First, you can see that this document is setup as a standard HTML5 document with
 <script src="scripts/system.js"></script>
 ```
 
-This tag is used to load SystemJS, a modern JavaScript module loader. Because Aurelia is a modern framework, it's written as modules and encourages you to create your code in a modular fashion. To use modules in ${context.language.name} you need a loader that understands modular code. That's what SystemJS does. It locates modules, understands their dependencies and ensures that everything is properly loaded at runtime. Aurelia supports a variety of module loaders. Besides SystemJS, Aurelia supports all AMD-based loaders such as RequireJS, Cajon and Dojo. Aurelia also support module-based build systems like Webpack.
+This tag is used to load SystemJS, a modern JavaScript module loader. Because Aurelia is a modern framework, it's written as modules and encourages you to create your code in a modular fashion. To use modules in ${context.language.name} you need a loader that understands modular code. That's what SystemJS does. It locates modules, understands their dependencies and ensures that everything is properly loaded at runtime. Aurelia supports a variety of module loaders. Besides SystemJS, Aurelia supports all AMD-based loaders such as RequireJS, Cajon and Dojo. Aurelia also supports module-based build systems like Webpack.
 
 ```
 <script src="scripts/config-typescript.js"></script>
