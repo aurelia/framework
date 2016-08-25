@@ -376,6 +376,9 @@ We're almost there! There's one thing that's missing. Notice that if you check a
 
 This final example shows how we can bind css directly on any HTML element. It also shows how we can use our `\${}` syntax directly inside any attribute. In this case, we want to add the `text-decoration` of `line-through` whenever the todo's `done` property is true, otherwise we want the `none` value.
 
+> Warning: style vs css attribute
+> Use the `style` attribute's alias, `css` when doing string interpolation to ensure your application is compatible with Internet Explorer and Edge, if you care about supporting these browsers.
+
 Run the application one more time and you should see the expected result:
 
 ![Todo App With CSS](img/todo-app-with-css.png)
