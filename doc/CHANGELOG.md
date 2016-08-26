@@ -1,3 +1,21 @@
+<a name="1.0.2"></a>
+## [1.0.2](https://github.com/aurelia/framework/compare/1.0.1...v1.0.2) (2016-08-26)
+
+
+### Bug Fixes
+
+* **doc:** fix typo ([c0daf1b](https://github.com/aurelia/framework/commit/c0daf1b))
+* **doc:** fixed escaping variable ([fc354e3](https://github.com/aurelia/framework/commit/fc354e3))
+* **doc:** rename view file ([1553006](https://github.com/aurelia/framework/commit/1553006))
+* **doc:** s/sting/string in quick start ([1f6deb9](https://github.com/aurelia/framework/commit/1f6deb9))
+
+
+### Features
+
+* **doc:** note about style vs css attribute ([78f4cd9](https://github.com/aurelia/framework/commit/78f4cd9))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/aurelia/framework/compare/1.0.0-rc.1.0.13...v1.0.0) (2016-07-27)
 
