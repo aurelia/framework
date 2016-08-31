@@ -73,7 +73,20 @@ In the picture, you can see that we have a header across the top, a contact list
 To begin, we're going to setup our `App` class by configuring it with a router. We want our browser history to reflect which contact in our list is selected, so we'll introduce a client-side router to handle the navigation from screen to screen. Replace the code in your `app${context.language.fileExtension}` with the following:
 
 <code-listing heading="app${context.language.fileExtension}">
-  <source-code lang="ES 2015/ES Next">
+  <source-code lang="ES 2015">
+    export class App {
+      configureRouter(config, router){
+        config.title = 'Contacts';
+        config.map([
+          { route: '',              moduleId: 'no-selection',   title: 'Select'},
+          { route: 'contacts/:id',  moduleId: 'contact-detail', name:'contacts' }
+        ]);
+
+        this.router = router;
+      }
+    }
+  </source-code>
+  <source-code lang="ES Next">
     export class App {
       configureRouter(config, router){
         config.title = 'Contacts';
@@ -235,7 +248,7 @@ Aurelia strives to be a self-consistent framework. As such, building a custom el
     import {WebAPI} from './web-api';
 
     export class ContactList {
-      static inject() { return [WebAPI] };
+      static inject() { return [WebAPI]; }
 
       constructor(api){
         this.api = api;
@@ -629,7 +642,7 @@ Whenever the contact detail screen successfully saves a contact, we'll publish t
     import {areEqual} from './utility';
 
     export class ContactDetail {
-      static inject = [WebAPI, EventAggregator];
+      static inject() { return [WebAPI, EventAggregator]; }
 
       constructor(api, ea){
         this.api = api;
@@ -801,7 +814,7 @@ With this messages in place, we can now enable any other component in our system
     import {ContactUpdated, ContactViewed} from './messages';
 
     export class ContactList {
-      static inject = [WebAPI, EventAggregator];
+      static inject() { return [WebAPI, EventAggregator]; }
 
       constructor(api, ea){
         this.api = api;
