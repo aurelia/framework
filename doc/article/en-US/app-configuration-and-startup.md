@@ -222,7 +222,7 @@ So far, we've been bootstrapping our app declaratively by using the `aurelia-app
   </source-code>
 </code-listing>
 
-In case you use Webpack, you can replace the `aurelia-boostrapper-webpack` package with the `./src/main` entry file in the `aurelia-boostrapper` bundle defined inside of `webpack.config.js`, and call the boostrapper manually:
+In case you use Webpack, you can replace the `aurelia-bootstrapper-webpack` package with the `./src/main` entry file in the `aurelia-bootstrapper` bundle defined inside of `webpack.config.js`, and call the bootstrapper manually:
 
 
 <code-listing heading="Manual Bootstrapping with Webpack">
