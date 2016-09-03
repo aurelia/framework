@@ -629,7 +629,7 @@ A typical select element is rendered using a combination of `value.bind` and `re
   </source-code>
 </code-listing>
 
-### Binding innerHTML and textContext
+### Binding innerHTML and textContent
 
 <code-listing heading="Binding innerHTML">
   <source-code lang="HTML">
