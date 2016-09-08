@@ -1549,8 +1549,8 @@ Aurelia will not search for a JavaScript file if you reference a component with 
 
 <code-listing heading="Declare Custom Element Without View-Model With Binding">
   <source-code lang="HTML">
-    <template bindable="name">
-       Say Hello To ${name}
+    <template bindable="greeting,name">
+       Say ${greeting} To ${name}
     </template>
   </source-code>
 </code-listing>
@@ -1565,7 +1565,7 @@ Aurelia will not search for a JavaScript file if you reference a component with 
   <source-code lang="HTML">
     <require from="./js-less-component.html"></require>
 
-    <js-less-component name.bind="someProperty"></js-less-component>
+    <js-less-component greeting="Hello" name.bind="someProperty"></js-less-component>
   </source-code>
 </code-listing>
 
