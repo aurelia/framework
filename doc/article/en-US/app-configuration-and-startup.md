@@ -152,8 +152,7 @@ In case you are using Webpack, create a bootstrapper file, e.g. `bootstrapper.js
 <code-listing heading="Polyfill Configuration">
   <source-code lang="HTML">
     import 'webcomponents/webcomponentsjs/MutationObserver';
-    import * as raf from 'raf';
-    raf.polyfill();
+    import 'raf/polyfill';
   </source-code>
 </code-listing>
 
@@ -172,8 +171,7 @@ If you are using JSPM change your `index.html` startup code as follows:
         <script src="jspm_packages/system.js"></script>
         <script src="config.js"></script>
         <script>
-          SystemJS.import('raf').then(function(raf) {
-            raf.polyfill();
+          SystemJS.import('raf/polyfill').then(function() {
             return SystemJS.import('aurelia-polyfills');
           }).then(function() {
             return SystemJS.import('webcomponents/webcomponentsjs/MutationObserver');
