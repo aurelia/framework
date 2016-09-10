@@ -19,7 +19,7 @@
 * One of the only two main-stream, open-source SPA frameworks with official commercial backing (Ember is the other).
 * The only SPA framework with commercial support options available.
 * Custom contracts available for enterprises.
-* Internally “dogfooded” by Durandal Inc. in its own business-critical products.
+* Internally “dogfooded” by Blue Spire Inc. in its own products.
 
 Many technologists make incorrect assumptions in this space. You may hear about "Google's Polymer" (or Angular) or "Facebook's React". However, these libraries aren't official products of their respective companies. React team members have stated publicly that Facebook is not committed to the React library. Google developers have stated publicly that Polymer is not a Google product and developers are not considered customers. Angular and Polymer are two out of six UI libraries built by Google employees, all competitive with one another, and none officially recognized by the company. There is much marketing and brand recognition around these libraries but no guarantee and little hope of long-term stability. We encourage you to try to see past the marketing, brands and hype and into the core capabilities and benefits of the technology itself. If you do, we think you'll realize that Aurelia is the best option available.
 
