@@ -255,7 +255,24 @@ Sometimes you can't get a library to work with the module loading system. That's
   </source-code>
 </code-listing>
 
-## [Styling your Application](aurelia-doc://section/7/version/1.0.0)
+## [Configuring the Loader](aurelia-doc://section/7/version/1.0.0)
+
+You can configure the loader by adding a `config` key to `build.loader` with the options you want to add. For instance, if you want to increase the timeout for requirejs, you would do this:
+
+```
+"build": {
+    "loader": {
+        "type": "require",
+        "configTarget": "vendor-bundle.js",
+        "includeBundleMetadataInConfig": "auto",
+        "config": {
+            "waitSeconds": 60
+        }
+    }
+}
+```
+
+## [Styling your Application](aurelia-doc://section/8/version/1.0.0)
 
 There are many ways to style components in Aurelia. The CLI sets up your project to only process styles inside your application's `src` folder. Those styles can then be imported into a view using Aurelia's `require` element.
 
@@ -281,6 +298,7 @@ There are many ways to style components in Aurelia. The CLI sets up your project
 Bear in mind that you can always configure things any way you want by modifying the tasks in the `aurelia_project/tasks` folder.
 For styling purposes, you can modify the `process-css.js` file.
 
-## [What if I forget this stuff?](aurelia-doc://section/8/version/1.0.0)
+
+## [What if I forget this stuff?](aurelia-doc://section/9/version/1.0.0)
 
 If you need your memory refreshed as to what the available options are, at any time you can execute `au help`. If you aren't sure what version of the CLI you are running, you can run `au -v`;
