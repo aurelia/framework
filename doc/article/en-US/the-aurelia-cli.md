@@ -67,6 +67,65 @@ If you selected a project setup that includes unit tests, you can run your tests
 
 Executing `au generate resource` runs a generator to scaffold out typical Aurelia constructs. Options for *resource* are: element, attribute, value-converter, binding-behavior, task and generator. That's right...there's a generator generator so you can write your own. Ex. `au generate element`
 
+## [Build Revisions](aurelia-doc://section/10/version/1.0.0)
+
+To create builds with revision numbers, you must set `rev` to be `true` under the build options. This will cause a unique revision number to be added to the bundled files. For example:
+```javascript
+"options": {
+  "minify": "stage & prod",
+  "sourcemaps": "dev & stage",
+  "rev": true
+}
+```
+In order for your `index.html` file to be updated to load up the correct revisioned bundle, you must ensure that the `"index"` property located in `build/targets` section is correctly pointing to the `index.html` (or starting page) for your project. For example:
+``` javascript
+"build": {
+  "targets": [
+    {
+      "id": "web",
+      "displayName": "Web",
+      "output": "scripts",
+      "index": "index.html"
+    }
+  ]
+}
+```
+
+## [Bundling Your Project](aurelia-doc://section/11/version/1.0.0)
+
+By default, the Aurelia CLI creates two bundles, an `app-bundle.js`, and a `vendor-bundle.js`. An example of the default `app-bundle.js` looks like this:  
+```javascript
+{
+  "name": "app-bundle.js",
+  "source": [
+    "[**/*.js]",
+    "**/*.{css,html}"
+  ]
+}
+```  
+In this setup, we've named the bundle `app-bundle.js`, and have defined what's included by setting the `source` property to be an array of patterns that match to file paths (the patterns are using glob patterns, [minimatch](https://github.com/isaacs/minimatch) to be specific, to find files that match).  
+Optionally, you can define an `exclude` list by setting the `source` property to be an object containing both an `include` and `exclude` array of patterns. This is helpful when you're trying to define multiple bundles from your source code.  
+```javascript
+{
+  "name": "app-bundle.js",
+  "source": {
+    "include": [
+      "[**/*.js]",
+      "**/*.{css,html}"
+    ],
+    "exclude": [
+      "**/sub-module/**/*",
+    ]
+  }
+},
+{
+  "name": "sub-module-bundle.js",
+  "source": [
+    "**/sub-module/**/*",
+  ]
+}
+```
+
 ## [Adding Client Libraries to Your Project](aurelia-doc://section/6/version/1.0.0)
 
 If you need to add a 3rd party client library to your project, first `npm install` the library. After that, open the `aurelia_project/aurelia.json` file and scroll down to the `build.bundles` section. You'll need to add the library into one of your bundle's `dependencies` sections.
