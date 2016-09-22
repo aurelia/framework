@@ -37,7 +37,7 @@ npm install aurelia-cli -g
 
 ## [Creating A New Aurelia Project](aurelia-doc://section/2/version/1.0.0)
 
-Now, that you've got your machine setup, we can create our contact manager app. To create the project, run `au new` from the command line. You will be presented with a number of options. Name the project "contact-manager" and then select either "Default ESNext" or "Default TypeScript" depending on what is most comfortable for you.
+Now, that you've got your machine setup, we can create our contact manager app. To create the project, run `au new` from the command line. You will be presented with a number of options. Name the project "contact-manager" and then select either the "Default ESNext" or "Default TypeScript" option depending on what is most comfortable for you. (Do not select "Custom" for this tutorial.)
 
 Once you've made your choice, the CLI will show you your selections and ask if you'd like to create the file structure. Hit enter to accept the default "yes". After that, you'll be asked if you would like to install your new project's dependencies. Press enter to select the default "yes" for this as well.
 
