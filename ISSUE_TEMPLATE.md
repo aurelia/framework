@@ -6,8 +6,8 @@ submit them to StackOverflow using the tags aurelia and aurelia-framework
 http://stackoverflow.com/questions/tagged/aurelia
 or the Aurelia Gitter https://gitter.im/aurelia/discuss
 
-Durandal Inc. offers paid support agreements. Further information regarding paid support
-may be obtained by emailing support@durandal.io
+Blue Spire offers paid support agreements. Further information regarding paid support
+may be obtained by emailing support@bluespire.com
 
 Future support requests submitted here will be closed.
 
