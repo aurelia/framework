@@ -77,6 +77,16 @@ To create builds with revision numbers, you must set `rev` to be `true` under th
   "rev": true
 }
 ```
+You are also able to set specific flags so that build revisions only take place while staging or in production. For example:
+```javascript
+"options": {
+  "minify": "stage & prod",
+  "sourcemaps": "dev & stage",
+  "rev": "stage & prod"
+}
+```  
+Now, if you were to run `au build --env prod`, the output would contain build revisions, while `au build --env dev` would not. Setting the build revisions to only compile while in production can help the development process, since it keeps your workspace clean of various build revisions.
+### Modifying The Index File
 In order for your `index.html` file to be updated to load up the correct revisioned bundle, you must ensure that the `"index"` property located in `build/targets` section is correctly pointing to the `index.html` (or starting page) for your project. For example:
 ``` javascript
 "build": {
