@@ -1121,4 +1121,4 @@ Now that you've completed the tutorial, you may want to consider doing some addi
 
 ## [Conclusion](aurelia-doc://section/11/version/1.0.0)
 
-This tutorial presents a fairly simply application, but it provides an opportunity to demonstrate a number of interesting techniques. We hope it's helped you along in the process of learning Aurelia and we look forward to seeing what things you will build next.
+This tutorial presents a fairly simple application, but it provides an opportunity to demonstrate a number of interesting techniques. We hope it's helped you along in the process of learning Aurelia and we look forward to seeing what things you will build next.
