@@ -297,7 +297,7 @@ Aurelia strives to be a self-consistent framework. As such, building a custom el
 
 The view-model for our custom element has a few notable characteristics. First, we're using dependency injection. Aurelia has its own dependency injection container, which it uses to instantiate classes in your app. Classes can declare constructor dependencies through *inject metadata*. This looks a bit different depending on what language you are using. In ES 2015, you can declare an `inject` static method that returns an array of constructor dependencies while in ES Next and TypeScript, you can use an `inject` decorator to declare those dependencies. As you can see here, our `ContactList` class has a dependency on our `WebAPI` class. When Aurelia instantiates the contact list, it will first instantiate (or locate) an instance of the web API and "inject" that into the contact list's constructor.
 
-The second thing to notice is the `created` method. All Aurelia components follow a component life-cycle. A developer can opt into any stage of the life-cycle by implementing the appropriate methods. In this case, we're implementing into the `created` hook which gets called after both the view-model and thew view are created. We're using this as an opportunity to call our API and get back the list of contacts, which we then store in our `contacts` property so we can bind it in the view.
+The second thing to notice is the `created` method. All Aurelia components follow a component life-cycle. A developer can opt into any stage of the life-cycle by implementing the appropriate methods. In this case, we're implementing into the `created` hook which gets called after both the view-model and the view are created. We're using this as an opportunity to call our API and get back the list of contacts, which we then store in our `contacts` property so we can bind it in the view.
 
 Finally, we have a `select` method for selecting a contact. We'll revisit this shortly, after we take a look at how it's used in the view. On that note, create a `contact-list.html` file and use the following code for the view:
 
@@ -791,7 +791,7 @@ Whenever the contact detail screen successfully saves a contact, we'll publish t
 
 First, notice that we've both imported Aurelia's `EventAggregator` and configured it to be injected into the constructor of our `ContactDetail` class. We've also imported the two messages we created. Whenever a contact is loaded, we publish the `ContactViewed` message. Whenever a contact is saved, we publish the `ContactUpdated` message. Finally, if the user attempts to navigate away, but cancels, we reflect this by publishing another `ContactViewed` message, representing that they are returning to view the current contact.
 
-With this messages in place, we can now enable any other component in our system to loosely subscribe to the new information in our system and use that data as appropriate to its internal needs. We'll go ahead and update the `contact-list` component to take advantage of this information to ensure that it is always in sync:
+With these messages in place, we can now enable any other component in our system to loosely subscribe to the new information in our system and use that data as appropriate to its internal needs. We'll go ahead and update the `contact-list` component to take advantage of this information to ensure that it is always in sync:
 
 <code-listing heading="contact-list${context.language.fileExtension}">
   <source-code lang="ES 2015">
@@ -1121,4 +1121,4 @@ Now that you've completed the tutorial, you may want to consider doing some addi
 
 ## [Conclusion](aurelia-doc://section/11/version/1.0.0)
 
-This tutorial presents a fairly simply application, but it provides an opportunity to demonstrate a number of interesting techniques. We hope it's helped you along in the process of learning Aurelia and we look forward to seeing what things you will build next.
+This tutorial presents a fairly simple application, but it provides an opportunity to demonstrate a number of interesting techniques. We hope it's helped you along in the process of learning Aurelia and we look forward to seeing what things you will build next.
