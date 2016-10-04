@@ -47,6 +47,9 @@ Once the dependencies are installed, your project is ready to go.
 
 If you would like to use ASP.NET Core, first begin by using Visual Studio to create your ASP.NET Core project. Select whatever options make the most sense based on your .NET project plans. After you have created the project, open a command line and change directory into your web project's project folder. This is the folder that contains the `.xproj` file. From within this folder, you can execute the following command `au new --here` which will setup Aurelia "here" inside this project folder. You will be prompted to choose the platform you want. Simply select "ASP.NET Core". Follow the prompts for the rest of the process, just like above.
 
+>Info
+>Since Aurelia-CLI should be in charge of building your client side code, make sure before running the `new` command from **Aurelia-CLI** you add `<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>` to your .xproj file inside the first `<PropertyGroup></PropertyGroup>` you find to stop Visual Studio from compiling the `.ts` files in your project. If build your solution before doing this, Visual Studio will compile your `.ts` files breaking some of the **Aurelia-CLI** commands.
+
 ## [Running Your Aurelia App](aurelia-doc://section/3/version/1.0.0)
 
 From inside your project folder, simply execute `au run`. This will build your app, creating all bundles in the process. It will start a minimal web server and serve your application. If you would like to develop, with auto-refresh of the browser, simply specify the `--watch` flag like this: `au run --watch`.
