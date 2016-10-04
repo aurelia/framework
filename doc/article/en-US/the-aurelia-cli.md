@@ -327,6 +327,31 @@ Sometimes you can't get a library to work with the module loading system. That's
   </source-code>
 </code-listing>
 
+### A note on NPM's scoped packages
+
+The CLI treats [scoped packages](https://docs.npmjs.com/misc/scope) in the same way as unscoped ones, you just need to remember that the scope is always part of its name.
+
+So, for example, if you need to consume a scoped package in a CLI project, you need the following in your `aurelia.json`:
+```
+dependencies: [
+  {
+    "name": "@scope/packagename",
+    "path": "../node_modules/@scope/packagename/dist/amd",
+    "main": "packagename"
+  }
+]
+```
+
+Your imports must be scoped too:
+```
+import { SomeClass } from '@scope/packagename';
+```
+
+And this is an example of loading a `@scope/packagename` plugin during app startup:
+```
+aurelia.use.standardConfiguration().plugin('@scope/packagename');
+```
+
 ## [Configuring the Loader](aurelia-doc://section/7/version/1.0.0)
 
 You can configure the loader by adding a `config` key to `build.loader` with the options you want to add. For instance, if you want to increase the timeout for requirejs, you would do this:
