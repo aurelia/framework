@@ -400,13 +400,12 @@ For styling purposes, you can modify the `process-css.js` file.
 
 If you need your memory refreshed as to what the available options are, at any time you can execute `au help`. If you aren't sure what version of the CLI you are running, you can run `au -v`;
 
-## [Troubleshooting](aurelia-doc://section/10/version/1.0.0)
+## [Troubleshooting](aurelia-doc://section/12/version/1.0.0)
 
 _**I updated aurelia-cli and now executing `au run` returns `"Invalid Command: run"`**_
 
-There appears to be an ongoing issue with npm's cache that can affect the upgrade of the aurelia-cli. Clearing the npm-cache appears to resolve the issue. 
-Steps: 
+There appears to be an ongoing issue with npm's cache that can affect the upgrade of the aurelia-cli. Clearing the npm-cache appears to resolve the issue.
+Steps:
  * `npm uninstall aurelia-cli -g`
  * delete the contents under c:/Users/NAME/AppData/Roaming/npm-cache
  * `npm install aurelia-cli -g`
-
