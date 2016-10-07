@@ -144,9 +144,8 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
     const CopyWebpackPlugin = require('copy-webpack-plugin');
     const AureliaWebpackPlugin = require('aurelia-webpack-plugin');
     const WebpackMd5Hash = require('webpack-md5-hash');
-    const DefinePlugin = require('webpack/lib/DefinePlugin');
     const ExtractTextPlugin = require('extract-text-webpack-plugin');
-    const cssnano = require('cssnano');
+    // const cssnano = require('cssnano'); <---- uncomment this line if you want to use cssnano for postcss 
     const project = require('./package.json');
 
     const ENV = process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase() || 'development';
@@ -243,7 +242,10 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
                                 singleton: true
                             }
                         },
-                        ExtractTextPlugin.extract(`css?${JSON.stringify({
+                        /**
+                         * For debug, using css-loader would be enough
+                         */
+                        DEBUG ? 'css-loader' : ExtractTextPlugin.extract(`css?${JSON.stringify({
                             // sourceMap: DEBUG,
                             // url: false,
                             minimize: !DEBUG
@@ -452,8 +454,16 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
       "server:dev2": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --profile --watch",
     ```
 
-8. Reminder
-  * If you use `less`, `sass` or `stylus`, import them in javascript:
+8. Reminder for `less`, `sass` and `stylus`
+  
+  * **Example** for `less`:
+  * Install the loader based on your choice
+
+  ```shell
+    npm install less-loader --save-dev
+  ```
+
+  * import them in javascript instead of your html template
   
   ```js
     import 'style.less';
@@ -461,8 +471,8 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
   
   * Uncomment corresponding loader in these lines:
   ```js
-    // 'postcss-loader',
-    // 'less-loader',
+    // 'postcss-loader', <!--- Uncomment this line if you wish to use postcss
+    // 'less-loader', <--- uncomment this line
     // 'sass-loader',
     // 'styl-loader'
   ```
