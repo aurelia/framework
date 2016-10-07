@@ -8,7 +8,7 @@
   	"name": "Rob Eisenberg",
   	"url": "http://robeisenberg.com"
   },
-  "contributors": [],
+  "contributors": ["Julian Cardich"],
   "translators": [],
   "keywords": ["Getting Started", "ES2015", "ES2016", "TypeScript"]
 }
@@ -292,6 +292,14 @@ There's something else of note in this markup though. We can not only bind prope
 
 > Info: Binding Commands
 > Aurelia will use two-way binding for all form control value bindings and one-way binding for everything else. However, you can always override this by using an explicit binding command. For example, instead of using `.bind` you can use `.one-way`, `.two-way` or `.one-time`. Similarly, you can use `.delegate` for event delegation in place of `.trigger`.
+
+From the command line, run
+
+```
+gulp build
+```
+
+to refresh the generated files.
 
 If you run the app now, you should see something like this:
 
