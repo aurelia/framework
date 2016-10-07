@@ -85,3 +85,390 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
   ```shell
   npm run e2e:start
   ```
+
+## [Using Standard Webpack Configuration](aurelia-doc://section/7/version/1.0.0)
+
+1. After downloading skeleton-esnext-webpack from Aurelia github,
+  we need to replace any reference to @easy-webpack with the standard webpack modules.<br/>In `package.json`, remove all modules that start with `@easy-webpack` in `devDependencies`:
+  
+  ```json
+    "@easy-webpack/config-aurelia": "^2.0.1",
+    "@easy-webpack/config-babel": "^2.0.2",
+    "@easy-webpack/config-common-chunks-simple": "^2.0.1",
+    "@easy-webpack/config-copy-files": "^1.0.0",
+    "@easy-webpack/config-css": "^2.3.2",
+    "@easy-webpack/config-env-development": "^2.1.1",
+    "@easy-webpack/config-env-production": "^2.1.0",
+    "@easy-webpack/config-external-source-maps": "^2.0.1",
+    "@easy-webpack/config-fonts-and-images": "^1.2.1",
+    "@easy-webpack/config-generate-index-html": "^2.0.1",
+    "@easy-webpack/config-global-bluebird": "^1.2.0",
+    "@easy-webpack/config-global-jquery": "^1.2.0",
+    "@easy-webpack/config-global-regenerator": "^1.2.0",
+    "@easy-webpack/config-html": "^2.0.2",
+    "@easy-webpack/config-json": "^2.0.2",
+    "@easy-webpack/config-test-coverage-istanbul": "^2.0.2",
+    "@easy-webpack/config-uglify": "^2.1.0",
+    "@easy-webpack/core": "^1.3.2",
+  ``` 
+
+  with the following:
+
+  ```json
+    "aurelia-webpack-plugin": "^1.1.0",
+    "copy-webpack-plugin": "^3.0.1",
+    "html-webpack-plugin": "^2.22.0",
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.16.0",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "html-loader": "^0.4.4",
+    "sourcemap-istanbul-instrumenter-loader": "^0.2.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+  ```
+
+2. Then use the following config:
+
+  * **IMPORTANT**: the following config is for `webpack@2.1.0.beta-23+` (current: `@beta-25`), as from this version, schema validation will be enforced
+  and custom property on config object is no longer allowed. So we will be using `webpack.LoaderOptionsPlugin` to provide
+  some configs for `html-minifier-loader`. If you want to keep using the prefdefined webpack
+  version in the skeleton, move all properties inside `webpack.LoaderOptionsPlugin` instance to export object
+
+  ```js
+    const hasProcessFlag = flag => process.argv.join('').indexOf(flag) > -1;
+    const path = require('path');
+    const webpack = require('webpack');
+    const HtmlWebpackPlugin = require('html-webpack-plugin');
+    const CopyWebpackPlugin = require('copy-webpack-plugin');
+    const AureliaWebpackPlugin = require('aurelia-webpack-plugin');
+    const WebpackMd5Hash = require('webpack-md5-hash');
+    const DefinePlugin = require('webpack/lib/DefinePlugin');
+    const ExtractTextPlugin = require('extract-text-webpack-plugin');
+    const cssnano = require('cssnano');
+    const project = require('./package.json');
+
+    const ENV = process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase() || 'development';
+    const DEBUG = ENV !== 'production';
+    const title = 'Aurelia Webpack Skeleton';
+    const baseUrl = '/';
+    const rootDir = path.resolve();
+    const srcDir = path.resolve('src');
+    const outDir = path.resolve('dist');
+
+    const aureliaBootstrap = [
+        'aurelia-bootstrapper-webpack',
+        'aurelia-polyfills',
+        'aurelia-pal-browser',
+        'regenerator-runtime'
+    ];
+
+    const aureliaModules = Object.keys(project.dependencies).filter(dep => dep.startsWith('aurelia-'));
+    const metadata = {
+        port: process.env.WEBPACK_PORT || 9000,
+        host: process.env.WEBPACK_HOST || 'localhost',
+        ENV: ENV,
+        HMR: hasProcessFlag('hot') || !!process.env.WEBPACK_HMR
+    };
+
+    module.exports = {
+        entry: {
+            'app': [], // <-- this array will be filled by the aurelia-webpack-plugin
+            'aurelia-bootstrap': aureliaBootstrap,
+            'aurelia': aureliaModules.filter(pkg => aureliaBootstrap.indexOf(pkg) === -1)
+        },
+        output: {
+            path: outDir,
+            /**
+            * Specifies the name of each output file on disk.
+            * IMPORTANT: You must not specify an absolute path here!
+            *
+            * See: http://webpack.github.io/docs/configuration.html#output-filename
+            */
+            filename: DEBUG ? '[name].bundle.js' : '[name].[chunkhash].bundle.js',
+
+            /**
+            * The filename of the SourceMaps for the JavaScript files.
+            * They are inside the output.path directory.
+            *
+            * See: http://webpack.github.io/docs/configuration.html#output-sourcemapfilename
+            */
+            sourceMapFilename: DEBUG ? '[name].bundle.map' : '[name].[chunkhash].bundle.map',
+
+            /** The filename of non-entry chunks as relative path
+            * inside the output.path directory.
+            *
+            * See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
+            */
+            chunkFilename: DEBUG ? '[id].chunk.js' : '[id].[chunkhash].chunk.js'
+        },
+        resolve: {
+            modules: [
+                srcDir,
+                'node_modules'
+            ]
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/, // include: path.resolve('src'),
+                    use: {
+                        loader: 'babel-loader',
+                        query: {
+                            presets: [
+                                [ 'es2015', {
+                                    loose: true, // this helps simplify ESnext transformation
+                                    module: false // this helps enable tree shaking for webpack 2
+                                }],
+                                'stage-1'
+                            ],
+                            plugins: ['transform-decorators-legacy']
+                        }
+                    }
+                }, {
+                    test: /\.html$/,
+                    exclude: /index\.html$/, // index.html will be taken care by HtmlWebpackPlugin
+                    use: [
+                        'raw-loader',
+                        'html-minifier-loader'
+                    ]
+                }, {
+                    test: /\.(less|css)$/,
+                    use: [
+                        {
+                            loader: 'style-loader',
+                            options: {
+                                singleton: true
+                            }
+                        },
+                        ExtractTextPlugin.extract(`css?${JSON.stringify({
+                            // sourceMap: DEBUG,
+                            // url: false,
+                            minimize: !DEBUG
+                        })}`),
+                        // 'postcss-loader',
+                        // 'less-loader',
+                        // 'sass-loader',
+                        // 'styl-loader'
+                    ]
+                }, {
+                    test: /\.(png|jpe?g|gif|svg|eot|woff|woff2|ttf)(\?\S*)?$/,
+                    use: {
+                        loader: 'url-loader',
+                        query: {
+                            limit: 10000,
+                            name: '[name].[ext]'
+                        }
+                    }
+                }
+            ]
+        },
+        devServer: {
+            port: metadata.port,
+            host: metadata.host,
+            historyApiFallback: true,
+            watchOptions: {
+                aggregateTimeout: 300,
+                poll: 1000
+            },
+            progress: true,
+            outputPath: outDir
+        },
+        plugins: [
+            new webpack.LoaderOptionsPlugin({
+                metadata,
+                debug: DEBUG,
+                devtool: 'source-map',
+                options: {
+                    context: __dirname,
+                    /**
+                     * Enable the following config for postcss
+                     */
+                    // postcss: (wpack) => [
+                    //     cssnano({
+                    //         discardComments: { removeAll: true },
+                    //         autoprefixer: true,
+                    //         colormin: true,
+                    //         convertValues: true,
+                    //         core: true,
+                    //         discardDuplicates: true,
+                    //         discardEmpty: true,
+                    //         functionOptimiser: true,
+                    //         minifyGradients: true
+                    //     })
+                    // ],
+                    'html-minifier-loader': {
+                        minimize: true,
+                        removeComments: true,
+                        collapseWhitespace: true,
+                        collapseInlineTagWhitespace: true,
+                        collapseBooleanAttributes: true,
+                        removeAttributeQuotes: true,
+                        minifyCSS: true,
+                        minifyJS: true,
+                        removeScriptTypeAttributes: true,
+                        removeStyleLinkTypeAttributes: true
+                    }
+                }
+            }),
+            // Extract all css into 1 file
+            new ExtractTextPlugin({
+                filename: 'style.min.css',
+                allChunks: true
+            }),
+            new webpack.ProvidePlugin({
+                regeneratorRuntime: 'regenerator-runtime', // to support await/async syntax
+                Promise: 'bluebird', // because Edge browser has slow native Promise object
+                $: 'jquery', // because 'bootstrap' by Twitter depends on this
+                jQuery: 'jquery', // just an alias
+                'window.jQuery': 'jquery' // this doesn't expose jQuery property for window, but exposes it to every module
+            }),
+            new HtmlWebpackPlugin({
+                title: title,
+                template: 'index.html',
+                chunksSortMode: 'dependency'
+            }),
+            new AureliaWebpackPlugin({
+                root: rootDir,
+                src: srcDir,
+                title: title,
+                baseUrl: baseUrl
+            }),
+            new CopyWebpackPlugin([{
+                from: 'favicon.ico',
+                to: 'favicon.ico'
+            }]),
+            new webpack.optimize.CommonsChunkPlugin({
+                name: ['aurelia', 'aurelia-bootstrap']
+            }),
+            new DefinePlugin({
+                '__DEV__': true,
+                'ENV': JSON.stringify(metadata.ENV),
+                'HMR': metadata.HMR,
+                'process.env': {
+                    'ENV': JSON.stringify(metadata.ENV),
+                    'NODE_ENV': JSON.stringify(metadata.ENV),
+                    'HMR': metadata.HMR,
+                    'WEBPACK_HOST': JSON.stringify(metadata.host),
+                    'WEBPACK_PORT': JSON.stringify(metadata.port)
+                }
+            })
+        ].concat(DEBUG ? [
+
+        ] : [
+            /**
+            * Plugin: WebpackMd5Hash
+            * Description: Plugin to replace a standard webpack chunkhash with md5.
+            *
+            * See: https://www.npmjs.com/package/webpack-md5-hash
+            */
+            new WebpackMd5Hash(),
+            /**
+            * Plugin: DedupePlugin
+            * Description: Prevents the inclusion of duplicate code into your bundle
+            * and instead applies a copy of the function at runtime.
+            *
+            * See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
+            * See: https://github.com/webpack/docs/wiki/optimization#deduplication
+            */
+            new webpack.optimize.DedupePlugin(),
+            new webpack.optimize.UglifyJsPlugin({
+                mangle: { screw_ie8: true, keep_fnames: true},
+                dead_code: true,
+                unused: true,
+                comments: true,
+                compress: {
+                    screw_ie8: true,
+                    keep_fnames: true,
+                    drop_debugger: false,
+                    dead_code: false,
+                    unused: false,
+                    warnings: false
+                }
+            })
+        ])
+    };
+  ```
+
+3. Our `index.html` needs to be adjusted a bit:
+
+  ```html
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title><%- htmlWebpackPlugin.options.title %></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <base href="<%- htmlWebpackPlugin.options.baseUrl %>">
+        <!-- imported CSS are concatenated and added automatically -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+      </head>
+      <body aurelia-app="main">
+        <div class="splash">
+          <div class="message"><%- htmlWebpackPlugin.options.title %></div>
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+        <% if (process.env.ENV === 'development') { %>
+        <!-- Webpack Dev Server reload -->
+        <script src="/webpack-dev-server.js"></script>
+        <% } %>
+      </body>
+    </html>
+  ```
+
+4. Change the bundler to latest version:
+
+  ```shell
+    npm install webpack@2.1.0.beta-23 --save-dev
+  ```
+
+5. Change `webpack-dev-server` to latest version
+
+  ```shell
+    npm install webpack-dev-server@2.1.0.beta-0 --save-dev
+  ```
+
+6. Install dependencies
+
+  ```shell
+    npm install
+  ```
+
+7. Modify the dev task so it doesn't throw an error, by replacing old dev task in `package.json` 
+  with the slightly different version (without `--progress`)<br/>
+  Replace:
+
+    ```json
+      "server:dev": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --progress --profile --watch",
+      "server:dev2": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --progress --profile --watch",
+    ```
+
+    With:
+
+    ```json
+      "server:dev": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --profile --watch",
+      "server:dev2": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --profile --watch",
+    ```
+
+8. Reminder
+  * If you use `less`, `sass` or `stylus`, import them in javascript:
+  
+  ```js
+    import 'style.less';
+  ``` 
+  
+  * Uncomment corresponding loader in these lines:
+  ```js
+    // 'postcss-loader',
+    // 'less-loader',
+    // 'sass-loader',
+    // 'styl-loader'
+  ```
+
+9. Start development
+
+  ```shell
+    npm start
+  ```
