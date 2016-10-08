@@ -88,7 +88,9 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
 
 ## [Using Standard Webpack Configuration](aurelia-doc://section/7/version/1.0.0)
 
-1. After downloading skeleton-esnext-webpack from Aurelia github,
+1. Dependencies
+
+  *  After downloading skeleton-esnext-webpack from Aurelia github,
   we need to replace any reference to `@easy-webpack` with the standard webpack modules.<br/>In `package.json`, remove all modules that start with `@easy-webpack` in `devDependencies`:
   
   ```json
@@ -123,15 +125,34 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
     "babel-polyfill": "^6.16.0",
     "css-loader": "^0.25.0",
     "file-loader": "^0.9.0",
-    "html-loader": "^0.4.4",
     "sourcemap-istanbul-instrumenter-loader": "^0.2.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
   ```
 
+  * Replace `extract-text-webpack-plugin` with newer version by (this is for production build):
+  
+    Replace
+    ```json
+      "extract-text-webpack-plugin": "^1.0.1",
+    ```
+
+    With
+    ```json
+      "extract-text-webpack-plugin": "^2.0.0-beta.4",
+    ```
+  
+  * Insert `raw-loader`, `html-minifier`, `html-minifier-loader` into devDependencies to handle our templates:
+  
+    ```json
+      "raw-loader": "^0.5.1",
+      "html-minifier": "^3.1.0",
+      "html-minifier-loader": "^1.3.3",
+    ```
+
 2. Then use the following config:
 
-  * **IMPORTANT**: the following config is for `webpack@2.1.0.beta-23+` (current: `@beta-25`), as from this version, schema validation will be enforced
+  * **IMPORTANT**: the following config is for `webpack@2.1.0-beta.23+` (current: `@beta.25`), as from this version, schema validation will be enforced
   and custom properties on config object are no longer allowed. So we will be using `webpack.LoaderOptionsPlugin` to provide
   some configs for `html-minifier-loader`. If you want to keep using the prefdefined webpack
   version in the skeleton, move all properties inside `webpack.LoaderOptionsPlugin` instance to export object
@@ -206,7 +227,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
             modules: [
                 srcDir,
                 'node_modules',
-                // 'bower_components' // <--- Uncomment this line to enable simpler import path
+                // 'bower_components' // <--- Uncomment this line to enable simpler import path for bower components
             ]
         },
         module: {
