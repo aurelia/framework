@@ -89,7 +89,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
 ## [Using Standard Webpack Configuration](aurelia-doc://section/7/version/1.0.0)
 
 1. After downloading skeleton-esnext-webpack from Aurelia github,
-  we need to replace any reference to @easy-webpack with the standard webpack modules.<br/>In `package.json`, remove all modules that start with `@easy-webpack` in `devDependencies`:
+  we need to replace any reference to `@easy-webpack` with the standard webpack modules.<br/>In `package.json`, remove all modules that start with `@easy-webpack` in `devDependencies`:
   
   ```json
     "@easy-webpack/config-aurelia": "^2.0.1",
