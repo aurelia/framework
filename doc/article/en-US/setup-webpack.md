@@ -507,17 +507,17 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
 
   1. Install a plugin like normal. Ex. `npm install aurelia-dialog --save`
   2. Go to your project `package.json`, look for path `"aurelia.build.resources"`, add plugin's module name (ex. "aurelia-dialog") to `resources` array
-  3. Start your project to check if the plugin is propery config
+  3. Start your project to check if the plugin is properly configured
       * If webpack doesn't complain anything, plugin is good
       * If not, peek to plugin source directory in `node_modules`, Ex `node_modules/aurelia-dialog`
           - Have a look at `package.json` to see if `"main"` points to the right file. (As the time of this writing, plugin `"aurelia-async"` pointed to the wrong entry filename)
-          - Have a look at `dist/commonjs` folder (all aurelia plugins are build in this standard)
-          - Put all the module names (if any), without extension into your project `package.json` `"aurelia.build.resources"`, with plugin name as prefix
+          - Have a look at `dist/commonjs` folder (all aurelia plugins are built in this standard)
+          - Put all the module names (if any), without extension into your project `package.json` `"aurelia.build.resources"`, with plugin name as prefix (ex. `"aurelia-dialog"`)
           - Rerun `npm start`
 
-  * A good example of how to know if a plugin is configured properly is to look into `aurelia-dialog`'s `package.json` -> `aurelia.build.resources`
+  * A good example of how to know if a plugin has proper configs is to look into `aurelia-dialog`'s `package.json` -> `aurelia.build.resources`
   * Example for `"aurelia-clean-bindings"` plugin:
-    - This plugin doesn't have sub modules dependencies configured properly, as it is distributed with following format:
+    - This plugin doesn't have sub modules dependencies configured properly, as it is distributed with following module structure:
       
       ```
         dist
@@ -531,6 +531,19 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
 
     - Fix:
       - Add to your `package.json` path `"aurelia.build.resources"` value: `["aurelia-clean-bindings", "aurelia-clean-bindings/clean-bindings"]`
+      - It should look like this in your `package.json`:
+      ```json
+        "aurelia": {
+            "build": {
+                "resources": [
+                    "aurelia-other-plugin...",
+                    [ "aurelia-clean-bindings", "aurelia-clean-bindings/clean-bindings" ],
+                    "aurelia-other-plugin..."
+                ]
+            }
+        }
+      ```
+      - Create an issue to inform plugin author
       - Happy adding plugins
 
 
