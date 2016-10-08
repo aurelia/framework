@@ -426,13 +426,13 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
 4. Change the bundler to latest version:
 
   ```shell
-    npm install webpack@2.1.0.beta-25 --save-dev
+    npm install webpack@2.1.0-beta.25 --save-dev
   ```
 
 5. Change development server - `webpack-dev-server` to latest version
 
   ```shell
-    npm install webpack-dev-server@2.1.0.beta-0 --save-dev
+    npm install webpack-dev-server@2.1.0-beta.0 --save-dev
   ```
 
 6. Install dependencies
