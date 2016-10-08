@@ -158,13 +158,12 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
   version in the skeleton, move all properties inside `webpack.LoaderOptionsPlugin` instance to export object
 
   ```js
-    const hasProcessFlag = flag => process.argv.join('').indexOf(flag) > -1;
     const path = require('path');
     const webpack = require('webpack');
     const HtmlWebpackPlugin = require('html-webpack-plugin');
     const CopyWebpackPlugin = require('copy-webpack-plugin');
     const AureliaWebpackPlugin = require('aurelia-webpack-plugin');
-    const WebpackMd5Hash = require('webpack-md5-hash');
+    // const WebpackMd5Hash = require('webpack-md5-hash'); <--- enable this and install webpack-md5-hash if you want to use md5 instead of webpack's default hash
     const ExtractTextPlugin = require('extract-text-webpack-plugin');
     // const cssnano = require('cssnano'); <---- uncomment this line if you want to use cssnano for postcss 
     const project = require('./package.json');
@@ -189,7 +188,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
         port: process.env.WEBPACK_PORT || 9000,
         host: process.env.WEBPACK_HOST || 'localhost',
         ENV: ENV,
-        HMR: hasProcessFlag('hot') || !!process.env.WEBPACK_HMR
+        HMR: process.argv.join('').indexOf('hot') >= 0 || !!process.env.WEBPACK_HMR
     };
 
     module.exports = {
@@ -387,7 +386,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
             *
             * See: https://www.npmjs.com/package/webpack-md5-hash
             */
-            new WebpackMd5Hash(),
+            // new WebpackMd5Hash(), // <--- enable this if you want to use md5 instead of webpack's default hash
             /**
             * Plugin: DedupePlugin
             * Description: Prevents the inclusion of duplicate code into your bundle
@@ -501,7 +500,41 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
     // 'styl-loader'
   ```
 
-9. Start development
+9. Reminder when using plugins
+
+  * To bundle plugins' dependencies properly, all sub modules of a plugin has to be put in `aurelia.build.resources` in either that plugin's `package.json` or your project's `packag.json`
+  This is crucial but not all aurelia plugins were aware of this matters / or built before this standard configuration. If you want to use a plugin, follow these steps:
+
+  1. Install a plugin like normal. Ex. `npm install aurelia-dialog --save`
+  2. Go to your project `package.json`, look for path `"aurelia.build.resources"`, add plugin's module name (ex. "aurelia-dialog") to `resources` array
+  3. Start your project to check if the plugin is propery config
+    3.1 If webpack doesn't complain anything, plugin is good
+    3.2 If not, peek to plugin source directory in `node_modules`, Ex `node_modules/aurelia-dialog`
+      3.2.1 Have a look at `package.json` to see if `"main"` points to the right file. (As the time of this writing, plugin `"aurelia-async"` pointed to the wrong entry filename)
+      3.2.2 Have a look at `dist/commonjs` folder (all aurelia plugins are build in this standard)
+      3.2.3 Put all the module names (if any), without extension into your project `package.json` `"aurelia.build.resources"`, with plugin name as prefix
+      3.2.4 Rerun `npm start`
+
+  * A good example of how to know if a plugin is configured properly is to look into `aurelia-dialog`'s `package.json` -> `aurelia.build.resources`
+  * Example for `"aurelia-clean-bindings"` plugin:
+    - This plugin doesn't have sub modules dependencies configured properly, as it is distributed with following format:
+      
+      ```
+        dist
+        └───commonjs
+        │   │   clean-bindings.js
+        │   │   index.js
+      ```
+    
+    - In `package.json`, there is no `"aurelia.build.resources"` path with value: `["aurelia-clean-bindings/clean-bindings"]`, so if you only add value `"aurelia-clean-bindings"` to your `package.json`'s
+    `"aurelia.build.resources"` value: `"aurelia-clean-bindings"`, it won't work
+
+    - Fix:
+      - Add to your `package.json` path `"aurelia.build.resources"` value: `["aurelia-clean-bindings", "aurelia-clean-bindings/clean-bindings"]`
+      - Happy adding plugins
+
+
+10. Start development
 
   ```shell
     npm start
