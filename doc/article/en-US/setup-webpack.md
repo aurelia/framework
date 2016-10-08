@@ -508,12 +508,12 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
   1. Install a plugin like normal. Ex. `npm install aurelia-dialog --save`
   2. Go to your project `package.json`, look for path `"aurelia.build.resources"`, add plugin's module name (ex. "aurelia-dialog") to `resources` array
   3. Start your project to check if the plugin is propery config
-    3.1 If webpack doesn't complain anything, plugin is good
-    3.2 If not, peek to plugin source directory in `node_modules`, Ex `node_modules/aurelia-dialog`
-      3.2.1 Have a look at `package.json` to see if `"main"` points to the right file. (As the time of this writing, plugin `"aurelia-async"` pointed to the wrong entry filename)
-      3.2.2 Have a look at `dist/commonjs` folder (all aurelia plugins are build in this standard)
-      3.2.3 Put all the module names (if any), without extension into your project `package.json` `"aurelia.build.resources"`, with plugin name as prefix
-      3.2.4 Rerun `npm start`
+      * If webpack doesn't complain anything, plugin is good
+      * If not, peek to plugin source directory in `node_modules`, Ex `node_modules/aurelia-dialog`
+          - Have a look at `package.json` to see if `"main"` points to the right file. (As the time of this writing, plugin `"aurelia-async"` pointed to the wrong entry filename)
+          - Have a look at `dist/commonjs` folder (all aurelia plugins are build in this standard)
+          - Put all the module names (if any), without extension into your project `package.json` `"aurelia.build.resources"`, with plugin name as prefix
+          - Rerun `npm start`
 
   * A good example of how to know if a plugin is configured properly is to look into `aurelia-dialog`'s `package.json` -> `aurelia.build.resources`
   * Example for `"aurelia-clean-bindings"` plugin:
