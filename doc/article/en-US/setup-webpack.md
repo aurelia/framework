@@ -132,7 +132,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
 2. Then use the following config:
 
   * **IMPORTANT**: the following config is for `webpack@2.1.0.beta-23+` (current: `@beta-25`), as from this version, schema validation will be enforced
-  and custom property on config object is no longer allowed. So we will be using `webpack.LoaderOptionsPlugin` to provide
+  and custom properties on config object are no longer allowed. So we will be using `webpack.LoaderOptionsPlugin` to provide
   some configs for `html-minifier-loader`. If you want to keep using the prefdefined webpack
   version in the skeleton, move all properties inside `webpack.LoaderOptionsPlugin` instance to export object
 
@@ -205,7 +205,8 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
         resolve: {
             modules: [
                 srcDir,
-                'node_modules'
+                'node_modules',
+                // 'bower_components' // <--- Uncomment this line to enable simpler import path
             ]
         },
         module: {
@@ -234,7 +235,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
                         'html-minifier-loader'
                     ]
                 }, {
-                    test: /\.(less|css)$/,
+                    test: /\.css$/, // /\.(less|styl|sass|css)$/, <--- Use it to enable less, stylus or sass 
                     use: [
                         {
                             loader: 'style-loader',
@@ -243,7 +244,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
                             }
                         },
                         /**
-                         * For debug, using css-loader would be enough
+                         * For development, using css-loader would be enough
                          */
                         DEBUG ? 'css-loader' : ExtractTextPlugin.extract(`css?${JSON.stringify({
                             // sourceMap: DEBUG,
@@ -302,7 +303,6 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
                     //     })
                     // ],
                     'html-minifier-loader': {
-                        minimize: true,
                         removeComments: true,
                         collapseWhitespace: true,
                         collapseInlineTagWhitespace: true,
@@ -345,7 +345,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
             new webpack.optimize.CommonsChunkPlugin({
                 name: ['aurelia', 'aurelia-bootstrap']
             }),
-            new DefinePlugin({
+            new webpack.DefinePlugin({
                 '__DEV__': true,
                 'ENV': JSON.stringify(metadata.ENV),
                 'HMR': metadata.HMR,
@@ -376,6 +376,9 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
             * See: https://github.com/webpack/docs/wiki/optimization#deduplication
             */
             new webpack.optimize.DedupePlugin(),
+            /**
+            * Plugin: Uglifyjs
+            */
             new webpack.optimize.UglifyJsPlugin({
                 mangle: { screw_ie8: true, keep_fnames: true},
                 dead_code: true,
@@ -423,10 +426,10 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
 4. Change the bundler to latest version:
 
   ```shell
-    npm install webpack@2.1.0.beta-23 --save-dev
+    npm install webpack@2.1.0.beta-25 --save-dev
   ```
 
-5. Change `webpack-dev-server` to latest version
+5. Change development server - `webpack-dev-server` to latest version
 
   ```shell
     npm install webpack-dev-server@2.1.0.beta-0 --save-dev
