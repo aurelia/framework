@@ -226,7 +226,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
                     use: 'html-loader'
                 },
                 {
-                    test: /\.css$/, // /\.(less|styl|sass|css)$/, <--- Use it to enable less, stylus or sass 
+                    test: /\.css$/, 
                     use: [
                         {
                             loader: 'style-loader',
@@ -404,6 +404,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
 
     * Modify our config in `webpack.config.js`<br/>
       Replace:
+
       ```js
       {
           test: /\.html$/,
@@ -414,7 +415,9 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
           ]
       }
       ```
+
       With:
+
       ```js
       {
           test: /\.html$/,
@@ -425,7 +428,9 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
           ]
       }
       ```
+
       Also add to `plugins` config:
+
       ```js
       new webpack.LoaderOptionsPlugin({
           options: {
@@ -472,11 +477,11 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
       npm install --save-dev stylus stylus-loader 
       ```
   
-  * Modify style loading rule by adding chosen loader, it should look like this for `less`:
+  * Modify style loading rule by adding chosen loader and file extension, it should look like this for `less`:
 
     ```js
     {
-        test: /\.css$/, // /\.(less|styl|sass|css)$/, <--- Use it to enable less, stylus or sass 
+        test: /\.(less|css)$/, // <--- This was /\.css$/ for only css
         use: [
             {
                 loader: 'style-loader',
