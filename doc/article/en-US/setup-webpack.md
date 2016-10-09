@@ -88,89 +88,74 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
 
 ## [Using Standard Webpack Configuration](aurelia-doc://section/7/version/1.0.0)
 
+#### 1. Basic Usage
+
 1. Dependencies
+    * After downloading skeleton-esnext-webpack from Aurelia github,
+    we replace any reference to `@easy-webpack` with the normal webpack modules.<br/>
+    In `package.json`,  remove all modules that start with `@easy-webpack` in `devDependencies`:<br/><br/>
 
-  *  After downloading skeleton-esnext-webpack from Aurelia github,
-  we need to replace any reference to `@easy-webpack` with the standard webpack modules.<br/>In `package.json`, remove all modules that start with `@easy-webpack` in `devDependencies`:
-  
-  ```json
-    "@easy-webpack/config-aurelia": "^2.0.1",
-    "@easy-webpack/config-babel": "^2.0.2",
-    "@easy-webpack/config-common-chunks-simple": "^2.0.1",
-    "@easy-webpack/config-copy-files": "^1.0.0",
-    "@easy-webpack/config-css": "^2.3.2",
-    "@easy-webpack/config-env-development": "^2.1.1",
-    "@easy-webpack/config-env-production": "^2.1.0",
-    "@easy-webpack/config-external-source-maps": "^2.0.1",
-    "@easy-webpack/config-fonts-and-images": "^1.2.1",
-    "@easy-webpack/config-generate-index-html": "^2.0.1",
-    "@easy-webpack/config-global-bluebird": "^1.2.0",
-    "@easy-webpack/config-global-jquery": "^1.2.0",
-    "@easy-webpack/config-global-regenerator": "^1.2.0",
-    "@easy-webpack/config-html": "^2.0.2",
-    "@easy-webpack/config-json": "^2.0.2",
-    "@easy-webpack/config-test-coverage-istanbul": "^2.0.2",
-    "@easy-webpack/config-uglify": "^2.1.0",
-    "@easy-webpack/core": "^1.3.2",
-  ``` 
-
-  with the following:
-
-  ```json
-    "aurelia-webpack-plugin": "^1.1.0",
-    "copy-webpack-plugin": "^3.0.1",
-    "html-webpack-plugin": "^2.22.0",
-    "babel-core": "^6.17.0",
-    "babel-loader": "^6.2.5",
-    "babel-polyfill": "^6.16.0",
-    "css-loader": "^0.25.0",
-    "file-loader": "^0.9.0",
-    "sourcemap-istanbul-instrumenter-loader": "^0.2.0",
-    "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-  ```
-
-  * Replace `extract-text-webpack-plugin` with newer version by (this is for production build):
-  
-    Replace
     ```json
-      "extract-text-webpack-plugin": "^1.0.1",
+      "@easy-webpack/config-aurelia": "^2.0.1",
+      "@easy-webpack/config-babel": "^2.0.2",
+      "@easy-webpack/config-common-chunks-simple": "^2.0.1",
+      "@easy-webpack/config-copy-files": "^1.0.0",
+      "@easy-webpack/config-css": "^2.3.2",
+      "@easy-webpack/config-env-development": "^2.1.1",
+      "@easy-webpack/config-env-production": "^2.1.0",
+      "@easy-webpack/config-external-source-maps": "^2.0.1",
+      "@easy-webpack/config-fonts-and-images": "^1.2.1",
+      "@easy-webpack/config-generate-index-html": "^2.0.1",
+      "@easy-webpack/config-global-bluebird": "^1.2.0",
+      "@easy-webpack/config-global-jquery": "^1.2.0",
+      "@easy-webpack/config-global-regenerator": "^1.2.0",
+      "@easy-webpack/config-html": "^2.0.2",
+      "@easy-webpack/config-json": "^2.0.2",
+      "@easy-webpack/config-test-coverage-istanbul": "^2.0.2",
+      "@easy-webpack/config-uglify": "^2.1.0",
+      "@easy-webpack/core": "^1.3.2",
     ```
 
-    With
+    with the following:
+
     ```json
-      "extract-text-webpack-plugin": "^2.0.0-beta.4",
-    ```
-  
-  * Insert `raw-loader`, `html-minifier`, `html-minifier-loader` into devDependencies to handle our templates:
-  
-    ```json
-      "raw-loader": "^0.5.1",
-      "html-minifier": "^3.1.0",
-      "html-minifier-loader": "^1.3.3",
+      "aurelia-webpack-plugin": "^1.1.0",
+      "copy-webpack-plugin": "^3.0.1",
+      "html-webpack-plugin": "^2.22.0",
+      "babel-core": "^6.17.0",
+      "babel-loader": "^6.2.5",
+      "babel-polyfill": "^6.16.0",
+      "css-loader": "^0.25.0",
+      "file-loader": "^0.9.0",
+      "sourcemap-istanbul-instrumenter-loader": "^0.2.0",
+      "style-loader": "^0.13.1",
+      "url-loader": "^0.5.7",
+      "html-loader": "^0.4.4"
     ```
 
-2. Then use the following config:
+    Also, change bundler (webpack) to the latest version by replacing:
+    ```json
+      "webpack": "^2.1.0-beta.22"
+    ```
+    with
 
-  * **IMPORTANT**: the following config is for `webpack@2.1.0-beta.23+` (current: `@beta.25`), as from this version, schema validation will be enforced
-  and custom properties on config object are no longer allowed. So we will be using `webpack.LoaderOptionsPlugin` to provide
-  some configs for `html-minifier-loader`. If you want to keep using the prefdefined webpack
-  version in the skeleton, move all properties inside `webpack.LoaderOptionsPlugin` instance to export object
+    ```json
+      "webpack": "^2.1.0-beta.25"
+    ```
+
+2. Configuration
 
   ```js
     const path = require('path');
     const webpack = require('webpack');
     const HtmlWebpackPlugin = require('html-webpack-plugin');
     const CopyWebpackPlugin = require('copy-webpack-plugin');
-    const AureliaWebpackPlugin = require('aurelia-webpack-plugin');
-    // const WebpackMd5Hash = require('webpack-md5-hash'); <--- enable this and install webpack-md5-hash if you want to use md5 instead of webpack's default hash
-    const ExtractTextPlugin = require('extract-text-webpack-plugin');
-    // const cssnano = require('cssnano'); <---- uncomment this line if you want to use cssnano for postcss 
+    const AureliaWebpackPlugin = require('aurelia-webpack-plugin'); 
     const project = require('./package.json');
 
     const ENV = process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase() || 'development';
     const DEBUG = ENV !== 'production';
-    const title = 'Aurelia Webpack Skeleton';
+    const title = 'Aurelia Navigation Skeleton';
     const baseUrl = '/';
     const rootDir = path.resolve();
     const srcDir = path.resolve('src');
@@ -199,20 +184,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
         },
         output: {
             path: outDir,
-            /**
-            * Specifies the name of each output file on disk.
-            * IMPORTANT: You must not specify an absolute path here!
-            *
-            * See: http://webpack.github.io/docs/configuration.html#output-filename
-            */
             filename: DEBUG ? '[name].bundle.js' : '[name].[chunkhash].bundle.js',
-
-            /**
-            * The filename of the SourceMaps for the JavaScript files.
-            * They are inside the output.path directory.
-            *
-            * See: http://webpack.github.io/docs/configuration.html#output-sourcemapfilename
-            */
             sourceMapFilename: DEBUG ? '[name].bundle.map' : '[name].[chunkhash].bundle.map',
 
             /** The filename of non-entry chunks as relative path
@@ -224,8 +196,8 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
         },
         resolve: {
             modules: [
-                srcDir,
-                'node_modules',
+                srcDir, // This enables simple import path for our module in deep tree
+                'node_modules', 
                 // 'bower_components' // <--- Uncomment this line to enable simpler import path for bower components
             ]
         },
@@ -247,14 +219,13 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
                             plugins: ['transform-decorators-legacy']
                         }
                     }
-                }, {
+                },
+                {
                     test: /\.html$/,
                     exclude: /index\.html$/, // index.html will be taken care by HtmlWebpackPlugin
-                    use: [
-                        'raw-loader',
-                        'html-minifier-loader'
-                    ]
-                }, {
+                    use: 'html-loader'
+                },
+                {
                     test: /\.css$/, // /\.(less|styl|sass|css)$/, <--- Use it to enable less, stylus or sass 
                     use: [
                         {
@@ -263,21 +234,11 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
                                 singleton: true
                             }
                         },
-                        /**
-                         * For development, using css-loader would be enough
-                         */
-                        DEBUG ? 'css-loader' : ExtractTextPlugin.extract(`css?${JSON.stringify({
-                            // sourceMap: DEBUG,
-                            // url: false,
-                            minimize: !DEBUG
-                        })}`),
-                        // 'postcss-loader',
-                        // 'less-loader',
-                        // 'sass-loader',
-                        // 'styl-loader'
+                        'css-loader'
                     ]
-                }, {
-                    test: /\.(png|jpe?g|gif|svg|eot|woff|woff2|ttf)(\?\S*)?$/,
+                },
+                {
+                    test: /\.(png|jpe?g|gif|svg|eot|woff|woff2|ttf)$/,
                     use: {
                         loader: 'url-loader',
                         query: {
@@ -300,46 +261,6 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
             outputPath: outDir
         },
         plugins: [
-            new webpack.LoaderOptionsPlugin({
-                metadata,
-                debug: DEBUG,
-                devtool: 'source-map',
-                options: {
-                    context: __dirname,
-                    /**
-                     * Enable the following config for postcss
-                     */
-                    // postcss: (wpack) => [
-                    //     cssnano({
-                    //         discardComments: { removeAll: true },
-                    //         autoprefixer: true,
-                    //         colormin: true,
-                    //         convertValues: true,
-                    //         core: true,
-                    //         discardDuplicates: true,
-                    //         discardEmpty: true,
-                    //         functionOptimiser: true,
-                    //         minifyGradients: true
-                    //     })
-                    // ],
-                    'html-minifier-loader': {
-                        removeComments: true,
-                        collapseWhitespace: true,
-                        collapseInlineTagWhitespace: true,
-                        collapseBooleanAttributes: true,
-                        removeAttributeQuotes: true,
-                        minifyCSS: true,
-                        minifyJS: true,
-                        removeScriptTypeAttributes: true,
-                        removeStyleLinkTypeAttributes: true
-                    }
-                }
-            }),
-            // Extract all css into 1 file
-            new ExtractTextPlugin({
-                filename: 'style.min.css',
-                allChunks: true
-            }),
             new webpack.ProvidePlugin({
                 regeneratorRuntime: 'regenerator-runtime', // to support await/async syntax
                 Promise: 'bluebird', // because Edge browser has slow native Promise object
@@ -348,6 +269,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
                 'window.jQuery': 'jquery' // this doesn't expose jQuery property for window, but exposes it to every module
             }),
             new HtmlWebpackPlugin({
+                inject: 'head', // this helps put all scripts into document head to avoid flash of unstyled content (FOUC) when app starts 
                 title: title,
                 template: 'index.html',
                 chunksSortMode: 'dependency'
@@ -367,26 +289,19 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
             }),
             new webpack.DefinePlugin({
                 '__DEV__': true,
-                'ENV': JSON.stringify(metadata.ENV),
+                'ENV': metadata.ENV,
                 'HMR': metadata.HMR,
                 'process.env': {
-                    'ENV': JSON.stringify(metadata.ENV),
-                    'NODE_ENV': JSON.stringify(metadata.ENV),
+                    'ENV': metadata.ENV,
+                    'NODE_ENV': metadata.ENV,
                     'HMR': metadata.HMR,
-                    'WEBPACK_HOST': JSON.stringify(metadata.host),
-                    'WEBPACK_PORT': JSON.stringify(metadata.port)
+                    'WEBPACK_HOST': metadata.host,
+                    'WEBPACK_PORT': metadata.port
                 }
             })
         ].concat(DEBUG ? [
 
         ] : [
-            /**
-            * Plugin: WebpackMd5Hash
-            * Description: Plugin to replace a standard webpack chunkhash with md5.
-            *
-            * See: https://www.npmjs.com/package/webpack-md5-hash
-            */
-            // new WebpackMd5Hash(), // <--- enable this if you want to use md5 instead of webpack's default hash
             /**
             * Plugin: DedupePlugin
             * Description: Prevents the inclusion of duplicate code into your bundle
@@ -417,91 +332,166 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
     };
   ```
 
-3. Our `index.html` needs to be adjusted a bit:
+3. Change `index.html` to
 
   ```html
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title><%- htmlWebpackPlugin.options.title %></title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <base href="<%- htmlWebpackPlugin.options.baseUrl %>">
-        <!-- imported CSS are concatenated and added automatically -->
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="format-detection" content="telephone=no">
-      </head>
-      <body aurelia-app="main">
-        <div class="splash">
-          <div class="message"><%- htmlWebpackPlugin.options.title %></div>
-          <i class="fa fa-spinner fa-spin"></i>
-        </div>
-        <% if (process.env.ENV === 'development') { %>
-        <!-- Webpack Dev Server reload -->
-        <script src="/webpack-dev-server.js"></script>
-        <% } %>
-      </body>
-    </html>
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title><%- htmlWebpackPlugin.options.title %></title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <base href="<%- htmlWebpackPlugin.options.baseUrl %>">
+      <!-- imported CSS are concatenated and added automatically -->
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="format-detection" content="telephone=no">
+    </head>
+    <body aurelia-app="main">
+      <div class="splash">
+        <div class="message"><%- htmlWebpackPlugin.options.title %></div>
+        <i class="fa fa-spinner fa-spin"></i>
+      </div>
+      <% if (process.env.ENV === 'development') { %>
+      <!-- Webpack Dev Server reload -->
+      <script src="/webpack-dev-server.js"></script>
+      <% } %>
+    </body>
+  </html>
   ```
 
-4. Change the bundler to latest version:
+4. Install dependencies
 
   ```shell
-    npm install webpack@2.1.0-beta.25 --save-dev
+  npm install
   ```
 
-5. Change development server - `webpack-dev-server` to latest version
-
-  ```shell
-    npm install webpack-dev-server@2.1.0-beta.0 --save-dev
-  ```
-
-6. Install dependencies
-
-  ```shell
-    npm install
-  ```
-
-7. Modify the dev task so it doesn't throw an error, by replacing old dev task in `package.json` 
+5. Adjust development tasks<br/>
+  Modify the dev task so it doesn't throw an error,
+  by replacing old dev task in `package.json` 
   with the slightly different version (without `--progress`)<br/>
-  Replace:
+    Replace:
 
     ```json
-      "server:dev": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --progress --profile --watch",
-      "server:dev2": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --progress --profile --watch",
+    "server:dev": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --progress --profile --watch",
+    "server:dev2": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --progress --profile --watch",
     ```
 
     With:
 
     ```json
-      "server:dev": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --profile --watch",
-      "server:dev2": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --profile --watch",
+    "server:dev": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --profile --watch",
+    "server:dev2": "cross-env NODE_ENV=development node ./node_modules/webpack-dev-server/bin/webpack-dev-server --inline --profile --watch",
     ```
 
-8. Reminder for `less`, `sass` and `stylus`
-  
-  * **Example** for `less`:
-  * Install the loader based on your choice
+6. Start development
 
   ```shell
-    npm install less-loader --save-dev
+  npm start
   ```
 
-  * import them in javascript instead of your html template
-  
-  ```js
-    import 'style.less';
-  ``` 
-  
-  * Uncomment corresponding loader in these lines:
-  ```js
-    // 'postcss-loader', <!--- Uncomment this line if you wish to use postcss
-    // 'less-loader', <--- uncomment this line
-    // 'sass-loader',
-    // 'styl-loader'
-  ```
+#### 2. Advanced Usage
 
-9. Reminder when using plugins
+1. **Template optimization**
+    * Additional dependencies for handling template,
+    as Aurelia templates need to be optimized to reduce bundle size:
+      ```json
+      "raw-loader": "^0.5.1",
+      "html-minifier": "^3.1.0",
+      "html-minifier-loader": "^1.3.3",
+      ```
+    * **IMPORTANT**: Start from `webpack@2.1.0-beta.23` (current version: `@beta.25`), custom properties are no longer allowed
+  on base config object, So we will be using `webpack.LoaderOptionsPlugin` to provide
+  some config options for `html-minifier-loader`.
 
+    * Modify our config in `webpack.config.js`<br/>
+      Replace:
+      ```js
+      {
+          test: /\.html$/,
+          exclude: /index\.html$/, // index.html will be taken care by HtmlWebpackPlugin
+          use: [
+              'raw-loader',
+              'html-minifier-loader'
+          ]
+      }
+      ```
+      With:
+      ```js
+      {
+          test: /\.html$/,
+          exclude: /index\.html$/, // index.html will be taken care by HtmlWebpackPlugin
+          use: [
+              'raw-loader',
+              'html-minifier-loader'
+          ]
+      }
+      ```
+      Also add to `plugins` config:
+      ```js
+      new webpack.LoaderOptionsPlugin({
+          options: {
+              context: __dirname,
+              'html-minifier-loader': {
+                  removeComments: true, // remove all comments
+                  collapseWhitespace: true, // collapse white space between block elements (div, header, footer, p etc...)
+                  collapseInlineTagWhitespace: true, // collapse white space between inline elements (button, span, i, b, a etc...)
+                  collapseBooleanAttributes: true, // <input required="required"/> => <input required />
+                  removeAttributeQuotes: true, // <input class="abcd" /> => <input class=abcd />
+                  minifyCSS: true, // <input style="display: inline-block; width: 50px;" /> => <input style="display:inline-block;width:50px;"/>
+                  minifyJS: true, // same with CSS but for javascript
+                  removeScriptTypeAttributes: true, // <script type="text/javascript"> => <script>
+                  removeStyleLinkTypeAttributes: true // <link type="text/css" /> => <link />
+              }
+          }
+      })
+      ```
+
+2. **Using CSS pre-processor**: `less`, `sass` and `stylus`
+  * **IMPORTANT**: You can't require style with different extension than `css` like this:
+    ```html
+    <!-- invalid require -->
+    <require from='./style.less'></require>
+    ```
+
+    So we have to require our style (`less`, `sass` or `styl`) in our javascript like this:
+    ```js
+    import './style.less'; 
+    ```
+    
+  * Based on the choice of pre-processor, use corresponding dependencies:
+
+      * `less`:
+      ```shell
+      npm install --save-dev less less-loader
+      ```
+      * `sass`:
+      ```shell
+      npm install --save-dev node-sass sass-loader
+      ```
+      * `styl`:
+      ```json
+      npm install --save-dev stylus stylus-loader 
+      ```
+  
+  * Modify style loading rule by adding chosen loader, it should look like this for `less`:
+
+    ```js
+    {
+        test: /\.css$/, // /\.(less|styl|sass|css)$/, <--- Use it to enable less, stylus or sass 
+        use: [
+            {
+                loader: 'style-loader',
+                options: {
+                    singleton: true
+                }
+            },
+            'css-loader',
+            'less-loader' // <--- This was added to enable "import 'style.less'"
+        ]
+    },
+    ```
+
+3. **Using plugins**
+  * Plugins registry repository: [Plugins](https://github.com/aurelia/registry)
   * To bundle plugins' dependencies properly, all sub modules of a plugin has to be put in `aurelia.build.resources` in either that plugin's `package.json` or your project's `packag.json`
   This is crucial but not all aurelia plugins were aware of this matters / or built before this standard configuration. If you want to use a plugin, follow these steps:
 
@@ -510,20 +500,20 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
   3. Start your project to check if the plugin is properly configured
       * If webpack doesn't complain anything, plugin is good
       * If not, peek to plugin source directory in `node_modules`, Ex `node_modules/aurelia-dialog`
-          - Have a look at `package.json` to see if `"main"` points to the right file. (As the time of this writing, plugin `"aurelia-async"` pointed to the wrong entry filename)
-          - Have a look at `dist/commonjs` folder (all aurelia plugins are built in this standard)
-          - Put all the module names (if any), without extension into your project `package.json` `"aurelia.build.resources"`, with plugin name as prefix (ex. `"aurelia-dialog"`)
-          - Rerun `npm start`
+        - Have a look at `package.json` to see if `"main"` points to the right file. (As the time of this writing, plugin `"aurelia-async"` pointed to the wrong entry filename)
+        - Have a look at `dist/commonjs` folder (all aurelia plugins are built in this standard)
+        - Put all the module names (if any), without extension into your project `package.json` `"aurelia.build.resources"`, with plugin name as prefix (ex. `"aurelia-dialog"`)
+        - Rerun `npm start`
 
   * A good example of how to know if a plugin has proper configs is to look into `aurelia-dialog`'s `package.json` -> `aurelia.build.resources`
   * Example for `"aurelia-clean-bindings"` plugin:
     - This plugin doesn't have sub modules dependencies configured properly, as it is distributed with following module structure:
       
       ```
-        dist
-        └───commonjs
-        │   │   clean-bindings.js
-        │   │   index.js
+      dist
+      └───commonjs
+      │   │   clean-bindings.js
+      │   │   index.js
       ```
     
     - In `package.json`, there is no `"aurelia.build.resources"` path with value: `["aurelia-clean-bindings/clean-bindings"]`, so if you only add value `"aurelia-clean-bindings"` to your `package.json`'s
@@ -533,22 +523,15 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
       - Add to your `package.json` path `"aurelia.build.resources"` value: `["aurelia-clean-bindings", "aurelia-clean-bindings/clean-bindings"]`
       - It should look like this in your `package.json`:
       ```json
-        "aurelia": {
-            "build": {
-                "resources": [
-                    "aurelia-other-plugin...",
-                    [ "aurelia-clean-bindings", "aurelia-clean-bindings/clean-bindings" ],
-                    "aurelia-other-plugin..."
-                ]
-            }
-        }
+      "aurelia": {
+          "build": {
+              "resources": [
+                  "aurelia-other-plugin...",
+                  [ "aurelia-clean-bindings", "aurelia-clean-bindings/clean-bindings" ],
+                  "aurelia-other-plugin..."
+              ]
+          }
+      }
       ```
       - Create an issue to inform plugin author
       - Happy adding plugins
-
-
-10. Start development
-
-  ```shell
-    npm start
-  ```
