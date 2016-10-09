@@ -1124,3 +1124,10 @@ Now that you've completed the tutorial, you may want to consider doing some addi
 ## [Conclusion](aurelia-doc://section/11/version/1.0.0)
 
 This tutorial presents a fairly simple application, but it provides an opportunity to demonstrate a number of interesting techniques. We hope it's helped you along in the process of learning Aurelia and we look forward to seeing what things you will build next.
+
+* NOTE *
+
+If you get error messages, 
+* It's possible that you have an old version of the cli. You need to update it inside your project.
+* also option 2, 'using type script' works fine.
+
