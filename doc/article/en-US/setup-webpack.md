@@ -402,53 +402,52 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
   on base config object, So we will be using `webpack.LoaderOptionsPlugin` to provide
   some config options for `html-minifier-loader`.
 
-    * Modify our config in `webpack.config.js`<br/>
-      Replace:
+    * Modify our config in `webpack.config.js` by replacing:
 
-      ```js
-      {
-          test: /\.html$/,
-          exclude: /index\.html$/, // index.html will be taken care by HtmlWebpackPlugin
-          use: [
-              'raw-loader',
-              'html-minifier-loader'
-          ]
-      }
-      ```
+        ```js
+        {
+            test: /\.html$/,
+            exclude: /index\.html$/, // index.html will be taken care by HtmlWebpackPlugin
+            use: [
+                'raw-loader',
+                'html-minifier-loader'
+            ]
+        }
+        ```
 
       With:
 
-      ```js
-      {
-          test: /\.html$/,
-          exclude: /index\.html$/, // index.html will be taken care by HtmlWebpackPlugin
-          use: [
-              'raw-loader',
-              'html-minifier-loader'
-          ]
-      }
-      ```
+        ```js
+        {
+            test: /\.html$/,
+            exclude: /index\.html$/, // index.html will be taken care by HtmlWebpackPlugin
+            use: [
+                'raw-loader',
+                'html-minifier-loader'
+            ]
+        }
+        ```
 
       Also add to `plugins` config:
 
-      ```js
-      new webpack.LoaderOptionsPlugin({
-          options: {
-              context: __dirname,
-              'html-minifier-loader': {
-                  removeComments: true, // remove all comments
-                  collapseWhitespace: true, // collapse white space between block elements (div, header, footer, p etc...)
-                  collapseInlineTagWhitespace: true, // collapse white space between inline elements (button, span, i, b, a etc...)
-                  collapseBooleanAttributes: true, // <input required="required"/> => <input required />
-                  removeAttributeQuotes: true, // <input class="abcd" /> => <input class=abcd />
-                  minifyCSS: true, // <input style="display: inline-block; width: 50px;" /> => <input style="display:inline-block;width:50px;"/>
-                  minifyJS: true, // same with CSS but for javascript
-                  removeScriptTypeAttributes: true, // <script type="text/javascript"> => <script>
-                  removeStyleLinkTypeAttributes: true // <link type="text/css" /> => <link />
-              }
-          }
-      })
-      ```
+        ```js
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                context: __dirname,
+                'html-minifier-loader': {
+                    removeComments: true, // remove all comments
+                    collapseWhitespace: true, // collapse white space between block elements (div, header, footer, p etc...)
+                    collapseInlineTagWhitespace: true, // collapse white space between inline elements (button, span, i, b, a etc...)
+                    collapseBooleanAttributes: true, // <input required="required"/> => <input required />
+                    removeAttributeQuotes: true, // <input class="abcd" /> => <input class=abcd />
+                    minifyCSS: true, // <input style="display: inline-block; width: 50px;" /> => <input style="display:inline-block;width:50px;"/>
+                    minifyJS: true, // same with CSS but for javascript
+                    removeScriptTypeAttributes: true, // <script type="text/javascript"> => <script>
+                    removeStyleLinkTypeAttributes: true // <link type="text/css" /> => <link />
+                }
+            }
+        })
+        ```
 
 2. **Using CSS pre-processor**: `less`, `sass` and `stylus`
   * **IMPORTANT**: You can't require style with different extension than `css` like this:
