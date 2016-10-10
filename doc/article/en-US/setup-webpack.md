@@ -86,7 +86,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
   npm run e2e:start
   ```
 
-## [Using Standard Webpack Configuration](aurelia-doc://section/7/version/1.0.0)
+## [Using Normal Webpack Configuration](aurelia-doc://section/7/version/1.0.0)
 
 #### 1. Basic Usage
 
@@ -143,81 +143,33 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
       "webpack": "^2.1.0-beta.25"
     ```
 
-2. Configuration
+2. Basic Configuration
 
   ```js
     const path = require('path');
     const webpack = require('webpack');
     const HtmlWebpackPlugin = require('html-webpack-plugin');
-    const CopyWebpackPlugin = require('copy-webpack-plugin');
     const AureliaWebpackPlugin = require('aurelia-webpack-plugin'); 
     const project = require('./package.json');
-
-    const ENV = process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase() || 'development';
-    const DEBUG = ENV !== 'production';
-    const title = 'Aurelia Navigation Skeleton';
-    const baseUrl = '/';
-    const rootDir = path.resolve();
-    const srcDir = path.resolve('src');
-    const outDir = path.resolve('dist');
-
-    const aureliaBootstrap = [
-        'aurelia-bootstrapper-webpack',
-        'aurelia-polyfills',
-        'aurelia-pal-browser',
-        'regenerator-runtime'
-    ];
-
-    const aureliaModules = Object.keys(project.dependencies).filter(dep => dep.startsWith('aurelia-'));
-    const metadata = {
-        port: process.env.WEBPACK_PORT || 9000,
-        host: process.env.WEBPACK_HOST || 'localhost',
-        ENV: ENV,
-        HMR: process.argv.join('').indexOf('hot') >= 0 || !!process.env.WEBPACK_HMR
-    };
 
     module.exports = {
         entry: {
             'app': [], // <-- this array will be filled by the aurelia-webpack-plugin
-            'aurelia-bootstrap': aureliaBootstrap,
-            'aurelia': aureliaModules.filter(pkg => aureliaBootstrap.indexOf(pkg) === -1)
+            'aurelia': Object.keys(project.dependencies).filter(dep => dep.startsWith('aurelia-'))
         },
         output: {
             path: outDir,
-            filename: DEBUG ? '[name].bundle.js' : '[name].[chunkhash].bundle.js',
-            sourceMapFilename: DEBUG ? '[name].bundle.map' : '[name].[chunkhash].bundle.map',
-
-            /** The filename of non-entry chunks as relative path
-            * inside the output.path directory.
-            *
-            * See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
-            */
-            chunkFilename: DEBUG ? '[id].chunk.js' : '[id].[chunkhash].chunk.js'
-        },
-        resolve: {
-            modules: [
-                srcDir, // This enables simple import path for our module in deep tree
-                'node_modules', 
-                // 'bower_components' // <--- Uncomment this line to enable simpler import path for bower components
-            ]
+            filename: '[name].bundle.js'
         },
         module: {
             rules: [
                 {
                     test: /\.js$/,
-                    exclude: /node_modules/, // include: path.resolve('src'),
-                    use: {
-                        loader: 'babel-loader',
-                        query: {
-                            presets: [
-                                [ 'es2015', {
-                                    loose: true, // this helps simplify ESnext transformation
-                                    module: false // this helps enable tree shaking for webpack 2
-                                }],
-                                'stage-1'
-                            ],
-                            plugins: ['transform-decorators-legacy']
-                        }
+                    exclude: /node_modules/,
+                    loader: 'babel-loader',
+                    query: {
+                        presets: ['es2015', 'stage-1'],
+                        plugins: ['transform-decorators-legacy']
                     }
                 },
                 {
@@ -227,38 +179,13 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
                 },
                 {
                     test: /\.css$/, 
-                    use: [
-                        {
-                            loader: 'style-loader',
-                            options: {
-                                singleton: true
-                            }
-                        },
-                        'css-loader'
-                    ]
+                    use: ['style-loader', 'css-loader']
                 },
                 {
                     test: /\.(png|jpe?g|gif|svg|eot|woff|woff2|ttf)$/,
-                    use: {
-                        loader: 'url-loader',
-                        query: {
-                            limit: 10000,
-                            name: '[name].[ext]'
-                        }
-                    }
+                    use: 'url-loader'
                 }
             ]
-        },
-        devServer: {
-            port: metadata.port,
-            host: metadata.host,
-            historyApiFallback: true,
-            watchOptions: {
-                aggregateTimeout: 300,
-                poll: 1000
-            },
-            progress: true,
-            outputPath: outDir
         },
         plugins: [
             new webpack.ProvidePlugin({
@@ -266,94 +193,42 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
                 Promise: 'bluebird', // because Edge browser has slow native Promise object
                 $: 'jquery', // because 'bootstrap' by Twitter depends on this
                 jQuery: 'jquery', // just an alias
-                'window.jQuery': 'jquery' // this doesn't expose jQuery property for window, but exposes it to every module
             }),
             new HtmlWebpackPlugin({
-                inject: 'head', // this helps put all scripts into document head to avoid flash of unstyled content (FOUC) when app starts 
-                title: title,
-                template: 'index.html',
-                chunksSortMode: 'dependency'
+                template: 'index.html'
             }),
             new AureliaWebpackPlugin({
-                root: rootDir,
-                src: srcDir,
-                title: title,
-                baseUrl: baseUrl
+                root: path.resolve(),
+                src: path.resolve('src'),
+                baseUrl: '/'
             }),
-            new CopyWebpackPlugin([{
-                from: 'favicon.ico',
-                to: 'favicon.ico'
-            }]),
             new webpack.optimize.CommonsChunkPlugin({
-                name: ['aurelia', 'aurelia-bootstrap']
-            }),
-            new webpack.DefinePlugin({
-                '__DEV__': true,
-                'ENV': metadata.ENV,
-                'HMR': metadata.HMR,
-                'process.env': {
-                    'ENV': metadata.ENV,
-                    'NODE_ENV': metadata.ENV,
-                    'HMR': metadata.HMR,
-                    'WEBPACK_HOST': metadata.host,
-                    'WEBPACK_PORT': metadata.port
-                }
+                name: ['aurelia']
             })
-        ].concat(DEBUG ? [
-
-        ] : [
-            /**
-            * Plugin: DedupePlugin
-            * Description: Prevents the inclusion of duplicate code into your bundle
-            * and instead applies a copy of the function at runtime.
-            *
-            * See: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
-            * See: https://github.com/webpack/docs/wiki/optimization#deduplication
-            */
-            new webpack.optimize.DedupePlugin(),
-            /**
-            * Plugin: Uglifyjs
-            */
-            new webpack.optimize.UglifyJsPlugin({
-                mangle: { screw_ie8: true, keep_fnames: true},
-                dead_code: true,
-                unused: true,
-                comments: true,
-                compress: {
-                    screw_ie8: true,
-                    keep_fnames: true,
-                    drop_debugger: false,
-                    dead_code: false,
-                    unused: false,
-                    warnings: false
-                }
-            })
-        ])
+        ]
     };
   ```
 
-3. Change `index.html` to
+3. Change our `index.html` to
 
   ```html
   <!DOCTYPE html>
   <html>
     <head>
-      <title><%- htmlWebpackPlugin.options.title %></title>
+      <title>Aurelia Navigation Skeleton</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <base href="<%- htmlWebpackPlugin.options.baseUrl %>">
+      <base href="/">
       <!-- imported CSS are concatenated and added automatically -->
       <meta name="apple-mobile-web-app-capable" content="yes">
       <meta name="format-detection" content="telephone=no">
     </head>
     <body aurelia-app="main">
       <div class="splash">
-        <div class="message"><%- htmlWebpackPlugin.options.title %></div>
+        <div class="message">Aurelia Navigation Skeleton</div>
         <i class="fa fa-spinner fa-spin"></i>
       </div>
-      <% if (process.env.ENV === 'development') { %>
-      <!-- Webpack Dev Server reload -->
-      <script src="/webpack-dev-server.js"></script>
-      <% } %>
+      <!-- Uncomment below line for Webpack Dev Server auto reload -->
+      <!--<script src="/webpack-dev-server.js"></script>-->
     </body>
   </html>
   ```
@@ -393,11 +268,13 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
 1. **Template optimization**
     * Additional dependencies for handling template,
     as Aurelia templates need to be optimized to reduce bundle size:
+
       ```json
       "raw-loader": "^0.5.1",
       "html-minifier": "^3.1.0",
       "html-minifier-loader": "^1.3.3",
       ```
+
     * **IMPORTANT**: Start from `webpack@2.1.0-beta.23` (current version: `@beta.25`), custom properties are no longer allowed
   on base config object, So we will be using `webpack.LoaderOptionsPlugin` to provide
   some config options for `html-minifier-loader`.
@@ -408,10 +285,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
         {
             test: /\.html$/,
             exclude: /index\.html$/, // index.html will be taken care by HtmlWebpackPlugin
-            use: [
-                'raw-loader',
-                'html-minifier-loader'
-            ]
+            use: 'html-loader'
         }
         ```
 
@@ -435,14 +309,14 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
             options: {
                 context: __dirname,
                 'html-minifier-loader': {
-                    removeComments: true, // remove all comments
-                    collapseWhitespace: true, // collapse white space between block elements (div, header, footer, p etc...)
-                    collapseInlineTagWhitespace: true, // collapse white space between inline elements (button, span, i, b, a etc...)
-                    collapseBooleanAttributes: true, // <input required="required"/> => <input required />
-                    removeAttributeQuotes: true, // <input class="abcd" /> => <input class=abcd />
-                    minifyCSS: true, // <input style="display: inline-block; width: 50px;" /> => <input style="display:inline-block;width:50px;"/>
-                    minifyJS: true, // same with CSS but for javascript
-                    removeScriptTypeAttributes: true, // <script type="text/javascript"> => <script>
+                    removeComments: true,               // remove all comments
+                    collapseWhitespace: true,           // collapse white space between block elements (div, header, footer, p etc...)
+                    collapseInlineTagWhitespace: true,  // collapse white space between inline elements (button, span, i, b, a etc...)
+                    collapseBooleanAttributes: true,    // <input required="required"/> => <input required />
+                    removeAttributeQuotes: true,        // <input class="abcd" /> => <input class=abcd />
+                    minifyCSS: true,                    // <input style="display: inline-block; width: 50px;" /> => <input style="display:inline-block;width:50px;"/>
+                    minifyJS: true,                     // same with CSS but for javascript
+                    removeScriptTypeAttributes: true,   // <script type="text/javascript"> => <script>
                     removeStyleLinkTypeAttributes: true // <link type="text/css" /> => <link />
                 }
             }
@@ -494,7 +368,64 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
     },
     ```
 
-3. **Using plugins**
+3. Javascript optimization.
+
+  * To diliver a smaller bundle for production. Add to your `plugins` in the configuration:
+
+      ```js
+      new webpack.optimize.UglifyJsPlugin({
+          mangle: { screw_ie8: true, keep_fnames: true},
+          dead_code: true,
+          unused: true,
+          comments: true,
+          compress: {
+              screw_ie8: true,
+              keep_fnames: true,
+              drop_debugger: false,
+              dead_code: false,
+              unused: false,
+              warnings: false
+          }
+      })
+      ```
+
+  * Pass some extra configuration to our `babel-loader` to enable simpler transformation
+    and tree-shaking to remove unused codes by:<br/>
+    Replacing:
+
+      ```js
+      {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader',
+          query: {
+              presets: ['es2015', 'stage-1'],
+              plugins: ['transform-decorators-legacy']
+          }
+      },
+      ```
+
+    With
+
+      ```js
+      {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader',
+          query: {
+              presets: [
+                  [ 'es2015', {
+                      loose: true, // this helps simplify ESnext transformation
+                      module: false // this helps enable tree shaking for webpack 2
+                  }],
+                  'stage-1'
+              ],
+              plugins: ['transform-decorators-legacy']
+          }
+      }
+      ```
+
+4. **Using plugins**
   * Plugins registry repository: [Plugins](https://github.com/aurelia/registry)
   * To bundle plugins' dependencies properly, all sub modules of a plugin has to be put in `aurelia.build.resources` in either that plugin's `package.json` or your project's `packag.json`
   This is crucial but not all aurelia plugins were aware of this matters / or built before this standard configuration. If you want to use a plugin, follow these steps:
@@ -520,7 +451,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
       │   │   index.js
       ```
     
-    - In `package.json`, there is no `"aurelia.build.resources"` path with value: `["aurelia-clean-bindings/clean-bindings"]`, so if you only add value `"aurelia-clean-bindings"` to your `package.json`'s
+    - In this plugin's `package.json`, there is no `"aurelia.build.resources"` path with value: `["aurelia-clean-bindings/clean-bindings"]`, so if you only add value `"aurelia-clean-bindings"` to your `package.json`'s
     `"aurelia.build.resources"` value: `"aurelia-clean-bindings"`, it won't work
 
     - Fix:
