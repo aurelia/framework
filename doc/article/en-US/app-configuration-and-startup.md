@@ -295,14 +295,14 @@ To create a "feature", simply create a folder in your app; in the case of our ex
 <code-listing heading="A Feature Module (index${context.language.fileExtension})">
   <source-code lang="ES 2015/2016">
     export function configure(config) {
-      config.globalResources('./my-component', './my-component-2', 'my-component-3', 'etc.');
+      config.globalResources(['./my-component', './my-component-2', 'my-component-3', 'etc.']);
     }
   </source-code>
   <source-code lang="TypeScript">
     import {FrameworkConfiguration} from 'aurelia-framework';
 
     export function configure(config: FrameworkConfiguration): void {
-      config.globalResources('./my-component', './my-component-2', 'my-component-3', 'etc.');
+      config.globalResources(['./my-component', './my-component-2', 'my-component-3', 'etc.']);
     }
   </source-code>
 </code-listing>
