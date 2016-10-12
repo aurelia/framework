@@ -370,7 +370,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
 
 3. **Javascript optimization**.
 
-  * To diliver a smaller bundle for production. Add to your `plugins` in the configuration:
+  * To deliver a smaller bundle for production. Add to your `plugins` in the configuration:
 
       ```js
       new webpack.optimize.UglifyJsPlugin({
