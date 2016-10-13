@@ -495,7 +495,7 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
         };
         const outDir = path.resolve('dist');
 
-        const aureliaModules: [
+        const aureliaModules = [
             'aurelia-bootstrapper-webpack',
             'aurelia-binding',
             'aurelia-dependency-injection',
