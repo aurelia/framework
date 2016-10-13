@@ -46,7 +46,7 @@ Aurelia must also be configured to use the HTML Imports template loader and the 
 <code-listing heading="Plugin Installation">
   <source-code lang="Shell">
     $ jspm install aurelia-html-import-template-loader
-    $ jspm install 'aurelia-polymer@^1.0.0-beta'
+    $ jspm install aurelia-polymer@^1.0.0-beta
   </source-code>
 </code-listing>
 
