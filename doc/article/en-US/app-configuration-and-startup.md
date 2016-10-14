@@ -443,7 +443,7 @@ Optionally, you can provide an object instance to use as the data-binding contex
   </source-code>
 </code-listing>
 
-But what if you need to enhance multiple elements on the page that are not have direct parent children relations. For example - you have an existing application written on some non Aurelia framework and you want to refactor it component by component.
+But what if you need to enhance multiple elements on the page that do not have direct parent children relations. For example - you have an existing application written on some non Aurelia framework and you want to refactor it component by component.
 
 You can't use `aurelia.enhance` method multiple times because it was not designed for that and will give you problems. Instead you can use templating engine enhance method directly.
 
