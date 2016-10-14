@@ -66,12 +66,12 @@ You can improve the user-experience by plugging into Aurelia's router pipeline w
     }
   </source-code>
   <source-code lang="TypeScript">
-    import {Redirect, NavigationInstruction, RouterConfiguration} from 'aurelia-router';
+    import {NavigationInstruction, Next, PipelineStep, Redirect, RouterConfiguration} from 'aurelia-router';
 
     export class App {
       configureRouter(config: RouterConfiguration): void {
         config.title = 'Aurelia';
-        config.addPipelineStep('authorize', AuthorizeStep);
+        config.addAuthorizeStep(AuthorizeStep);
         config.map([
           { route: ['welcome'], moduleId: 'welcome', title: 'Welcome', settings: { roles: [] } },
           { route: 'admin', moduleId: 'admin', title: 'Admin' settings: { roles: ['admin'] } }
@@ -79,8 +79,8 @@ You can improve the user-experience by plugging into Aurelia's router pipeline w
       }
     }
 
-    class AuthorizeStep {
-      run(navigationInstruction: NavigationInstruction, next: Function): Promise<any> {
+    class AuthorizeStep implements PipelineStep {
+      public run(navigationInstruction: NavigationInstruction, next: Next): Promise<any> {
         if (navigationInstruction.getAllInstructions().some(i => i.config.settings.roles.indexOf('admin') !== -1)) {
           var isAdmin = /* insert magic here */false;
           if (!isAdmin) {
