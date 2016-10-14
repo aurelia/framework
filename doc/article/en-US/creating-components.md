@@ -136,3 +136,6 @@ All components have a well-defined lifecycle. Below is a list of methods you can
 6. `unbind()` - After a component is detached, it's usually unbound. If your view-model has the `unbind` callback, it will be invoked during this process.
 
 Each of these callbacks is optional. Implement whatever makes sense for your component, but don't feel obligated to implement any of them if they aren't needed for your scenario. Usually, if you implement `bind` you will need to implement `unbind`. The same goes for `attached` and `detached`, but again, it isn't mandatory.
+
+> Info
+> It is important to note that if you implement the `bind` callback function, then the property changed callbacks for any `bindable` properties will not be called when the property value is initially set. The changed callback will be called for any subsequent time the bound value changes.
