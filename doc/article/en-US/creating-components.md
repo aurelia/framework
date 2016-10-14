@@ -71,7 +71,7 @@ Also, notice how the view is wrapped in a Web Components HTMLTemplateElement. Al
 
 The `.bind` binding command configures the "default binding behavior" for the attribute. For most attributes, this is a `one-way` binding, where data updates only flow in one direction: from the view-model to the view. However, usually, the behavior you want for form controls is `two-way` binding so that data not only flows from your view-model into your view, but user input in the view flows back into your view-model.
 
-Those are the defaults, but you can always be explicit about the binding direction by using `.one-way`, `two-way` or `.one-time` in place of `.bind`. (`.one-time` renders the initial value of the property but does not perform synchronization thereafter, making it a nice memory and performance gain for data you know will not change.)
+Those are the defaults, but you can always be explicit about the binding direction by using `.one-way`, `two-way` or `.one-time` in place of `.bind` (`.one-time` renders the initial value of the property but does not perform synchronization thereafter, making it a nice memory and performance gain for data you know will not change).
 
 In addition to binding HTML attributes, you can also bind events. Any event, either native or custom, can be bound using `.trigger` this causes the expression to be invoked when the indicated event is fired.
 
