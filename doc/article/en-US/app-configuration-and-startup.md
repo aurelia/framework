@@ -458,7 +458,7 @@ Example:
       </head>
       <body>
         <my-component message="Enhance Me"></my-component>
-        <div class="42">Some legacy code you don't want to enhance</div>
+        <div class="42">Some legacy code that you don't want to enhance</div>
         <your-component message.bind="message"></your-component>
       </body>
     </html>
