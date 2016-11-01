@@ -137,5 +137,7 @@ All components have a well-defined lifecycle. Below is a list of methods you can
 
 Each of these callbacks is optional. Implement whatever makes sense for your component, but don't feel obligated to implement any of them if they aren't needed for your scenario. Usually, if you implement `bind` you will need to implement `unbind`. The same goes for `attached` and `detached`, but again, it isn't mandatory.
 
+The order in which the lifecycle hooks are listed above matches the order in which they are invoked. For example, `bind` happens before `attached` to ensure elements take their initial state from the view-model before the view is attached to the DOM and transitioned in. Likewise, `detached` happens before `unbind` to ensure the view is transitioned out and detached from the DOM before `unbind` potentially causes the view to change.
+
 > Info
 > It is important to note that if you implement the `bind` callback function, then the property changed callbacks for any `bindable` properties will not be called when the property value is initially set. The changed callback will be called for any subsequent time the bound value changes.
