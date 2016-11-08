@@ -269,6 +269,12 @@ Components have a well-defined lifecycle:
     * ex. `All.of(Plugin)`
 * `Optional` - Injects an instance of a class only if it already exists in the container; null otherwise.
     * ex. `Optional.of(LoggedInUser)`
+* `Parent` - Skips starting dependency resolution from the current container and instead begins the lookup process on the parent container.
+    * ex. `Parent.of(MyCustomElement)`
+* `Factory` - Used to allow injecting dependencies, but also passing data to the constructor.
+    * ex. `Factory.of(CustomClass)`
+* `NewInstance` - Used to inject a new instance of a dependency, without regard for existing instances in the container.
+    * ex. `NewInstance.of(CustomClass).as(Another)`
 
 <code-listing heading="Explicit Registration">
   <source-code lang="ES 2016">
