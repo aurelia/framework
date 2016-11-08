@@ -15,7 +15,7 @@
 ---
 ## [Introduction](aurelia-doc://section/1/version/1.0.0)
 
-The first rule of securing client-side applications: The client cannot be trusted. Your backend should not trust the input coming from the front-end, under any circumstance. Malicious individuals often know how to use browser debug tools and manually craft HTTP requests to your backend. You may even find yourself in a situation where a disgruntled employee (or former employee), who is a developer with intimate knowledge of the system, is seeking revenge by attempting a malicious attack.
+The first rule of securing client-side applications: the client cannot be trusted. Your backend should never trust the input coming from the front-end, under any circumstance. Malicious individuals often know how to use browser debug tools and manually craft HTTP requests to your backend. You may even find yourself in a situation where a disgruntled employee (or former employee), who is a developer with intimate knowledge of the system, is seeking revenge by attempting a malicious attack.
 
 **Your primary mechanism for securing any SPA application, Aurelia or otherwise, is to work hard on securing your backend services.**
 
