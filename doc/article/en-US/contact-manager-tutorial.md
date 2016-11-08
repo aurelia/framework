@@ -295,7 +295,7 @@ Aurelia strives to be a self-consistent framework. As such, building a custom el
   </source-code>
 </code-listing>
 
-> Note that we use a dashed naming convention to separate the words *contact-list* as our custom element name. The name of the class instead should be defined by using the UpperCammelCase version *ContactList*
+> Note that we use a dashed naming convention to separate the words *contact-list* as our custom element name. The name of the class instead should be defined by using the UpperCamelCase version *ContactList*
 
 The view-model for our custom element has a few notable characteristics. First, we're using dependency injection. Aurelia has its own dependency injection container, which it uses to instantiate classes in your app. Classes can declare constructor dependencies through *inject metadata*. This looks a bit different depending on what language you are using. In ES 2015, you can declare an `inject` static method that returns an array of constructor dependencies while in ES Next and TypeScript, you can use an `inject` decorator to declare those dependencies. As you can see here, our `ContactList` class has a dependency on our `WebAPI` class. When Aurelia instantiates the contact list, it will first instantiate (or locate) an instance of the web API and "inject" that into the contact list's constructor.
 
