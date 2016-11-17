@@ -916,15 +916,16 @@ Contextual items available inside a repeat template:
     - ie 'files*path' - Matches the string and then anything that follows it. Your view-model's `activate` callback will be called with an object that has a `path` property set to the wildcard's value.
 
 
-### The Screen Activation Lifecycle
+### The Route Screen Activation Lifecycle
 
 * `canActivate(params, routeConfig, navigationInstruction)` - Implement this hook if you want to control whether or not your view-model _can be navigated to_. Return a boolean value, a promise for a boolean value, or a navigation command.
 * `activate(params, routeConfig, navigationInstruction)` - Implement this hook if you want to perform custom logic just before your view-model is displayed. You can optionally return a promise to tell the router to wait to bind and attach the view until after you finish your work.
 * `canDeactivate()` - Implement this hook if you want to control whether or not the router _can navigate away_ from your view-model when moving to a new route. Return a boolean value, a promise for a boolean value, or a navigation command.
 * `deactivate()` - Implement this hook if you want to perform custom logic when your view-model is being navigated away from. You can optionally return a promise to tell the router to wait until after you finish your work.
 
-> Info: Navigation Commands
-> A _Navigation Command_ is any object with a `navigate(router: Router)` method. When a navigation command is encountered, the current navigation will be cancelled and control will be passed to the navigation command so it can determine the correct action. Aurelia provides one navigation command out of the box: `Redirect`.
+> Warning: Root Screen Activation
+> Unlike the mapped routes, the root's view-model only has access to the `activate()` hook.
+> However this can also be used to implement logic for _attaching the component_ by returning a promise for a boolean value.
 
 The `params` object will have a property for each parameter of the route that was parsed, as well as a property for each query string value. `routeConfig` will be the original route configuration object that you set up. `routeConfig` will also have a new `navModel` property, which can be used to change the document title for data loaded by your view-model. For example:
 
