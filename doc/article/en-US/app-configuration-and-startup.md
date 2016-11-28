@@ -443,13 +443,11 @@ Optionally, you can provide an object instance to use as the data-binding contex
   </source-code>
 </code-listing>
 
-But what if you need to enhance multiple elements on the page that do not have direct parent children relations. For example - you have an existing application written on some non Aurelia framework and you want to refactor it component by component.
+But what if you need to enhance multiple elements on a page that do not have a direct parent/child relationship? For example, suppose you have an existing application written on a non-Aurelia framework that you need to refactor component by component.
 
-You can't use `aurelia.enhance` method multiple times because it was not designed for that and will give you problems. Instead you can use templating engine enhance method directly.
+You can't use the `aurelia.enhance` method multiple times because it was not designed for that. Instead you can use the templating engine's `enhance` method directly.
 
-Example:
-
-<code-listing heading="Multiple enhance statements HTML">
+<code-listing heading="Multiple Enhance HTML">
   <source-code lang="HTML">
     <!doctype html>
     <html>
@@ -465,7 +463,7 @@ Example:
   </source-code>
 </code-listing>
 
-<code-listing heading="Multiple enhance statements JS">
+<code-listing heading="Multiple Enhance Code">
   <source-code lang="ES 2015/2016">
     import {TemplatingEngine} from 'aurelia-framework';
 
