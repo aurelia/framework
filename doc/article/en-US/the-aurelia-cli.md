@@ -245,13 +245,17 @@ The Bootstrap example above results in the bundling of the JavaScript portions o
         "exports": "$",
         "resources": [
           "css/bootstrap.css"
-        ]
+        ],
+        "copy": {
+          "fonts/glyphicons-halflings-regular.woff2": "../bootstrap/fonts/glyphicons-halflings-regular.woff2",
+          "fonts/glyphicons-halflings-regular.woff": "../bootstrap/fonts/glyphicons-halflings-regular.woff"
+        }
       }
     ]
   </source-code>
 </code-listing>
 
-Notice that we've added a `resources` array. Here we can provide a list of additional files to be included with the bundle. These files are relative to the `path` designated above and must include the file extension. You can also use glob patterns in place of exact file names.
+Notice that we've added a `resources` array and a `copy` object. In `resources` we can provide a list of additional files to be included with the bundle. These files are relative to the `path` designated above and must include the file extension. You can also use glob patterns in place of exact file names. In `copy` we can specify files to be copied to the output directory. This is very useful when working with libraries that load files via http, which is what Bootstrap does with font files. The `copy` object works as a 'from':'to' setup, where 'from' is the file you want to copy, and 'to' is the destination. Remember to always include the file extension.  
 
 > Info
 > Remember that CSS bundled in this way is bundled as a text resource designed to be required in your view. To load the Bootstrap css file in a view, use `<require from="bootstrap/css/bootstrap.css"></require>`. Notice that the module name derives from combining the `name` property with the resource.
@@ -300,7 +304,11 @@ Sometimes you can't get a library to work with the module loading system. That's
           "exports": "$",
           "resources": [
             "css/bootstrap.css"
-          ]
+          ],
+          "copy": {
+            "fonts/glyphicons-halflings-regular.woff2": "../bootstrap/fonts/glyphicons-halflings-regular.woff2",
+            "fonts/glyphicons-halflings-regular.woff": "../bootstrap/fonts/glyphicons-halflings-regular.woff"
+          }
         },
         {
           "name": "text",
