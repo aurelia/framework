@@ -443,6 +443,61 @@ Optionally, you can provide an object instance to use as the data-binding contex
   </source-code>
 </code-listing>
 
+But what if you need to enhance multiple elements on the page that do not have direct parent children relations. For example - you have an existing application written on some non Aurelia framework and you want to refactor it component by component.
+
+You can't use `aurelia.enhance` method multiple times because it was not designed for that and will give you problems. Instead you can use templating engine enhance method directly.
+
+Example:
+
+<code-listing heading="Multiple enhance statements HTML">
+  <source-code lang="HTML">
+    <!doctype html>
+    <html>
+      <head>
+        <title>My App</title>
+      </head>
+      <body>
+        <my-component message="Enhance Me"></my-component>
+        <div class="42">Some legacy code that you don't want to enhance</div>
+        <your-component message.bind="message"></your-component>
+      </body>
+    </html>
+  </source-code>
+</code-listing>
+
+<code-listing heading="Multiple enhance statements JS">
+  <source-code lang="ES 2015/2016">
+    import {TemplatingEngine} from 'aurelia-framework';
+
+    export function configure(aurelia) {
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging()
+        .globalResources('resources/my-component', 'resources/your-component');
+
+      aurelia.start().then(a => {
+        let templatingEngine = a.container.get(TemplatingEngine);
+
+        templatingEngine.enhance({
+          container: a.container,
+          element: document.querySelector('my-component'),
+          resources: a.resources
+        });
+
+        templatingEngine.enhance({
+          container: a.container,
+          element: document.querySelector('your-component'),
+          resources: a.resources,
+          bindingContext: {
+            message: 'Enhance Me as well'
+          }
+        });
+
+      });
+    }
+  </source-code>
+</code-listing>
+
 ## [Customizing Conventions](aurelia-doc://section/9/version/1.0.0)
 
 There are many things you may want to customize or configure as part of your application's bootstrap process. Once you have your main `configure` method in place and `aurelia-app` is pointing to that module, you can do just about anything you want. One of the most common aspects of Aurelia that developers may want to customize, is its conventions.
