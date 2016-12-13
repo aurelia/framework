@@ -62,15 +62,23 @@ The CLI build system understands that you might run your code in different envir
 
 Aurelia CLI apps always run in bundled mode, even during development. To build your app, simply run `au build`. You can also specify an environment to build for. For example: `au build --env stage`.
 
-## [Unit Testing](aurelia-doc://section/5/version/1.0.0)
+## [Deploying Your App](aurelia-doc://section/5/version/1.0.0)
+
+Run the following build command:
+
+    au build --env prod
+
+Then copy the file `index.html` and the folder `/scripts`  to the main deployment folder on your server.
+
+## [Unit Testing](aurelia-doc://section/6/version/1.0.0)
 
 If you selected a project setup that includes unit tests, you can run your tests with `au test`. If you would like to adopt a tdd-based workflow, writing code and tests with continual test evaluation, you can use the `--watch` flag. For example: `au test --watch`.
 
-## [Generators](aurelia-doc://section/5/version/1.0.0)
+## [Generators](aurelia-doc://section/7/version/1.0.0)
 
 Executing `au generate resource` runs a generator to scaffold out typical Aurelia constructs. Options for *resource* are: element, attribute, value-converter, binding-behavior, task and generator. That's right...there's a generator generator so you can write your own. Ex. `au generate element`
 
-## [Build Revisions](aurelia-doc://section/10/version/1.0.0)
+## [Build Revisions](aurelia-doc://section/8/version/1.0.0)
 
 To create builds with revision numbers, you must set `rev` to be `true` under the build options. This will cause a unique revision number to be added to the bundled files. For example:
 ```javascript
@@ -104,7 +112,7 @@ In order for your `index.html` file to be updated to load up the correct revisio
 }
 ```
 
-## [Bundling Your Project](aurelia-doc://section/11/version/1.0.0)
+## [Bundling Your Project](aurelia-doc://section/9/version/1.0.0)
 
 By default, the Aurelia CLI creates two bundles, an `app-bundle.js`, and a `vendor-bundle.js`. An example of the default `app-bundle.js` looks like this:  
 ```javascript
@@ -139,7 +147,7 @@ Optionally, you can define an `exclude` list by setting the `source` property to
 }
 ```
 
-## [Adding Client Libraries to Your Project](aurelia-doc://section/6/version/1.0.0)
+## [Adding Client Libraries to Your Project](aurelia-doc://section/10/version/1.0.0)
 
 If you need to add a 3rd party client library to your project, first `npm install` the library. After that, open the `aurelia_project/aurelia.json` file and scroll down to the `build.bundles` section. You'll need to add the library into one of your bundle's `dependencies` sections.
 
@@ -352,7 +360,7 @@ And this is an example of loading a `@scope/packagename` plugin during app start
 aurelia.use.standardConfiguration().plugin('@scope/packagename');
 ```
 
-## [Configuring the Loader](aurelia-doc://section/7/version/1.0.0)
+## [Configuring the Loader](aurelia-doc://section/11/version/1.0.0)
 
 You can configure the loader by adding a `config` key to `build.loader` with the options you want to add. For instance, if you want to increase the timeout for requirejs, you would do this:
 
@@ -369,7 +377,7 @@ You can configure the loader by adding a `config` key to `build.loader` with the
 }
 ```
 
-## [Styling your Application](aurelia-doc://section/8/version/1.0.0)
+## [Styling your Application](aurelia-doc://section/12/version/1.0.0)
 
 There are many ways to style components in Aurelia. The CLI sets up your project to only process styles inside your application's `src` folder. Those styles can then be imported into a view using Aurelia's `require` element.
 
@@ -396,11 +404,11 @@ Bear in mind that you can always configure things any way you want by modifying 
 For styling purposes, you can modify the `process-css.js` file.
 
 
-## [What if I forget this stuff?](aurelia-doc://section/9/version/1.0.0)
+## [What if I forget this stuff?](aurelia-doc://section/13/version/1.0.0)
 
 If you need your memory refreshed as to what the available options are, at any time you can execute `au help`. If you aren't sure what version of the CLI you are running, you can run `au -v`;
 
-## [Troubleshooting](aurelia-doc://section/12/version/1.0.0)
+## [Troubleshooting](aurelia-doc://section/14/version/1.0.0)
 
 _**I updated aurelia-cli and now executing `au run` returns `"Invalid Command: run"`**_
 
