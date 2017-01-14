@@ -236,16 +236,16 @@ Aurelia strives to be a self-consistent framework. As such, building a custom el
     export class ContactList {
       static inject() { return [WebAPI] };
 
-      constructor(api){
+      constructor(api) {
         this.api = api;
         this.contacts = [];
       }
 
-      created(){
+      created() {
         this.api.getContactList().then(contacts => this.contacts = contacts);
       }
 
-      select(contact){
+      select(contact) {
         this.selectedId = contact.id;
         return true;
       }
@@ -257,16 +257,16 @@ Aurelia strives to be a self-consistent framework. As such, building a custom el
 
     @inject(WebAPI)
     export class ContactList {
-      constructor(api){
+      constructor(api) {
         this.api = api;
         this.contacts = [];
       }
 
-      created(){
+      created() {
         this.api.getContactList().then(contacts => this.contacts = contacts);
       }
 
-      select(contact){
+      select(contact) {
         this.selectedId = contact.id;
         return true;
       }
@@ -281,13 +281,13 @@ Aurelia strives to be a self-consistent framework. As such, building a custom el
       contacts;
       selectedId = 0;
 
-      constructor(private api: WebAPI){ }
+      constructor(private api: WebAPI) { }
 
-      created(){
+      created() {
         this.api.getContactList().then(contacts => this.contacts = contacts);
       }
 
-      select(contact){
+      select(contact) {
         this.selectedId = contact.id;
         return true;
       }
@@ -585,37 +585,37 @@ The reason for these issues is that we have two separate components, our `contac
 <code-listing heading="messages${context.language.fileExtension}">
   <source-code lang="ES 2015">
     export class ContactUpdated {
-      constructor(contact){
+      constructor(contact) {
         this.contact = contact;
       }
     }
 
     export class ContactViewed {
-      constructor(contact){
+      constructor(contact) {
         this.contact = contact;
       }
     }
   </source-code>
   <source-code lang="ES Next">
     export class ContactUpdated {
-      constructor(contact){
+      constructor(contact) {
         this.contact = contact;
       }
     }
 
     export class ContactViewed {
-      constructor(contact){
+      constructor(contact) {
         this.contact = contact;
       }
     }
   </source-code>
   <source-code lang="TypeScript">
     export class ContactUpdated {
-      constructor(public contact){ }
+      constructor(public contact) { }
     }
 
     export class ContactViewed {
-      constructor(public contact){ }
+      constructor(public contact) { }
     }
   </source-code>
 </code-listing>
@@ -665,7 +665,7 @@ Whenever the contact detail screen successfully saves a contact, we'll publish t
         if(!areEqual(this.originalContact, this.contact)){
           let result = confirm('You have unsaved changes. Are you sure you wish to leave?');
 
-          if(!result){
+          if(!result) {
             this.ea.publish(new ContactViewed(this.contact));
           }
 
@@ -718,7 +718,7 @@ Whenever the contact detail screen successfully saves a contact, we'll publish t
         if(!areEqual(this.originalContact, this.contact)){
           let result = confirm('You have unsaved changes. Are you sure you wish to leave?');
 
-          if(!result){
+          if(!result) {
             this.ea.publish(new ContactViewed(this.contact));
           }
 
@@ -778,7 +778,7 @@ Whenever the contact detail screen successfully saves a contact, we'll publish t
         if(!areEqual(this.originalContact, this.contact)){
           let result = confirm('You have unsaved changes. Are you sure you wish to leave?');
 
-          if(!result){
+          if(!result) {
             this.ea.publish(new ContactViewed(this.contact));
           }
 
@@ -804,7 +804,7 @@ With these messages in place, we can now enable any other component in our syste
     export class ContactList {
       static inject = [WebAPI, EventAggregator];
 
-      constructor(api, ea){
+      constructor(api, ea) {
         this.api = api;
         this.contacts = [];
 
@@ -816,11 +816,11 @@ With these messages in place, we can now enable any other component in our syste
         });
       }
 
-      created(){
+      created() {
         this.api.getContactList().then(contacts => this.contacts = contacts);
       }
 
-      select(contact){
+      select(contact) {
         this.selectedId = contact.id;
         return true;
       }
@@ -834,7 +834,7 @@ With these messages in place, we can now enable any other component in our syste
 
     @inject(WebAPI, EventAggregator)
     export class ContactList {
-      constructor(api, ea){
+      constructor(api, ea) {
         this.api = api;
         this.contacts = [];
 
@@ -846,11 +846,11 @@ With these messages in place, we can now enable any other component in our syste
         });
       }
 
-      created(){
+      created() {
         this.api.getContactList().then(contacts => this.contacts = contacts);
       }
 
-      select(contact){
+      select(contact) {
         this.selectedId = contact.id;
         return true;
       }
@@ -867,7 +867,7 @@ With these messages in place, we can now enable any other component in our syste
       contacts;
       selectedId = 0;
 
-      constructor(private api: WebAPI, ea: EventAggregator){
+      constructor(private api: WebAPI, ea: EventAggregator) {
         ea.subscribe(ContactViewed, msg => this.select(msg.contact));
         ea.subscribe(ContactUpdated, msg => {
           let id = msg.contact.id;
@@ -876,11 +876,11 @@ With these messages in place, we can now enable any other component in our syste
         });
       }
 
-      created(){
+      created() {
         this.api.getContactList().then(contacts => this.contacts = contacts);
       }
 
-      select(contact){
+      select(contact) {
         this.selectedId = contact.id;
         return true;
       }
@@ -938,7 +938,7 @@ With that in place, let's create our `loading-indicator` custom element. In the 
       noView(['nprogress/nprogress.css']),
       bindable({name: 'loading', defaultValue: false})
     ).on(class {
-      loadingChanged(newValue){
+      loadingChanged(newValue) {
         if (newValue) {
           nprogress.start();
         } else {
@@ -955,7 +955,7 @@ With that in place, let's create our `loading-indicator` custom element. In the 
     export class LoadingIndicator {
       @bindable loading = false;
 
-      loadingChanged(newValue){
+      loadingChanged(newValue) {
         if (newValue) {
           nprogress.start();
         } else {
@@ -972,7 +972,7 @@ With that in place, let's create our `loading-indicator` custom element. In the 
     export class LoadingIndicator {
       @bindable loading = false;
 
-      loadingChanged(newValue){
+      loadingChanged(newValue) {
         if (newValue) {
           nprogress.start();
         } else {
@@ -1022,7 +1022,7 @@ With this registration in place, we can now use our new indicator in our `app.ht
         this.api = api;
       }
 
-      configureRouter(config, router){
+      configureRouter(config, router) {
         config.title = 'Contacts';
         config.map([
           { route: '',              moduleId: 'no-selection',   title: 'Select'},
@@ -1043,7 +1043,7 @@ With this registration in place, we can now use our new indicator in our `app.ht
         this.api = api;
       }
 
-      configureRouter(config, router){
+      configureRouter(config, router) {
         config.title = 'Contacts';
         config.map([
           { route: '',              moduleId: 'no-selection',   title: 'Select'},
@@ -1065,7 +1065,7 @@ With this registration in place, we can now use our new indicator in our `app.ht
 
       constructor(public api: WebAPI) {}
 
-      configureRouter(config: RouterConfiguration, router: Router){
+      configureRouter(config: RouterConfiguration, router: Router) {
         config.title = 'Contacts';
         config.map([
           { route: '',              moduleId: 'no-selection',   title: 'Select'},
