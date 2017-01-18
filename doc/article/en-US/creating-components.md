@@ -84,7 +84,7 @@ Now you know how to build basic components. What's great about this knowledge? I
 
 View-models and other interface elements, such as Custom Elements and Custom Attributes, are created as classes which are instantiated by the framework using a dependency injection container. Code written in this style is easy to modularize and test. Rather than creating large classes, you can break things down into small objects that collaborate to achieve a goal. The DI can then put the pieces together for you at runtime.
 
-In order to leverage DI, you simply decorate your class to tell the framework what it should pass to its constructor. Here's an example of a CustomDetail component that depends on Aurelia's fetch client.
+In order to leverage DI, you simply decorate your class to tell the framework what it should pass to its constructor. Here's an example of a CustomerDetail component that depends on Aurelia's fetch client.
 
 <code-listing heading="customer-detail${context.language.fileExtension}">
   <source-code lang="ES 2016">
