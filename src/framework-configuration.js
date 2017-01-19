@@ -285,6 +285,14 @@ export class FrameworkConfiguration {
     return this;
   }
 
+  // Default configuration helpers
+  // Note: Please do NOT add PLATFORM.moduleName() around those module names.
+  //       Those functions are not guaranteed to be called, they are here to faciliate 
+  //       common configurations. If they are not called, we don't want to include a 
+  //       static dependency on those modules.
+  //       Including those modules in the bundle or not is a decision that must be
+  //       taken by the bundling tool, at build time.
+
   /**
    * Plugs in the default binding language from aurelia-templating-binding.
    * @return Returns the current FrameworkConfiguration instance.
