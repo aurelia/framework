@@ -23,6 +23,9 @@ For this tutorial, we're going to use the Aurelia CLI. If you've already setup y
     * Here's [a nice GUI client](https://desktop.github.com).
     * Here's [a standard client](https://git-scm.com).
 
+> Warning
+> Note on Git for Windows installation: When installing Git for Windows, there is an option to `use git bash only`, `run git from windows command prompt`, or `run git and included unix tools from windows command prompt`. You have to choose `run git from windows command prompt` or `run git and included unix tools from windows command prompt` in order for Aurelia CLI to work.
+
 Once you have the prerequisites installed, you can install the Aurelia CLI itself. From the command line, use npm to install the CLI globally:
 
 ```
