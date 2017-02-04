@@ -202,12 +202,15 @@ export class FrameworkConfiguration {
    * @param config The configuration for the specified plugin.
    * @return Returns the current FrameworkConfiguration instance.
    */
-  feature(plugin: string, config?: any): FrameworkConfiguration {
-    if (getExt(plugin)) {
-      return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
-    }
-
-    return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: [plugin, ''], config: config || {} });
+  feature(plugin: string, config?: any = {}): FrameworkConfiguration {
+    let hasIndex = /\/index$/i.test(plugin);
+    let moduleId = hasIndex || getExt(plugin) ? 
+                      plugin : 
+                      plugin + '/index';
+    let root = hasIndex ? 
+                  plugin.substr(0, plugin.length - 6) : 
+                  plugin;
+    return this.plugin({ moduleId, resourcesRelativeTo: [root, ''], config });
   }
 
   /**
