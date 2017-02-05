@@ -69,14 +69,12 @@ export class Aurelia {
    * @return Returns a Promise with the started Aurelia instance.
    */
   start(): Promise<Aurelia> {
-    if (this.started) {
-      return Promise.resolve(this);
+    if (this._started) {
+      return this._started;
     }
 
-    this.started = true;
     this.logger.info('Aurelia Starting');
-
-    return this.use.apply().then(() => {
+    return this._started = this.use.apply().then(() => {
       preventActionlessFormSubmit();
 
       if (!this.container.hasResolver(BindingLanguage)) {
