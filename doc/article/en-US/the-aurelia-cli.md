@@ -417,3 +417,21 @@ Steps:
  * `npm uninstall aurelia-cli -g`
  * delete the contents under c:/Users/NAME/AppData/Roaming/npm-cache
  * `npm install aurelia-cli -g`
+ 
+## [Updating A Single Library](aurelia-doc://section/15/version/1.0.0)
+
+To update a single library use the command `npm install library-name` where library-name is the library that you wish to update.  
+
+## [Updating Multiple Libraries](aurelia-doc://section/16/version/1.0.0)
+
+* Add the following section to the project's package.json file
+
+```
+"scripts": {
+    "au-update": "npm install aurelia-binding@latest aurelia-bootstrapper@latest ...
+    }
+```
+
+* List the libraries on a single line separated by a space.
+* Include all of the libraries from the dependencies section of aurelia.json that you want to update.
+* Use the command `npm run au-update` to update all of the libraries in the au-update list above.
