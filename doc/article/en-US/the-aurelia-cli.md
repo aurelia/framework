@@ -261,6 +261,31 @@ The Bootstrap example above results in the bundling of the JavaScript portions o
 
 Notice that we've added a `resources` array. Here we can provide a list of additional files to be included with the bundle. These files are relative to the `path` designated above and must include the file extension. You can also use glob patterns in place of exact file names.
 
+The final step to make Bootstrap work is to copy the necessary font files to the `bootstrap/fonts` folder, which by default is where Bootstrap will look for the font files. To do this, we should declare these files in the `copyFiles` property, after the `bundles` property.
+
+```
+"bundles": [ ... ], 
+"copyFiles": {
+    "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2": "bootstrap/fonts".
+    "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff": "bootstrap/fonts",
+    "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf": "bootstrap/fonts"
+  }
+```
+
+Now, the font files will be copied to the `bootstrap/fonts` folder when building the application.
+
+> Info: Setup for copying files
+> The `copyFiles` works as a 'from':'to' setup, where 'from' is the location of the file you want to copy, and 'to' is the destination folder. Both paths are relative to project folder. The sintax is:
+> 
+```
+"bundles": [ ... ], 
+  "copyFiles": {
+    FILE_YOU_WANT_TO_COPY_BASED_ON_PROJECT_FOLDER: DESTINATION_FOLDER_BASED_ON_PROJECT_FOLDER
+  }
+```
+> If you run the application providing the `--watch` flag, the files will be recopied when changed. 
+  
+  
 > Info
 > Remember that CSS bundled in this way is bundled as a text resource designed to be required in your view. To load the Bootstrap css file in a view, use `<require from="bootstrap/css/bootstrap.css"></require>`. Notice that the module name derives from combining the `name` property with the resource.
 
