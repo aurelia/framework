@@ -279,9 +279,9 @@ Now, the font files will be copied to the `bootstrap/fonts` folder when building
 > 
 ```
 "bundles": [ ... ], 
-  "copyFiles": {
-    FILE_YOU_WANT_TO_COPY_BASED_ON_PROJECT_FOLDER: DESTINATION_FOLDER_BASED_ON_PROJECT_FOLDER
-  }
+"copyFiles": {
+  FILE_YOU_WANT_TO_COPY_BASED_ON_PROJECT_FOLDER: DESTINATION_FOLDER_BASED_ON_PROJECT_FOLDER
+}
 ```
 > If you run the application providing the `--watch` flag, the files will be recopied when changed. 
   
