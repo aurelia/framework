@@ -335,6 +335,10 @@ Sometimes you can't get a library to work with the module loading system. That's
   </source-code>
 </code-listing>
 
+### A Very Stubborn Legacy Library With Plugins
+
+Some legacy libraries may support plugins which you also want included in your bundle. In some cases these plugins depend on a global object defined by the main library, so it is important that the plugins exist later in the bundle than the main library scripts. These plugins can go in the `append` section, which works exactly the same as the `prepend` section but the scripts are appended to the end of the bundle, after all other items.  Like the `prepend` section all items are relative to the project folder, not the `src`.
+
 ### A note on NPM's scoped packages
 
 The CLI treats [scoped packages](https://docs.npmjs.com/misc/scope) in the same way as unscoped ones, you just need to remember that the scope is always part of its name.
