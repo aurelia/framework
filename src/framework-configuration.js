@@ -204,12 +204,8 @@ export class FrameworkConfiguration {
    */
   feature(plugin: string, config?: any = {}): FrameworkConfiguration {
     let hasIndex = /\/index$/i.test(plugin);
-    let moduleId = hasIndex || getExt(plugin) ? 
-                      plugin : 
-                      plugin + '/index';
-    let root = hasIndex ? 
-                  plugin.substr(0, plugin.length - 6) : 
-                  plugin;
+    let moduleId = hasIndex || getExt(plugin) ? plugin : plugin + '/index';
+    let root = hasIndex ? plugin.substr(0, plugin.length - 6) : plugin;
     return this.plugin({ moduleId, resourcesRelativeTo: [root, ''], config });
   }
 
@@ -290,8 +286,8 @@ export class FrameworkConfiguration {
 
   // Default configuration helpers
   // Note: Please do NOT add PLATFORM.moduleName() around those module names.
-  //       Those functions are not guaranteed to be called, they are here to faciliate 
-  //       common configurations. If they are not called, we don't want to include a 
+  //       Those functions are not guaranteed to be called, they are here to faciliate
+  //       common configurations. If they are not called, we don't want to include a
   //       static dependency on those modules.
   //       Including those modules in the bundle or not is a decision that must be
   //       taken by the bundling tool, at build time.
