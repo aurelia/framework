@@ -68,14 +68,12 @@ export class Aurelia {
    * @return Returns a Promise with the started Aurelia instance.
    */
   start(): Promise<Aurelia> {
-    if (this.started) {
-      return Promise.resolve(this);
+    if (this._started) {
+      return this._started;
     }
 
-    this.started = true;
     this.logger.info('Aurelia Starting');
-
-    return this.use.apply().then(() => {
+    return this._started = this.use.apply().then(() => {
       preventActionlessFormSubmit();
 
       if (!this.container.hasResolver(BindingLanguage)) {
@@ -378,12 +376,11 @@ export class FrameworkConfiguration {
    * @param config The configuration for the specified plugin.
    * @return Returns the current FrameworkConfiguration instance.
    */
-  feature(plugin: string, config?: any): FrameworkConfiguration {
-    if (getExt(plugin)) {
-      return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
-    }
-
-    return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: [plugin, ''], config: config || {} });
+  feature(plugin: string, config?: any = {}): FrameworkConfiguration {
+    let hasIndex = /\/index$/i.test(plugin);
+    let moduleId = hasIndex || getExt(plugin) ? plugin : plugin + '/index';
+    let root = hasIndex ? plugin.substr(0, plugin.length - 6) : plugin;
+    return this.plugin({ moduleId, resourcesRelativeTo: [root, ''], config });
   }
 
   /**
@@ -460,6 +457,14 @@ export class FrameworkConfiguration {
 
     return this;
   }
+
+  // Default configuration helpers
+  // Note: Please do NOT add PLATFORM.moduleName() around those module names.
+  //       Those functions are not guaranteed to be called, they are here to faciliate
+  //       common configurations. If they are not called, we don't want to include a
+  //       static dependency on those modules.
+  //       Including those modules in the bundle or not is a decision that must be
+  //       taken by the bundling tool, at build time.
 
   /**
    * Plugs in the default binding language from aurelia-templating-binding.

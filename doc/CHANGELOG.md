@@ -1,3 +1,18 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/aurelia/framework/compare/1.0.8...v1.1.0) (2017-02-27)
+
+
+### Bug Fixes
+
+* **startup:** start() incorrectly returns a resolved promise ([4ef49e6](https://github.com/aurelia/framework/commit/4ef49e6))
+
+
+### Features
+
+* **config:** .feature() accepts explicit /index. ([890f8d5](https://github.com/aurelia/framework/commit/890f8d5))
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/aurelia/framework/compare/1.0.1...v1.0.2) (2016-08-26)
 

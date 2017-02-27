@@ -140,14 +140,12 @@ var Aurelia = exports.Aurelia = function () {
   Aurelia.prototype.start = function start() {
     var _this = this;
 
-    if (this.started) {
-      return Promise.resolve(this);
+    if (this._started) {
+      return this._started;
     }
 
-    this.started = true;
     this.logger.info('Aurelia Starting');
-
-    return this.use.apply().then(function () {
+    return this._started = this.use.apply().then(function () {
       preventActionlessFormSubmit();
 
       if (!_this.container.hasResolver(_aureliaTemplating.BindingLanguage)) {
@@ -412,12 +410,13 @@ var FrameworkConfiguration = function () {
     return this;
   };
 
-  FrameworkConfiguration.prototype.feature = function feature(plugin, config) {
-    if (getExt(plugin)) {
-      return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
-    }
+  FrameworkConfiguration.prototype.feature = function feature(plugin) {
+    var config = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-    return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: [plugin, ''], config: config || {} });
+    var hasIndex = /\/index$/i.test(plugin);
+    var moduleId = hasIndex || getExt(plugin) ? plugin : plugin + '/index';
+    var root = hasIndex ? plugin.substr(0, plugin.length - 6) : plugin;
+    return this.plugin({ moduleId: moduleId, resourcesRelativeTo: [root, ''], config: config });
   };
 
   FrameworkConfiguration.prototype.globalResources = function globalResources(resources) {

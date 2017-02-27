@@ -32,14 +32,12 @@ export let Aurelia = class Aurelia {
   }
 
   start() {
-    if (this.started) {
-      return Promise.resolve(this);
+    if (this._started) {
+      return this._started;
     }
 
-    this.started = true;
     this.logger.info('Aurelia Starting');
-
-    return this.use.apply().then(() => {
+    return this._started = this.use.apply().then(() => {
       preventActionlessFormSubmit();
 
       if (!this.container.hasResolver(BindingLanguage)) {
@@ -276,12 +274,11 @@ export let FrameworkConfiguration = class FrameworkConfiguration {
     return this;
   }
 
-  feature(plugin, config) {
-    if (getExt(plugin)) {
-      return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
-    }
-
-    return this.plugin({ moduleId: plugin + '/index', resourcesRelativeTo: [plugin, ''], config: config || {} });
+  feature(plugin, config = {}) {
+    let hasIndex = /\/index$/i.test(plugin);
+    let moduleId = hasIndex || getExt(plugin) ? plugin : plugin + '/index';
+    let root = hasIndex ? plugin.substr(0, plugin.length - 6) : plugin;
+    return this.plugin({ moduleId, resourcesRelativeTo: [root, ''], config });
   }
 
   globalResources(resources) {
