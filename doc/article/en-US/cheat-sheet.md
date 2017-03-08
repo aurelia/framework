@@ -1917,7 +1917,7 @@ If you include the `aurelia-event-aggregator` plugin using "basicConfiguration" 
 
 <code-listing heading="Publishing a Message">
   <source-code lang="ES 2016">
-    //some-massage.js
+    //some-message.js
     export class SomeMessage{ }
 
     //a-publisher.js
@@ -1937,7 +1937,7 @@ If you include the `aurelia-event-aggregator` plugin using "basicConfiguration" 
     }
   </source-code>
   <source-code lang="ES 2015">
-    //some-massage.js
+    //some-message.js
     export class SomeMessage{ }
 
     //a-publisher.js
@@ -1957,7 +1957,7 @@ If you include the `aurelia-event-aggregator` plugin using "basicConfiguration" 
     }
   </source-code>
   <source-code lang="TypeScript">
-    //some-massage.ts
+    //some-message.ts
     export class SomeMessage{ }
 
     //a-publisher.ts
