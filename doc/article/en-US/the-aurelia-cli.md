@@ -266,7 +266,7 @@ The final step to make Bootstrap work is to copy the necessary font files to the
 ```
 "bundles": [ ... ], 
 "copyFiles": {
-    "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2": "bootstrap/fonts".
+    "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2": "bootstrap/fonts",
     "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff": "bootstrap/fonts",
     "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf": "bootstrap/fonts"
   }
