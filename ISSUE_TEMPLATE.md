@@ -1,5 +1,7 @@
 <!--
-BUGS: Please use this template.
+BUGS: Please use this template. 
+
+Issues submitted that do not follow this template will be closed.
 
 SUPPORT REQUESTS/QUESTIONS: If you have a support request or question please
 submit them to StackOverflow using the tags aurelia and aurelia-framework
