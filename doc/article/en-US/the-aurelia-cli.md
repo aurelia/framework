@@ -217,13 +217,17 @@ Libraries that predate module systems can be a pain because they often rely on g
 <code-listing heading="A Legacy Library Dependency">
   <source-code lang="JavaScript">
     "dependencies": [
-      "jquery",
       {
-        "name": "bootstrap",
-        "path": "../node_modules/bootstrap/dist",
-        "main": "js/bootstrap.min",
-        "deps": ["jquery"],
-        "exports": "$"
+        "name":"jquery",
+        "path":"../node_modules/jquery/dist",
+        "main":"jquery.min",
+        "export": "$"
+      },
+      {
+          "name": "bootstrap",
+          "path": "../node_modules/bootstrap/dist",
+          "main": "js/bootstrap.min",
+          "deps": ["jquery"]
       }
     ]
   </source-code>
@@ -235,7 +239,8 @@ Libraries that predate module systems can be a pain because they often rely on g
 * `deps` - This is an array of dependencies which must be loaded and available before the legacy library can be evaluated.
 * `exports` - This is the name of the global variable that should be used as the exported value of the module.
 
-Notice first that we've included "jquery" as one of our dependencies. We are able to use the simplified form because it's a single file and its `package.json` `main` points directly to that file. Below that we configure `bootstrap`. The first three properties are the same as in our package example above. However, now we have a `deps` list. We've included `jquery` since Bootstrap needs it to be present before it can load. Finally, we have the `exports` property. Usually a library creates a unique global variable, but jQuery plugins, like Bootstrap, are different. They attach their APIs to the jQuery object itself. So, in this case, we export the jQuery object as the module. This could be any global variable though.
+Notice first that we've included "jquery" as one of our dependencies, *and specifically at the beginning of the dependency list*.  
+We are using the `exports` property to export the jQuery object since jQuery plugin, like Bootstrap, attach their APIs to the jQuery object itself.  (This could be any global variable, though.)  Finally, below that we configure `bootstrap`. The first three properties are the same as in our package example above. However, now we have a `deps` list. We've included `jquery` since Bootstrap needs it to be present before it can load.
 
 ### A Library with Additional Resources
 
@@ -244,16 +249,20 @@ The Bootstrap example above results in the bundling of the JavaScript portions o
 <code-listing heading="A Library with Additional Resources">
   <source-code lang="JavaScript">
     "dependencies": [
-      "jquery",
       {
-        "name": "bootstrap",
-        "path": "../node_modules/bootstrap/dist",
-        "main": "js/bootstrap.min",
-        "deps": ["jquery"],
-        "exports": "$",
-        "resources": [
-          "css/bootstrap.css"
-        ]
+        "name":"jquery",
+        "path":"../node_modules/jquery/dist",
+        "main":"jquery.min",
+        "export": "$"
+      },
+      {
+          "name": "bootstrap",
+          "path": "../node_modules/bootstrap/dist",
+          "main": "js/bootstrap.min",
+          "deps": ["jquery"],
+          "resources": [
+            "css/bootstrap.css"
+          ]
       }
     ]
   </source-code>
