@@ -415,6 +415,25 @@ You can configure the loader by adding a `config` key to `build.loader` with the
 }
 ```
 
+**Setting the baseUrl**
+
+Sometimes you may want to keep the scripts folder somewhere other than the default location, or move the index.html file a few folders up from the project root. In that case it is possible to set the `baseUrl` property so that the build system uses the correct paths and that bundles get loaded correctly in the browser. The `baseUrl` property should be set in both the `platform` object as well as the `build.targets` object:
+
+<code-listing heading="baseUrl">
+  <source-code lang="JavaScript">
+    "targets": [
+      {
+        "id": "web",
+        "displayName": "Web",
+        "output": "some/dir/scripts",
+        "index": "index.html",
+        "baseUrl": "some/dir/scripts"
+      }
+  </source-code>
+</code-listing>
+
+The script tag for the bundle in `index.html` file needs to point to the modified location of the scripts folder as well: `<script src="some/dir/scripts/vendor-bundle.js" data-main="aurelia-bootstrapper"></script>`
+
 ## [Styling your Application](aurelia-doc://section/12/version/1.0.0)
 
 There are many ways to style components in Aurelia. The CLI sets up your project to only process styles inside your application's `src` folder. Those styles can then be imported into a view using Aurelia's `require` element.
