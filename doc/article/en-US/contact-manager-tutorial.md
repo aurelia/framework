@@ -1016,6 +1016,7 @@ With this registration in place, we can now use our new indicator in our `app.ht
 
 <code-listing heading="app${context.language.fileExtension}">
   <source-code lang="ES 2015">
+    import {Router, RouterConfiguration} from 'aurelia-router';
     import {WebAPI} from './web-api';
 
     export class App {
@@ -1037,6 +1038,7 @@ With this registration in place, we can now use our new indicator in our `app.ht
     }
   </source-code>
   <source-code lang="ES Next">
+    import {Router, RouterConfiguration} from 'aurelia-router';  
     import {inject} from 'aurelia-framework';
     import {WebAPI} from './web-api';
 
