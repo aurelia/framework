@@ -1254,10 +1254,10 @@ Since the VM's navigation life-cycle is called only once you may have problems r
 
 <code-listing heading="Simple Attribute Declaration">
   <source-code lang="ES 2016">
-    import {inject, customAttribute, DOM} from 'aurelia-framework';
+    import {inject, customAttribute} from 'aurelia-framework';
 
     @customAttribute('my-attribute')
-    @inject(DOM.Element)
+    @inject(Element)
     export class Show {
       constructor(element) {
         this.element = element;
@@ -1273,7 +1273,7 @@ Since the VM's navigation life-cycle is called only once you may have problems r
 
     export let MyAttribute = decorators(
       customAttribute('my-attribute'),
-      inject(DOM.Element)
+      inject(Element)
     ).on(class {
       constructor(element) {
         this.element = element;
@@ -1285,10 +1285,10 @@ Since the VM's navigation life-cycle is called only once you may have problems r
     });
   </source-code>
   <source-code lang="TypeScript">
-    import {inject, customAttribute, DOM} from 'aurelia-framework';
+    import {inject, customAttribute} from 'aurelia-framework';
 
     @customAttribute('my-attribute')
-    @inject(DOM.Element)
+    @inject(Element)
     export class Show {
       constructor(private element: Element) { }
 
