@@ -84,8 +84,7 @@ export class Aurelia {
       }
 
       this.logger.info('Aurelia Started');
-      let evt = DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true });
-      DOM.dispatchEvent(evt);
+      DOM.dispatchEvent(DOM.createCustomEvent('aurelia-started', { bubbles: true, cancelable: true }));
       return this;
     });
   }
@@ -173,7 +172,6 @@ export class Aurelia {
   }
 
   _onAureliaComposed() {
-    let evt = DOM.createCustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
-    setTimeout(() => DOM.dispatchEvent(evt), 1);
+    setTimeout(() => DOM.dispatchEvent(DOM.createCustomEvent('aurelia-composed', { bubbles: true, cancelable: true })), 1);
   }
 }
