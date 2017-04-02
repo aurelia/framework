@@ -518,7 +518,7 @@ exec(`yarn upgrade ${depsToUpdate}`);
 
 ```
 "scripts": {
-  "au-update": "au-update": "node ./aurelia_project/tasks/au-update.js"
+  "au-update": "node ./aurelia_project/tasks/au-update.js"
 }
 
 * This will find the easily updatable dependencies in each bundles dependencies list and update them.
