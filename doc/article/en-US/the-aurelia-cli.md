@@ -508,6 +508,7 @@ let depsToUpdate =
     _.chain(bundles)
      .flatMap(bundle => bundle.dependencies)
      .filter(dep => _.isString(dep))
+     .filter(dep => _.contains(dep, "aurelia"))
      .reduce((deps, dep) => `${deps} ${dep}`)
      .value();
 
