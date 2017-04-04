@@ -145,14 +145,14 @@ This causes the `my-root${context.language.fileExtension}`/`my-root.html` to be 
 
 ## [Bootstrapping Older Browsers](aurelia-doc://section/3/version/1.0.0)
 
-Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need the [requestAnimationFrame Polyfill](https://www.npmjs.com/package/raf) and the [MutationObserver polyfill](https://github.com/webcomponents/webcomponentsjs/tree/master/src). Once you have installed these, you'll need to adjust your code to load them before Aurelia is initialized.
+Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need the [requestAnimationFrame Polyfill](https://www.npmjs.com/package/raf) and the [MutationObserver polyfill](https://github.com/megawac/MutationObserver.js). Once you have installed these (via `npm install raf mutationobserver-shim`), you'll need to adjust your code to load them before Aurelia is initialized.
 
 In case you are using Webpack, create a bootstrapper file, e.g. `bootstrapper.js`:
 
 <code-listing heading="Polyfill Configuration">
   <source-code lang="HTML">
-    import 'webcomponents/webcomponentsjs/MutationObserver';
-    import 'raf/polyfill';
+    import 'mutationobserver-shim/MutationObserver'; // IE10 MutationObserver polyfill
+    import 'raf/polyfill'; // IE9 requestAnimationFrame polyfill
   </source-code>
 </code-listing>
 
