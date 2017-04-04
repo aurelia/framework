@@ -1,17 +1,17 @@
 <!--
-BUGS: Please use this template. 
-
-Issues submitted that do not follow this template will be closed.
+ISSUES SUBMITTED THAT DO NOT FOLLOW THIS TEMPLATE WILL BE CLOSED.
 
 SUPPORT REQUESTS/QUESTIONS: If you have a support request or question please
 submit them to StackOverflow using the tags aurelia and aurelia-framework
 http://stackoverflow.com/questions/tagged/aurelia
 or the Aurelia Gitter https://gitter.im/aurelia/discuss
 
+SUPPORT REQUESTS SUBMITTED HERE WILL BE CLOSED.
+
+BUGS: Please use this template. 
+
 Blue Spire offers paid support agreements. Further information regarding paid support
 may be obtained by emailing support@bluespire.com
-
-Future support requests submitted here will be closed.
 
 The HTML comments below are for your reference, and are not displayed
 when your issue is submitted, feel free to leave them.
@@ -30,24 +30,26 @@ major.minor.patch-pre
 OSX 10.x|Linux (distro)|Windows [7|8|8.1|10]
 
 * **Node Version:**
-6.2.0
+6.10.2
 <!--
 Minimum supported Node version is latest Node 4.x LTS
 run `node -v`
 -->
 
 * **NPM Version:**
-3.8.9
+3.10.10
 <!--
 Minimum supported NPM version is 3.x
 run `npm -v`
 -->
 
-* **JSPM OR Webpack AND Version**
-JSPM 0.16.32 | webpack 2.1.0-beta.17
+* **Aurelia CLI OR JSPM OR Webpack AND Version**
+CLI 0.27.0 | JSPM 0.16.53 | webpack 2.3.3
 <!--
+If using Aurelia CLI
+run `au -v` in project root.
 If using JSPM
-run `jspm -v`
+run `jspm -v` in project root.
 If using Webpack
 run `webpack --help | grep webpack`
 -->
@@ -70,9 +72,5 @@ To create a runnable gist, go to https://gist.run/?id=7542e061bc940cde506b&sha=6
 Then click "Fork to Public Gist".
 Create your gist, then finally click "Update Gist." Include a link to the gist.run below.
 -->
-
-
-* **What is the expected behavior?**
-
 
 * **What is the motivation / use case for changing the behavior?**
