@@ -398,6 +398,23 @@ And this is an example of loading a `@scope/packagename` plugin during app start
 aurelia.use.standardConfiguration().plugin('@scope/packagename');
 ```
 
+### Reference packages outside of the node_modules folder
+
+It is possible to use packages outside of the node_modules folder. The only difference is that you need te define what the `packageRoot` is. In `aurelia.json`, you can define a package that lives outside of the node_modules folder as follows:
+
+<code-listing heading="Package outside of node_modules">
+  <source-code lang="JavaScript">
+    dependencies: [{
+      "name": "my-standalone-folder",
+      "path": "../my-standalone-folder/dist/amd",
+      "main": "index",
+      "packageRoot": "../my-standalone-folder"
+    }]
+  </source-code>
+</code-listing>
+
+The `packageRoot` is the root folder of the package. This is often the folder which contains the `package.json` file of the package.
+
 ## [Configuring the Loader](aurelia-doc://section/11/version/1.0.0)
 
 You can configure the loader by adding a `config` key to `build.loader` with the options you want to add. For instance, if you want to increase the timeout for requirejs, you would do this:
