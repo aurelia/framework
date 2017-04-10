@@ -254,7 +254,7 @@ Aurelia strives to be a self-consistent framework. As such, building a custom el
       }
     }
   </source-code>
-  <source-code lang="ES Next">
+  <source-code lang="ES 2016">
     import {WebAPI} from './web-api';
     import {inject} from 'aurelia-framework';
 
@@ -414,7 +414,7 @@ Again, this is because the router is trying to route to the detail screen, but w
       }
     }
   </source-code>
-  <source-code lang="ES Next">
+  <source-code lang="ES 2016">
     import {inject} from 'aurelia-framework';
     import {WebAPI} from './web-api';
     import {areEqual} from './utility';
@@ -599,7 +599,7 @@ The reason for these issues is that we have two separate components, our `contac
       }
     }
   </source-code>
-  <source-code lang="ES Next">
+  <source-code lang="ES 2016">
     export class ContactUpdated {
       constructor(contact) {
         this.contact = contact;
@@ -679,7 +679,7 @@ Whenever the contact detail screen successfully saves a contact, we'll publish t
       }
     }
   </source-code>
-  <source-code lang="ES Next">
+  <source-code lang="ES 2016">
     import {inject} from 'aurelia-framework';
     import {EventAggregator} from 'aurelia-event-aggregator';
     import {WebAPI} from './web-api';
@@ -829,7 +829,7 @@ With these messages in place, we can now enable any other component in our syste
       }
     }
   </source-code>
-  <source-code lang="ES Next">
+  <source-code lang="ES 2016">
     import {EventAggregator} from 'aurelia-event-aggregator';
     import {WebAPI} from './web-api';
     import {ContactUpdated, ContactViewed} from './messages';
@@ -950,7 +950,7 @@ With that in place, let's create our `loading-indicator` custom element. In the 
       }
     });
   </source-code>
-  <source-code lang="ES Next">
+  <source-code lang="ES 2016">
     import * as nprogress from 'nprogress';
     import {bindable, noView} from 'aurelia-framework';
 
@@ -998,7 +998,7 @@ Previously, when we created the `contact-list` component, we required that into 
       config.globalResources(['./elements/loading-indicator']);
     }
   </source-code>
-  <source-code lang="ES Next">
+  <source-code lang="ES 2016">
     export function configure(config) {
       config.globalResources(['./elements/loading-indicator']);
     }
@@ -1036,7 +1036,7 @@ With this registration in place, we can now use our new indicator in our `app.ht
       }
     }
   </source-code>
-  <source-code lang="ES Next">
+  <source-code lang="ES 2016">
     import {inject} from 'aurelia-framework';
     import {WebAPI} from './web-api';
 
