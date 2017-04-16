@@ -400,7 +400,7 @@ aurelia.use.standardConfiguration().plugin('@scope/packagename');
 
 ### Reference packages outside of the node_modules folder
 
-It is possible to use packages outside of the node_modules folder. The only difference is that you need te define what the `packageRoot` is. In `aurelia.json`, you can define a package that lives outside of the node_modules folder as follows:
+It is possible to use packages outside of the node_modules folder. The only difference is that you need to define what the `packageRoot` is. In `aurelia.json`, you can define a package that lives outside of the node_modules folder as follows:
 
 <code-listing heading="Package outside of node_modules">
   <source-code lang="JavaScript">
