@@ -334,7 +334,7 @@ Ok, now that we've got the contact list built, we need to use it. To do that, up
     <template>
       <require from="bootstrap/css/bootstrap.css"></require>
       <require from="./styles.css"></require>
-      <require from="./contact-list"></require>
+      <require from="./contacts-list"></require>
 
       <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="navbar-header">
