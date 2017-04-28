@@ -145,18 +145,26 @@ This causes the `my-root${context.language.fileExtension}`/`my-root.html` to be 
 
 ## [Bootstrapping Older Browsers](aurelia-doc://section/3/version/1.0.0)
 
-Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need the [requestAnimationFrame Polyfill](https://www.npmjs.com/package/raf) and the [MutationObserver polyfill](https://github.com/megawac/MutationObserver.js). Once you have installed these (via `npm install raf mutationobserver-shim`), you'll need to adjust your code to load them before Aurelia is initialized.
+Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need the [requestAnimationFrame Polyfill](https://www.npmjs.com/package/raf) and the [MutationObserver polyfill](https://github.com/megawac/MutationObserver.js). Once you have installed these (via `npm install --save-dev raf mutationobserver-shim`), you'll need to adjust your code to load them before Aurelia is initialized.
 
-In case you are using Webpack, create a bootstrapper file, e.g. `bootstrapper.js`:
+In case you are using Webpack, create a file, e.g. `ie-polyfill.js`:
 
 <code-listing heading="Polyfill Configuration">
-  <source-code lang="HTML">
+  <source-code lang="JS">
     import 'mutationobserver-shim/MutationObserver'; // IE10 MutationObserver polyfill
     import 'raf/polyfill'; // IE9 requestAnimationFrame polyfill
   </source-code>
 </code-listing>
 
-After you have created the file, add it as the first file in your `aurelia-bootstrapper` bundle. You can find bundle configuration in the `webpack.config.js` file.
+After you have created the file, add it as the first file in your `aurelia-bootstrapper` bundle. You can find bundle configuration in the `webpack.config.js` file, something like:
+
+<code-listing heading="Polyfill Configuration">
+  <source-code lang="JS">
+    entry: {
+      'app': ['./ie-polyfill', 'aurelia-bootstrapper'],
+  </source-code>
+</code-listing>
+
 
 If you are using JSPM change your `index.html` startup code as follows:
 
@@ -174,7 +182,7 @@ If you are using JSPM change your `index.html` startup code as follows:
           SystemJS.import('raf/polyfill').then(function() {
             return SystemJS.import('aurelia-polyfills');
           }).then(function() {
-            return SystemJS.import('webcomponents/webcomponentsjs/MutationObserver');
+            return SystemJS.import('mutationobserver-shim/MutationObserver');
           }).then(function() {
             SystemJS.import('aurelia-bootstrapper');
           });
