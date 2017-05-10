@@ -92,6 +92,7 @@
     "gulp-ignore": "^2.0.1",
     "gulp-insert": "^0.5.0",
     "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
     "gulp-typedoc": "^2.0.0",
     "gulp-typedoc-extractor": "0.0.8",
     "gulp-typescript": "^2.13.6",

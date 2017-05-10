@@ -5,7 +5,6 @@ exports.base = function() {
   var config = {
     filename: '',
     filenameRelative: '',
-    sourceMap: true,
     sourceRoot: '',
     moduleRoot: path.resolve('src').replace(/\\/g, '/'),
     moduleIds: false,

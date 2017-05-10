@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var to5 = require('gulp-babel');
+var sourcemaps = require('gulp-sourcemaps');
 var paths = require('../paths');
 var compilerOptions = require('../babel-options');
 var compilerTsOptions = require('../typescript-options');
@@ -81,8 +82,10 @@ function srcForTypeScript() {
 compileToModules.forEach(function(moduleType){
   gulp.task('build-babel-' + moduleType, function () {
     return srcForBabel()
+      .pipe(sourcemaps.init())
       .pipe(to5(assign({}, compilerOptions[moduleType]())))
       .pipe(cleanGeneratedCode())
+      .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(paths.output + moduleType));
   });
 
