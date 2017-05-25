@@ -184,6 +184,8 @@ With these libraries installed, we now need to tell Aurelia which application bu
 
 You can read more about configuring 3rd party libraries in the documentation on the Aurelia CLI. For now, just know that this causes jQuery, Bootstrap and all necessary CSS to be included in the vendor bundle and makes it reachable through the module system.
 
+After you have modified the aurelia.json file, it is necessary to restart the `au run --watch` process in order for the changes to be picked up.
+
 ## [Building Out the Default Route](aurelia-doc://section/5/version/1.0.0)
 
 If you run the application now, you'll see a blank screen and the browser's console will display the following message:
