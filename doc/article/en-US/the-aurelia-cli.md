@@ -221,7 +221,7 @@ Libraries that predate module systems can be a pain because they often rely on g
         "name":"jquery",
         "path":"../node_modules/jquery/dist",
         "main":"jquery.min",
-        "export": "$"
+        "exports": "$"
       },
       {
           "name": "bootstrap",
@@ -253,7 +253,7 @@ The Bootstrap example above results in the bundling of the JavaScript portions o
         "name":"jquery",
         "path":"../node_modules/jquery/dist",
         "main":"jquery.min",
-        "export": "$"
+        "exports": "$"
       },
       {
           "name": "bootstrap",
