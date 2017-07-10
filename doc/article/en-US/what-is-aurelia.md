@@ -13,19 +13,31 @@
   "keywords": ["JavaScript", "SPA"]
 }
 ---
-## [What is it?](aurelia-doc://section/1/version/1.0.0)
+## [What is Aurelia?](aurelia-doc://section/1/version/1.0.0)
 
-Well, it's actually simple. Aurelia is just JavaScript. However, it's not yesterday's JavaScript, but the JavaScript of tomorrow. By using modern tooling we've been able to write Aurelia from the ground up in ECMAScript 2016. This means we have native modules, classes, decorators and more at our disposal...and you have them too.
+Aurelia is a collection of Modern JavaScript modules, which when used together, function as a powerful platform for building browser, desktop and mobile applications, all open source and built on open web standards.
 
-Not only is Aurelia written in modern and future JavaScript, but it also takes a modern approach to architecture. In the past, frameworks have been monolithic beasts. Not Aurelia though. It's built as a series of collaborating libraries. Taken together, they form a powerful and robust framework for building Single Page Apps (SPAs). However, Aurelia's libraries can often be used individually, in traditional web sites or even on the server-side through technologies like NodeJS.
+Let's unpack this statement a little...
 
-## [Licensing](aurelia-doc://section/2/version/1.0.0)
+### A Collection of Modern JavaScript Modules
 
-Aurelia's code is open sourced under [the MIT License](http://opensource.org/licenses/MIT), a very permissive license used by many popular web projects today. Our starter kits are available under the [Creative Commons 0](http://creativecommons.org/publicdomain/zero/1.0/legalcode) license. We also have a [Contributor's License Agreement (CLA)](https://docs.google.com/forms/d/1Npd68d32UDUKUYuCDDrW0VN5Lv8p-a6Ziaa2JFKp6Cg/viewform?c=0&w=1) for those who wish to join us in working on Aurelia. Ultimately, this means that you can use Aurelia without fear of legal repercussions and we can build it in the same confidence.
+Rather than being a monolithic framework, Aurelia is broken down into a collection of feature-oriented modules. Examples of feature modules include metadata, dependency injection, binding, templating, router and more. Each module is written using ECMAScript (aka JavaScript) or TypeScript (a strict superset of JavaScript that adds compile-time type checking). Many of these modules can be used individually in any type of JavaScript project, including Node.js.
 
-## [Benefits](aurelia-doc://section/3/version/1.0.0)
+### A Powerful Platform for Building Apps
 
-So, Aurelia is a set of modern, modular JavaScript libraries for building UI...and it's open source. Great. There are other projects that might describe themselves in a similar way, so what makes Aurelia unique?
+While Aurelia's modules can be used for many purposes, their true power lies in using them together as a front-end application platform. If your end goal is to create rich, engaging experiences for your customers, meeting or exceeding what is found in modern native applications, Aurelia provides the means. Through its rich component model, dynamic UI composition, routing and extensive set of plugins, Aurelia provides a comprehensive set of capabilities and tools to build any front-end experience you can dream up, whether you're targeting the browser, mobile or desktop.
+
+### Open Source
+
+With all the power and capability that Aurelia offers, you might expect it to have an expensive licensing model or be closed source, but neither is true. Aurelia is free and its code is open sourced under [the MIT License](http://opensource.org/licenses/MIT), a very permissive license used by many popular web projects today. Its starter kits and documentation are available under [the Creative Commons 0](http://creativecommons.org/publicdomain/zero/1.0/legalcode) license. It also has [a Contributor's License Agreement (CLA)](https://github.com/durandalproject/about/blob/master/CLA.md) for those who wish to join the core team in working on Aurelia. Ultimately, this means that you can use Aurelia without fear of legal repercussions and we can build it in the same confidence.
+
+### Built on Open Web Standards
+
+Not only is Aurelia written with ECMAScript, but it's also designed to make careful use of the DOM standard. Rather than Aurelia utilizing a costly abstraction over the DOM, implementing its own custom HTML parser or adopting framework-specific JavaScript extensions, it leverages the latest DOM APIs to get "bare metal" performance, exceptional memory efficiency and all while staying synced with the continuous improvements of the browser platform itself. Additionally, Aurelia's component model is based on W3C Web Components HTML Templates and ShadowDOM, so you know it will stand the test of time and will enable you to evolve your application along with advances in the standards, without major application re-writes or framework churn.
+
+## [Why choose Aurelia?](aurelia-doc://section/2/version/1.0.0)
+
+Here are a few things that make Aurelia unique:
 
 * **Clean and Unobtrusive** - Aurelia is the only framework that lets you build components with plain JavaScript. The framework stays out of your way so your code remains clean and easy to evolve over time.
 * **Convention over Configuration** - Simple conventions help developers follow solid patterns and reduce the amount of code they have to write and maintain. It also means less fiddling with framework APIs and more focus on their app.
