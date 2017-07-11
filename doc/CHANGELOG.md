@@ -1,3 +1,8 @@
+<a name="1.1.3"></a>
+## [1.1.3](https://github.com/aurelia/framework/compare/1.1.2...v1.1.3) (2017-07-11)
+
+* Documentation updates.
+
 <a name="1.1.2"></a>
 ## [1.1.2](https://github.com/aurelia/framework/compare/1.1.1...v1.1.2) (2017-04-05)
 
