@@ -509,3 +509,35 @@ To update a single library use the command `npm install library-name` where libr
 * List the libraries on a single line separated by a space.
 * Include all of the libraries from the dependencies section of aurelia.json that you want to update.
 * Use the command `npm run au-update` to update all of the libraries in the au-update list above.
+
+## [Updating Multiple Libraries using an external script](aurelia-doc://section/17/version/1.0.0)
+
+* Add the following section to an `au-update.js` file in your aurelia_project/tasks folder.
+
+```
+let project = require('../aurelia.json')
+let exec = require('child_process').exec
+let _ = require('lodash')
+
+var bundles = project.build.bundles
+
+let depsToUpdate =
+    _.chain(bundles)
+     .flatMap(bundle => bundle.dependencies)
+     .filter(dep => _.isString(dep))
+     .filter(dep => _.contains(dep, "aurelia"))
+     .reduce((deps, dep) => `${deps} ${dep}`)
+     .value();
+
+exec(`yarn upgrade ${depsToUpdate}`);
+```
+
+* Add the following section to the projects `package.json` file:
+
+```
+"scripts": {
+  "au-update": "node ./aurelia_project/tasks/au-update.js"
+}
+
+* This will find the easily updatable dependencies in each bundles dependencies list and update them.
+* 'easily updatable' means that the dependency doesn't have any additional properties, and is listed as a string in aurelia.json
