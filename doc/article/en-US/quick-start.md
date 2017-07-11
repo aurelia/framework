@@ -43,7 +43,7 @@ Now let's setup your project. First, unzip the downloaded files on your hard dri
       </head>
       <body aurelia-app="src/main">
         <script src="scripts/system.js"></script>
-        <script src="scripts/config-typescript.js"></script>
+        <script src="scripts/config-esnext.js"></script>
         <script src="scripts/aurelia-core.min.js"></script>
         <script>
           System.import('aurelia-bootstrapper');
@@ -53,7 +53,7 @@ Now let's setup your project. First, unzip the downloaded files on your hard dri
   </source-code>
 </code-listing>
 
-Before we explain what this does, let's adjust the programming language it's using. If you look at the second script tag, you will see its `src` pointing to `scripts/config-typescript.js`. This is the configuration for TypeScript. So, if you want to use TypeScript, you are all set and don't need to make any changes. If you want to use ESNext, you need to swap its `src` so that it points at `scripts/config-esnext.js`.
+Before we explain what this does, let's adjust the programming language it's using. If you look at the second script tag, you will see its `src` pointing to `scripts/config-esnext.js`. This is the configuration for ESNext. So, if you want to use ESNext, you are all set and don't need to make any changes. If you want to use ESNext, you need to swap its `src` so that it points at `scripts/config-typescript.js`.
 
 That's it. Your language selection is now configured with these docs and with your new project.
 
@@ -70,7 +70,7 @@ If you've followed along this far, you now have everything set up to help you le
       </head>
       <body aurelia-app="src/main">
         <script src="scripts/system.js"></script>
-        <script src="scripts/config-typescript.js"></script>
+        <script src="scripts/config-esnext.js"></script>
         <script src="scripts/aurelia-core.min.js"></script>
         <script>
           System.import('aurelia-bootstrapper');
@@ -91,7 +91,7 @@ First, you can see that this document is setup as a standard HTML5 document with
 This tag is used to load SystemJS, a modern JavaScript module loader. Because Aurelia is a modern framework, it's written as modules and encourages you to create your code in a modular fashion. To use modules in ${context.language.name} you need a loader that understands modular code. That's what SystemJS does. It locates modules, understands their dependencies and ensures that everything is properly loaded at runtime. Aurelia supports a variety of module loaders. Besides SystemJS, Aurelia supports all AMD-based loaders such as RequireJS, Cajon and Dojo. Aurelia also supports module-based build systems like Webpack.
 
 ```
-<script src="scripts/config-typescript.js"></script>
+<script src="scripts/config-esnext.js"></script>
 ```
 
 As discussed previously, this line of code configures the programming language you want to use. It's actually a configuration file for the SystemJS module loader that installs a *transpiler* into the loader. As a result, each time a module is loaded, it's able to take your ESNext or TypeScript code and automatically convert it to ES5 code that today's browsers fully understand. Pretty cool right?
