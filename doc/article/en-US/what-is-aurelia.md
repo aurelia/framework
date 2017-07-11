@@ -29,7 +29,7 @@ While Aurelia's modules can be used for many purposes, their true power lies in 
 
 ### Open Source
 
-With all the power and capability that Aurelia offers, you might expect it to have an expensive licensing model or be closed source, but neither is true. Aurelia is free and its code is open sourced under [the MIT License](http://opensource.org/licenses/MIT), a very permissive license used by many popular web projects today. Its starter kits and documentation are available under [the Creative Commons 0](http://creativecommons.org/publicdomain/zero/1.0/legalcode) license. It also has [a Contributor's License Agreement (CLA)](https://github.com/durandalproject/about/blob/master/CLA.md) for those who wish to join the core team in working on Aurelia. Ultimately, this means that you can use Aurelia without fear of legal repercussions and we can build it in the same confidence.
+With all the power and capability that Aurelia offers, you might expect it to have an expensive licensing model or be closed source, but neither is true. Aurelia is free and its code is open sourced under [the MIT License](http://opensource.org/licenses/MIT), a very permissive license used by many popular web projects today. Its starter kits and documentation are available under [the Creative Commons 0](http://creativecommons.org/publicdomain/zero/1.0/legalcode) license. It also has [a Contributor License Agreement (CLA)](https://github.com/durandalproject/about/blob/master/CLA.md) for those who wish to join the core team in working on Aurelia. Ultimately, this means that you can use Aurelia without fear of legal repercussions and we can build it in the same confidence.
 
 ### Built on Open Web Standards
 
