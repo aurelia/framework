@@ -510,3 +510,34 @@ To update a single library use the command `npm install library-name` where libr
 * List the libraries on a single line separated by a space.
 * Include all of the libraries from the dependencies section of aurelia.json that you want to update.
 * Use the command `npm run au-update` to update all of the libraries in the au-update list above.
+
+## [Javascript Minification](aurelia-doc://section/17/version/1.0.0)
+
+The CLI will minify Javascript out of the box for the staging and production environments:
+
+<code-listing heading="Default minification settings">
+  <source-code lang="JavaScript">
+    "options": {
+      "minify": "stage & prod",
+      "sourcemaps": "dev & stage"
+    },
+  </source-code>
+</code-listing>
+
+These options can be found in the `"build"."options"` section of `aurelia.json`. If you wish to specify the options that are used in the minification process, then replace `"minify": "stage & prod"` with:
+
+<code-listing heading="Default minification settings">
+  <source-code lang="JavaScript">
+    "minify": {
+      "dev": false,
+      "default": {
+        "indent_level": 2
+      },
+      "stage & prod": {
+        "max-line-len": 100000
+      } 
+    },
+  </source-code>
+</code-listing>
+
+The Aurelia-CLI uses [UglifyJS2](https://github.com/mishoo/UglifyJS2) for minification, so any option that UglifyJS2 supports is also supported by the Aurelia-CLI. With the above configuration, minification will occur for the `stage` and `prod` environments, but not for the `dev` environment. For the `stage` and `prod` environments, both the `indent_level` as well as the `max-line-len` option are passed to the minifier. The `default` key is optional, but allows you to reduce code duplication when multiple environments have similar options.
