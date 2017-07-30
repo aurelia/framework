@@ -160,6 +160,9 @@ Next, because Bootstrap uses jQuery, we want to install jQuery as well, like thi
 ```
 npm install jquery@^2.2.4 --save
 ```
+
+> Whenever you install new dependencies used in your app, make sure to restart the `au run` or respectivley the `au run --watch` command, in order to have the CLI rebundle your freshly added dependecies.
+
 With these libraries installed, we now need to tell Aurelia which application bundle they should be included in and how to properly configure them with the module system. To do this, look in the `aurelia_project` folder and open up the `aurelia.json` file. This file contains all the information that the Aurelia CLI uses to build our project. If you scroll down, you will see a `bundles` section. There are two bundles defined by default: `app-bundle.js`, which contains your code and `vendor-bundle.js` which contains all 3rd party libraries. We need to add some new items to the `dependencies` array of the `vendor-bundle.js` bundle. Add the following two entries for jQuery and Bootstrap:
 
 <code-listing heading="jQuery and Bootstrap Bundle Config">
