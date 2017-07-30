@@ -149,10 +149,11 @@ Optionally, you can define an `exclude` list by setting the `source` property to
 
 ## [Adding Client Libraries to Your Project](aurelia-doc://section/10/version/1.0.0)
 
-If you need to add a 3rd party client library to your project, first `npm install` the library. After that, open the `aurelia_project/aurelia.json` file and scroll down to the `build.bundles` section. You'll need to add the library into one of your bundle's `dependencies` sections.
+The CLI provides two commands to help you add 3rd party client libraries, `au install <library>` and `au import <library>`. The `install` command will download, install and add the library to the configuration file `aurelia_project/aurelia.json`. The `import` command will add a library that you've previously installed with npm to the configuration file. Finally, both commands will give you instructions on how to access the library from your code.
 
-> Info
-> One of the first new features you'll see soon is a command to help you with 3rd party module configuration. The command will inspect a previously npm-installed package, and make a configuration recommendation to you, automating the process if you desire.
+### Manual configuration
+
+Unfortunately, not all 3rd party libraries can be successfully configured automatically by the `install` and `import` commands. In order the remedy this by manual configuration, open the `aurelia_project/aurelia.json` file and scroll down to the `build.bundles` section. You'll need to add the library into one of your bundle's `dependencies` sections.
 
 Below is some guidance for how to manually configure several different common 3rd party library scenarios:
 
