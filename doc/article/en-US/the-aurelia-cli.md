@@ -502,9 +502,9 @@ To update a single library use the command `npm install library-name` where libr
 * Add the following section to the project's package.json file
 
 ```
-"scripts": {
-    "au-update": "npm install aurelia-binding@latest aurelia-bootstrapper@latest ...
-    }
+  "scripts": {
+    "au-update": "npm install aurelia-binding@latest aurelia-bootstrapper@latest"
+  },
 ```
 
 * List the libraries on a single line separated by a space.
