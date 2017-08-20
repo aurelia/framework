@@ -206,7 +206,7 @@ Many modules installed through NPM are packages made up of multiple source files
 
 * `name` - This is the name of the library as you will import it in your JavaScript or TypeScript code.
 * `path` - This is a path to the folder where the package's source is located. This path is relative to your application's `src` folder.
-* `main` - This is the main module (entry point) of the package, relative to the `path`. You should not include the file extension. `.js` will be appended automatically.
+* `main` - This is the main module (entry point) of the package, relative to the `path`. You should not include the file extension. `.js` will be appended automatically. Set `main` to `false` when the package does not have a main file.
 
 > Info: Environment-Specific Dependencies
 > We've also shown how to use the `env` setting on a dependency. This can be used on any dependency in the bundle to indicate what environment builds the dependency should be included in. By default, dependencies are included in all builds. The example above shows how to include the library only in builds targeting the "dev" environment. You can also specify multiple environments like `dev & stage`.
@@ -236,7 +236,7 @@ Libraries that predate module systems can be a pain because they often rely on g
 
 * `name` - This is the name of the library as you will import it in your JavaScript or TypeScript code.
 * `path` - This is a path to the folder where the package's source is located. This path is relative to your application's `src` folder.
-* `main` - This is the main module (entry point) of the package, relative to the `path`. You should not include the file extension. `.js` will be appended automatically.
+* `main` - This is the main module (entry point) of the package, relative to the `path`. You should not include the file extension. `.js` will be appended automatically.  Set `main` to `false` when the package does not have a main file.
 * `deps` - This is an array of dependencies which must be loaded and available before the legacy library can be evaluated.
 * `exports` - This is the name of the global variable that should be used as the exported value of the module.
 
