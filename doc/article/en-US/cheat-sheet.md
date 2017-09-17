@@ -1113,14 +1113,11 @@ Add [a base tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base)
 > Warning
 > PushState requires server-side support. Don't forget to configure your server appropriately.
 
-### Reusing an existing VM
+### Reusing an Existing View Model
 
-Since the VM's navigation life-cycle is called only once you may have problems recognizing that the user switched the route from `Product A` to `Product B` (see below).  To work around this issue implement the method `determineActivationStrategy` in your VM and return hints for the router about what you'd like to happen.
+Since the view model's navigation lifecycle is called only once, you may have problems recognizing that the user switched the route from `Product A` to `Product B` (see below). To work around this issue implement the method `determineActivationStrategy` in your view model and return hints for the router about what you'd like to happen. Available return values are `replace` and `invoke-lifecycle`. Remember, "lifecycle" refers to the navigation lifecycle.
 
-> Info
-> Additionally, you can add an `activationStrategy` property to your route config if the strategy is always the same and you don't want that to be in your view-model code. Available values are `replace` and `invoke-lifecycle`. Remember, "lifecycle" refers to the navigation lifecycle.
-
-<code-listing heading="Router VM Activation Control">
+<code-listing heading="Router View Model Activation Control">
   <source-code lang="ES 2015/2016">
     //app.js
 
@@ -1139,7 +1136,7 @@ Since the VM's navigation life-cycle is called only once you may have problems r
     import {activationStrategy} from 'aurelia-router';
 
     export class Product {
-      determineActivationStrategy(){
+      determineActivationStrategy() {
         return activationStrategy.replace;
       }
     }
@@ -1161,15 +1158,18 @@ Since the VM's navigation life-cycle is called only once you may have problems r
 
     //product.ts
 
-    import {activationStrategy} from 'aurelia-router';
+    import {activationStrategy, RoutableComponentDetermineActivationStrategy} from 'aurelia-router';
 
-    export class Product {
-      determineActivationStrategy(): string {
+    export class Product implements RoutableComponentDetermineActivationStrategy {
+      determineActivationStrategy() {
         return activationStrategy.replace;
       }
     }
   </source-code>
 </code-listing>
+
+> Info
+> Alternatively, if the strategy is always the same and you don't want that to be in your view model code, you can add the `activationStrategy` property to your route config instead.
 
 ### Rendering multiple ViewPorts
 
