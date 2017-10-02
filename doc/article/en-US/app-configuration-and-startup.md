@@ -143,6 +143,10 @@ The root component is set by calling `aurelia.setRoot()`. If no values are provi
 
 This causes the `my-root${context.language.fileExtension}`/`my-root.html` to be loaded as the root component and injected into the `some-element` HTML element.
 
+> Note: The content of the app host element, the one marked with `aurelia-app` or passed to `Aurelia.prototype.setRoot`, will be replaced when `Aurelia.prototype.setRoot` completes.
+
+> Warning: When using the `<body>` element as the app host, bear in mind that any content added prior to the completion of `Aurelia.prototype.setRoot` will be removed.
+
 ## [Bootstrapping Older Browsers](aurelia-doc://section/3/version/1.0.0)
 
 Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need the [requestAnimationFrame Polyfill](https://www.npmjs.com/package/raf) and the [MutationObserver polyfill](https://github.com/megawac/MutationObserver.js). Once you have installed these (via `npm install --save-dev raf mutationobserver-shim`), you'll need to adjust your code to load them before Aurelia is initialized.
