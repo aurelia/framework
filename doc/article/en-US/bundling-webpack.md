@@ -73,7 +73,7 @@ The skeleton-navigation is configured to create 3 explicit entry bundles by defa
 - `aurelia` - contains all of the aurelia's modules
 - `app` - contains files from within the `src` folder and their dependencies
 
-However, you are free to define as many entry bundles as we want, by listing adding the packages as entry points of `webpack.config.js`:
+However, you are free to define as many entry bundles as we want, by listing the packages as entry points of `webpack.config.js`:
 
 ```js
 const baseConfig = {
