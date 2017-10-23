@@ -161,7 +161,8 @@ Next, because Bootstrap uses jQuery, we want to install jQuery as well, like thi
 npm install jquery@^2.2.4 --save
 ```
 
-> Whenever you install new dependencies used in your app, make sure to restart the `au run` or respectivley the `au run --watch` command, in order to have the CLI rebundle your freshly added dependecies.
+> Info
+> Whenever you install new dependencies used in your app, make sure to restart the `au run` or respectively the `au run --watch` command, in order to have the CLI re-bundle your freshly added dependencies.
 
 With these libraries installed, we now need to tell Aurelia which application bundle they should be included in and how to properly configure them with the module system. To do this, look in the `aurelia_project` folder and open up the `aurelia.json` file. This file contains all the information that the Aurelia CLI uses to build our project. If you scroll down, you will see a `bundles` section. There are two bundles defined by default: `app-bundle.js`, which contains your code and `vendor-bundle.js` which contains all 3rd party libraries. We need to add some new items to the `dependencies` array of the `vendor-bundle.js` bundle. Add the following two entries for jQuery and Bootstrap:
 
@@ -303,7 +304,8 @@ Aurelia strives to be a self-consistent framework. As such, building a custom el
   </source-code>
 </code-listing>
 
-> Note that we use a dashed naming convention to separate the words *contact-list* as our custom element name. The name of the class instead should be defined by using the UpperCamelCase version *ContactList*
+> Info
+> We use a dashed naming convention to separate the words *contact-list* as our custom element name. The name of the class instead should be defined by using the UpperCamelCase version *ContactList*.
 
 The view-model for our custom element has a few notable characteristics. First, we're using dependency injection. Aurelia has its own dependency injection container, which it uses to instantiate classes in your app. Classes can declare constructor dependencies through *inject metadata*. This looks a bit different depending on what language you are using. In ES 2015, you can declare an `inject` static method that returns an array of constructor dependencies while in ES Next and TypeScript, you can use an `inject` decorator to declare those dependencies. As you can see here, our `ContactList` class has a dependency on our `WebAPI` class. When Aurelia instantiates the contact list, it will first instantiate (or locate) an instance of the web API and "inject" that into the contact list's constructor.
 
@@ -1122,12 +1124,12 @@ And with that, we've finished our app. Congratulations!
 
 Now that you've completed the tutorial, you may want to consider doing some additional research or development exercises to continue your learning and hone your skills. Here are a few ideas:
 
-* Create a real backend for the app and use the [http-client or fetch-client](#/doc/article/aurelia/fetch-client/latest/http-services) to retrieve the data.
+* Create a real backend for the app and use the [http-client or fetch-client](docs/plugins/http-services) to retrieve the data.
 * Extend that application so that new contacts can be added.
 * Extend the contact detail form with data validation.
-* Learn more about [the component life-cycle](#/doc/article/aurelia/framework/latest/creating-components/1).
-* Learn more about [the navigation life-cycle and routing](#/doc/article/aurelia/framework/latest/cheat-sheet/7).
-* Expand your knowledge of [binding](#/doc/article/aurelia/binding/latest/binding-basics) and [templating](#/doc/article/aurelia/templating/latest/templating-basics).
+* Learn more about [the component life-cycle](docs/fundamentals/components#the-component-lifecycle).
+* Learn more about [the navigation life-cycle and routing](docs/fundamentals/cheat-sheet#routing).
+* Expand your knowledge of [binding](docs/binding/basics) and [templating](docs/templating/basics).
 
 ## [Conclusion](aurelia-doc://section/11/version/1.0.0)
 
