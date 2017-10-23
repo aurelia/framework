@@ -91,7 +91,7 @@ To begin, we're going to setup our `App` class by configuring it with a router. 
   </source-code>
   <source-code lang="TypeScript">
     import {Router, RouterConfiguration} from 'aurelia-router';
-
+       
     export class App {
       router: Router;
 
@@ -934,8 +934,7 @@ Once this is installed, we'll need to make sure it gets configured in the proper
 As you can see, we've configured the standard JavaScript main but are also including an additional CSS resource, just like we did with Bootstrap.
 
 > Info: TypeScript Definition Files
-> TypeScript users should note that when using 3rd party libraries, in order to make them work in a TypeScript project, you will either need to install the d.ts files or create them for yourself. In the case of NProgress, there are definition files available via Definitely Typed which can be installed with the Typings CLI. Assuming you have the Typings tool installed, you would install the definition files for NProgress with the following command: `typings install dt~nprogress --global --save
-`
+> TypeScript users should note that when using 3rd party libraries, in order to make them work in a TypeScript project, you will either need to install the d.ts files or create them for yourself. In the case of NProgress, there are definition files available via Definitely Typed which can be installed with the Typings CLI. Assuming you have the Typings tool installed, you would install the definition files for NProgress with the following command: `typings install dt~nprogress --global --save` (or `npm install @types/nprogress --global --save` for TypeScript >= 2.0)
 
 With that in place, let's create our `loading-indicator` custom element. In the `src/resources/elements` folder create a file named `loading-indicator${context.language.fileExtension}` and use the code below for its implementation:
 
