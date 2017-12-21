@@ -39,7 +39,7 @@ We can  use [Aurelia Bundler](http://github.com/aurelia/bundler) to create a gul
 
 Now that we have our app running, let's start by installing `aurelia-bundler`. To do so `cd` into `skeleton-navigation` and run the following command:
 
-```shell
+```Shell
 npm install aurelia-bundler --save-dev
 ```
 
@@ -47,7 +47,6 @@ Now, let's create a `bundle.js` file in `build/tasks/bundle.js` as follows:
 
 <code-listing heading="bundle.js">
   <source-code lang="JavaScript">
-
     var gulp = require('gulp');
     var bundle = require('aurelia-bundler').bundle;
 
@@ -101,7 +100,7 @@ Now, let's create a `bundle.js` file in `build/tasks/bundle.js` as follows:
 
 With that file in place, let's run the command below:
 
-```shell
+```Shell
 gulp bundle
 ```
 
@@ -129,7 +128,6 @@ In a JSPM v0.17 style app, we have two separate config files: `jspm.browser.js` 
 
 <code-listing heading="bundle.js">
   <source-code lang="JavaScript">
-
     var config = {
       force: true,
       baseURL: '.',             // baseURL of the application
@@ -293,13 +291,13 @@ Here is a typical bundle configuration in all its glory:
 
 At this point, if you are thinking: "Well, this is all good but we have already developed an application that uses Polymer and  `HTML Imports` extensively. We want to bundle them as well." As you may already know, we have created a separate plugin [aurelia-html-import-template-loader](https://github.com/aurelia/html-import-template-loader) exclusively for this use case. We have bundling support for that too. This is how we can do it. It's actually a two part process. First let's install the `aurelia-html-import-template-loader` plugin with the command below:
 
-```shell
+```Shell
  jspm install aurelia-html-import-template-loader
 ```
 
 Now, let's open `src/main.js` and add this line:
 
-```javascript
+```JavaScript
 aurelia.use.plugin('aurelia-html-import-template-loader')
 ```
 
@@ -325,7 +323,6 @@ With this little change Aurelia Loader will now use `HTML Imports` to load all t
 
 <code-listing heading="HTML Import Config">
   <source-code lang="JavaScript">
-
     "dist/view-bundle": {
       htmlimports: true,
       includes: 'dist/*.html',
@@ -343,7 +340,6 @@ We will also change the first bundle a little bit to exclude all the `html` and 
 
 <code-listing heading="Full HTML Import Bundle Config">
   <source-code lang="JavaScript">
-
     var gulp = require('gulp');
     var bundle = require('aurelia-bundler').bundle;
 
@@ -395,7 +391,7 @@ We will also change the first bundle a little bit to exclude all the `html` and 
 
 We have changed the source code (src/main.js), so we need to rebuild our app. The command below should do that:
 
-```shell
+```Shell
  gulp serve
 ```
 

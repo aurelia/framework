@@ -25,7 +25,7 @@ The CLI itself has a couple of prerequisites that you must install first:
 
 Once you have the prerequisites installed, you can install the Aurelia CLI itself. From the command line, use npm to install the CLI globally:
 
-```
+```Shell
 npm install aurelia-cli -g
 ```
 
@@ -47,8 +47,8 @@ Once the dependencies are installed, your project is ready to go.
 
 If you would like to use ASP.NET Core, first begin by using Visual Studio to create your ASP.NET Core project. Select whatever options make the most sense based on your .NET project plans. After you have created the project, open a command line and change directory into your web project's project folder. This is the folder that contains the `.xproj` file. From within this folder, you can execute the following command `au new --here` which will setup Aurelia "here" inside this project folder. You will be prompted to choose the platform you want. Simply select "ASP.NET Core". Follow the prompts for the rest of the process, just like above.
 
->Info
->Since Aurelia-CLI should be in charge of building your client side code, make sure before running the `new` command from **Aurelia-CLI** you add `<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>` to your .xproj file inside the first `<PropertyGroup></PropertyGroup>` you find to stop Visual Studio from compiling the `.ts` files in your project. If you build your solution before doing this, Visual Studio will compile your `.ts` files breaking some of the **Aurelia-CLI** commands.
+> Info
+> Since the Aurelia-CLI should be in charge of building your client side code, make sure that before running the `new` command from **Aurelia-CLI** you add `<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>` to your .xproj file inside the first `<PropertyGroup></PropertyGroup>` you find to stop Visual Studio from compiling the `.ts` files in your project. If you build your solution before doing this, Visual Studio will compile your `.ts` files, breaking some of the **Aurelia-CLI** commands.
 
 ## [Running Your Aurelia App](aurelia-doc://section/3/version/1.0.0)
 
@@ -66,7 +66,9 @@ Aurelia CLI apps always run in bundled mode, even during development. To build y
 
 Run the following build command:
 
-    au build --env prod
+```Shell
+au build --env prod
+```
 
 Then copy the file `index.html` and the folder `/scripts`  to the main deployment folder on your server.
 
@@ -81,25 +83,30 @@ Executing `au generate resource` runs a generator to scaffold out typical Aureli
 ## [Build Revisions](aurelia-doc://section/8/version/1.0.0)
 
 To create builds with revision numbers, you must set `rev` to be `true` under the build options. This will cause a unique revision number to be added to the bundled files. For example:
-```javascript
+
+```JSON
 "options": {
   "minify": "stage & prod",
   "sourcemaps": "dev & stage",
   "rev": true
 }
 ```
+
 You are also able to set specific flags so that build revisions only take place while staging or in production. For example:
-```javascript
+
+```JSON
 "options": {
   "minify": "stage & prod",
   "sourcemaps": "dev & stage",
   "rev": "stage & prod"
 }
 ```  
+
 Now, if you were to run `au build --env prod`, the output would contain build revisions, while `au build --env dev` would not. Setting the build revisions to only compile while in production can help the development process, since it keeps your workspace clean of various build revisions.
 ### Modifying The Index File
 In order for your `index.html` file to be updated to load up the correct revisioned bundle, you must ensure that the `"index"` property located in `build/targets` section is correctly pointing to the `index.html` (or starting page) for your project. For example:
-``` javascript
+
+``` JSON
 "build": {
   "targets": [
     {
@@ -115,7 +122,8 @@ In order for your `index.html` file to be updated to load up the correct revisio
 ## [Bundling Your Project](aurelia-doc://section/9/version/1.0.0)
 
 By default, the Aurelia CLI creates two bundles, an `app-bundle.js`, and a `vendor-bundle.js`. An example of the default `app-bundle.js` looks like this:  
-```javascript
+
+```JSON
 {
   "name": "app-bundle.js",
   "source": [
@@ -124,9 +132,11 @@ By default, the Aurelia CLI creates two bundles, an `app-bundle.js`, and a `vend
   ]
 }
 ```  
+
 In this setup, we've named the bundle `app-bundle.js`, and have defined what's included by setting the `source` property to be an array of patterns that match to file paths (the patterns are using glob patterns, [minimatch](https://github.com/isaacs/minimatch) to be specific, to find files that match).  
 Optionally, you can define an `exclude` list by setting the `source` property to be an object containing both an `include` and `exclude` array of patterns. This is helpful when you're trying to define multiple bundles from your source code.  
-```javascript
+
+```JSON
 {
   "name": "app-bundle.js",
   "source": {
@@ -162,7 +172,7 @@ Below is some guidance for how to manually configure several different common 3r
 If the library you have installed is a single CommonJS or AMD file, you can add an entry similar to the following to the dependencies of your bundle:
 
 <code-listing heading="A Single File Module Dependency">
-  <source-code lang="JavaScript">
+  <source-code lang="JSON">
     "dependencies": [
       {
         "name": "library-name",
@@ -178,7 +188,7 @@ If the library you have installed is a single CommonJS or AMD file, you can add 
 If the `main` field of the library's `package.json` points to the single file that you need to bundle, then you can opt for a simplified configuration by just adding the package name to your dependencies directly:
 
 <code-listing heading="A Single File Module Dependency via Main">
-  <source-code lang="JavaScript">
+  <source-code lang="JSON">
     "dependencies": [
       "library-name"
     ]
@@ -191,7 +201,7 @@ If the `main` field of the library's `package.json` points to the single file th
 Many modules installed through NPM are packages made up of multiple source files. Configuring a library like this is a bit different than the single-file scenario above. Here's an example configuration for a multi-file package:
 
 <code-listing heading="A CommonJS Package Dependency">
-  <source-code lang="JavaScript">
+  <source-code lang="JSON">
     "dependencies": [
       {
         "name": "aurelia-testing",
@@ -216,7 +226,7 @@ Many modules installed through NPM are packages made up of multiple source files
 Libraries that predate module systems can be a pain because they often rely on global scripts which must be loaded before the library. These libraries also add their own global variables. An example of one such library is [bootstrap](http://getbootstrap.com/css/). Let's take a look at how to handle a legacy library like that.
 
 <code-listing heading="A Legacy Library Dependency">
-  <source-code lang="JavaScript">
+  <source-code lang="JSON">
     "dependencies": [
       {
         "name":"jquery",
@@ -248,7 +258,7 @@ We are using the `exports` property to export the jQuery object since jQuery plu
 The Bootstrap example above results in the bundling of the JavaScript portions of the library. But, as you probably know, Bootstrap is mostly about CSS. The CSS files distributed with Bootstrap aren't traceable through the module system so this still doesn't result in the Bootstrap CSS being bundled. Here's how we solve that problem:
 
 <code-listing heading="A Library with Additional Resources">
-  <source-code lang="JavaScript">
+  <source-code lang="JSON">
     "dependencies": [
       {
         "name":"jquery",
@@ -273,8 +283,8 @@ Notice that we've added a `resources` array. Here we can provide a list of addit
 
 The final step to make Bootstrap work is to copy the necessary font files to the `bootstrap/fonts` folder, which by default is where Bootstrap will look for the font files. To do this, we should declare these files in the `copyFiles` property, after the `bundles` property.
 
-```
-"bundles": [ ... ], 
+```JSON
+"bundles": [ ... ],
 "copyFiles": {
     "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2": "bootstrap/fonts",
     "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff": "bootstrap/fonts",
@@ -286,16 +296,17 @@ Now, the font files will be copied to the `bootstrap/fonts` folder when building
 
 > Info: Setup for copying files
 > The `copyFiles` works as a 'from':'to' setup, where 'from' is the location of the file you want to copy, and 'to' is the destination folder. Both paths are relative to project folder. The sintax is:
-> 
-```
-"bundles": [ ... ], 
+>
+```JSON
+"bundles": [ ... ],
 "copyFiles": {
   FILE_YOU_WANT_TO_COPY_BASED_ON_PROJECT_FOLDER: DESTINATION_FOLDER_BASED_ON_PROJECT_FOLDER
 }
 ```
-> If you run the application providing the `--watch` flag, the files will be recopied when changed. 
-  
-  
+
+> Warning
+> If you run the application providing the `--watch` flag, the files will be recopied when changed.
+
 > Info
 > Remember that CSS bundled in this way is bundled as a text resource designed to be required in your view. To load the Bootstrap css file in a view, use `<require from="bootstrap/css/bootstrap.css"></require>`. Notice that the module name derives from combining the `name` property with the resource.
 
@@ -304,7 +315,7 @@ Now, the font files will be copied to the `bootstrap/fonts` folder when building
 Sometimes you can't get a library to work with the module loading system. That's ok. You can still include it in the bundle, using traditional concatenation techniques. In fact, this is how the CLI bundles up the loader and promise polyfills. These items don't go into the `dependencies` section but instead go into the `prepend` section. This is because they aren't module dependencies. They also aren't relative to the `src`, but relative to the project folder. Using the `prepend` section causes the scripts to be prepended to the beginning of the bundle, using normal script concatenation techniques. Here's a full vendor bundle example, showing this and the rest of the techniques listed above.
 
 <code-listing heading="A Sample Bundle">
-  <source-code lang="JavaScript">
+  <source-code lang="JSON">
     {
       "name": "vendor-bundle.js",
       "prepend": [
@@ -379,8 +390,9 @@ Some legacy libraries may support plugins which you also want included in your b
 The CLI treats [scoped packages](https://docs.npmjs.com/misc/scope) in the same way as unscoped ones, you just need to remember that the scope is always part of its name.
 
 So, for example, if you need to consume a scoped package in a CLI project, you need the following in your `aurelia.json`:
-```
-dependencies: [
+
+```JSON
+"dependencies": [
   {
     "name": "@scope/packagename",
     "path": "../node_modules/@scope/packagename/dist/amd",
@@ -390,12 +402,14 @@ dependencies: [
 ```
 
 Your imports must be scoped too:
-```
+
+```JavaScript
 import { SomeClass } from '@scope/packagename';
 ```
 
 And this is an example of loading a `@scope/packagename` plugin during app startup:
-```
+
+```JavaScript
 aurelia.use.standardConfiguration().plugin('@scope/packagename');
 ```
 
@@ -404,8 +418,8 @@ aurelia.use.standardConfiguration().plugin('@scope/packagename');
 It is possible to use packages outside of the node_modules folder. The only difference is that you need to define what the `packageRoot` is. In `aurelia.json`, you can define a package that lives outside of the node_modules folder as follows:
 
 <code-listing heading="Package outside of node_modules">
-  <source-code lang="JavaScript">
-    dependencies: [{
+  <source-code lang="JSON">
+    "dependencies": [{
       "name": "my-standalone-folder",
       "path": "../my-standalone-folder/dist/amd",
       "main": "index",
@@ -420,16 +434,16 @@ The `packageRoot` is the root folder of the package. This is often the folder wh
 
 You can configure the loader by adding a `config` key to `build.loader` with the options you want to add. For instance, if you want to increase the timeout for requirejs, you would do this:
 
-```
+```JSON
 "build": {
-    "loader": {
-        "type": "require",
-        "configTarget": "vendor-bundle.js",
-        "includeBundleMetadataInConfig": "auto",
-        "config": {
-            "waitSeconds": 60
-        }
+  "loader": {
+    "type": "require",
+    "configTarget": "vendor-bundle.js",
+    "includeBundleMetadataInConfig": "auto",
+    "config": {
+      "waitSeconds": 60
     }
+  }
 }
 ```
 
@@ -438,7 +452,7 @@ You can configure the loader by adding a `config` key to `build.loader` with the
 Sometimes you may want to keep the scripts folder somewhere other than the default location, or move the index.html file a few folders up from the project root. In that case it is possible to set the `baseUrl` property so that the build system uses the correct paths and that bundles get loaded correctly in the browser. The `baseUrl` property should be set in both the `platform` object as well as the `build.targets` object:
 
 <code-listing heading="baseUrl">
-  <source-code lang="JavaScript">
+  <source-code lang="JSON">
     "targets": [
       {
         "id": "web",
@@ -492,7 +506,7 @@ Steps:
  * `npm uninstall aurelia-cli -g`
  * delete the contents under c:/Users/NAME/AppData/Roaming/npm-cache
  * `npm install aurelia-cli -g`
- 
+
 ## [Updating A Single Library](aurelia-doc://section/15/version/1.0.0)
 
 To update a single library use the command `npm install library-name` where library-name is the library that you wish to update.  
@@ -501,10 +515,10 @@ To update a single library use the command `npm install library-name` where libr
 
 * Add the following section to the project's package.json file
 
-```
+```JSON
 "scripts": {
-    "au-update": "npm install aurelia-binding@latest aurelia-bootstrapper@latest ...
-    }
+  "au-update": "npm install aurelia-binding@latest aurelia-bootstrapper@latest ..."
+}
 ```
 
 * List the libraries on a single line separated by a space.
@@ -516,7 +530,7 @@ To update a single library use the command `npm install library-name` where libr
 The CLI will minify Javascript out of the box for the staging and production environments:
 
 <code-listing heading="Default minification settings">
-  <source-code lang="JavaScript">
+  <source-code lang="JSON">
     "options": {
       "minify": "stage & prod",
       "sourcemaps": "dev & stage"
@@ -527,7 +541,7 @@ The CLI will minify Javascript out of the box for the staging and production env
 These options can be found in the `"build"."options"` section of `aurelia.json`. If you wish to specify the options that are used in the minification process, then replace `"minify": "stage & prod"` with:
 
 <code-listing heading="Default minification settings">
-  <source-code lang="JavaScript">
+  <source-code lang="JSON">
     "minify": {
       "dev": false,
       "default": {
@@ -535,7 +549,7 @@ These options can be found in the `"build"."options"` section of `aurelia.json`.
       },
       "stage & prod": {
         "max-line-len": 100000
-      } 
+      }
     },
   </source-code>
 </code-listing>

@@ -41,13 +41,13 @@ Now that we have our app running, let's try to build the preconfigured bundle. W
 
 To build the development bundle execute:
 
-```shell
+```Shell
 npm run build
 ```
 
 To build an optimized, minified production bundle execute:
 
-```shell
+```Shell
 npm run build:prod
 ```
 
@@ -60,7 +60,7 @@ After the bundle is created, by default you'll find the output in the `dist` fol
 
 To start a simple web server and test either the development or production build execute:
 
-```shell
+```Shell
 npm run server:prod
 ```
 
@@ -68,19 +68,19 @@ After executing the command, you'll see a link which will run your bundled appli
 
 ## [Entry Bundles](aurelia-doc://section/4/version/1.0.0)
 
-The skeleton-navigation is configured to create 3 explicit entry bundles by default: 
+The skeleton-navigation is configured to create 3 explicit entry bundles by default:
 - `aurelia-bootstrap` - contains modules needed to be loaded first, such as polyfills and Aurelia's Platform Abstraction Layer
 - `aurelia` - contains all of the aurelia's modules
 - `app` - contains files from within the `src` folder and their dependencies
 
 However, you are free to define as many entry bundles as we want, by listing the packages as entry points of `webpack.config.js`:
 
-```js
+```JavaScript
 const baseConfig = {
   entry: {
     'app': [],
     // (...) //
-    'vendor': ['moment'] 
+    'vendor': ['moment']
   },
   output: {
     path: outDir,
@@ -112,7 +112,7 @@ For most use-cases, I recommend using the centralized approach, as it makes it e
 Let's say we want to separate out the View and ViewModel: `src/users` contained in the skeleton and defer its loading to when the user clicks on a link to that route, you could define an async bundle as follows:
 
 <code-listing heading="package.json">
-  <source-code lang="JavaScript">
+  <source-code lang="JSON">
     "aurelia": {
       "build": {
         "resources": [
@@ -161,14 +161,14 @@ By default, all the production dependencies declared in the `package.json` that 
 In case Aurelia is supposed to load an external file or an external module that was not defined as a resource by any of its the dependencies, resources must also be specified manually.
 
 > Warning
-> Since the syntax is still relatively new, many Aurelia plugins do not declare their resources. If you are developing an Aurelia plugin, make sure you do this, so that your users do not have to. The `package.json` syntax is similar, with the one exception that resources are relative to the root directory of the plugin, as there is no `src` folder. 
+> Since the syntax is still relatively new, many Aurelia plugins do not declare their resources. If you are developing an Aurelia plugin, make sure you do this, so that your users do not have to. The `package.json` syntax is similar, with the one exception that resources are relative to the root directory of the plugin, as there is no `src` folder.
 
 There might reasons not to declare those resources in all cases,for example when the plugin is to be partially consumed (e.g. only one Button element from a package containing multiple Aurelia elements).
 
 If we'd like to consume such external resources, we should declare them ourselves, for example:
 
 <code-listing heading="package.json">
-  <source-code lang="JavaScript">
+  <source-code lang="JSON">
     "aurelia": {
       "build": {
         "resources": [
@@ -183,7 +183,7 @@ If we'd like to consume such external resources, we should declare them ourselve
 You can also combine both features to separate out plugins or resources for lazy-loading:
 
 <code-listing heading="package.json">
-  <source-code lang="JavaScript">
+  <source-code lang="JSON">
     "aurelia": {
       "build": {
         "resources": [
@@ -296,7 +296,7 @@ Let's take a look at how a configuration file can be put together:
       baseConfig,
 
       require('@easy-webpack/config-env-production')(),
-        
+
       require('@easy-webpack/config-aurelia')
         ({root: rootDir, src: srcDir, title: title, baseUrl: baseUrl}),
 

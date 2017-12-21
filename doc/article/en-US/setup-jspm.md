@@ -22,13 +22,13 @@ Let's start by getting you set up with a great set of tools that you can use to 
 
 First, let's begin by installing [Gulp](http://gulpjs.com/) which we'll be using for build automation. If you don't have it already, you can use npm to set it up like this (in some environments you may need to use `sudo`):
 
-```shell
+```Shell
 npm install -g gulp
 ```
 
 Next, we need to install [jspm](http://jspm.io/). This will serve as our client-side package manager. You can do that like this:
 
-```shell
+```Shell
 npm install -g jspm
 ```
 
@@ -36,8 +36,8 @@ npm install -g jspm
 
 With the tooling installed, we can now turn our attention to setting up a basic structure for your app. We'll begin by downloading a skeleton. We've got several versions available for you based on your language and tooling preferences. Please download the latest skeletons now.
 
-<div style="text-align: center;">
-  <a class="au-button" href="https://github.com/aurelia/skeleton-navigation/releases/latest" style="text-decoration: none; margin: 32px 8px 42px 8px;" target="_blank">Download the Skeletons</a>
+<div style="text-align: center; margin-bottom: 32px">
+  <a class="au-button" href="https://github.com/aurelia/skeleton-navigation/releases/latest" target="_blank">Download the Skeletons</a>
 </div>
 
 Once the download has completed, unzip it and look inside. The readme file contained therein will explain the various options available to you. Please select one of the skeletons and copy it to the location on your file system that you wish your code to reside. Be sure to rename the folder to appropriately represent the app you want to build.
@@ -46,13 +46,13 @@ You will now find everything you need inside the folder, including a basic build
 
 1. Open a console and change directory into your app's directory.
 2. Execute the following command to install the dependencies listed in the _devDependencies_ section of the package manifest:
-  ```shell
-  npm install
-  ```
+```Shell
+npm install
+```
 3. Next, execute the following command to install the Aurelia libraries, bootstrap and font-awesome, listed in the _jspm.dependencies_ section of the package manifest:
-  ```shell
-  jspm install -y
-  ```
+```Shell
+jspm install -y
+```
 Everything we've done so far is standard Node.js build and package management procedures. It doesn't have anything specific to do with Aurelia itself. We're just walking you through setting up a modern ${context.language.name} project and build configuration from scratch.
 
 > Info
@@ -61,7 +61,7 @@ Everything we've done so far is standard Node.js build and package management pr
 ## [Running The App](aurelia-doc://section/3/version/1.0.0)
 
 If you've followed along this far, you now have all the libraries, build configuration and tools you need to create amazing ${context.language.name} apps with Aurelia. The next thing to do is run the sample app. To see this in action, on your console, use the following command to build and launch the server:
-```shell
+```Shell
 gulp watch
 ```
 You can now browse to [http://localhost:9000/](http://localhost:9000/) to see the app.
@@ -74,11 +74,11 @@ You can now browse to [http://localhost:9000/](http://localhost:9000/) to see th
 To run the unit tests, first ensure that you have followed the steps above in order to install all dependencies and successfully build the library. Once you have done that, proceed with these additional steps:
 
 1. Ensure that the [Karma](http://karma-runner.github.io/) CLI is installed. If you need to install it, use the following command:
-  ```shell
+  ```Shell
   npm install -g karma-cli
   ```
 2. You can now run the tests with this command:
-  ```shell
+  ```Shell
   gulp test
   ```
 
@@ -88,15 +88,15 @@ Integration tests are performed with [Protractor](http://angular.github.io/protr
 
 1. Place your E2E-Tests into the folder ```test/e2e/src```.
 2. Install the necessary webdriver:
-  ```shell
+  ```Shell
   gulp webdriver-update
   ```
 3. Configure the path to the webdriver by opening the file ```protractor.conf.js``` and adjusting the ```seleniumServerJar``` property. Typically it's only needed to adjust the version number.
 4. Make sure your app runs and is accessible:
-  ```shell
+  ```Shell
   gulp watch
   ```
 5. In another console run the E2E-Tests:
-  ```shell
+  ```Shell
   gulp e2e
   ```
