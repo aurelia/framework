@@ -143,7 +143,8 @@ The root component is set by calling `aurelia.setRoot()`. If no values are provi
 
 This causes the `my-root${context.language.fileExtension}`/`my-root.html` to be loaded as the root component and injected into the `some-element` HTML element.
 
-> Note: The content of the app host element, the one marked with `aurelia-app` or passed to `Aurelia.prototype.setRoot`, will be replaced when `Aurelia.prototype.setRoot` completes.
+> Info
+> The content of the app host element, the one marked with `aurelia-app` or passed to `Aurelia.prototype.setRoot`, will be replaced when `Aurelia.prototype.setRoot` completes.
 
 > Warning: When using the `<body>` element as the app host, bear in mind that any content added prior to the completion of `Aurelia.prototype.setRoot` will be removed.
 
@@ -154,7 +155,7 @@ Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Fi
 In case you are using Webpack, create a file, e.g. `ie-polyfill.js`:
 
 <code-listing heading="Polyfill Configuration">
-  <source-code lang="JS">
+  <source-code lang="JavaScript">
     import 'mutationobserver-shim/MutationObserver'; // IE10 MutationObserver polyfill
     import 'raf/polyfill'; // IE9 requestAnimationFrame polyfill
   </source-code>
@@ -163,12 +164,11 @@ In case you are using Webpack, create a file, e.g. `ie-polyfill.js`:
 After you have created the file, add it as the first file in your `aurelia-bootstrapper` bundle. You can find bundle configuration in the `webpack.config.js` file, something like:
 
 <code-listing heading="Polyfill Configuration">
-  <source-code lang="JS">
+  <source-code lang="JavaScript">
     entry: {
       'app': ['./ie-polyfill', 'aurelia-bootstrapper'],
   </source-code>
 </code-listing>
-
 
 If you are using JSPM change your `index.html` startup code as follows:
 
@@ -196,7 +196,7 @@ If you are using JSPM change your `index.html` startup code as follows:
   </source-code>
 </code-listing>
 
-> Note: Module Loaders and Bundlers
+> Info: Module Loaders and Bundlers
 > The code in this article demonstrates loading via SystemJS. However, these techniques can be accomplished with other module loaders just as readily. Be sure to lookup the appropriate APIs for your chosen loader or bundler in order to translate these samples into the required code for your own app.
 
 > Warning: Promises in Edge

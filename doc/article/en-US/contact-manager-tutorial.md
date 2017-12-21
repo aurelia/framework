@@ -28,7 +28,7 @@ For this tutorial, we're going to use the Aurelia CLI. If you've already setup y
 
 Once you have the prerequisites installed, you can install the Aurelia CLI itself. From the command line, use npm to install the CLI globally:
 
-```
+```Shell
 npm install aurelia-cli -g
 ```
 
@@ -91,7 +91,7 @@ To begin, we're going to setup our `App` class by configuring it with a router. 
   </source-code>
   <source-code lang="TypeScript">
     import {Router, RouterConfiguration} from 'aurelia-router';
-       
+
     export class App {
       router: Router;
 
@@ -151,13 +151,13 @@ We're almost done setting up the application shell. Before we're done, we need t
 
 To get Bootstrap setup, we begin by installing the library itself with NPM. Execute the following on the command line to do this:
 
-```
+```Shell
 npm install bootstrap --save
 ```
 
 Next, because Bootstrap uses jQuery, we want to install jQuery as well, like this:
 
-```
+```Shell
 npm install jquery@^2.2.4 --save
 ```
 
@@ -194,7 +194,7 @@ After you have modified the aurelia.json file, it is necessary to restart the `a
 
 If you run the application now, you'll see a blank screen and the browser's console will display the following message:
 
-```
+```Output
 Failed to load resource: the server responded with a status of 404 (Not Found) http://localhost:9000/src/no-selection.js
 ERROR [app-router] Error: Script error for "no-selection"
 ```
@@ -372,7 +372,7 @@ If you go ahead and run the application, you should now see something like this:
 
 Ok, things are starting to come together, but we still can't view an individual contact. If you try selecting something from the list, you'll see an error like the following in the console:
 
-```
+```Output
 ERROR [app-router] Error: Script error for "contact-detail"
 ```
 
@@ -908,7 +908,7 @@ Let's add one more final touch to this application. Whenever we're navigating fr
 
 Begin by installing the `nprogress` library with the following command:
 
-```
+```Shell
 npm install nprogress --save
 ```
 
