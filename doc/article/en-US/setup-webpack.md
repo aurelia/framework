@@ -1,17 +1,7 @@
 ---
-{
-  "name": "Setup with Webpack",
-  "culture": "en-US",
-  "description": "If you're interested in getting setup with Webpack to build projects, this article will take you through setting up both your machine and a production quality starter project.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Bazyli Brzóska",
-  	"url": "https://invent.life"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["JavaScript", "TypeScript", "SPA", "Setup", "Webpack"]
-}
+name: Setup with Webpack
+description: If you're interested in getting setup with Webpack to build projects, this article will take you through setting up both your machine and a production quality starter project.
+author: Bazyli Brzóska (https://invent.life)
 ---
 ## [Configuring Your Environment](aurelia-doc://section/1/version/1.0.0)
 

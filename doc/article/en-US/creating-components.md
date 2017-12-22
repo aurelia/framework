@@ -1,17 +1,7 @@
 ---
-{
-  "name": "Creating Components",
-  "culture": "en-US",
-  "description": "Components are the basic building blocks of all Aurelia applications. In this article you'll learn how to build basic components using dependency injection and the component lifecycle.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Components", "MVVM", "Separation of Concerns"]
-}
+name: Creating Components
+description: Components are the basic building blocks of all Aurelia applications. In this article you'll learn how to build basic components using dependency injection and the component lifecycle.
+author: Rob Eisenberg (http://robeisenberg.com)
 ---
 ## [Creating A Component](aurelia-doc://section/1/version/1.0.0)
 

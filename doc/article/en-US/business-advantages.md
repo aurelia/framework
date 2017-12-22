@@ -1,17 +1,7 @@
 ---
-{
-  "name": "Business Advantages",
-  "culture": "en-US",
-  "description": "Aurelia is open source platform with commercial backing. If your business is going to spend significant money building software, you want to do it on a platform that's committed to you as a customer. You want to be able to form a relationship with your technology provider to ensure that you and your developers have a solid platform upon which to build your business now and in the years to come.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Benefits", "Business"]
-}
+name: Business Advantages
+description: Aurelia is open source platform with commercial backing. If your business is going to spend significant money building software, you want to do it on a platform that's committed to you as a customer. You want to be able to form a relationship with your technology provider to ensure that you and your developers have a solid platform upon which to build your business now and in the years to come.
+author: Rob Eisenberg (http://robeisenberg.com)
 ---
 
 ## [Commercially Backed](aurelia-doc://section/1/version/1.0.0)

@@ -1,17 +1,7 @@
 ---
-{
-  "name": "Bundling with Webpack",
-  "culture": "en-US",
-  "description": "Before deploying your app to production, you'll want to bundle the assets for efficient use of the network.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Bazyli Brzóska",
-  	"url": "https://invent.life"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Deploy", "Bundling", "Webpack"]
-}
+name: Bundling with Webpack
+description: Before deploying your app to production, you'll want to bundle the assets for efficient use of the network.
+author: Bazyli Brzóska (https://invent.life)
 ---
 ## [Introduction](aurelia-doc://section/1/version/1.0.0)
 

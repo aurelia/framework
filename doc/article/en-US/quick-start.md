@@ -1,17 +1,7 @@
 ---
-{
-  "name": "Quick Start",
-  "culture": "en-US",
-  "description": "Welcome to Aurelia! This quick start guide will take you through creating a Todo app using Aurelia and briefly explain its main concepts. We assume you are familiar with JavaScript, HTML, and CSS.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Getting Started", "ES2015", "ES2016", "TypeScript"]
-}
+name: Quick Start
+description: Welcome to Aurelia! This quick start guide will take you through creating a Todo app using Aurelia and briefly explain its main concepts. We assume you are familiar with JavaScript, HTML, and CSS.
+author: Rob Eisenberg (http://robeisenberg.com)
 ---
 ## [Setup](aurelia-doc://section/1/version/1.0.0)
 

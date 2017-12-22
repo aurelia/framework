@@ -1,17 +1,7 @@
 ---
-{
-  "name": "Setup with JSPM",
-  "culture": "en-US",
-  "description": "If you're interested in getting setup with JSPM to build projects, this article will take you through setting up both your machine and a production quality starter project.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["JavaScript", "TypeScript", "SPA", "Setup"]
-}
+name: Setup with JSPM
+description: If you're interested in getting setup with JSPM to build projects, this article will take you through setting up both your machine and a production quality starter project.
+author: Rob Eisenberg (http://robeisenberg.com)
 ---
 ## [Configuring Your Environment](aurelia-doc://section/1/version/1.0.0)
 

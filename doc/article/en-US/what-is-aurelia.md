@@ -1,17 +1,7 @@
 ---
-{
-  "name": "What is Aurelia?",
-  "culture": "en-US",
-  "description": "Aurelia is a modern front-end framework for building browser, mobile and desktop applications.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["JavaScript", "SPA"]
-}
+name: What is Aurelia?
+description: Aurelia is a modern front-end framework for building browser, mobile and desktop applications.
+author: Rob Eisenberg (http://robeisenberg.com)
 ---
 ## [What is Aurelia?](aurelia-doc://section/1/version/1.0.0)
 

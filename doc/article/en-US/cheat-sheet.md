@@ -1,17 +1,7 @@
 ---
-{
-  "name": "Cheat Sheet",
-  "culture": "en-US",
-  "description": "Forgot the syntax for bindings? Need to know how to create a custom attribute? This article contains answers to questions like those as well as a bunch of quick snippets for common tasks.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Help", "Cheat Sheet"]
-}
+name: Cheat Sheet
+description: Forgot the syntax for bindings? Need to know how to create a custom attribute? This article contains answers to questions like those as well as a bunch of quick snippets for common tasks.
+author: Rob Eisenberg (http://robeisenberg.com)
 ---
 ## [Configuration and Startup](aurelia-doc://section/1/version/1.0.0)
 

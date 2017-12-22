@@ -1,17 +1,7 @@
 ---
-{
-  "name": "Integrating with Polymer",
-  "culture": "en-US",
-  "description": "Polymer is a library for creating reusable web components declaratively with extra features like data binding and property observation. In many ways, it is similar to Aurelia's component support. However, Polymer also includes an extensive catalog of custom elements for everything from material design to credit card forms to embedding Google services like Google Maps and YouTube. With a bit of work, these components can be incorporated into Aurelia applications as well.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Ben Navetta",
-  	"url": "https://www.linkedin.com/in/benjaminnavetta"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Integration", "Web Components", "Polymer"]
-}
+name: Integrating with Polymer
+description: Polymer is a library for creating reusable web components declaratively with extra features like data binding and property observation. In many ways, it is similar to Aurelia's component support. However, Polymer also includes an extensive catalog of custom elements for everything from material design to credit card forms to embedding Google services like Google Maps and YouTube. With a bit of work, these components can be incorporated into Aurelia applications as well.
+author: Ben Navetta (https://www.linkedin.com/in/benjaminnavetta)
 ---
 ## [Setup](aurelia-doc://section/1/version/1.0.0)
 

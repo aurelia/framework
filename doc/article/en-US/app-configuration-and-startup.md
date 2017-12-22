@@ -1,17 +1,7 @@
 ---
-{
-  "name": "App Configuration and Startup",
-  "culture": "en-US",
-  "description": "In this article you'll learn the various ways to bootstrap and configure Aurelia, along with different mechanisms for controlling the initial render strategy.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Framework", "Configuration", "Startup"]
-}
+name: App Configuration and Startup
+description: In this article you'll learn the various ways to bootstrap and configure Aurelia, along with different mechanisms for controlling the initial render strategy.
+author: Rob Eisenberg (http://robeisenberg.com)
 ---
 ## [Bootstrapping Aurelia](aurelia-doc://section/1/version/1.0.0)
 

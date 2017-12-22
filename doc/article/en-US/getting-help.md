@@ -1,17 +1,7 @@
 ---
-{
-  "name": "Getting Help",
-  "culture": "en-US",
-  "description": "As you begin to learn Aurelia and build applications, you may find that you need assistance from time to time. Sometimes it may only be an answer to a quick question or a clarification on the docs. Other times it may be a need for more extensive support, architectural advice or even consulting or training.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Help", "Support", "Training", "Community"]
-}
+name: Getting Help
+description: As you begin to learn Aurelia and build applications, you may find that you need assistance from time to time. Sometimes it may only be an answer to a quick question or a clarification on the docs. Other times it may be a need for more extensive support, architectural advice or even consulting or training.
+author: Rob Eisenberg (http://robeisenberg.com)
 ---
 ## [Channels](aurelia-doc://section/1/version/1.0.0)
 

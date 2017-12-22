@@ -1,17 +1,7 @@
 ---
-{
-  "name": "The Aurelia CLI",
-  "culture": "en-US",
-  "description": "Learn how to get setup with the Aurelia CLI and use its basic capabilities.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Getting Started", "ES2015", "ES2016", "TypeScript"]
-}
+name: The Aurelia CLI
+description: Learn how to get setup with the Aurelia CLI and use its basic capabilities.
+author: Rob Eisenberg (http://robeisenberg.com)
 ---
 ## [Machine Setup](aurelia-doc://section/1/version/1.0.0)
 

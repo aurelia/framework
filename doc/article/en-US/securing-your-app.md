@@ -1,17 +1,7 @@
 ---
-{
-  "name": "Securing Your App",
-  "culture": "en-US",
-  "description": "It's important to secure your application. This article will address a couple of simple things you can do to improve the security of your application.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Security", "SPA"]
-}
+name: Securing Your App
+description: It's important to secure your application. This article will address a couple of simple things you can do to improve the security of your application.
+author: Rob Eisenberg (http://robeisenberg.com)
 ---
 ## [Introduction](aurelia-doc://section/1/version/1.0.0)
 

@@ -1,17 +1,7 @@
 ---
-{
-  "name": "Bundling with JSPM",
-  "culture": "en-US",
-  "description": "Before deploying your app to production, you'll want to bundle the assets for efficient use of the network.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Shuhel Ahmed",
-  	"url": "https://github.com/ahmedshuhel"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Deploy", "Bundling"]
-}
+name: Bundling with JSPM
+description: Before deploying your app to production, you'll want to bundle the assets for efficient use of the network.
+author: Shuhel Ahmed (https://github.com/ahmedshuhel)
 ---
 ## [Introduction](aurelia-doc://section/1/version/1.0.0)
 

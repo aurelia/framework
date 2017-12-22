@@ -1,17 +1,7 @@
 ---
-{
-  "name": "Technical Benefits",
-  "culture": "en-US",
-  "description": "There are many technical advantages to using Aurelia. In this article, you will find a list of points we think are interesting. Taken together, there is no other SPA framework today that can match Aurelia.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-  	"name": "Rob Eisenberg",
-  	"url": "http://robeisenberg.com"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["Benefits", "Capabilities"]
-}
+name: Technical Benefits
+description: There are many technical advantages to using Aurelia. In this article, you will find a list of points we think are interesting. Taken together, there is no other SPA framework today that can match Aurelia.
+author: Rob Eisenberg (http://robeisenberg.com)
 ---
 ## [Modern JavaScript](aurelia-doc://section/1/version/1.0.0)
 
