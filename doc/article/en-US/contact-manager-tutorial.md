@@ -3,7 +3,7 @@ name: Contact Manager Tutorial
 description: Now that you've got the basics down, you need to learn how to use the CLI, build a more complex app and get a solid knowledge foundation for real-world work. In this tutorial we'll build a small contact manager app and demonstrate a variety of Aurelia's features as well as learn some useful techniques.
 author: Rob Eisenberg (http://robeisenberg.com)
 ---
-## [Setting Up Your Machine](aurelia-doc://section/1/version/1.0.0)
+## Setting Up Your Machine
 
 For this tutorial, we're going to use the Aurelia CLI. If you've already setup your machine with the CLI, you can skip to the next section. If not, then please install the following CLI prerequisites:
 
@@ -28,7 +28,7 @@ npm install aurelia-cli -g
 > Warning
 > While creating a new project doesn't require NPM 3, front-end development, in general, requires a flat-package structure, which is not available with NPM versions prior to 3. It is recommended that you update to NPM 3, which will be able to manage this structural requirement. You can check your NPM version with `npm -v`. If you need to update, run `npm install npm -g`.
 
-## [Creating A New Aurelia Project](aurelia-doc://section/2/version/1.0.0)
+## Creating A New Aurelia Project
 
 Now, that you've got your machine setup, we can create our contact manager app. To create the project, run `au new` from the command line. You will be presented with a number of options. Name the project "contact-manager" and then select either the "Default ESNext" or "Default TypeScript" option depending on what is most comfortable for you. (Do not select "Custom" for this tutorial.)
 
@@ -36,7 +36,7 @@ Once you've made your choice, the CLI will show you your selections and ask if y
 
 Once the dependencies are installed (it will take a few minutes), your project is ready to go. Just change directory into the project folder and run it by typing `au run --watch`. This will run the app and watch the project's source for changes. Open a web browser and navigate to the url indicated in the CLI's output. If you've got everything setup correctly, you should see the message "Hello World!" in the browser.
 
-## [Adding Required Assets](aurelia-doc://section/3/version/1.0.0)
+## Adding Required Assets
 
 For this tutorial, we're going to be working against a fake, in-memory backend. We've also pre-created the CSS and some utility functions, so we don't have to waste time on that here. Before we begin writing the app, you'll need to download these required assets and add them to your project.
 
@@ -52,7 +52,7 @@ Once you've downloaded the zip file, extract it and you'll find three files:
 
 Copy all of these files to the `src` folder of your project. TypeScript users should also rename the file extensions from `.js` to `.ts`.
 
-## [Building the Application Shell](aurelia-doc://section/4/version/1.0.0)
+## Building the Application Shell
 
 > Warning
 > Before proceeding any further, please make sure you are familiar with the concepts introduced in the Quick Start Guide or otherwise have some basic experience with Aurelia. Topics covered in the Quick Start will not be explained again here.
@@ -180,7 +180,7 @@ You can read more about configuring 3rd party libraries in the documentation on 
 
 After you have modified the aurelia.json file, it is necessary to restart the `au run --watch` process in order for the changes to be picked up.
 
-## [Building Out the Default Route](aurelia-doc://section/5/version/1.0.0)
+## Building Out the Default Route
 
 If you run the application now, you'll see a blank screen and the browser's console will display the following message:
 
@@ -222,7 +222,7 @@ All it does is provide a container with some styling in order to display our mes
 
 ![No Selection Screen](img/contact-app-no-selection.png)
 
-## [Building Out the Contact List](aurelia-doc://section/6/version/1.0.0)
+## Building Out the Contact List
 
 We've got the basic visual structure of our application in place and routing is now working. We've even created our first screen. However, it's not very interesting. We've got a `div` placeholder for the actual contact list at present. Let's go ahead and build that out, as a `contact-list` custom element.
 
@@ -358,7 +358,7 @@ If you go ahead and run the application, you should now see something like this:
 
 ![The Contact List](img/contact-app-contact-list.png)
 
-## [Building Out the Contact Detail Screen](aurelia-doc://section/7/version/1.0.0)
+## Building Out the Contact Detail Screen
 
 Ok, things are starting to come together, but we still can't view an individual contact. If you try selecting something from the list, you'll see an error like the following in the console:
 
@@ -572,7 +572,7 @@ You should now be able to select contacts in the list, see their details, edit t
 
 ![The Contact Details](img/contact-app-contact-detail.png)
 
-## [Adding Pub/Sub Messaging](aurelia-doc://section/8/version/1.0.0)
+## Adding Pub/Sub Messaging
 
 If you play around with the application for a bit, you'll notice a few "buggy" behaviors:
 
@@ -892,7 +892,7 @@ As you can see, we've just imported and injected our `EventAggregator` and then 
 
 If you run the application now, you should see that everything is working as expected.
 
-## [Adding A Loading Indicator](aurelia-doc://section/9/version/1.0.0)
+## Adding A Loading Indicator
 
 Let's add one more final touch to this application. Whenever we're navigating from screen to screen or making a `WebAPI` request, let's show a loading indicator at the top of our app. To do this, we'll use a 3rd party library and create a custom Aurelia element to wrap it up.
 
@@ -1109,7 +1109,7 @@ Ok, now that we've got an `api` property we can bind to, update your `app.html` 
 
 And with that, we've finished our app. Congratulations!
 
-## [Next Steps](aurelia-doc://section/10/version/1.0.0)
+## Next Steps
 
 Now that you've completed the tutorial, you may want to consider doing some additional research or development exercises to continue your learning and hone your skills. Here are a few ideas:
 
@@ -1120,6 +1120,6 @@ Now that you've completed the tutorial, you may want to consider doing some addi
 * Learn more about [the navigation life-cycle and routing](docs/fundamentals/cheat-sheet#routing).
 * Expand your knowledge of [binding](docs/binding/basics) and [templating](docs/templating/basics).
 
-## [Conclusion](aurelia-doc://section/11/version/1.0.0)
+## Conclusion
 
 This tutorial presents a fairly simple application, but it provides an opportunity to demonstrate a number of interesting techniques. We hope it's helped you along in the process of learning Aurelia and we look forward to seeing what things you will build next.

@@ -3,7 +3,7 @@ name: Securing Your App
 description: It's important to secure your application. This article will address a couple of simple things you can do to improve the security of your application.
 author: Rob Eisenberg (http://robeisenberg.com)
 ---
-## [Introduction](aurelia-doc://section/1/version/1.0.0)
+## Introduction
 
 The first rule of securing client-side applications: the client cannot be trusted. Your backend should never trust the input coming from the front-end, under any circumstance. Malicious individuals often know how to use browser debug tools and manually craft HTTP requests to your backend. You may even find yourself in a situation where a disgruntled employee (or former employee), who is a developer with intimate knowledge of the system, is seeking revenge by attempting a malicious attack.
 
@@ -12,7 +12,7 @@ The first rule of securing client-side applications: the client cannot be truste
 > Danger: Security Advice
 > This article, more or less, contains only a few quick warnings. It is in no way exhaustive, nor should it be your only resource on securing your application. The bulk of the work in security relates to your server-side technology. You should spend adequate time reading up on and understanding security best practices for whatever backend tech you have chosen.
 
-## [Authentication and Authorization](aurelia-doc://section/2/version/1.0.0)
+## Authentication and Authorization
 
 When designing your application, consider which backend API calls can be made anonymously, which require a logged-in user and which roles or permissions are required for various authenticated requests. Ensure that your entire API surface area is explicitly covered in this way. Your front-end can facilitate the login process, but ultimately this is a backend task. Here are a few related recommendations:
 
@@ -87,7 +87,7 @@ You can improve the user-experience by plugging into Aurelia's router pipeline w
 > Info: Route Settings
 > Developers can add a `settings` property to any route configuration object and use it to store any data they wish to associate with the route. The value of the `settings` property will be preserved by Aurelia's router and also copied to the navigation model.
 
-## [Validation and Sanitization](aurelia-doc://section/3/version/1.0.0)
+## Validation and Sanitization
 
 The backend should always perform validation and sanitization of data. Do not rely on your client-side validation and sanitization code. In reality, your client-side validation/santization code should not be seen as anything more than a User Experience enhancement, designed to aid honest users. It will have no affect on anyone who is malicious.
 
@@ -101,7 +101,7 @@ Here's a few things you should do though:
 > Info: We Are Trying To Help You
 > Internally, Aurelia makes no use of `eval` or the `Function` constructor. Additionally, all binding expressions are parsed by our strict parser which does not make globals like `window` or `document` available in binding expressions. We've done this to help prevent some common abuses.
 
-## [Secret Data](aurelia-doc://section/4/version/1.0.0)
+## Secret Data
 
 Do not embed private keys into your JavaScript code. While the average user may not be able to access them, anyone with true ill intent can simply download your client code, un-minifiy it and use basic regular expressions on the codebase to find things that *look like* sensitive data. Perhaps they've discovered what backend technology you are using or what cloud services your product is based on simply by studying your app's HTTP requests or looking at the page source. Using that information they may be able to refine their search based on certain patterns well-known to users of those technologies, making it easier to find your private keys.
 
@@ -113,7 +113,7 @@ If you have a need to acquire any secret data on the client, it should be done w
 * Be careful how you store these values in memory. Do not store these as class property values or on any object that is linked to the DOM through data-binding or otherwise. Doing so would allow an attacker to gain access to the information through the debug console. If you must store this information, keep it inside a private (non-exported) module-level variable.
 * If you need to store this information anywhere, encrypt it first.
 
-## [Deployment](aurelia-doc://section/5/version/1.0.0)
+## Deployment
 
 When deploying your apps, there are a few things you can do to make it more difficult for attackers to figure out how your client works:
 
@@ -121,7 +121,7 @@ When deploying your apps, there are a few things you can do to make it more diff
 * Do not deploy the original client-side source files. Only deploy your bundled, minified app.
 * For additional security or IP protection, you may want to look into products such as [jscrambler](https://jscrambler.com/en/).
 
-## [Prepare for the Inevitable](aurelia-doc://section/6/version/1.0.0)
+## Prepare for the Inevitable
 
 Even with the most skilled, security-proficient development team, your app will never be 100% protected. This is a fundamental assumption that you should have from the beginning. Expect to be attacked and expect someone to succeed at some point in time. What will you do if this happens? How will you respond? Will you be able to track down the culprit? Will you be able to identify the issue and quickly seal up the breach? You need a plan.
 
@@ -133,7 +133,7 @@ Again, most of this come down to server-side implementation. Here are a few basi
 * Consider timing out logins or auth tokens. You can provide refresh mechanisms in order to help the user experience.
 * Configure server insight tooling so that threats can be detected earlier.
 
-## [Do Not Be Nice to Bad Guys](aurelia-doc://section/7/version/1.0.0)
+## Do Not Be Nice to Bad Guys
 
 Be careful what information you give out, especially when something goes wrong. For example, if there's a failed login attempt, do not tell the user whether they got their username or password incorrect. That's too much information. Just tell them they had an incorrect login. Furthermore, be careful with what error information you send to end-users. You should keep detailed, internal error logs, but most of that information should not be sent to the end user. Too much information can help an attacker take a step closer to causing real damage.
 

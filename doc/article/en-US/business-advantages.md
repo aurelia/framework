@@ -4,24 +4,24 @@ description: Aurelia is open source platform with commercial backing. If your bu
 author: Rob Eisenberg (http://robeisenberg.com)
 ---
 
-## [Commercially Backed](aurelia-doc://section/1/version/1.0.0)
+## Commercially Backed
 
 * Commercial support options available.
 * Custom contracts available for enterprises.
 * Internally "dogfooded" by Blue Spire Inc. in its own products.
 
-## [Commercial Products and Services](aurelia-doc://section/2/version/1.0.0)
+## Commercial Products and Services
 
 * Official on-site or virtual training.
 * Consulting, advisory, and code-review services.
 * Aurelia UX (In Development) - Cross-platform, mobile UI components.
 
-## [Strategic Partnerships](aurelia-doc://section/3/version/1.0.0)
+## Strategic Partnerships
 
 * Partnerships with both large and boutique consulting organizations in order to provide scale-out of developer resources as needed by businesses adopting Aurelia.
 * Official training partners around the world to deliver training anywhere and anytime.
 
-## [Broad Customer Reach](aurelia-doc://section/4/version/1.0.0)
+## Broad Customer Reach
 
 * Applications developed in virtually every space: healthcare, insurance, finance, entertainment, technology, developer tools, LOB, gaming, etc.
 * Used internally at many well-known enterprises.

@@ -3,7 +3,7 @@ name: Cheat Sheet
 description: Forgot the syntax for bindings? Need to know how to create a custom attribute? This article contains answers to questions like those as well as a bunch of quick snippets for common tasks.
 author: Rob Eisenberg (http://robeisenberg.com)
 ---
-## [Configuration and Startup](aurelia-doc://section/1/version/1.0.0)
+## Configuration and Startup
 
 <code-listing heading="Bootstrapping Older Browsers">
   <source-code lang="HTML">
@@ -134,7 +134,7 @@ author: Rob Eisenberg (http://robeisenberg.com)
   </source-code>
 </code-listing>
 
-## [Creating Components](aurelia-doc://section/2/version/1.0.0)
+## Creating Components
 
 UI components consist of two parts: a view-model and a view. Simply create each part in its own file. Use the same file name but different file extensions for the two parts. For example: _hello${context.language.fileExtension}_ and _hello.html_.
 
@@ -175,7 +175,7 @@ Components have a well-defined lifecycle:
 5. `detached()` - At some point in the future, the component may be removed from the DOM. If/When this happens, and if the view-model has a `detached` callback, this is when it will be invoked.
 6. `unbind()` - After a component is detached, it's usually unbound. If your view-model has the `unbind` callback, it will be invoked during this process.
 
-## [Dependency Injection](aurelia-doc://section/3/version/1.0.0)
+## Dependency Injection
 
 <code-listing heading="Declaring Dependencies">
   <source-code lang="ES 2016">
@@ -304,7 +304,7 @@ Components have a well-defined lifecycle:
   </source-code>
 </code-listing>
 
-## [Templating Basics](aurelia-doc://section/4/version/1.0.0)
+## Templating Basics
 
 <code-listing heading="A Simple Template">
   <source-code lang="HTML">
@@ -410,7 +410,7 @@ Note that when a `containerless` attribute is used, the container is stripped *a
   </source-code>
 </code-listing>
 
-## [Databinding](aurelia-doc://section/5/version/1.0.0)
+## Databinding
 
 ### bind, one-way, two-way & one-time
 
@@ -763,7 +763,7 @@ You can bind a css string or object to an element's `style` attribute. Use the `
   </source-code>
 </code-listing>
 
-## [Templating View Resources](aurelia-doc://section/6/version/1.0.0)
+## Templating View Resources
 
 <code-listing heading="Conditionally displays an HTML element.">
   <source-code lang="HTML">
@@ -861,7 +861,7 @@ Contextual items available inside a repeat template:
   </source-code>
 </code-listing>
 
-## [Routing](aurelia-doc://section/7/version/1.0.0)
+## Routing
 
 <code-listing heading="Basic Route Configuration">
   <source-code lang="ES 2015/2016">
@@ -1240,7 +1240,7 @@ Since the view model's navigation lifecycle is called only once, you may have pr
   </source-code>
 </code-listing>
 
-## [Custom Attributes](aurelia-doc://section/8/version/1.0.0)
+## Custom Attributes
 
 <code-listing heading="Simple Attribute Declaration">
   <source-code lang="ES 2016">
@@ -1479,7 +1479,7 @@ Since the view model's navigation lifecycle is called only once, you may have pr
   </source-code>
 </code-listing>
 
-## [Custom Elements](aurelia-doc://section/9/version/1.0.0)
+## Custom Elements
 
 <code-listing heading="Custom Element View-Model Declaration">
   <source-code lang="ES 2016">
@@ -1800,7 +1800,7 @@ The developer can also specify a different method name to use -
   </source-code>
 </code-listing>
 
-## [The Event Aggregator](aurelia-doc://section/10/version/1.0.0)
+## The Event Aggregator
 
 If you include the `aurelia-event-aggregator` plugin using "basicConfiguration" or "standardConfiguration" then the singleton EventAggregator's API will be also present on the `Aurelia` object. You can also create additional instances of the EventAggregator, if needed, and "merge" them into any object. To do this, import `includeEventsIn` and invoke it with the object you wish to turn into an event aggregator. For example `includeEventsIn(myObject)`. Now my object has `publish` and `subscribe` methods and can be used in the same way as the global event aggregator, detailed below.
 

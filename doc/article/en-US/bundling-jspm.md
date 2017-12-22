@@ -3,7 +3,7 @@ name: Bundling with JSPM
 description: Before deploying your app to production, you'll want to bundle the assets for efficient use of the network.
 author: Shuhel Ahmed (https://github.com/ahmedshuhel)
 ---
-## [Introduction](aurelia-doc://section/1/version/1.0.0)
+## Introduction
 
 Most of the current major browsers limit the number of simultaneous connections per hostname to six. This means that while six requests are being processed, additional requests for assets on a host will be queued by the browser. In the image below, the Chrome F12 developer tools network tab shows the timing for assets required by the `welcome view` of the skeleton-navigation application.
 
@@ -15,7 +15,7 @@ In the past, the most common browser limit has been 2 connections. This may have
 
 You may wonder: If this limit can have such a great impact on performance, then why don't browsers give us a higher limit? Most well-known browsers choose not to grant this wish in order to prevent the server from being overloaded by a small number of browsers. Such activity would be similar in nature to a DDOS attack.
 
-## [Bundling & Minification](aurelia-doc://section/2/version/1.0.0)
+## Bundling & Minification
 
 This connection limit will not cause slowness in our application if we can manage resources well enough to avoid it. When the page is first loaded, this is the initial request that returns HTML content. When the browser processes the HTML content, it spawns more requests to load resources like JS, CSS and images. It also executes JavaScript and sends AJAX requests to the server.
 
@@ -23,7 +23,7 @@ To make this process efficient, we need to compress the assets and make fewer (p
 
 Bundling along with minification are techniques that can also be used to improve load time. Bundling and minification improve load time by reducing the number of requests to the server as well as reducing the size of requested assets such as views, view-models and CSS.
 
-## [Bundling an Aurelia JSPM Application](aurelia-doc://section/3/version/1.0.0)
+## Bundling an Aurelia JSPM Application
 
 We can  use [Aurelia Bundler](http://github.com/aurelia/bundler) to create a gulp task for bundling our JSPM app. Let's jump right into it. We will use the `skeleton-navigation` as our app to bundle. If you don't have that set up. Follow [these steps](https://github.com/aurelia/skeleton-navigation#running-the-app).
 
@@ -106,13 +106,13 @@ Now, if we refresh/reload the app from the browser, we will see much less networ
 
 Just 9 requests tells the story. We have also managed to minimize the size from 1.2MB to just 773KB here.
 
-## [Multiple Bundles](aurelia-doc://section/4/version/1.0.0)
+## Multiple Bundles
 
 We can create as many bundles as we want. Here we have created two: one for our application code and another for Aurelia and third-party libraries.
 
 We can create just a single bundle, if we want, that combines both application code and third-party libraries. The number of bundles we would like to have mostly depends on our application structure and the usage patterns of our app. For example, if our app was built in a modular fashion, such that it is a collection of child-app/sections, then a `common` bundle for third-party libraries and a `bundle per section` makes much more sense and performs better than a huge single bundle that needs to be loaded up front.
 
-## [Bundling a JSPM v0.17 App](aurelia-doc://section/5/version/1.0.0)
+## Bundling a JSPM v0.17 App
 
 In a JSPM v0.17 style app, we have two separate config files: `jspm.browser.js` and `jspm.config.js`. In such case the `configPath` in the bundle config should look like: `configPath: ['./jspm.browser.js', './jspm.config.js']`. We also have to add another `injectionConfigPath` to indicate which config file should host the bundle and depCache injection. Here is a typical bundle configuration for a `JSPM v0.17` app.
 
@@ -143,7 +143,7 @@ In a JSPM v0.17 style app, we have two separate config files: `jspm.browser.js` 
   </source-code>
 </code-listing>
 
-## [Duplicate Modules in Multiple Bundles](aurelia-doc://section/6/version/1.0.0)
+## Duplicate Modules in Multiple Bundles
 
 Creating multiple bundles requires us to be extra careful because multiple bundles may contain duplicate modules. Before explaining that, we need to understand how bundling works behind the scenes a bit. Let's consider the example modules `A` and `B` below:
 
@@ -228,7 +228,7 @@ Our goal is to create a bundle of our application code only. We have to somehow 
 
 `[*.js]` will exclude the dependencies of each module that the glob pattern `*.js` yields. In the above case it will exclude `aurelia-framework`, `aurelia-fetch-client` and so on.
 
-## [Bundle Configuration](aurelia-doc://section/7/version/1.0.0)
+## Bundle Configuration
 
 Here is a typical bundle configuration in all its glory:
 
@@ -277,7 +277,7 @@ Here is a typical bundle configuration in all its glory:
 - **force** : If this is set to `true` the task will overwrite any existing file/bundle with the same name. Set it to false if you are not sure about it.
 - **packagePath** : By default it is `'.'`, You can change this if your `package.json` file is somewhere else other than the base of your app. `aurelia-bundler` uses this file to find `config.js`, `baseURL`, the `jspm_packages` folder and other important project configuration.
 
-## [Bundling HTML Imports](aurelia-doc://section/8/version/1.0.0)
+## Bundling HTML Imports
 
 At this point, if you are thinking: "Well, this is all good but we have already developed an application that uses Polymer and  `HTML Imports` extensively. We want to bundle them as well." As you may already know, we have created a separate plugin [aurelia-html-import-template-loader](https://github.com/aurelia/html-import-template-loader) exclusively for this use case. We have bundling support for that too. This is how we can do it. It's actually a two part process. First let's install the `aurelia-html-import-template-loader` plugin with the command below:
 
@@ -416,6 +416,6 @@ The above pattern will bundle all the views in `dist` and its child folders exce
   </source-code>
 </code-listing>
 
-## [Conclusion](aurelia-doc://section/9/version/1.0.0)
+## Conclusion
 
 In this article, you've learned both the why and how of bundling. We've covered the `bundler` library, how to configure it for use with Gulp and demonstrated several different scenarios. To bundle your own app, we recommend that you begin with one of the configurations above and customize it. You may have a small app that makes sense as a single bundle or a larger one that can be broken down into features. Each application is different, but the bundler will help you to create the optimal deployment for your unique scenarios.

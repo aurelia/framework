@@ -3,7 +3,7 @@ name: Quick Start
 description: Welcome to Aurelia! This quick start guide will take you through creating a Todo app using Aurelia and briefly explain its main concepts. We assume you are familiar with JavaScript, HTML, and CSS.
 author: Rob Eisenberg (http://robeisenberg.com)
 ---
-## [Setup](aurelia-doc://section/1/version/1.0.0)
+## Setup
 
 Aurelia is an amazing framework that embraces simple and clean code without sacrificing power. In this tutorial we'll introduce you to the simplicity of Aurelia through the construction of a "Todo" application. You'll see just how clean and simple your application code can be and you'll learn several of the basic concepts and capabilities of Aurelia.
 
@@ -47,7 +47,7 @@ Before we explain what this does, let's adjust the programming language it's usi
 
 That's it. Your language selection is now configured with these docs and with your new project.
 
-## [The Index.html Page](aurelia-doc://section/2/version/1.0.0)
+## The Index.html Page
 
 If you've followed along this far, you now have everything set up to help you learn Aurelia. Let's start by taking a look at the `index.html` file in a bit more depth.
 
@@ -105,7 +105,7 @@ There's one more thing to note. I wonder if you noticed it. On the `body` tag, t
 
 I know you're going to find this interesting, so let's get to it!
 
-## [The Todo Class](aurelia-doc://section/3/version/1.0.0)
+## The Todo Class
 
 One of the amazing things you can do with Aurelia, that you can't with any other framework or library, is model your entire application using plain ${context.language.name}. We think you'll understand it when you see it.
 
@@ -131,7 +131,7 @@ We're going to begin by creating a `Todo` class. Since we're making a Todo App, 
 
 That's it. It's a plain class that models the todo's `description` text along with a boolean `done` to indicate if you've completed your todo.
 
-## [The App Class](aurelia-doc://section/4/version/1.0.0)
+## The App Class
 
 Our todo application contains a list of `Todo` instances. It can add and remove todos. The todos are added by allowing the end user to provide a todo description. Once they type a description and add the todo, the description is cleared so they can create another todo. Let's model these ideas. Here's the `App` class:
 
@@ -196,7 +196,7 @@ Again, it's that simple. Let's review the ideas we modeled:
 
 Here's what's amazing. This is all the ${context.language.name} code for the app. But where is Aurelia? Well, the answer is that Aurelia tries as hard as possible to stay out of your ${context.language.name} code. That's why you don't see it above. It's not needed. Aurelia has the ability to render plain ${context.language.name} objects.
 
-## [Getting Ready to Render](aurelia-doc://section/5/version/1.0.0)
+## Getting Ready to Render
 
 Ok, now that we've modeled out our application in ${context.language.name}, we need to make Aurelia render it. We weren't completely honest when we said above that we had showed you all the ${context.language.name} code. There's one final piece that gets it all going.
 
@@ -230,7 +230,7 @@ The next thought you might have is "but you didn't say what component to render!
 
 Ok, we're almost ready to run our app. The next piece is to tell Aurelia *how* it should render `app.js`;
 
-## [Rendering the App](aurelia-doc://section/6/version/1.0.0)
+## Rendering the App
 
 As a brief recap, remember that almost nothing we've done so far is Aurelia-specific. Almost all the code we've written is just vanilla ${context.language.name}. Now that we've added a `main` file to our project and have specified which module exports the root component of our UI hierarchy, Aurelia is ready to render.
 
@@ -374,7 +374,7 @@ Run the application one more time and you should see the expected result:
 
 ![Todo App With CSS](img/todo-app-with-css.png)
 
-## [Conclusion](aurelia-doc://section/7/version/1.0.0)
+## Conclusion
 
 With its strong focus on developer experience, Aurelia can enable you to not only create amazing applications, but also enjoy the process. We've designed it with simple conventions in mind so you don't need to waste time with tons of configuration or write boilerplate code just to satisfy a stubborn or restrictive framework. You'll never hit a roadblock with Aurelia either. It's been carefully designed to be pluggable and customizable...and most of the time you just write plain ${context.language.name} and forget the framework is even there.
 

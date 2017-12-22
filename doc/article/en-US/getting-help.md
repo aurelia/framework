@@ -3,7 +3,7 @@ name: Getting Help
 description: As you begin to learn Aurelia and build applications, you may find that you need assistance from time to time. Sometimes it may only be an answer to a quick question or a clarification on the docs. Other times it may be a need for more extensive support, architectural advice or even consulting or training.
 author: Rob Eisenberg (http://robeisenberg.com)
 ---
-## [Channels](aurelia-doc://section/1/version/1.0.0)
+## Channels
 
 When you join the Aurelia community, you have access to our entire ecosystem. If you need quick help or an answer clarifying documentation, we hope you'll engage with the community in our Gitter chat room. We have one of the most active Gitter channels in the world, with core team and community members present almost every hour of the day, no matter what part of the world you live in. You can join the channel and get help at [http://www.gitter.im/aurelia/discuss](http://www.gitter.im/aurelia/discuss)
 

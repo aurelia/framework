@@ -3,7 +3,7 @@ name: The Aurelia CLI
 description: Learn how to get setup with the Aurelia CLI and use its basic capabilities.
 author: Rob Eisenberg (http://robeisenberg.com)
 ---
-## [Machine Setup](aurelia-doc://section/1/version/1.0.0)
+## Machine Setup
 
 The CLI itself has a couple of prerequisites that you must install first:
 
@@ -25,7 +25,7 @@ npm install aurelia-cli -g
 > Warning
 > While creating a new project doesn't require NPM 3, front-end development, in general, requires a flat-package structure, which is not available with NPM versions prior to 3. It is recommended that you update to NPM 3, which will be able to manage this structural requirement. You can check your NPM version with `npm -v`. If you need to update, run `npm install npm -g`.
 
-## [Creating A New Aurelia Project](aurelia-doc://section/2/version/1.0.0)
+## Creating A New Aurelia Project
 
 To create a new project, you can run `au new`. You will be presented with a number of options. If you aren't sure what you want, you can select one of the defaults. Otherwise, you can create a custom project. Simply follow the prompts.
 
@@ -49,7 +49,7 @@ Since the Aurelia-CLI should be in charge of building your client side code, mak
 
 This will stop Visual Studio from compiling the `.ts` files in your project. If you build your solution before doing this, Visual Studio will compile your `.ts` files, breaking some of the **Aurelia-CLI** commands.
 
-## [Running Your Aurelia App](aurelia-doc://section/3/version/1.0.0)
+## Running Your Aurelia App
 
 From inside your project folder, simply execute `au run`. This will build your app, creating all bundles in the process. It will start a minimal web server and serve your application. If you would like to develop, with auto-refresh of the browser, simply specify the `--watch` flag like this: `au run --watch`.
 
@@ -57,11 +57,11 @@ From inside your project folder, simply execute `au run`. This will build your a
 
 The CLI build system understands that you might run your code in different environments. By default, you are set up with three: `dev`, `stage` and `prod`. You can use the `--env` flag to specify what environment you want to run under. For example: `au run --env prod --watch`.
 
-## [Building Your App](aurelia-doc://section/4/version/1.0.0)
+## Building Your App
 
 Aurelia CLI apps always run in bundled mode, even during development. To build your app, simply run `au build`. You can also specify an environment to build for. For example: `au build --env stage`.
 
-## [Deploying Your App](aurelia-doc://section/5/version/1.0.0)
+## Deploying Your App
 
 Run the following build command:
 
@@ -71,15 +71,15 @@ au build --env prod
 
 Then copy the file `index.html` and the folder `/scripts`  to the main deployment folder on your server.
 
-## [Unit Testing](aurelia-doc://section/6/version/1.0.0)
+## Unit Testing
 
 If you selected a project setup that includes unit tests, you can run your tests with `au test`. If you would like to adopt a tdd-based workflow, writing code and tests with continual test evaluation, you can use the `--watch` flag. For example: `au test --watch`.
 
-## [Generators](aurelia-doc://section/7/version/1.0.0)
+## Generators
 
 Executing `au generate resource` runs a generator to scaffold out typical Aurelia constructs. Options for *resource* are: element, attribute, value-converter, binding-behavior, task and generator. That's right...there's a generator generator so you can write your own. Ex. `au generate element`
 
-## [Build Revisions](aurelia-doc://section/8/version/1.0.0)
+## Build Revisions
 
 To create builds with revision numbers, you must set `rev` to be `true` under the build options. This will cause a unique revision number to be added to the bundled files. For example:
 
@@ -102,7 +102,9 @@ You are also able to set specific flags so that build revisions only take place 
 ```  
 
 Now, if you were to run `au build --env prod`, the output would contain build revisions, while `au build --env dev` would not. Setting the build revisions to only compile while in production can help the development process, since it keeps your workspace clean of various build revisions.
+
 ### Modifying The Index File
+
 In order for your `index.html` file to be updated to load up the correct revisioned bundle, you must ensure that the `"index"` property located in `build/targets` section is correctly pointing to the `index.html` (or starting page) for your project. For example:
 
 ``` JSON
@@ -118,7 +120,7 @@ In order for your `index.html` file to be updated to load up the correct revisio
 }
 ```
 
-## [Bundling Your Project](aurelia-doc://section/9/version/1.0.0)
+## Bundling Your Project
 
 By default, the Aurelia CLI creates two bundles, an `app-bundle.js`, and a `vendor-bundle.js`. An example of the default `app-bundle.js` looks like this:  
 
@@ -156,7 +158,7 @@ Optionally, you can define an `exclude` list by setting the `source` property to
 }
 ```
 
-## [Adding Client Libraries to Your Project](aurelia-doc://section/10/version/1.0.0)
+## Adding Client Libraries to Your Project
 
 The CLI provides two commands to help you add 3rd party client libraries, `au install <library>` and `au import <library>`. The `install` command will download, install and add the library to the configuration file `aurelia_project/aurelia.json`. The `import` command will add a library that you've previously installed with npm to the configuration file. Finally, both commands will give you instructions on how to access the library from your code.
 
@@ -429,7 +431,7 @@ It is possible to use packages outside of the node_modules folder. The only diff
 
 The `packageRoot` is the root folder of the package. This is often the folder which contains the `package.json` file of the package.
 
-## [Configuring the Loader](aurelia-doc://section/11/version/1.0.0)
+## Configuring the Loader
 
 You can configure the loader by adding a `config` key to `build.loader` with the options you want to add. For instance, if you want to increase the timeout for requirejs, you would do this:
 
@@ -465,7 +467,7 @@ Sometimes you may want to keep the scripts folder somewhere other than the defau
 
 The script tag for the bundle in `index.html` file needs to point to the modified location of the scripts folder as well: `<script src="some/dir/scripts/vendor-bundle.js" data-main="aurelia-bootstrapper"></script>`
 
-## [Styling your Application](aurelia-doc://section/12/version/1.0.0)
+## Styling your Application
 
 There are many ways to style components in Aurelia. The CLI sets up your project to only process styles inside your application's `src` folder. Those styles can then be imported into a view using Aurelia's `require` element.
 
@@ -492,11 +494,11 @@ Bear in mind that you can always configure things any way you want by modifying 
 For styling purposes, you can modify the `process-css.js` file.
 
 
-## [What if I forget this stuff?](aurelia-doc://section/13/version/1.0.0)
+## What if I forget this stuff?
 
 If you need your memory refreshed as to what the available options are, at any time you can execute `au help`. If you aren't sure what version of the CLI you are running, you can run `au -v`;
 
-## [Troubleshooting](aurelia-doc://section/14/version/1.0.0)
+## Troubleshooting
 
 _**I updated aurelia-cli and now executing `au run` returns `"Invalid Command: run"`**_
 
@@ -506,11 +508,11 @@ Steps:
  * delete the contents under c:/Users/NAME/AppData/Roaming/npm-cache
  * `npm install aurelia-cli -g`
 
-## [Updating A Single Library](aurelia-doc://section/15/version/1.0.0)
+## Updating A Single Library
 
 To update a single library use the command `npm install library-name` where library-name is the library that you wish to update.  
 
-## [Updating Multiple Libraries](aurelia-doc://section/16/version/1.0.0)
+## Updating Multiple Libraries
 
 * Add the following section to the project's package.json file
 
@@ -524,7 +526,7 @@ To update a single library use the command `npm install library-name` where libr
 * Include all of the libraries from the dependencies section of aurelia.json that you want to update.
 * Use the command `npm run au-update` to update all of the libraries in the au-update list above.
 
-## [Javascript Minification](aurelia-doc://section/17/version/1.0.0)
+## Javascript Minification
 
 The CLI will minify Javascript out of the box for the staging and production environments:
 

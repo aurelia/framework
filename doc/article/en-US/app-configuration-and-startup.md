@@ -3,7 +3,7 @@ name: App Configuration and Startup
 description: In this article you'll learn the various ways to bootstrap and configure Aurelia, along with different mechanisms for controlling the initial render strategy.
 author: Rob Eisenberg (http://robeisenberg.com)
 ---
-## [Bootstrapping Aurelia](aurelia-doc://section/1/version/1.0.0)
+## Bootstrapping Aurelia
 
 Most platforms have a "main" or entry point for code execution. Aurelia is no different. If you've read the Quick Start, then you've seen the `aurelia-app` attribute. Simply place this on an HTML element and Aurelia's bootstrapper will load an _app${context.language.fileExtension}_ and _app.html_, databind them together and inject them into the DOM element on which you placed that attribute.
 
@@ -104,7 +104,7 @@ You can see that this code configures the default data-binding language (.bind, 
 
 Once you've configured the framework, you need to start things up by calling `aurelia.start()`. This API returns a promise. Once it's resolved, the framework is ready, including all plugins, and it is now safe to interact with the services and begin rendering.
 
-## [Rendering the Root Component](aurelia-doc://section/2/version/1.0.0)
+## Rendering the Root Component
 
 The root component is set by calling `aurelia.setRoot()`. If no values are provided, this defaults to treating the element with the `aurelia-app` attribute as the DOM host for your app and `app${context.language.fileExtension}`/`app.html` as the source for the root component. However, you can specify whatever you want, just like this:
 
@@ -138,7 +138,7 @@ This causes the `my-root${context.language.fileExtension}`/`my-root.html` to be 
 
 > Warning: When using the `<body>` element as the app host, bear in mind that any content added prior to the completion of `Aurelia.prototype.setRoot` will be removed.
 
-## [Bootstrapping Older Browsers](aurelia-doc://section/3/version/1.0.0)
+## Bootstrapping Older Browsers
 
 Aurelia was originally designed for Evergreen Browsers. This includes Chrome, Firefox, IE11 and Safari 8. However, we also support IE9 and above through the use of additional polyfills. To support these earlier browsers, you need the [requestAnimationFrame Polyfill](https://www.npmjs.com/package/raf) and the [MutationObserver polyfill](https://github.com/megawac/MutationObserver.js). Once you have installed these (via `npm install --save-dev raf mutationobserver-shim`), you'll need to adjust your code to load them before Aurelia is initialized.
 
@@ -192,7 +192,7 @@ If you are using JSPM change your `index.html` startup code as follows:
 > Warning: Promises in Edge
 > Currently, the Edge browser has a serious performance problem with its Promise implementation. This deficiency can greatly increase startup time of your app. If you are targeting the Edge browser, it is highly recommended that you use the [bluebird promise](http://bluebirdjs.com/docs/getting-started.html) library to replace Edge's native implementation. You can do this by simply referencing the library prior to loading other libraries.
 
-## [Manual Bootstrapping](aurelia-doc://section/4/version/1.0.0)
+## Manual Bootstrapping
 
 So far, we've been bootstrapping our app declaratively by using the `aurelia-app` attribute. That's not the only way though. You can manually bootstrap the framework as well. In case of JSPM, here's how you would change your HTML file to use manual bootstrapping:
 
@@ -255,7 +255,7 @@ In case you use Webpack, you can replace the `aurelia-bootstrapper-webpack` pack
 
 The function you pass to the `bootstrap` method is the same as the `configure` function from the examples above.
 
-## [Making Resources Global](aurelia-doc://section/5/version/1.0.0)
+## Making Resources Global
 
 When you create a view in Aurelia, it is completely encapsulated. In the same way that you must `import` modules into an ES2015/TypeScript module, you must also import or `require` components into an Aurelia view. However, certain components are used so frequently across views that it can become very tedious to import them over and over again. To solve this problem, Aurelia lets you explicitly declare certain "view resources" as global. In fact, the configuration helper method `defaultResources()` mentioned above does just that. It takes the default set of view resources, such as `repeat`, `if`, `compose`, etc, and makes them globally usable in every view. You can do the same with your own components. Here's how we could make the `my-component` custom element, located in a _resources_ subfolder of your project, globally available in all views.
 
@@ -284,7 +284,7 @@ When you create a view in Aurelia, it is completely encapsulated. In the same wa
   </source-code>
 </code-listing>
 
-## [Organizing Your App with Features](aurelia-doc://section/6/version/1.0.0)
+## Organizing Your App with Features
 
 Sometimes you have whole group of components or related functionality that collectively form a "feature". This "feature" may even be owned by a particular set of developers on your team. You want these developers to be able to manage the configuration and resources of their own feature, without interfering with the other parts of the app. For this scenario, Aurelia provides the "feature" feature.
 
@@ -336,7 +336,7 @@ How then do we turn this feature on in our app? Here's an app configuration file
   </source-code>
 </code-listing>
 
-## [Installing Plugins](aurelia-doc://section/7/version/1.0.0)
+## Installing Plugins
 
 Similar to features, you can install 3rd party plugins. The main difference is that a "feature" is provided internally by your application, while a plugin is installed from a 3rd party source through your package manager.
 
@@ -369,7 +369,7 @@ To use a plugin, you first install the package. For example `jspm install my-plu
 
 Simply provide the same name used during installation, to the plugin API. Some plugins may require configuration (see the plugin's documentation for details). If so, pass the configuration object or configuration callback function as the second parameter of the `plugin` API.
 
-## [Leveraging Progressive Enhancement](aurelia-doc://section/8/version/1.0.0)
+## Leveraging Progressive Enhancement
 
 So far you've seen Aurelia replacing a portion of the DOM with a root component. However, that's not the only way to render with Aurelia. Aurelia can also progressively enhance existing HTML.
 
@@ -498,7 +498,7 @@ You can't use the `aurelia.enhance` method multiple times because it was not des
   </source-code>
 </code-listing>
 
-## [Customizing Conventions](aurelia-doc://section/9/version/1.0.0)
+## Customizing Conventions
 
 There are many things you may want to customize or configure as part of your application's bootstrap process. Once you have your main `configure` method in place and `aurelia-app` is pointing to that module, you can do just about anything you want. One of the most common aspects of Aurelia that developers may want to customize, is its conventions.
 
@@ -622,7 +622,7 @@ In addition to customizing the mapping logic of the `ConventionalViewStrategy` y
   </source-code>
 </code-listing>
 
-## [Logging](aurelia-doc://section/10/version/1.0.0)
+## Logging
 
 Aurelia has a simple logging abstraction that the framework itself uses. By default it is a no-op. The configuration in the above examples shows how to install an appender which will take the log data and output it to the console. Here's the code again, for convenience:
 

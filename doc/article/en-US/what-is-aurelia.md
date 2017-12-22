@@ -3,7 +3,7 @@ name: What is Aurelia?
 description: Aurelia is a modern front-end framework for building browser, mobile and desktop applications.
 author: Rob Eisenberg (http://robeisenberg.com)
 ---
-## [What is Aurelia?](aurelia-doc://section/1/version/1.0.0)
+## What is Aurelia?
 
 Aurelia is a collection of Modern JavaScript modules, which when used together, function as a powerful platform for building browser, desktop and mobile applications, all open source and built on open web standards.
 
@@ -25,7 +25,7 @@ With all the power and capability that Aurelia offers, you might expect it to ha
 
 Not only is Aurelia written with ECMAScript, but it's also designed to make careful use of the DOM standard. Rather than Aurelia utilizing a costly abstraction over the DOM, implementing its own custom HTML parser or adopting framework-specific JavaScript extensions, it leverages the latest DOM APIs to get "bare metal" performance, exceptional memory efficiency and all while staying synced with the continuous improvements of the browser platform itself. Additionally, Aurelia's component model is based on W3C Web Components HTML Templates and ShadowDOM, so you know it will stand the test of time and will enable you to evolve your application along with advances in the standards, without major application re-writes or framework churn.
 
-## [Why choose Aurelia?](aurelia-doc://section/2/version/1.0.0)
+## Why choose Aurelia?
 
 There are many frameworks to choose from today. We believe that Aurelia provides a fresh and exciting approach to front-end development with power and flexibility that is unmatched by other options. That said, we recognize that each team and each project has different needs. You might find Aurelia to be the right choice for you if...
 

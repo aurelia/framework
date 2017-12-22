@@ -3,7 +3,7 @@ name: Creating Components
 description: Components are the basic building blocks of all Aurelia applications. In this article you'll learn how to build basic components using dependency injection and the component lifecycle.
 author: Rob Eisenberg (http://robeisenberg.com)
 ---
-## [Creating A Component](aurelia-doc://section/1/version/1.0.0)
+## Creating A Component
 
 In Aurelia, user interface components are composed of _view_ and _view-model_ pairs. The view is written with HTML and is rendered into the DOM. The view-model is written with ${context.language.name} and provides data and behavior to the view. The Templating Engine along with Dependency Injection are responsible for creating these pairs and enforcing a predictable lifecycle for the component. Once instantiated, Aurelia's powerful _databinding_ links the two pieces together allowing changes in your view-model to be reflected in the view and changes in your view to reflected in your view-model. This Separation of Concerns is great for developer/designer collaboration, maintainability, architectural flexibility, and even source control.
 
@@ -70,7 +70,7 @@ In addition to binding HTML attributes, you can also bind events. Any event, eit
 
 Now you know how to build basic components. What's great about this knowledge? It's consistent throughout Aurelia. The same pattern as above is used to create your app's root component, screens that the router navigates to, custom elements, dynamically composed UI components, modal dialogs, etc.
 
-## [Component Instantiation Through Dependency Injection (DI)](aurelia-doc://section/2/version/1.0.0)
+## Component Instantiation Through Dependency Injection (DI)
 
 View-models and other interface elements, such as Custom Elements and Custom Attributes, are created as classes which are instantiated by the framework using a dependency injection container. Code written in this style is easy to modularize and test. Rather than creating large classes, you can break things down into small objects that collaborate to achieve a goal. The DI can then put the pieces together for you at runtime.
 
@@ -114,7 +114,7 @@ In order to leverage DI, you simply decorate your class to tell the framework wh
 * If you are sticking with ES2015, or don't want to use decorators, you can also add a static `inject` method to the class that returns an array of types to inject.
 * If you are using TypeScript >= 1.5, you can add the `@autoinject` decorator to your class and leave out the Types in the decorator call, but just use them on the constructor's signature.
 
-## [The Component Lifecycle](aurelia-doc://section/3/version/1.0.0)
+## The Component Lifecycle
 
 All components have a well-defined lifecycle. Below is a list of methods you can implement on your view-model in order to hook into the component lifecycle:
 

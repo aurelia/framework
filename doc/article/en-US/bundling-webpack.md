@@ -3,7 +3,7 @@ name: Bundling with Webpack
 description: Before deploying your app to production, you'll want to bundle the assets for efficient use of the network.
 author: Bazyli Brzóska (https://invent.life)
 ---
-## [Introduction](aurelia-doc://section/1/version/1.0.0)
+## Introduction
 
 Most of the current major browsers limit the number of simultaneous connections per hostname to six. This means that while six requests are being processed, additional requests for assets on a host will be queued by the browser. In the image below, the Chrome F12 developer tools network tab shows the timing for assets required by the `welcome view` of the unbundled, JSPM-based skeleton-navigation application.
 
@@ -15,7 +15,7 @@ In the past, the most common browser limit has been 2 connections. This may have
 
 You may wonder: If this limit can have such a great impact on performance, then why don't browsers give us a higher limit? Most well-known browsers choose not to grant this wish in order to prevent the server from being overloaded by a small number of browsers. Such activity would be similar in nature to a DDOS attack.
 
-## [Bundling & Minification](aurelia-doc://section/2/version/1.0.0)
+## Bundling & Minification
 
 This connection limit will not cause slowness in our application if we can manage resources well enough to avoid it. When the page is first loaded, this is the initial request that returns HTML content. When the browser processes the HTML content, it spawns more requests to load resources like JS, CSS and images. It also executes JavaScript and sends AJAX requests to the server.
 
@@ -23,7 +23,7 @@ To make this process efficient, we need to compress the assets and make fewer (p
 
 Bundling along with minification are techniques that can also be used to improve load time. Bundling and minification improve load time by reducing the number of requests to the server as well as reducing the size of requested assets such as views, view-models and CSS.
 
-## [Bundling an Aurelia Webpack Application](aurelia-doc://section/3/version/1.0.0)
+## Bundling an Aurelia Webpack Application
 
 In the following example, we will use the `skeleton-navigation` as our app to bundle. If you don't have that set up. Follow [these steps](https://github.com/aurelia/skeleton-navigation#running-the-app).
 
@@ -56,7 +56,7 @@ npm run server:prod
 
 After executing the command, you'll see a link which will run your bundled application.
 
-## [Entry Bundles](aurelia-doc://section/4/version/1.0.0)
+## Entry Bundles
 
 The skeleton-navigation is configured to create 3 explicit entry bundles by default:
 - `aurelia-bootstrap` - contains modules needed to be loaded first, such as polyfills and Aurelia's Platform Abstraction Layer
@@ -84,7 +84,7 @@ Defining entry bundles is only useful when you want to be able to make use of cl
 
 To make it easier to see whether it's necessary to update a certain bundle, the production bundles by default contain a hash in their filename.
 
-## [Code-Splitting: Chunks / Async Bundles](aurelia-doc://section/5/version/1.0.0)
+## Code-Splitting: Chunks / Async Bundles
 
 By default, all of our application code is contained in the `app` entry bundle. If our application is small enough, we can keep using just that single bundle, however the number of bundles we would like to have should mostly depend on our application structure and the usage patterns of our app. For example, if our app was built in a modular fashion, such that it is a collection of child-app/sections, then a `common` bundle for third-party libraries and a `bundle per section` makes much more sense and performs better than a huge single bundle that needs to be loaded up front.
 
@@ -144,7 +144,7 @@ For quickly declaring a certain `<require>` as lazy (deferred loading), or in te
 Both the `lazy` and the `bundle` attributes are optional.
 If you do not specify the bundle name, the chunk number will be used instead.
 
-## [Declaring Build Resources](aurelia-doc://section/6/version/1.0.0)
+## Declaring Build Resources
 
 By default, all the production dependencies declared in the `package.json` that have a `main` entry file are considered as build resources.
 
@@ -199,7 +199,7 @@ You can also combine both features to separate out plugins or resources for lazy
   </source-code>
 </code-listing>
 
-## [Chunking Code When It Is Not Loaded By Aurelia](aurelia-doc://section/7/version/1.0.0)
+## Chunking Code When It Is Not Loaded By Aurelia
 
 If you have code that you'd like to load asynchronously in your ${context.language.name} files, you can make use of the System loader compliant syntax to create split-points.
 Example use-cases for this are: conditionally loading foreign language support based on the user's selection or conditionally polyfilling certain features.
@@ -240,7 +240,7 @@ When using TypeScript and the `System.import` API means you do not get any Typin
   </source-code>
 </code-listing>
 
-## [Duplicate Modules in Multiple Bundles](aurelia-doc://section/8/version/1.0.0)
+## Duplicate Modules in Multiple Bundles
 
 By default, the `webpack.config.js` uses the `CommonsChunkPlugin` under the hood, to eliminate code duplication across bundles by placing common code in the `app` bundle. If you have additional custom entry bundles, or somehow misused or misconfigured them, you may end up with duplicated modules in multiple bundles.
 
@@ -263,7 +263,7 @@ When we want to bundle `a.js`, Webpack will analyze the source code of the modul
 
 To have full control over how Webpack distributes and de-duplicates the modules in the chunks, please refer to [Webpack documentation](https://github.com/webpack/docs/wiki/optimization#multi-page-app) on the matter and replace the `@easy-webpack/config-common-chunks-simple` configuration with a custom one.
 
-## [Bundle Configuration and Easy Webpack](aurelia-doc://section/9/version/1.0.0)
+## Bundle Configuration and Easy Webpack
 
 Webpack is a very advanced piece technology, but it can be quite intimidating to beginners and hard to re-configure even for seasoned users. For this very reason, the skeleton-navigation example uses a package called [Easy Webpack](https://github.com/easy-webpack/core) that allows us to quickly stich together a number of configuration objects and supports presets. In more advanced use-cases, we can still override its configuration values, or replace the presets with custom configuration.
 
@@ -325,6 +325,6 @@ The names of the packages are self-explanatory. The skeleton-navigation config f
 
 You can easily replace all the preset packages with your own configuration objects. Please refer to the [Easy Webpack](https://github.com/easy-webpack/core) documentation for more information about its capabilities.
 
-## [Conclusion](aurelia-doc://section/10/version/1.0.0)
+## Conclusion
 
 In this article, you've learned both the why and how of bundling with Webpack. We've covered how to configure Webpack's configuration file for use with Aurelia and demonstrated several different scenarios for asynchonous loading of parts of your code. To bundle your own app, we recommend that you begin with the skeleton-navigation configuration file and customize it. You may have a small app that makes sense as a single bundle or a larger one that can be broken down into features. Each application is different, but Webpack is extremely flexible and should help you to create the optimal deployment for your unique scenarios.

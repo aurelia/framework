@@ -3,7 +3,7 @@ name: Integrating with Polymer
 description: Polymer is a library for creating reusable web components declaratively with extra features like data binding and property observation. In many ways, it is similar to Aurelia's component support. However, Polymer also includes an extensive catalog of custom elements for everything from material design to credit card forms to embedding Google services like Google Maps and YouTube. With a bit of work, these components can be incorporated into Aurelia applications as well.
 author: Ben Navetta (https://www.linkedin.com/in/benjaminnavetta)
 ---
-## [Setup](aurelia-doc://section/1/version/1.0.0)
+## Setup
 
 The first step is obtaining Polymer, which is generally done with the [Bower](http://bower.io/) package manager. The following `bower.json` will install Polymer's base and material design elements.
 
@@ -102,7 +102,7 @@ In `main.js`, the two Aurelia plugins installed before need to be loaded as well
 
 At this point, Aurelia and Polymer are ready to go. The examples below incorporate various Polymer elements into the Aurelia skeleton navigation starter.
 
-## [Importing Elements](aurelia-doc://section/2/version/1.0.0)
+## Importing Elements
 
 With the normal Aurelia template loader, nothing is allowed outside the root `<template>` element. When using HTML imports, however, the import statements must be before the `<template>`.
 
@@ -122,7 +122,7 @@ With the normal Aurelia template loader, nothing is allowed outside the root `<t
   </source-code>
 </code-listing>
 
-## [Data Binding](aurelia-doc://section/3/version/1.0.0)
+## Data Binding
 
 Given the imports above, this shows how to implement a basic layout in `app.html` with Polymer components.
 
@@ -163,7 +163,7 @@ All of the standard Aurelia binding syntax continues to work as well. For exampl
 binding on the `<paper-item>` elements in the navigation menu shows that attributes
 defined by Polymer are also supported by Aurelia.
 
-## [Forms and Two-Way Binding](aurelia-doc://section/4/version/1.0.0)
+## Forms and Two-Way Binding
 
 The updated `welcome.html` uses Polymer input elements to enhance its form.
 
@@ -214,7 +214,7 @@ use a `click.delegate` on a Polymer button instead.
   </source-code>
 </code-listing>
 
-## [How the Plugin Works](aurelia-doc://section/5/version/1.0.0)
+## How the Plugin Works
 
 The `aurelia-polymer` plugin is fairly simple. For each Polymer element, it
 registers the element's properties and what events they support with the

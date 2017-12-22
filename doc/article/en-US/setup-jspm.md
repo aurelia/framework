@@ -3,7 +3,7 @@ name: Setup with JSPM
 description: If you're interested in getting setup with JSPM to build projects, this article will take you through setting up both your machine and a production quality starter project.
 author: Rob Eisenberg (http://robeisenberg.com)
 ---
-## [Configuring Your Environment](aurelia-doc://section/1/version/1.0.0)
+## Configuring Your Environment
 
 Let's start by getting you set up with a great set of tools that you can use to build modern ${context.language.name} applications. All our tooling is built on [Node.js](http://nodejs.org/). If you have that installed already, great! If not, you should go to [the official web site](http://nodejs.org/), download and install it. Everything else we need will be installed via Node's package manager ([npm](https://docs.npmjs.com/getting-started/what-is-npm)). If you already have npm installed, make sure you've got the [latest version](https://github.com/npm/npm/wiki/Troubleshooting#try-the-latest-stable-version-of-node) to avoid any issues with the other tools.
 
@@ -22,7 +22,7 @@ Next, we need to install [jspm](http://jspm.io/). This will serve as our client-
 npm install -g jspm
 ```
 
-## [Setting up the Project Structure and Build](aurelia-doc://section/2/version/1.0.0)
+## Setting up the Project Structure and Build
 
 With the tooling installed, we can now turn our attention to setting up a basic structure for your app. We'll begin by downloading a skeleton. We've got several versions available for you based on your language and tooling preferences. Please download the latest skeletons now.
 
@@ -48,7 +48,7 @@ Everything we've done so far is standard Node.js build and package management pr
 > Info
 > Bootstrap and Font-Awesome are **not** dependencies of Aurelia. We only leverage them as part of the starter kit in order to help you quickly achieve a decent look out-of-the-box. You can easily replace them with whatever your favorite CSS framework and/or icon library is.
 
-## [Running The App](aurelia-doc://section/3/version/1.0.0)
+## Running The App
 
 If you've followed along this far, you now have all the libraries, build configuration and tools you need to create amazing ${context.language.name} apps with Aurelia. The next thing to do is run the sample app. To see this in action, on your console, use the following command to build and launch the server:
 ```Shell
@@ -59,7 +59,7 @@ You can now browse to [http://localhost:9000/](http://localhost:9000/) to see th
 > Warning
 > The Skeleton App uses [BrowserSync](http://www.browsersync.io/) for automated page refreshes on code/markup changes concurrently across multiple browsers. If you prefer to disable the mirroring feature, set the [ghostMode option](http://www.browsersync.io/docs/options/#option-ghostMode) to `false` in your build config.
 
-## [Running The Unit Tests](aurelia-doc://section/4/version/1.0.0)
+## Running The Unit Tests
 
 To run the unit tests, first ensure that you have followed the steps above in order to install all dependencies and successfully build the library. Once you have done that, proceed with these additional steps:
 
@@ -72,7 +72,7 @@ To run the unit tests, first ensure that you have followed the steps above in or
   gulp test
   ```
 
-## [Running The E2E Tests](aurelia-doc://section/5/version/1.0.0)
+## Running The E2E Tests
 
 Integration tests are performed with [Protractor](http://angular.github.io/protractor/#/).
 
