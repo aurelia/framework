@@ -96,7 +96,7 @@
     "aurelia-binding": "^1.0.0",
     "aurelia-dependency-injection": "^1.0.0",
     "aurelia-loader": "^1.0.0",
-    "aurelia-logging": "^1.0.0",
+    "@aurelia/logging": "^1.0.0",
     "aurelia-metadata": "^1.0.0",
     "aurelia-pal": "^1.0.0",
     "aurelia-path": "^1.0.0",
