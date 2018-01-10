@@ -1,0 +1,40 @@
+{
+  "extends": "tslint:latest",
+  "rules": {
+    "array-type": [
+      true,
+      "array-simple"
+    ],
+    "arrow-parens": false,
+    "interface-name": [
+      true,
+      "never-prefix"
+    ],
+    "max-classes-per-file": [false],
+    "member-ordering": [
+      true,
+      "fields-first"
+    ],
+    "no-implicit-dependencies": false,
+    "no-shadowed-variable": false,
+    "no-string-literal": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": [false],
+    "prefer-for-of": false,
+    "prefer-conditional-expression": false,
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "trailing-comma": [false],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-module",
+      "check-separator",
+      "check-type"
+    ]
+  }
+}
