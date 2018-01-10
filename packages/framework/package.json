@@ -13,6 +13,9 @@
   },
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
+  "contributors": [
+    "Zach Hollingshead <zach.hollingshead@gmail.com>"
+  ],
   "main": "dist/commonjs/aurelia-framework.js",
   "typings": "dist/aurelia-framework.d.ts",
   "repository": {
