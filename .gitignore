@@ -4,3 +4,4 @@ bower_components
 .idea
 .DS_STORE
 build/reports
+lerna-debug.log
