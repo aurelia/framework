@@ -1,7 +1,6 @@
 import './setup';
 import { FrameworkConfiguration } from '../src/framework-configuration';
 import { Aurelia } from '../src/aurelia';
-// import { Metadata } from 'aurelia-metadata';
 
 describe('the framework config', () => {
   it('should initialize', () => {
