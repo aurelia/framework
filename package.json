@@ -1,10 +1,15 @@
 {
-	"name": "aurelia-ux",
-  "version": "0.4.0",
+	"name": "aurelia-framework",
   "private": true,
+  "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
+  "keywords": [
+    "aurelia",
+    "framework",
+    "spa"
+  ],
   "homepage": "http://aurelia.io",
   "bugs": {
-    "url": "https://github.com/aurelia/ux/issues"
+    "url": "https://github.com/aurelia/framework/issues"
   },
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
@@ -13,9 +18,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/aurelia/ux"
+    "url": "http://github.com/aurelia/framework"
   },
 	"devDependencies": {
-		"lerna": "^2.5.1"
+		"lerna": "^2.7.1"
 	}
 }
