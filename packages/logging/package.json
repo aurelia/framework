@@ -8,7 +8,7 @@
   ],
   "homepage": "http://aurelia.io",
   "bugs": {
-    "url": "https://github.com/aurelia/logging/issues"
+    "url": "https://github.com/aurelia/framework/issues"
   },
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
@@ -19,7 +19,7 @@
   "typings": "dist/aurelia-logging.d.ts",
   "repository": {
     "type": "git",
-    "url": "http://github.com/aurelia/logging"
+    "url": "http://github.com/aurelia/framework"
   },
   "jspm": {
     "registry": "npm",
@@ -89,11 +89,6 @@
     "bump-version": "npm --no-git-tag-version version",
     "preprepare-release": "cross-env npm run test",
     "prepare-release": "cross-env npm run changelog && npm run build && npm run doc"
-  },
-  "aurelia": {
-    "documentation": {
-      "articles": []
-    }
   },
   "dependencies": {}
 }
