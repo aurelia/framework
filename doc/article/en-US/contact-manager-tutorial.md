@@ -145,18 +145,18 @@ To get Bootstrap setup, we begin by installing the library itself with NPM. Exec
 npm install bootstrap --save
 ```
 
-Next, because Bootstrap uses jQuery, we want to install jQuery as well, like this:
+Next, because Bootstrap uses jQuery and popper.js, we want to install them as well, like this:
 
 ```Shell
-npm install jquery@^2.2.4 --save
+npm install jquery@^2.2.4 popper.js@^1.12.9 --save
 ```
 
 > Info
 > Whenever you install new dependencies used in your app, make sure to restart the `au run` or respectively the `au run --watch` command, in order to have the CLI re-bundle your freshly added dependencies.
 
-With these libraries installed, we now need to tell Aurelia which application bundle they should be included in and how to properly configure them with the module system. To do this, look in the `aurelia_project` folder and open up the `aurelia.json` file. This file contains all the information that the Aurelia CLI uses to build our project. If you scroll down, you will see a `bundles` section. There are two bundles defined by default: `app-bundle.js`, which contains your code and `vendor-bundle.js` which contains all 3rd party libraries. We need to add some new items to the `dependencies` array of the `vendor-bundle.js` bundle. Add the following two entries for jQuery and Bootstrap:
+With these libraries installed, we now need to tell Aurelia which application bundle they should be included in and how to properly configure them with the module system. To do this, look in the `aurelia_project` folder and open up the `aurelia.json` file. This file contains all the information that the Aurelia CLI uses to build our project. If you scroll down, you will see a `bundles` section. There are two bundles defined by default: `app-bundle.js`, which contains your code and `vendor-bundle.js` which contains all 3rd party libraries. We need to add some new items to the `dependencies` array of the `vendor-bundle.js` bundle. Add the following three entries for jQuery, Popper.js, and Bootstrap:
 
-<code-listing heading="jQuery and Bootstrap Bundle Config">
+<code-listing heading="jQuery, Popper.js, and Bootstrap Bundle Config">
   <source-code lang="JavaScript">
     "dependencies": [
       ...
@@ -165,18 +165,23 @@ With these libraries installed, we now need to tell Aurelia which application bu
         "name": "bootstrap",
         "path": "../node_modules/bootstrap/dist",
         "main": "js/bootstrap.min",
-        "deps": ["jquery"],
+        "deps": ["jquery", "popper.js"],
         "exports": "$",
         "resources": [
           "css/bootstrap.css"
         ]
+      },
+      {
+        "name": "popper.js",
+        "path": "../node_modules/popper.js/dist",
+        "main": "umd/popper.min.js"
       },
       ...
     ]
   </source-code>
 </code-listing>
 
-You can read more about configuring 3rd party libraries in the documentation on the Aurelia CLI. For now, just know that this causes jQuery, Bootstrap and all necessary CSS to be included in the vendor bundle and makes it reachable through the module system.
+You can read more about configuring 3rd party libraries in the documentation on the Aurelia CLI. For now, just know that this causes jQuery, Popper.js, Bootstrap and all necessary CSS to be included in the vendor bundle and makes it reachable through the module system.
 
 After you have modified the aurelia.json file, it is necessary to restart the `au run --watch` process in order for the changes to be picked up.
 
