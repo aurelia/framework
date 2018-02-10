@@ -1,7 +1,9 @@
 import './setup';
-import {FrameworkConfiguration} from '../src/framework-configuration';
-import {Aurelia} from '../src/aurelia';
-import {Metadata} from 'aurelia-metadata';
+import { FrameworkConfiguration } from '../src/framework-configuration';
+import { Aurelia } from '../src/aurelia';
+// import {metadata} from 'aurelia-metadata'
+// import {ViewResources} from 'aurelia-templating'
+// import {Container} from 'aurelia-dependency-injection'
 
 describe('the framework config', () => {
   it('should initialize', () => {
@@ -37,13 +39,13 @@ describe('the framework config', () => {
       expect(mockContainer.registerSingleton).toHaveBeenCalledWith(TestClass, testInstance);
     });
 
-    it("globalResources will add an array of paths", () => {
+    it('globalResources will add an array of paths', () => {
       let resourceName = './someResource';
       expect(aurelia.use.globalResources([resourceName])).toBe(aurelia.use);
       expect(aurelia.use.resourcesToLoad[resourceName].moduleId).toEqual(resourceName);
     });
 
-    it("globalResources will add resources to lookup", () => {
+    it('globalResources will add resources to lookup', () => {
       expect(aurelia.use.globalResources('./someResource', './andAnother')).toBe(aurelia.use);
       expect('./someResource' in aurelia.use.resourcesToLoad).toEqual(true);
       expect('./andAnother' in aurelia.use.resourcesToLoad).toEqual(true);
@@ -58,15 +60,13 @@ describe('the framework config', () => {
 
       expect('plugin/someResource' in aurelia.use.resourcesToLoad).toEqual(true);
       expect(aurelia.use.resourcesToLoad['plugin/someResource'].relativeTo).toEqual('bootstrapper');
-
     });
-
   });
 
   describe('plugin()', () => {
     let configSpy,
-        loadModule,
-        config;
+      loadModule,
+      config;
 
     let aurelia, mockContainer, mockLoader, mockResources, mockPlugin, mockViewEngine;
 
@@ -74,7 +74,7 @@ describe('the framework config', () => {
       mockLoader = jasmine.createSpy('loader');
       mockResources = jasmine.createSpy('viewResources');
 
-      mockViewEngine = jasmine.createSpyObj("viewEngine", ["importViewResources"]);
+      mockViewEngine = jasmine.createSpyObj('viewEngine', ['importViewResources']);
       mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
         resolve();
       }));
@@ -86,11 +86,11 @@ describe('the framework config', () => {
       aurelia = new Aurelia(mockLoader, mockContainer, mockResources);
       config = aurelia.use;
 
-      configSpy = jasmine.createSpy("config");
+      configSpy = jasmine.createSpy('config');
 
       loadModule = jasmine.createSpy('loadModule').and.callFake((moduleId) => {
         return new Promise((resolve, reject) => {
-          if (moduleId === "plugin")
+          if (moduleId === 'plugin')
             resolve(configSpy);
           else
             reject("Couldn't find plugin");
@@ -101,7 +101,7 @@ describe('the framework config', () => {
       aurelia.loader.loadModule = loadModule;
     });
 
-    it("should default config to an empty object if not provided", () => {
+    it('should default config to an empty object if not provided', () => {
       config.plugin('noPlugin');
       expect(config.info.length).toBe(1);
 
@@ -122,23 +122,23 @@ describe('the framework config', () => {
       setTimeout(() => {
         expect(loadModule).not.toHaveBeenCalled();
         done();
-      })
+      });
     });
 
-    it("should load a plugin when processed", (done) => {
-      config.plugin("plugin").apply()
-        .then(() => expect(loadModule).toHaveBeenCalledWith("plugin"))
+    it('should load a plugin when processed', (done) => {
+      config.plugin('plugin').apply()
+        .then(() => expect(loadModule).toHaveBeenCalledWith('plugin'))
         .catch((reason) => expect(false).toBeTruthy(reason))
         .then(done);
     });
 
     it("should load a plugin and call its configure function if it's defined", (done) => {
       var pluginConfig = {};
-      configSpy.configure = jasmine.createSpy("configure").and.returnValue(null);
+      configSpy.configure = jasmine.createSpy('configure').and.returnValue(null);
 
-      config.plugin("plugin", pluginConfig).apply()
+      config.plugin('plugin', pluginConfig).apply()
         .then(() => {
-          expect(loadModule).toHaveBeenCalledWith("plugin");
+          expect(loadModule).toHaveBeenCalledWith('plugin');
           expect(configSpy.configure).toHaveBeenCalledWith(config, pluginConfig);
         })
         .catch((reason) => expect(false).toBeTruthy(reason))
@@ -148,14 +148,14 @@ describe('the framework config', () => {
     it("should load a plugin, call it's configure function and resolve the returned promise if defined", (done) => {
       var pluginConfig = {};
       var resolved = false;
-      configSpy.configure = jasmine.createSpy("configure").and.returnValue(new Promise((resolve) => {
+      configSpy.configure = jasmine.createSpy('configure').and.returnValue(new Promise((resolve) => {
         resolved = true;
         resolve();
       }));
 
-      config.plugin("plugin", pluginConfig).apply()
+      config.plugin('plugin', pluginConfig).apply()
         .then(() => {
-          expect(loadModule).toHaveBeenCalledWith("plugin");
+          expect(loadModule).toHaveBeenCalledWith('plugin');
           expect(configSpy.configure).toHaveBeenCalledWith(config, pluginConfig);
           expect(resolved).toBeTruthy();
         })
@@ -163,17 +163,17 @@ describe('the framework config', () => {
         .then(done);
     });
 
-    it("should reject if the plugin fails to load", (done) => {
-      config.plugin("failedLoad").apply()
-        .then(() => expect(true).toBeFalsy("This should have failed"))
-        .catch(() => expect(loadModule).toHaveBeenCalledWith("failedLoad"))
+    it('should reject if the plugin fails to load', (done) => {
+      config.plugin('failedLoad').apply()
+        .then(() => expect(true).toBeFalsy('This should have failed'))
+        .catch(() => expect(loadModule).toHaveBeenCalledWith('failedLoad'))
         .then(done);
     });
 
-    it("should throw if the plugin loader has been processed", (done) => {
+    it('should throw if the plugin loader has been processed', (done) => {
       config.apply().then(() => {
         expect(config.processed).toBeTruthy();
-        expect(() => config.plugin("plugin")).toThrow(new Error('This config instance has already been applied. To load more plugins or global resources, create a new FrameworkConfiguration instance.'));
+        expect(() => config.plugin('plugin')).toThrow(new Error('This config instance has already been applied. To load more plugins or global resources, create a new FrameworkConfiguration instance.'));
         done();
       });
     });
@@ -186,7 +186,7 @@ describe('the framework config', () => {
       mockLoader = jasmine.createSpy('loader');
       mockResources = jasmine.createSpy('viewResources');
 
-      mockViewEngine = jasmine.createSpyObj("viewEngine", ["importViewResources"]);
+      mockViewEngine = jasmine.createSpyObj('viewEngine', ['importViewResources']);
       mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
         resolve();
       }));
@@ -199,20 +199,43 @@ describe('the framework config', () => {
       aurelia = new Aurelia(mockLoader, mockContainer, mockResources);
     });
 
-    it("should load resources that are defined and register them with the resource registry", (done) => {
-      aurelia.use.resourcesToLoad["./aResource"] = {moduleId: './aResource', relativeTo: ''};
+    it('should load resources that are defined and register them with the resource registry', (done) => {
+      aurelia.use.resourcesToLoad['./aResource'] = {moduleId: './aResource', relativeTo: ''};
 
-      let resource = jasmine.createSpyObj("resource", ["register"]);
+      let resource = jasmine.createSpyObj('resource', ['register']);
 
       mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
         resolve([resource]);
       }));
 
       aurelia.start().then(() => {
-        expect(mockViewEngine.importViewResources).toHaveBeenCalledWith(["./aResource"], [undefined], mockResources);
+        expect(mockViewEngine.importViewResources).toHaveBeenCalledWith(['./aResource'], [undefined], mockResources);
       })
-      .catch((reason) => expect(true).toBeFalsy(reason))
-      .then(done);
+        .catch((reason) => expect(true).toBeFalsy(reason))
+        .then(done);
     });
   });
+
+  // fdescribe('synchronous registration', () => {
+  //   let aurelia, container, mockLoader
+  //   /** @type {ViewResources} */
+  //   let resources
+  //   /**@type {FrameworkConfiguration} */
+  //   let config
+
+  //   beforeEach(() => {
+  //     mockLoader = jasmine.createSpy('loader')
+  //     resources = new ViewResources()
+  //     container = new Container()
+
+  //     mockLoader.normalize = jasmine.createSpy('normalize').and.callFake(input => Promise.resolve(input))
+  //     aurelia = new Aurelia(mockLoader, container, resources)
+  //     config = new FrameworkConfiguration(aurelia)
+  //   })
+
+//   it('register custom element', () => {
+//     config.customElement(class Abc {})
+//     expect(resources.getElement('abc')).toBeTruthy()
+//   })
+// })
 });
