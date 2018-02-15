@@ -4,6 +4,7 @@
 [![ZenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.io)
 [![Join the chat at https://gitter.im/aurelia/discuss](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aurelia/discuss?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![CircleCI](https://circleci.com/gh/aurelia/framework.svg?style=shield)](https://circleci.com/gh/aurelia/framework)
+[![Backers on Open Collective](https://opencollective.com/aurelia/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/aurelia/sponsors/badge.svg)](#sponsors) 
 
 This library is part of the [Aurelia](http://www.aurelia.io/) platform and contains the aurelia framework which brings together all the required core aurelia libraries into a ready-to-go application-building platform.
 
@@ -66,3 +67,33 @@ To run the unit tests, first ensure that you have followed the steps above in or
   ```shell
   karma start
   ```
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="graphs/contributors"><img src="https://opencollective.com/aurelia/contributors.svg?width=890&button=false" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/aurelia#backer)]
+
+<a href="https://opencollective.com/aurelia#backers" target="_blank"><img src="https://opencollective.com/aurelia/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/aurelia#sponsor)]
+
+<a href="https://opencollective.com/aurelia/sponsor/0/website" target="_blank"><img src="https://opencollective.com/aurelia/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/aurelia/sponsor/1/website" target="_blank"><img src="https://opencollective.com/aurelia/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/aurelia/sponsor/2/website" target="_blank"><img src="https://opencollective.com/aurelia/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/aurelia/sponsor/3/website" target="_blank"><img src="https://opencollective.com/aurelia/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/aurelia/sponsor/4/website" target="_blank"><img src="https://opencollective.com/aurelia/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/aurelia/sponsor/5/website" target="_blank"><img src="https://opencollective.com/aurelia/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/aurelia/sponsor/6/website" target="_blank"><img src="https://opencollective.com/aurelia/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/aurelia/sponsor/7/website" target="_blank"><img src="https://opencollective.com/aurelia/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/aurelia/sponsor/8/website" target="_blank"><img src="https://opencollective.com/aurelia/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/aurelia/sponsor/9/website" target="_blank"><img src="https://opencollective.com/aurelia/sponsor/9/avatar.svg"></a>
+
+
