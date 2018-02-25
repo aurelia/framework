@@ -20,6 +20,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Dwayne Charrington](ilikekillnerds.com)
 * [Enrico Padovani](alchemists.it)
 * [Erik Lieben](eriklieben.com)
+* [Fabio Chines](tagsistemi.it)
 * [Huberto Kusters](https://opencollective.com/huberto-kusters)
 * [Juliën Hanssens](hanssens.com)
 * [Khuzema Kanore](wisdom.com.kw)
