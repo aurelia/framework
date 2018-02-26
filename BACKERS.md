@@ -17,6 +17,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Brandon Ryan](https://mainstream-tech.com)
 * [Brian Oommen](https://opencollective.com/brian-oommen)
 * [Christoph Noe](http://neonnoe.com/)
+* [CP Huo](https://opencollective.com/cp-huo)
 * [Dwayne Charrington](https://ilikekillnerds.com)
 * [Enrico Padovani](https://alchemists.it)
 * [Erik Lieben](https://www.eriklieben.com)
