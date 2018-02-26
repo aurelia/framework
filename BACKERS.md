@@ -2,6 +2,10 @@
 
 Below you'll find a list of the wonderful people and organizations that have made financial contributions to Aurelia. Please consider joining them in supporting open source by making [your own contribution on Open Collective](https://opencollective.com/aurelia/).
 
+## Silver Sponsors
+
+* [Simployer](https://www.simployer.no/)
+
 ## Bronze Sponsors
 
 * [Effectory](https://www.effectory.com/)
@@ -15,30 +19,35 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Arturo Martinez](https://twitter.com/artmasa)
 * [Ats Uiboupin](https://github.com/atsu85)
 * [Brandon Ryan](https://mainstream-tech.com)
-* [Brian Oommen](https://opencollective.com/brian-oommen)
 * [Christoph Noe](http://neonnoe.com/)
 * [CP Huo](https://opencollective.com/cp-huo)
 * [Dwayne Charrington](https://ilikekillnerds.com)
 * [Enrico Padovani](https://alchemists.it)
 * [Erik Lieben](https://www.eriklieben.com)
+* [Fabian Ituarte](http://fabianituarte.com/)
 * [Fabio Chines](https://tagsistemi.it)
-* [Huberto Kusters](https://opencollective.com/huberto-kusters)
 * [Juliën Hanssens](https://hanssens.com)
 * [Khuzema Kanore](http://wisdom.com.kw)
 * [Luka Cetina](https://opencollective.com/luka-cetina)
 * [Michael Lakerveld](https://twitter.com/lakerfld)
-* [Miroslav Popovic](https://miroslavpopovic.com)
 * [Prasan Kumar](https://antaressystems.com)
-* [Radenko Zec](https://opencollective.com/radenkozec)
 * [Red Feet](https://twitter.com/redfeet)
-* [Richard Bartley](https://twitter.com/RBRbBartley)
 * [Richard Sykora](https://twitter.com/richardsykora)
 * [Saqib Rokadia](https://invioinc.com/)
 * [Shannon Horn](http://smoothirish.com)
-* [Steven Moore](https://twitter.com/smoore4moma)
 * [Steven Pena](https://twitter.com/steven_pena)
 * [Tyler Presley](https://strengthen.io)
 * [Veikko Eeva](https://twitter.com/veikkoeeva)
 * [Vildan Softic](http://pragmatic-coder.net)
-* [Waldemar Bandosz](https://twitter.com/wbanos)
 * [weagle08](https://github.com/weagle08)
+
+## Generous One-Time Gifts
+
+* [Brian Oommen](https://opencollective.com/brian-oommen)
+* [COMsulting](http://www.comsulting.de/)
+* [Huberto Kusters](https://opencollective.com/huberto-kusters)
+* [Miroslav Popovic](https://miroslavpopovic.com)
+* [Radenko Zec](https://opencollective.com/radenkozec)
+* [Richard Bartley](https://twitter.com/RBRbBartley)
+* [Steven Moore](https://twitter.com/smoore4moma)
+* [Waldemar Bandosz](https://twitter.com/wbanos)
