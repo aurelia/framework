@@ -34,7 +34,8 @@ Often times you want to configure the framework or run some code prior to displa
 
 So, if you want to keep all the default settings, it's really easy. Just call `standardConfiguration()` to configure the standard set of plugins. Then call `developmentLogging()` to turn on logging in debug mode, output to the `console`.
 
-> Warning: some Aurelia modules will not behave correctly if they are imported before the Aurelia Platform Abstraction Layer (PAL) is initialized, which happens during `aurelia.start()`. If you need these modules in your configuration module, you need to initialize the PAL yourself before the file is loaded. [This Github issue](https://github.com/aurelia/pal-browser/issues/17) describes how you can manually initialize the PAL before starting the bootstrapping process.
+> Warning
+> Some Aurelia modules will not behave correctly if they are imported before the Aurelia Platform Abstraction Layer (PAL) is initialized, which happens during `aurelia.start()`. If you need these modules in your configuration module, you need to initialize the PAL yourself before the file is loaded. [This Github issue](https://github.com/aurelia/pal-browser/issues/17) describes how you can manually initialize the PAL before starting the bootstrapping process.
 
 The `use` property on the `aurelia` instance is an instance of `FrameworkConfiguration`. It has many helper methods for configuring Aurelia. For example, if you wanted to manually configure all the standard plugins without using the `standardConfiguration()` helper method to do so and you wanted to configure logging without using the helper method for that, this is how you would utilize the `FrameworkConfiguration` instance:
 
