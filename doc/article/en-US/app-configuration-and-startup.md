@@ -370,7 +370,44 @@ To use a plugin, you first install the package. For example `jspm install my-plu
   </source-code>
 </code-listing>
 
-Simply provide the same name used during installation, to the plugin API. Some plugins may require configuration (see the plugin's documentation for details). If so, pass the configuration object or configuration callback function as the second parameter of the `plugin` API.
+Simply provide the same name used during installation to the plugin API. Some plugins may require configuration (see the plugin's documentation for details). If so, pass the configuration object or configuration callback function as the second parameter of the `plugin` API.
+
+While all plugins work in a similar manner, consider the real-world example of adding and configuring the dialog plugin by using a configuration callback. The configuration parameter in this case is a type of `DialogConfiguration` and the above code would become:
+
+<code-listing heading="Using a Plugin">
+  <source-code lang="ES 2015/2016">
+    export function configure(aurelia) {s
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging()
+        .plugin('aurelia-dialog', config =>s {
+          config.useDefaults();
+          config.settings.lock = true; 
+          config.settings.centerHorizontalOnly = false; 
+          config.settings.startingZIndex = 5; 
+          config.settings.keyboard = true;
+        });
+
+      aurelia.start().then(() => aurelia.setRoot());
+    }
+  </source-code>
+  <source-code lang="TypeScript">
+    export function configure(aurelia: Aurelia): void {
+    aurelia.use
+      .standardConfiguration()
+      .developmentLogging()
+      .plugin('aurelia-dialog', config => {
+        config.useDefaults();
+        config.settings.lock = true; 
+        config.settings.centerHorizontalOnly = false; 
+        config.settings.startingZIndex = 5; 
+        config.settings.keyboard = true;
+      });
+
+      aurelia.start().then(() => aurelia.setRoot());
+    }
+  </source-code>
+</code-listing>
 
 ## Leveraging Progressive Enhancement
 
