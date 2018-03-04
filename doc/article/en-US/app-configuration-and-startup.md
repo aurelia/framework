@@ -380,11 +380,11 @@ While all plugins work in a similar manner, consider the real-world example of a
       aurelia.use
         .standardConfiguration()
         .developmentLogging()
-        .plugin('aurelia-dialog', config =>s {
+        .plugin('aurelia-dialog', config => {
           config.useDefaults();
-          config.settings.lock = true; 
-          config.settings.centerHorizontalOnly = false; 
-          config.settings.startingZIndex = 5; 
+          config.settings.lock = true;
+          config.settings.centerHorizontalOnly = false;
+          config.settings.startingZIndex = 5;
           config.settings.keyboard = true;
         });
 
@@ -398,9 +398,9 @@ While all plugins work in a similar manner, consider the real-world example of a
       .developmentLogging()
       .plugin('aurelia-dialog', config => {
         config.useDefaults();
-        config.settings.lock = true; 
-        config.settings.centerHorizontalOnly = false; 
-        config.settings.startingZIndex = 5; 
+        config.settings.lock = true;
+        config.settings.centerHorizontalOnly = false;
+        config.settings.startingZIndex = 5;
         config.settings.keyboard = true;
       });
 
