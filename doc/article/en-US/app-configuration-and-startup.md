@@ -339,6 +339,9 @@ How then do we turn this feature on in our app? Here's an app configuration file
   </source-code>
 </code-listing>
 
+> Info: Features with Webpack
+> When using Webpack, the syntax for enabling a feature is a little different. Instead of calling `.feature('my-feature');`, you will want to use the `PLATFORM.moduleName(...)` helper that allows the Aurelia Webpack plugin to understand dynamic module references. In this case, your syntax will look like `.feature(PLATFORM.moduleName('my-feature/index'));` Notice that in addition to the use of the `PLATFORM.moduleName(...)` helper, the index file must be directly referenced.
+
 ## Installing Plugins
 
 Similar to features, you can install 3rd party plugins. The main difference is that a "feature" is provided internally by your application, while a plugin is installed from a 3rd party source through your package manager.
