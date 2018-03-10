@@ -15,7 +15,7 @@ Before we start writing some code, you'll need to get setup with a basic project
 
 With this setup, you can choose between two popular programming language options: ESNext and TypeScript. If you would like to stay strictly with spec-compliant next-generation ECMAScript, you will want to go with the ESNext option. However, if you like strong typing and rich compile-time verification and tooling for your language, you'll want to go with TypeScript.
 
-Once you've made your language choice, we'll need to do two things:
+Once you've made your language choice, you'll need to do two things:
 
 * Configure this documentation to show all code samples in your preferred programming language.
 * Configure your Aurelia project to use your preferred programming language.
@@ -99,7 +99,7 @@ This is the core of Aurelia itself, in a single script file. You need to add tha
 SystemJS.import('aurelia-bootstrapper');
 ```
 
-The last script tag is a bit different. Instead of setting a `src`, it provides some code. The `SystemJS` object is being provided by the SystemJS module loader we mentioned above. Here, we're calling one of its APIs, `import`. This API tells the loader to load or "import" a module with the specified name. In this case, we're loading `aurelia-bootstrapper` which resides in the `aurelia-core.min.js` linked above. This module contains Aurelia's "bootstrap" or "startup" code. This tells Aurelia to load the framework, configure it and run your application.
+The last script tag is a bit different. Instead of setting a `src`, it provides some code. The `SystemJS` object is being provided by the SystemJS module loader we mentioned above. Here, we're calling one of its APIs, `import`. This API tells the loader to load or "import" a module with the specified name. In this case, we're loading `aurelia-bootstrapper` which resides in the `aurelia-core.min.js` file linked above. This module contains Aurelia's "bootstrap" or "startup" code. This tells Aurelia to load the framework, configure it and run your application.
 
 There's one more thing to note. I wonder if you noticed it. On the `body` tag, there's an `aurelia-app` attribute. It's pointing to `src/main`. This is what tells Aurelia's bootstrapper what module contains the framework configuration as well as what HTML element is the "host" element where the application will be rendered. We'll look at creating that file a little bit later. Before we do that, we want to do something a bit non-traditional. We want to show you how you can build your entire Todo application in plain, vanilla ${context.language.name} without using any Aurelia APIs. Then, we'll use Aurelia to render our application to the screen, without changing any of our ${context.language.name} code.
 
@@ -112,7 +112,7 @@ One of the amazing things you can do with Aurelia, that you can't with any other
 We're going to begin by creating a `Todo` class. Since we're making a Todo App, we'll need a class to model out an individual Todo item. In the `src` folder of your project, create the following file:
 
 <code-listing heading="todo${context.language.fileExtension}">
-  <source-code lang="ES 2015/2016">
+  <source-code lang="JavaScript">
     export class Todo {
       constructor(description) {
         this.description = description;
@@ -133,10 +133,10 @@ That's it. It's a plain class that models the todo's `description` text along wi
 
 ## The App Class
 
-Our todo application contains a list of `Todo` instances. It can add and remove todos. The todos are added by allowing the end user to provide a todo description. Once they type a description and add the todo, the description is cleared so they can create another todo. Let's model these ideas. Here's the `App` class:
+Our todo application contains a list of `Todo` instances. It can add and remove todos. The todos are added by allowing the user to provide a todo description. Once they type a description and add the todo, the description is cleared so they can create another todo. Let's model these ideas. Here's the `App` class:
 
 <code-listing heading="app${context.language.fileExtension}">
-  <source-code lang="ES 2015/2016">
+  <source-code lang="JavaScript">
     import {Todo} from './todo';
 
     export class App {
@@ -203,7 +203,7 @@ Ok, now that we've modeled out our application in ${context.language.name}, we n
 If you recall, when we looked at `index.html` there was an `aurelia-app` attribute on the `body` element. This attribute tells the `aurelia-bootstrapper` where to render the application and what main file to use to configure the app. The value of that attribute points to `src/main`. So, let's create that file in our `src` folder and see what it does.
 
 <code-listing heading="main${context.language.fileExtension}">
-  <source-code lang="ES 2015/2016">
+  <source-code lang="JavaScript">
     export function configure(aurelia) {
       aurelia.use.basicConfiguration();
       aurelia.start().then(() => aurelia.setRoot());
@@ -220,7 +220,7 @@ If you recall, when we looked at `index.html` there was an `aurelia-app` attribu
 </code-listing>
 
 > Info
-> When working with TypeScript, in this simple setup, you may see some "squigglies" in your code editor. This results from the fact that this simple setup isn't configured in a way that the code editor can find the type definition files. It's nothing to worry about and everything will work correctly. In the next tutorial, when we set up a production-ready project, this issue will go away. If you have experience with this before, you can use Typings to install them yourself at any point.
+> When working with TypeScript, in this simple setup, you may see some "squigglies" in your code editor. This results from the fact that this simple setup isn't configured in a way that the code editor can find the type definition files. It's nothing to worry about and everything will work correctly. In the next tutorial, when we set up a production-ready project, this issue will go away. If you have prior experience with this, you can use Typings to install the d.ts definitions yourself at any point.
 
 When we provide a main file, like above, we are able to tell Aurelia how to configure itself by simply exporting a `configure` method. The framework will provide an instance of the `Aurelia` object which you can use in a variety of ways. There are many options, plugins and 3rd party extensions you can add, for example. In this case, we're configuring Aurelia with the "basic configuration". After that, we tell the framework to "start". Once it is started up we tell it to "set root".
 
@@ -251,7 +251,7 @@ There are a couple of things to notice here. First, all views are wrapped in a W
 
 Ok, now that we have a view, we're ready to run our app. To do that, we'll need to start a web server to serve up your index.html page, so we can view it in a browser. How you go about doing that depends on which server-side technology you want to use. Below are instructions for a couple of common scenarios:
 
-* **Visual Studio** - Open Visual Studio 2015. Using the main menu, select File > Open > Web site... In the resulting dialog, choose the project folder then click the Open button. The folder contents will be displayed in the Visual Studio Solution Explorer window. Right click on index.html in Solution Explorer and select "View in Browser". This will fire up IISExpress and serve index.html.
+* **Visual Studio** - Open Visual Studio 2015. Using the main menu, select File > Open > Web site... In the resulting dialog, choose the project folder then click the Open button. The folder contents will be displayed in the Visual Studio Solution Explorer window. Right click on index.html in Solution Explorer and select "View in Browser". This will fire up the development web server and serve index.html.
 * **NodeJS with npm** - To start up a simple web server in the project folder, first globally install the http-server command with `npm install http-server -g`. (In some environments you may need to use `sudo`). Once that is installed, change directory to the project folder. You can now spin up the server from within the folder with the following command `http-server -o -c-1`.
 * **NodeJS with yarn** - First install the http-server with `yarn add http-server`. Then use `yarn run http-server -o -c-1` to run the server.
 * **Firefox** - If you don't want to worry about setting up a web server, Firefox is flexible enough to serve the app directly from your hard drive. Simply open the `index.html` file with Firefox.
@@ -291,7 +291,7 @@ If you run the app now, you should see something like this:
 Try typing into the input box and adding the todo. You should notice that the input box gets cleared out each time you do that. The reason for this is that the `value` of the `input` has two way binding and our original code cleared out the `todoDescription` after adding a new Todo instance. Here's our `addTodo()` implementation for reference:
 
 <code-listing heading="The Add Todo Implementation">
-  <source-code lang="ES 2015/2016">
+  <source-code lang="JavaScript">
     addTodo() {
       if (this.todoDescription) {
         this.todos.push(new Todo(this.todoDescription));
@@ -378,6 +378,6 @@ Run the application one more time and you should see the expected result:
 
 With its strong focus on developer experience, Aurelia can enable you to not only create amazing applications, but also enjoy the process. We've designed it with simple conventions in mind so you don't need to waste time with tons of configuration or write boilerplate code just to satisfy a stubborn or restrictive framework. You'll never hit a roadblock with Aurelia either. It's been carefully designed to be pluggable and customizable...and most of the time you just write plain ${context.language.name} and forget the framework is even there.
 
-Thanks for taking the time to read through our guide. There's so much more to learn and do! We hope you'll continue on to our "Contact Manager" tutorial to learn how to use the Aurelia CLI to get setup with a production-grade project and use some more advanced features like routing, publish/subscribe and custom elements.
+Thanks for taking the time to read through our guide. There's so much more to learn and do! We hope you'll continue on to our [Contact Manager Tutorial](docs/tutorials/creating-a-contact-manager) to learn how to use the Aurelia CLI to get setup with a production-grade project and use some more advanced features like routing, publish/subscribe and custom elements.
 
 We're looking forward to seeing what you create!
