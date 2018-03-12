@@ -14,7 +14,7 @@ For this tutorial, we're going to use the Aurelia CLI. If you've already setup y
     * Here's [a standard client](https://git-scm.com).
 
 > Warning
-> Note on Git for Windows installation: When installing Git for Windows, there is an option to `use git bash only`, `run git from windows command prompt`, or `run git and included unix tools from windows command prompt`. You have to choose `run git from windows command prompt` or `run git and included unix tools from windows command prompt` in order for Aurelia CLI to work.
+> When installing Git for Windows, there is an option to `use git bash only`, `run git from windows command prompt`, or `run git and included unix tools from windows command prompt`. You must choose `run git from windows command prompt` or `run git and included unix tools from windows command prompt` in order for the Aurelia CLI to work.
 
 Once you have the prerequisites installed, you can install the Aurelia CLI itself. From the command line, use npm to install the CLI globally:
 
@@ -55,7 +55,7 @@ Copy all of these files to the `src` folder of your project. TypeScript users sh
 ## Building the Application Shell
 
 > Warning
-> Before proceeding any further, please make sure you are familiar with the concepts introduced in the Quick Start Guide or otherwise have some basic experience with Aurelia. Topics covered in the Quick Start will not be explained again here.
+> Before proceeding any further, please make sure you are familiar with the concepts introduced in [Creating a Todo App](docs/tutorials/creating-a-todo-app) or otherwise have some basic experience with Aurelia. Topics covered in [Creating a Todo App](docs/tutorials/creating-a-todo-app) will not be covered in this article.
 
 Let's start by looking at a picture of the final product of this tutorial. It will help us to see the application's structure and the pieces we need to build.
 
