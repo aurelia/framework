@@ -67,12 +67,14 @@ To begin, we're going to setup our `App` class by configuring it with a router. 
 
 <code-listing heading="app${context.language.fileExtension}">
   <source-code lang="ES 2015/ES Next">
+    import {PLATFORM} from 'aurelia-pal';
+
     export class App {
       configureRouter(config, router){
         config.title = 'Contacts';
         config.map([
-          { route: '',              moduleId: 'no-selection',   title: 'Select' },
-          { route: 'contacts/:id',  moduleId: 'contact-detail', name:'contacts' }
+          { route: '',              moduleId: PLATFORM.moduleName('no-selection'),   title: 'Select' },
+          { route: 'contacts/:id',  moduleId: PLATFORM.moduleName('contact-detail'), name:'contacts' }
         ]);
 
         this.router = router;
@@ -81,6 +83,7 @@ To begin, we're going to setup our `App` class by configuring it with a router. 
   </source-code>
   <source-code lang="TypeScript">
     import {Router, RouterConfiguration} from 'aurelia-router';
+    import {PLATFORM} from 'aurelia-pal';
 
     export class App {
       router: Router;
@@ -88,8 +91,8 @@ To begin, we're going to setup our `App` class by configuring it with a router. 
       configureRouter(config: RouterConfiguration, router: Router){
         config.title = 'Contacts';
         config.map([
-          { route: '',              moduleId: 'no-selection',   title: 'Select' },
-          { route: 'contacts/:id',  moduleId: 'contact-detail', name:'contacts' }
+          { route: '',              moduleId: PLATFORM.moduleName('no-selection'),   title: 'Select' },
+          { route: 'contacts/:id',  moduleId: PLATFORM.moduleName('contact-detail'), name:'contacts' }
         ]);
 
         this.router = router;
@@ -105,6 +108,9 @@ To add routing to your app, all you have to do is add a `configureRouter` method
 
 In the case above, we are registering two routes. The first route is empty, indicated by `route: ''`. This will be the default route that is matched when there is no fragment. This route will cause the `no-selection` module to load. We'll use this to display a nice message to the user, if they haven't selected a contact to view. The second route has the pattern `contacts/:id`. This will match the literal `contacts/` followed by a parameter, which we've named `id`. When this route is matched, the router will load the `contact-detail` module so that we can display the selected contact.
 
+> Info
+> Did you notice the calls to `PLATFORM.moduleName(....)`? This is a special API that is used in Aurelia Webpack projects to allow Webpack to identify strings that represent modules. This enables Webpack to include the referenced module in the built package.
+
 There are a couple more points of interest with this configuration. First, notice that we've set the `config.title` property. This sets a base "title" to be used in the document's title for the browser. We can also set a `title` on each route. When we do that, the router's title and the matched route's title will be joined together to form the final document title. The second thing to notice is that the second route has a `name` property. We'll be able to use this later to generate routes without needing to copy/paste the route pattern everywhere. Instead, we can just refer to the route by name.
 
 Now that we've configured our application's navigation structure, we need to put the visual structure in place. To do that, replace your `app.html` file with the following markup:
@@ -112,7 +118,6 @@ Now that we've configured our application's navigation structure, we need to put
 <code-listing heading="app.html">
   <source-code lang="HTML">
     <template>
-      <require from="bootstrap/css/bootstrap.css"></require>
       <require from="./styles.css"></require>
 
       <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -134,13 +139,13 @@ Now that we've configured our application's navigation structure, we need to put
   </source-code>
 </code-listing>
 
-There are several interesting things to note about this view. First, take a look at the `require` elements at the top of the view. This is how we can "import" or "require" various resources into our view. It's the view equivalent of the ES 2015 "import" syntax. Just as JavaScript is modularized and requires importing of other resources, so do Aurelia views. In this specific case, we're indicating that we want to bring in bootstrap's CSS as well as our own custom styles. Of course, we haven't actually installed Bootstrap yet. We'll get to that in a minute.
+There are several interesting things to note about this view. First, take a look at the `require` elements at the top of the view. This is how we can "import" or "require" various resources into our view. It's the view equivalent of the ES 2015 "import" syntax. Just as JavaScript is modularized and requires importing of other resources, so do Aurelia views. In this specific case, we're indicating that we want to bring in our custom styles.
 
 Below the `require` elements, you can see a pretty standard structure. We have some HTML to setup a navbar at the top. Below that we have the application's main container div. This has two columns. The first will contain our contact list, indicated by the placeholder div. The second contains a `router-view` custom element.
 
 The `router-view` is provided by Aurelia and is a placeholder that indicated where the router should render the current route. This allows you to structure your application layout however you want, simply placing the `router-view` wherever you want to see the current page rendered. Whenever you have a `configureRouter` method, the view must also contain a `router-view`.
 
-We're almost done setting up the application shell. Before we're done, we need to install Bootstrap. We'll be using that in this tutorial in order to give our application a decent appearance. In your own apps, you can use any CSS framework you like.
+We're almost done setting up the application shell. Before we're done, we need to install Bootstrap and import it in our main file. We'll be using that in this tutorial in order to give our application a decent appearance. In your own apps, you can use any CSS framework you like.
 
 To get Bootstrap setup, we begin by installing the library itself with NPM. Execute the following on the command line to do this:
 
@@ -148,51 +153,25 @@ To get Bootstrap setup, we begin by installing the library itself with NPM. Exec
 npm install bootstrap --save
 ```
 
-Next, because Bootstrap uses jQuery, we want to install jQuery as well, like this:
+Next, we need to import it in our `main${context.language.fileExtension}` by adding the following line to the top of the file:
 
-```Shell
-npm install jquery@^2.2.4 --save
+```JavaScript
+import 'bootstrap/dist/css/bootstrap.css';
 ```
 
 > Info
 > Whenever you install new dependencies used in your app, make sure to restart the `au run` or respectively the `au run --watch` command, in order to have the CLI re-bundle your freshly added dependencies.
 
-With these libraries installed, we now need to tell Aurelia which application bundle they should be included in and how to properly configure them with the module system. To do this, look in the `aurelia_project` folder and open up the `aurelia.json` file. This file contains all the information that the Aurelia CLI uses to build our project. If you scroll down, you will see a `bundles` section. There are two bundles defined by default: `app-bundle.js`, which contains your code and `vendor-bundle.js` which contains all 3rd party libraries. We need to add some new items to the `dependencies` array of the `vendor-bundle.js` bundle. Add the following two entries for jQuery and Bootstrap:
-
-<code-listing heading="jQuery and Bootstrap Bundle Config">
-  <source-code lang="JavaScript">
-    "dependencies": [
-      ...
-      "jquery",
-      {
-        "name": "bootstrap",
-        "path": "../node_modules/bootstrap/dist",
-        "main": "js/bootstrap.min",
-        "deps": ["jquery"],
-        "exports": "$",
-        "resources": [
-          "css/bootstrap.css"
-        ]
-      },
-      ...
-    ]
-  </source-code>
-</code-listing>
-
-You can read more about configuring 3rd party libraries in the documentation on the Aurelia CLI. For now, just know that this causes jQuery, Bootstrap and all necessary CSS to be included in the vendor bundle and makes it reachable through the module system.
-
-After you have modified the aurelia.json file, it is necessary to restart the `au run --watch` process in order for the changes to be picked up.
-
 ## Building Out the Default Route
 
-If you run the application now, you'll see a blank screen and the browser's console will display the following message:
+If you run the application now, using `au run --watch`, you'll see a compile error similar to:
 
 ```Output
-Failed to load resource: the server responded with a status of 404 (Not Found) http://localhost:9000/src/no-selection.js
-ERROR [app-router] Error: Script error for "no-selection"
+ERROR in ./src/app.js
+Module not found: Error: Can't resolve 'contact-detail' in '/contact-manager/src'
 ```
 
-This is actually expected. Why? Well, we have now configured a router, that router is matching on the empty route pattern we defined and it's trying to load the `no-selection` module, but we haven't created that yet. Let's do that now. Create a new file under `src` named `no-selection${context.language.fileExtension}` and give it the following code:
+This is actually expected. Why? Well, we use `PLATFORM.moduleName(....)` as part of our route configuration, but we haven't actually created these modules. Let's create them now. Create a new file under `src` named `no-selection${context.language.fileExtension}` and give it the following code:
 
 <code-listing heading="no-selection${context.language.fileExtension}">
   <source-code lang="ES 2015/ES Next">
@@ -221,7 +200,23 @@ This will provide the basic functionality for our "no selection" screen. All we 
   </source-code>
 </code-listing>
 
-All it does is provide a container with some styling in order to display our message to the user. With this in place, you should now be able to run your application. If you haven't stopped/restarted it after editing the bundles, then you will need to do that now. When you run the application, you should see something like this:
+All it does is provide a container with some styling in order to display our message to the user.
+
+Next, let's just add a placeholder module for our contact detail screen, so we can satisfy the build. Create a new file under `src` named `contact-detail${context.language.fileExtension}` and give it the following code:
+
+<code-listing heading="contact-detail${context.language.fileExtension}">
+  <source-code lang="ES 2015">
+    export class ContactDetail {}
+  </source-code>
+  <source-code lang="ES Next">
+    export class ContactDetail {}
+  </source-code>
+  <source-code lang="TypeScript">
+    export class ContactDetail {}
+  </source-code>
+</code-listing>
+
+With this in place, you should now be able to run your application. If you haven't stopped/restarted it after editing the bundles, then you will need to do that now. When you run the application, you should see something similar to this:
 
 ![No Selection Screen](img/contact-app-no-selection.png)
 
