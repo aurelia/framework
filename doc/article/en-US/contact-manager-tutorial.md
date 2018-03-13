@@ -320,14 +320,13 @@ Finally, we have a `select` method for selecting a contact. We'll revisit this s
 
 The markup above begins by repeating an `li` for each contact of our contacts array. Take a look at the class attribute on the `li`. We've used an interesting technique here to add an `active` class if the contact's id is the same as the `selectedId` of the contact on our `ContactList` view-model. We've used the `$parent` special value to reach outside of the list's scope and into the parent view-model so we can test against that property. Throughout the list template, we've used basic string interpolation binding to show the `firstName`, `lastName` and `email` of each contact.
 
-Take special note of the `a` tag. First, we are using a custom attribute provided by Aurelia's routing system: `route-href`. This attribute can generate an href for a route, based on the route's name and a set of parameters. Remember how we named the contacts route in our configuration? Here we're using that by referencing the "contacts" route name and binding the contacts's `id` parameter as the route's `id` parameter. With this information, the router is able to generate the correct `href` on the `a` tag for each contact. Additionally, we've also wired up a `click` event. Why would we do this if the `href` is already going to handle navigating to the correct contact? Well, we're looking for instant user feedback. We want the list selection to happen ASAP, so we don't have to wait on the navigation system or on the loading of the contact data. To accomplish this, we use the `select` method to track the selected contact's `id`, which allows us to instantly apply the selection style. Finally, normal use of `.trigger` or `.delegate` causes the default action of the event to be cancelled. But, if you return true from your method, as we have done above, it will be allowed to continue. Thus, when the user clicks on the contact, we immediately select the contact in the list and then the `href` is allowed to trigger the router, causing a navigation to the selected contact.
+Take special note of the `a` tag. First, we are using a custom attribute provided by Aurelia's routing system: `route-href`. This attribute can generate an `href` for a route, based on the route's name and a set of parameters. Remember how we named the contacts route in our configuration? Here we're using that by referencing the "contacts" route name and binding the contacts's `id` parameter as the route's `id` parameter. With this information, the router is able to generate the correct `href` on the `a` tag for each contact. Additionally, we've also wired up a `click` event. Why would we do this if the `href` is already going to handle navigating to the correct contact? Well, we're looking for instant user feedback. We want the list selection to happen ASAP, so we don't have to wait on the navigation system or on the loading of the contact data. To accomplish this, we use the `select` method to track the selected contact's `id`, which allows us to instantly apply the selection style. Finally, normal use of `.trigger` or `.delegate` causes the default action of the event to be cancelled. But, if you return true from your method, as we have done above, it will be allowed to continue. Thus, when the user clicks on the contact, we immediately select the contact in the list and then the `href` is allowed to trigger the router, causing a navigation to the selected contact.
 
 Ok, now that we've got the contact list built, we need to use it. To do that, update your `app.html` with the following markup:
 
 <code-listing heading="app.html">
   <source-code lang="HTML">
     <template>
-      <require from="bootstrap/css/bootstrap.css"></require>
       <require from="./styles.css"></require>
       <require from="./contact-list"></require>
 
@@ -361,10 +360,10 @@ If you go ahead and run the application, you should now see something like this:
 Ok, things are starting to come together, but we still can't view an individual contact. If you try selecting something from the list, you'll see an error like the following in the console:
 
 ```Output
-ERROR [app-router] Error: Script error for "contact-detail"
+ERROR [app-router] Error: Unable to find module with ID: contact-detail.html
 ```
 
-Again, this is because the router is trying to route to the detail screen, but we have not yet created the component. So, let's do that next. Create a new file named `contact-detail${context.language.fileExtension}` and add the following code:
+Again, this is because the router is trying to route to the detail screen, but we only have a stub component with no view. So, let's build out the real detail component. Replace the contents of `contact-detail${context.language.fileExtension}` with the following code:
 
 <code-listing heading="contact-detail${context.language.fileExtension}">
   <source-code lang="ES 2015">
