@@ -101,7 +101,7 @@ To begin, we're going to setup our `App` class by configuring it with a router. 
   </source-code>
 </code-listing>
 
-> Important
+> Warning
 > After changing the code above, if you immediately try to compile, you may receive a compile error on your unit tests because the sample test references the `App` class, which we just changed. To address this, remove the dummy unit test.
 
 To add routing to your app, all you have to do is add a `configureRouter` method to your `App` class. The framework will call this method, passing it a `RouterConfiguration` and a `Router`. You can use the configuration object to get the router setup with the routes you want. Use the `map` method to map route patterns to the modules that should handle the patterns. Minimally, each route needs at least a `route` pattern and a `moduleId`.
