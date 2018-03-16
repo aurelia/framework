@@ -28,6 +28,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Erik Lieben](https://www.eriklieben.com)
 * [Fabian Ituarte](http://fabianituarte.com/)
 * [Fabio Chines](https://tagsistemi.it)
+* [John D'Amore](https://www.diameterhealth.com/)
 * [Juliën Hanssens](https://hanssens.com)
 * [Khuzema Kanore](http://wisdom.com.kw)
 * [Luka Cetina](https://opencollective.com/luka-cetina)
