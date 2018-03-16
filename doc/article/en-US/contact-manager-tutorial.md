@@ -899,29 +899,8 @@ Begin by installing the `nprogress` library with the following command:
 npm install nprogress --save
 ```
 
-Once this is installed, we'll need to make sure it gets configured in the proper bundle. Open your `aurelia.json` file again, find the bundles section and add the following entry to the dependencies array of the `vendor-bundle.js` bundle:
-
-<code-listing heading="NProgress Bundle Config">
-  <source-code lang="JavaScript">
-    "dependencies": [
-      ...
-      {
-        "name": "nprogress",
-        "path": "../node_modules/nprogress",
-        "main": "nprogress",
-        "resources": [
-          "nprogress.css"
-        ]
-      }
-      ...
-    ]
-  </source-code>
-</code-listing>
-
-As you can see, we've configured the standard JavaScript main but are also including an additional CSS resource, just like we did with Bootstrap.
-
 > Info: TypeScript Definition Files
-> TypeScript users should note that when using 3rd party libraries, in order to make them work in a TypeScript project, you will either need to install the d.ts files or create them for yourself. In the case of NProgress, there are definition files available via Definitely Typed which can be installed with the Typings CLI. Assuming you have the Typings tool installed, you would install the definition files for NProgress with the following command: `typings install dt~nprogress --global --save` (or `npm install @types/nprogress --global --save` for TypeScript >= 2.0)
+> TypeScript users should note that when using 3rd party libraries, in order to make them work in a TypeScript project, you may need to acquire (or create) d.ts files. See TypeScript's official documentation, if you encounter issues.
 
 With that in place, let's create our `loading-indicator` custom element. In the `src/resources/elements` folder create a file named `loading-indicator${context.language.fileExtension}` and use the code below for its implementation:
 
@@ -929,9 +908,10 @@ With that in place, let's create our `loading-indicator` custom element. In the 
   <source-code lang="ES 2015">
     import * as nprogress from 'nprogress';
     import {bindable, noView, decorators} from 'aurelia-framework';
+    import 'nprogress/nprogress.css';
 
     export let LoadingIndicator = decorators(
-      noView(['nprogress/nprogress.css']),
+      noView(),
       bindable({name: 'loading', defaultValue: false})
     ).on(class {
       loadingChanged(newValue) {
@@ -946,8 +926,9 @@ With that in place, let's create our `loading-indicator` custom element. In the 
   <source-code lang="ES Next">
     import * as nprogress from 'nprogress';
     import {bindable, noView} from 'aurelia-framework';
+    import 'nprogress/nprogress.css';
 
-    @noView(['nprogress/nprogress.css'])
+    @noView
     export class LoadingIndicator {
       @bindable loading = false;
 
@@ -962,9 +943,10 @@ With that in place, let's create our `loading-indicator` custom element. In the 
   </source-code>
   <source-code lang="TypeScript">
     import * as nprogress from 'nprogress';
-    import {bindable, noView} from 'aurelia-framework';
+    import {bindable, noView, PLATFORM} from 'aurelia-framework';
+    import 'nprogress/nprogress.css';
 
-    @noView(['nprogress/nprogress.css'])
+    @noView
     export class LoadingIndicator {
       @bindable loading = false;
 
@@ -979,7 +961,7 @@ With that in place, let's create our `loading-indicator` custom element. In the 
   </source-code>
 </code-listing>
 
-This code creates a custom element, but we're doing a few unique things here. First, since the entire rendering job is handled by the NProgress library, we don't need Aurelia's templating engine to render this component at all. So, we use the `noView()` decorator to tell Aurelia not to load a `loading-indicator.html`, compile it or do any of that rendering work. Additionally, the NProgress library requires some CSS to work, so we can declare that in the decorator as well. In the case of `noView`, this works exactly as if you had put this in a `require` element inside the view.
+This code creates a custom element, but we're doing a few unique things here. First, since the entire rendering job is handled by the NProgress library, we don't need Aurelia's templating engine to render this component at all. So, we use the `noView()` decorator to tell Aurelia not to load a `loading-indicator.html`, compile it or do any of that rendering work. Additionally, the NProgress library requires some CSS to work, so we make sure to import that above.
 
 Next, we want our custom HTML element to have a `loading` property that we can bind to via an HTML attribute in the DOM. So, we declare that by using the `bindable` decorator. Whenever you have a `bindable`, by convention, you can optionally declare a *propertyName*Changed method that will be called whenever the binding system updates the property. So, we've added one of those so that we can toggle the NProgress indicator off and on, based on the value of that property.
 
@@ -987,20 +969,24 @@ Previously, when we created the `contact-list` component, we required that into 
 
 <code-listing heading="resources/index${context.language.fileExtension}">
   <source-code lang="ES 2015">
+    import {PLATFORM} from 'aurelia-framework';
+
     export function configure(config) {
-      config.globalResources(['./elements/loading-indicator']);
+      config.globalResources([PLATFORM.moduleName('./elements/loading-indicator')]);
     }
   </source-code>
   <source-code lang="ES Next">
+    import {PLATFORM} from 'aurelia-framework';
+
     export function configure(config) {
-      config.globalResources(['./elements/loading-indicator']);
+      config.globalResources([PLATFORM.moduleName('./elements/loading-indicator')]);
     }
   </source-code>
   <source-code lang="TypeScript">
-    import {FrameworkConfiguration} from 'aurelia-framework';
+    import {FrameworkConfiguration, PLATFORM} from 'aurelia-framework';
 
     export function configure(config: FrameworkConfiguration) {
-      config.globalResources(['./elements/loading-indicator']);
+      config.globalResources([PLATFORM.moduleName('./elements/loading-indicator')]);
     }
   </source-code>
 </code-listing>
@@ -1009,6 +995,7 @@ With this registration in place, we can now use our new indicator in our `app.ht
 
 <code-listing heading="app${context.language.fileExtension}">
   <source-code lang="ES 2015">
+    import {PLATFORM} from 'aurelia-framework';
     import {WebAPI} from './web-api';
 
     export class App {
@@ -1021,8 +1008,8 @@ With this registration in place, we can now use our new indicator in our `app.ht
       configureRouter(config, router) {
         config.title = 'Contacts';
         config.map([
-          { route: '',              moduleId: 'no-selection',   title: 'Select'},
-          { route: 'contacts/:id',  moduleId: 'contact-detail', name:'contacts' }
+          { route: '',              moduleId: PLATFORM.moduleName('no-selection'),   title: 'Select'},
+          { route: 'contacts/:id',  moduleId: PLATFORM.moduleName('contact-detail'), name:'contacts' }
         ]);
 
         this.router = router;
@@ -1030,7 +1017,7 @@ With this registration in place, we can now use our new indicator in our `app.ht
     }
   </source-code>
   <source-code lang="ES Next">
-    import {inject} from 'aurelia-framework';
+    import {inject, PLATFORM} from 'aurelia-framework';
     import {WebAPI} from './web-api';
 
     @inject(WebAPI)
@@ -1042,8 +1029,8 @@ With this registration in place, we can now use our new indicator in our `app.ht
       configureRouter(config, router) {
         config.title = 'Contacts';
         config.map([
-          { route: '',              moduleId: 'no-selection',   title: 'Select'},
-          { route: 'contacts/:id',  moduleId: 'contact-detail', name:'contacts' }
+          { route: '',              moduleId: PLATFORM.moduleName('no-selection'),   title: 'Select'},
+          { route: 'contacts/:id',  moduleId: PLATFORM.moduleName('contact-detail'), name:'contacts' }
         ]);
 
         this.router = router;
@@ -1052,7 +1039,7 @@ With this registration in place, we can now use our new indicator in our `app.ht
   </source-code>
   <source-code lang="TypeScript">
     import {Router, RouterConfiguration} from 'aurelia-router';
-    import {inject} from 'aurelia-framework';
+    import {inject, PLATFORM} from 'aurelia-framework';
     import {WebAPI} from './web-api';
 
     @inject(WebAPI)
@@ -1064,8 +1051,8 @@ With this registration in place, we can now use our new indicator in our `app.ht
       configureRouter(config: RouterConfiguration, router: Router) {
         config.title = 'Contacts';
         config.map([
-          { route: '',              moduleId: 'no-selection',   title: 'Select'},
-          { route: 'contacts/:id',  moduleId: 'contact-detail', name:'contacts' }
+          { route: '',              moduleId: PLATFORM.moduleName('no-selection'),   title: 'Select'},
+          { route: 'contacts/:id',  moduleId: PLATFORM.moduleName('contact-detail'), name:'contacts' }
         ]);
 
         this.router = router;
