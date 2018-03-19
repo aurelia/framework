@@ -10,6 +10,9 @@ Below you'll find a list of the wonderful people and organizations that have mad
 
 * [Effectory](https://www.effectory.com/)
 * [Merchise](http://www.merchise.cl/)
+* [Nordic Trustee](https://nordictrustee.com/)
+* [Ormasoft](http://www.ormasoft.cl/)
+* [Team Extension](https://teamextension.io/)
 
 ## Wood Sponsors
 
