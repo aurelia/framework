@@ -120,13 +120,11 @@ Now that we've configured our application's navigation structure, we need to put
     <template>
       <require from="./styles.css"></require>
 
-      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">
-            <i class="fa fa-user"></i>
-            <span>Contacts</span>
-          </a>
-        </div>
+      <nav class="navbar navbar-light bg-light fixed-top" role="navigation">
+        <a class="navbar-brand" href="#">
+          <i class="fa fa-user"></i>
+          <span>Contacts</span>
+        </a>
       </nav>
 
       <div class="container">
@@ -151,12 +149,14 @@ To get Bootstrap setup, we begin by installing the library itself with NPM. Exec
 
 ```Shell
 npm install bootstrap --save
+npm install font-awesome --save
 ```
 
 Next, we need to import it in our `main${context.language.fileExtension}` by adding the following line to the top of the file:
 
 ```JavaScript
 import 'bootstrap/dist/css/bootstrap.css';
+import 'font-awesome/css/font-awesome.css';
 ```
 
 > Info
@@ -304,12 +304,12 @@ Finally, we have a `select` method for selecting a contact. We'll revisit this s
 <code-listing heading="contact-list.html">
   <source-code lang="HTML">
     <template>
-      <div class="contact-list">
+     <div class="contact-list">
         <ul class="list-group">
           <li repeat.for="contact of contacts" class="list-group-item ${contact.id === $parent.selectedId ? 'active' : ''}">
             <a route-href="route: contacts; params.bind: {id:contact.id}" click.delegate="$parent.select(contact)">
-              <h4 class="list-group-item-heading">${contact.firstName} ${contact.lastName}</h4>
-              <p class="list-group-item-text">${contact.email}</p>
+              <h4>${contact.firstName} ${contact.lastName}</h4>
+              <p>${contact.email}</p>
             </a>
           </li>
         </ul>
@@ -330,13 +330,11 @@ Ok, now that we've got the contact list built, we need to use it. To do that, up
       <require from="./styles.css"></require>
       <require from="./contact-list"></require>
 
-      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">
-            <i class="fa fa-user"></i>
-            <span>Contacts</span>
-          </a>
-        </div>
+      <nav class="navbar navbar-light bg-light fixed-top" role="navigation">
+        <a class="navbar-brand" href="#">
+          <i class="fa fa-user"></i>
+          <span>Contacts</span>
+        </a>
       </nav>
 
       <div class="container">
@@ -519,45 +517,44 @@ With that all in place, let's look at the view that will render this component. 
 <code-listing heading="contact-detail.html">
   <source-code lang="HTML">
     <template>
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Profile</h3>
+      <div class="card">
+        <div class="card-header text-white bg-primary">
+          <h3>Profile</h3>
         </div>
-        <div class="panel-body">
-          <form role="form" class="form-horizontal">
-            <div class="form-group">
-              <label class="col-sm-2 control-label">First Name</label>
-              <div class="col-sm-10">
+        <div class="card-body">
+          <form role="form">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">First Name</label>
+              <div class="col-sm-9">
                 <input type="text" placeholder="first name" class="form-control" value.bind="contact.firstName">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label">Last Name</label>
-              <div class="col-sm-10">
+              <label class="col-sm-3 col-form-label">Last Name</label>
+              <div class="col-sm-9">
                 <input type="text" placeholder="last name" class="form-control" value.bind="contact.lastName">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label">Email</label>
-              <div class="col-sm-10">
+              <label class="col-sm-3 col-form-label">Email</label>
+              <div class="col-sm-9">
                 <input type="text" placeholder="email" class="form-control" value.bind="contact.email">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label">Phone Number</label>
-              <div class="col-sm-10">
+              <label class="col-sm-3 col-form-label">Phone Number</label>
+              <div class="col-sm-9">
                 <input type="text" placeholder="phone number" class="form-control" value.bind="contact.phoneNumber">
               </div>
             </div>
           </form>
+          <div>
+            <button class="btn btn-success float-right" click.delegate="save()" disabled.bind="!canSave">Save</button>
         </div>
-      </div>
-
-      <div class="button-bar">
-        <button class="btn btn-success" click.delegate="save()" disabled.bind="!canSave">Save</button>
+        </div>
       </div>
     </template>
   </source-code>
