@@ -524,38 +524,37 @@ With that all in place, let's look at the view that will render this component. 
         <div class="card-body">
           <form role="form">
             <div class="form-group row">
-              <label class="col-sm-2 form-label">First Name</label>
-              <div class="col-sm-10">
+              <label class="col-sm-3 col-form-label">First Name</label>
+              <div class="col-sm-9">
                 <input type="text" placeholder="first name" class="form-control" value.bind="contact.firstName">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label">Last Name</label>
-              <div class="col-sm-10">
+              <label class="col-sm-3 col-form-label">Last Name</label>
+              <div class="col-sm-9">
                 <input type="text" placeholder="last name" class="form-control" value.bind="contact.lastName">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label">Email</label>
-              <div class="col-sm-10">
+              <label class="col-sm-3 col-form-label">Email</label>
+              <div class="col-sm-9">
                 <input type="text" placeholder="email" class="form-control" value.bind="contact.email">
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label">Phone Number</label>
-              <div class="col-sm-10">
+              <label class="col-sm-3 col-form-label">Phone Number</label>
+              <div class="col-sm-9">
                 <input type="text" placeholder="phone number" class="form-control" value.bind="contact.phoneNumber">
               </div>
             </div>
           </form>
+          <div>
+            <button class="btn btn-success float-right" click.delegate="save()" disabled.bind="!canSave">Save</button>
         </div>
-      </div>
-
-      <div class="button-bar">
-        <button class="btn btn-success" click.delegate="save()" disabled.bind="!canSave">Save</button>
+        </div>
       </div>
     </template>
   </source-code>
