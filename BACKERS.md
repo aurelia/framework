@@ -40,6 +40,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Prasan Kumar](https://antaressystems.com)
 * [Red Feet](https://twitter.com/redfeet)
 * [Richard Sykora](https://twitter.com/richardsykora)
+* [Robert B](https://opencollective.com/robert-b)
 * [Saqib Rokadia](https://invioinc.com/)
 * [Shannon Horn](http://smoothirish.com)
 * [Steven Pena](https://twitter.com/steven_pena)
