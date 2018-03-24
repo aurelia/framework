@@ -248,10 +248,10 @@ export class FrameworkConfiguration {
 
   /**
    * Adds globally available view resources to be imported into the Aurelia framework.
-   * @param resources The relative module id to the resource. (Relative to the plugin's installer.)
+   * @param {GlobalResources | string | | Function | (string | Function)[]} resources The relative module id to the resource. (Relative to the plugin's installer.)
    * @return Returns the current FrameworkConfiguration instance.
    */
-  globalResources(resources: GlobalResources | string | string[] | Function | Function[]): FrameworkConfiguration {
+  globalResources(resources): FrameworkConfiguration {
     assertProcessed(this);
 
     if (arguments.length === 1) {
@@ -284,6 +284,8 @@ export class FrameworkConfiguration {
 
         this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
       } else {
+        // here we don't lookup the hierarchy, each custom element should have their own metadata defined
+        // otherwise we may end up using parent class metadata for sub classes
         let resourceTypeMeta = metadata.get(metadata.resource, resource);
 
         if (resourceTypeMeta) {
@@ -313,7 +315,9 @@ export class FrameworkConfiguration {
             resourceTypeMeta.initialize(this.container, resource);
             resourceTypeMeta.register(this.aurelia.resources);
 
-            if (resourceTypeMeta.elementName) {
+            metadata.define(metadata.resource, resourceTypeMeta, resource);
+
+            if (resourceTypeMeta.elementName !== null) {
               this.globalBehaviors.push(resourceTypeMeta);
             }
           } else {
@@ -327,7 +331,7 @@ export class FrameworkConfiguration {
     return this;
   }
 
-  global(resources) {
+  global(resources: GlobalResources) {
     if (!resources || typeof resources !== 'object') {
       logger.warn('No global resources declared.');
       return;
@@ -508,9 +512,12 @@ export class FrameworkConfiguration {
     let resource = metadata.getOwn(metadata.resource, impl);
     if (!resource) {
       resource = new HtmlBehaviorResource();
-      resource.elementName = _hyphenate(impl.name);
+      metadata.define(metadata.resource, resource, impl);
     } else if (!(resource instanceof HtmlBehaviorResource)) {
       throw new Error(`Resource defined at ${impl.name} is not a custom element.`);
+    }
+    if (resource.elementName === null) {
+      resource.elementName = _hyphenate(impl.name);
     }
     resource.initialize(aurelia.container, impl);
     resource.register(aurelia.resources);
@@ -522,9 +529,12 @@ export class FrameworkConfiguration {
     let resource = metadata.getOwn(metadata.resource, impl);
     if (!resource) {
       resource = new HtmlBehaviorResource();
-      resource.attributeName = _hyphenate(impl.name);
+      metadata.define(metadata.resource, resource, impl);
     } else if (!(resource instanceof HtmlBehaviorResource)) {
       throw new Error(`Resource defined at ${impl.name} is not a custom attribute.`);
+    }
+    if (resource.attributeName === null) {
+      resource.attributeName = _hyphenate(impl.name);
     }
     resource.initialize(aurelia.container, impl);
     resource.register(aurelia.resources);
@@ -547,6 +557,7 @@ export class FrameworkConfiguration {
     let resource = metadata.getOwn(metadata.resource, impl);
     if (!resource) {
       resource = new ValueConverterResource(camelCase(impl.name));
+      metadata.define(metadata.resource, resource, impl);
     } else if (!(resource instanceof ValueConverterResource)) {
       throw new Error(`Resource defined at ${impl.name} is not a value converter.`);
     }
