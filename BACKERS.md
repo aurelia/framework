@@ -8,6 +8,8 @@ Below you'll find a list of the wonderful people and organizations that have mad
 
 ## Bronze Sponsors
 
+* [AmVenture](https://www.amventure.com/)
+* [Diapason](https://www.diapason-treasury.com/trms/)
 * [Effectory](https://www.effectory.com/)
 * [Merchise](http://www.merchise.cl/)
 * [Nordic Trustee](https://nordictrustee.com/)
