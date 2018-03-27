@@ -84,6 +84,13 @@ export declare class Aurelia {
   setRoot(root?: string, applicationHost?: string | Element): Promise<Aurelia>;
 }
 
+export declare interface GlobalResources {
+  customElements?: Function[]
+  customAttributes?: Function[]
+  bindingBehaviors?: Function[]
+  valueConverters?: Function[]
+}
+
 /**
  * Manages configuring the aurelia framework instance.
  */
@@ -152,11 +159,13 @@ export declare class FrameworkConfiguration {
   feature(plugin: string, config?: any): FrameworkConfiguration;
 
   /**
-     * Adds globally available view resources to be imported into the Aurelia framework.
-     * @param resources The relative module id to the resource. (Relative to the plugin's installer.)
-     * @return Returns the current FrameworkConfiguration instance.
-     */
-  globalResources(resources: string | string[]): FrameworkConfiguration;
+   * Adds globally available view resources to be imported into the Aurelia framework.
+   * @param resources The relative module id to the resource. (Relative to the plugin's installer.)
+   * @return Returns the current FrameworkConfiguration instance.
+   */
+  globalResources(globals: GlobalResources): FrameworkConfiguration;
+  globalResources(...resources: (string | Function)[]): FrameworkConfiguration;
+  globalResources(resources: string | string[] | Function | Function[]): FrameworkConfiguration;
 
   /**
      * Renames a global resource that was imported.
@@ -227,6 +236,30 @@ export declare class FrameworkConfiguration {
      * @return Returns a promise which resolves when all plugins are loaded and configured.
     */
   apply(): Promise<void>;
+
+  /**
+   * Explicitly register an implementation as custom element
+   * @param impl Custom element view model class
+   */
+  customElement(impl: Function): void;
+
+  /**
+   * Explicitly register an implementation as custom attribute
+   * @param impl Custom attribute view model class
+   */
+  customAttribute(impl: Function): void;
+
+  /**
+   * Explicitly register an implementation as binding behavior
+   * @param impl Binding behavior class
+   */
+  bindingBehavior(impl: Function): void;
+
+  /**
+   * Explicitly register an implementation as value converter
+   * @param impl Value converter class
+   */
+  valueConverter(impl: Function): void;
 }
 export * from 'aurelia-dependency-injection';
 export * from 'aurelia-binding';
@@ -239,4 +272,4 @@ export * from 'aurelia-pal';
 /**
    * The log manager.
    */
-  export const LogManager: any;
+export const LogManager: any;

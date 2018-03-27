@@ -1,7 +1,25 @@
 import * as TheLogManager from 'aurelia-logging';
-import {ViewEngine} from 'aurelia-templating';
+import { camelCase, ValueConverterResource, BindingBehaviorResource } from 'aurelia-binding';
+import {ViewEngine, ViewResources, HtmlBehaviorResource, _hyphenate} from 'aurelia-templating';
 import {join} from 'aurelia-path';
 import {Container} from 'aurelia-dependency-injection';
+import { metadata } from 'aurelia-metadata';
+
+
+/**
+ * @typedef ConfigInfo
+ * @prop {string} moduleId
+ * @prop {string[]} resourcesRelativeTo
+ * @prop {any} config
+ */
+
+ /**
+  * @typedef GlobalResources
+  * @prop {Function[]} valueConverters
+  * @prop {Function[]} bindingBehaviors
+  * @prop {Function[]} customElements
+  * @prop {Function[]} customAttributes
+  */
 
 const logger = TheLogManager.getLogger('aurelia');
 const extPattern = /\.[^/.]+$/;
@@ -20,7 +38,7 @@ function runTasks(config, tasks) {
   return next();
 }
 
-function loadPlugin(config, loader, info) {
+function loadPlugin(config: FrameworkConfiguration, loader, info: ConfigInfo) {
   logger.debug(`Loading plugin ${info.moduleId}.`);
   config.resourcesRelativeTo = info.resourcesRelativeTo;
 
@@ -48,7 +66,7 @@ function loadPlugin(config, loader, info) {
   }
 }
 
-function loadResources(aurelia, resourcesToLoad, appResources) {
+function loadResources(aurelia, resourcesToLoad, appResources: ViewResources) {
   let viewEngine = aurelia.container.get(ViewEngine);
 
   return Promise.all(Object.keys(resourcesToLoad).map(n => _normalize(resourcesToLoad[n])))
@@ -98,6 +116,20 @@ function loadResources(aurelia, resourcesToLoad, appResources) {
   }
 }
 
+function loadBehaviors(container: Container, behaviors: HtmlBehaviorResource[]) {
+  let current;
+  let next = () => {
+    current = behaviors.shift();
+    if (current) {
+      return current.load(container, current.target).then(next);
+    }
+
+    return Promise.resolve();
+  };
+
+  return next();
+}
+
 function getExt(name) { // eslint-disable-line consistent-return
   let match = name.match(extPattern);
   if (match && match.length > 0) {
@@ -105,7 +137,7 @@ function getExt(name) { // eslint-disable-line consistent-return
   }
 }
 
-function assertProcessed(plugins) {
+function assertProcessed(plugins: FrameworkConfiguration) {
   if (plugins.processed) {
     throw new Error('This config instance has already been applied. To load more plugins or global resources, create a new FrameworkConfiguration instance.');
   }
@@ -132,13 +164,18 @@ export class FrameworkConfiguration {
   constructor(aurelia: Aurelia) {
     this.aurelia = aurelia;
     this.container = aurelia.container;
+    /**@type {ConfigInfo[]} */
     this.info = [];
+    /**@type {HtmlBehaviorResource[]} */
+    this.globalBehaviors = [];
     this.processed = false;
     this.preTasks = [];
     this.postTasks = [];
     this.resourcesToLoad = {};
     this.preTask(() => aurelia.loader.normalize('aurelia-bootstrapper').then(name => this.bootstrapperName = name));
-    this.postTask(() => loadResources(aurelia, this.resourcesToLoad, aurelia.resources));
+    this.postTask(() => loadResources(aurelia, this.resourcesToLoad, aurelia.resources)
+      .then(() => loadBehaviors(this.container, this.globalBehaviors))
+    );
   }
 
   /**
@@ -211,11 +248,21 @@ export class FrameworkConfiguration {
 
   /**
    * Adds globally available view resources to be imported into the Aurelia framework.
-   * @param resources The relative module id to the resource. (Relative to the plugin's installer.)
+   * @param {GlobalResources | string | | Function | (string | Function)[]} resources The relative module id to the resource. (Relative to the plugin's installer.)
    * @return Returns the current FrameworkConfiguration instance.
    */
-  globalResources(resources: string|string[]): FrameworkConfiguration {
+  globalResources(resources): FrameworkConfiguration {
     assertProcessed(this);
+
+    if (arguments.length === 1) {
+      let firstArg = arguments[0];
+      // When there is only one argument, and it's an object, and not an array
+      // it's the shape on explicit global()
+      if (firstArg && typeof firstArg === 'object' && !Array.isArray(firstArg)) {
+        this.global(firstArg);
+        return this;
+      }
+    }
 
     let toAdd = Array.isArray(resources) ? resources : arguments;
     let resource;
@@ -223,21 +270,88 @@ export class FrameworkConfiguration {
 
     for (let i = 0, ii = toAdd.length; i < ii; ++i) {
       resource = toAdd[i];
-      if (typeof resource !== 'string') {
-        throw new Error(`Invalid resource path [${resource}]. Resources must be specified as relative module IDs.`);
+      if (!resource) {
+        throw new Error('Invalid resource declaration. Expected module name or a class');
       }
+      if (typeof resource === 'string') {
+        let parent = resourcesRelativeTo[0];
+        let grandParent = resourcesRelativeTo[1];
+        let name = resource;
 
-      let parent = resourcesRelativeTo[0];
-      let grandParent = resourcesRelativeTo[1];
-      let name = resource;
+        if ((resource.startsWith('./') || resource.startsWith('../')) && parent !== '') {
+          name = join(parent, resource);
+        }
 
-      if ((resource.startsWith('./') || resource.startsWith('../')) && parent !== '') {
-        name = join(parent, resource);
+        this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
+      } else {
+        // here we don't lookup the hierarchy, each custom element should have their own metadata defined
+        // otherwise we may end up using parent class metadata for sub classes
+        let resourceTypeMeta = metadata.get(metadata.resource, resource);
+
+        if (resourceTypeMeta) {
+          // Sometimes the resources might have been declared lazily, without a
+          // reliable name. Going through their corresponding resource resigration ensures it
+          if (resourceTypeMeta instanceof HtmlBehaviorResource) {
+            // When it's either custom element or custom attribute
+            if (resourceTypeMeta.attributeName !== null) {
+              this.customAttribute(resource);
+            } else {
+              this.customElement(resource);
+            }
+          } else if (resourceTypeMeta instanceof BindingBehaviorResource) {
+            this.bindingBehavior(resource);
+          } else if (resourceTypeMeta instanceof ValueConverterResource) {
+            this.valueConverter(resource);
+          } else {
+            logger.warn(`Invalid resource registered for ${resource.name}`);
+          }
+        } else {
+          // When there is no explicit resources defined
+          let className = resource.name;
+          if (resourceTypeMeta = HtmlBehaviorResource.convention(className)
+            || BindingBehaviorResource.convention(className)
+            || ValueConverterResource.convention(className)
+          ) {
+            resourceTypeMeta.initialize(this.container, resource);
+            resourceTypeMeta.register(this.aurelia.resources);
+
+            metadata.define(metadata.resource, resourceTypeMeta, resource);
+
+            if (resourceTypeMeta.elementName !== null) {
+              this.globalBehaviors.push(resourceTypeMeta);
+            }
+          } else {
+            // When there is no explicit configuration and there is no convention
+            // It's a custom element
+            this.customElement(resource);
+          }
+        }
       }
-
-      this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
     }
+    return this;
+  }
 
+  global(resources: GlobalResources) {
+    if (!resources || typeof resources !== 'object') {
+      logger.warn('No global resources declared.');
+      return;
+    }
+    const elements = resources.customElements;
+    if (elements) {
+      elements.forEach(this.customElement, this);
+    }
+    const attributes = resources.customAttributes;
+    if (attributes) {
+      attributes.forEach(this.customAttribute, this);
+    }
+    const bindingBehaviors = resources.bindingBehaviors;
+    if (bindingBehaviors) {
+      bindingBehaviors.forEach(this.bindingBehavior, this);
+    }
+    const valueConverters = resources.valueConverters;
+    if (valueConverters) {
+      valueConverters.forEach(this.valueConverter, this);
+    }
     return this;
   }
 
@@ -397,5 +511,63 @@ export class FrameworkConfiguration {
 
       return next().then(() => runTasks(this, this.postTasks));
     });
+  }
+
+  customElement(impl: Function) {
+    const aurelia = this.aurelia;
+    let resource = metadata.getOwn(metadata.resource, impl);
+    if (!resource) {
+      resource = new HtmlBehaviorResource();
+      metadata.define(metadata.resource, resource, impl);
+    } else if (!(resource instanceof HtmlBehaviorResource)) {
+      throw new Error(`Resource defined at ${impl.name} is not a custom element.`);
+    }
+    if (resource.elementName === null) {
+      resource.elementName = _hyphenate(impl.name);
+    }
+    resource.initialize(aurelia.container, impl);
+    resource.register(aurelia.resources);
+    this.globalBehaviors.push(resource);
+  }
+
+  customAttribute(impl: Function) {
+    const aurelia = this.aurelia;
+    let resource = metadata.getOwn(metadata.resource, impl);
+    if (!resource) {
+      resource = new HtmlBehaviorResource();
+      metadata.define(metadata.resource, resource, impl);
+    } else if (!(resource instanceof HtmlBehaviorResource)) {
+      throw new Error(`Resource defined at ${impl.name} is not a custom attribute.`);
+    }
+    if (resource.attributeName === null) {
+      resource.attributeName = _hyphenate(impl.name);
+    }
+    resource.initialize(aurelia.container, impl);
+    resource.register(aurelia.resources);
+  }
+
+  bindingBehavior(impl: Function) {
+    const aurelia = this.aurelia;
+    let resource = metadata.getOwn(metadata.resource, impl);
+    if (!resource) {
+      resource = new BindingBehaviorResource(camelCase(impl.name));
+    } else if (!(resource instanceof BindingBehaviorResource)) {
+      throw new Error(`Resource defined at ${impl.name} is not a binding behavior.`);
+    }
+    resource.initialize(aurelia.container, impl);
+    resource.register(aurelia.resources);
+  }
+
+  valueConverter(impl: Function) {
+    const aurelia = this.aurelia;
+    let resource = metadata.getOwn(metadata.resource, impl);
+    if (!resource) {
+      resource = new ValueConverterResource(camelCase(impl.name));
+      metadata.define(metadata.resource, resource, impl);
+    } else if (!(resource instanceof ValueConverterResource)) {
+      throw new Error(`Resource defined at ${impl.name} is not a value converter.`);
+    }
+    resource.initialize(aurelia.container, impl);
+    resource.register(aurelia.resources);
   }
 }

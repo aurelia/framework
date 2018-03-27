@@ -15,6 +15,7 @@ System.config({
     "aurelia-pal": "npm:aurelia-pal@1.0.0",
     "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0",
     "aurelia-path": "npm:aurelia-path@1.0.0",
+    "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0",
     "aurelia-task-queue": "npm:aurelia-task-queue@1.0.0",
     "aurelia-templating": "npm:aurelia-templating@1.0.0",
     "babel": "npm:babel-core@5.8.38",
@@ -62,6 +63,9 @@ System.config({
       "aurelia-pal": "npm:aurelia-pal@1.0.0"
     },
     "npm:aurelia-pal-browser@1.0.0": {
+      "aurelia-pal": "npm:aurelia-pal@1.0.0"
+    },
+    "npm:aurelia-polyfills@1.0.0": {
       "aurelia-pal": "npm:aurelia-pal@1.0.0"
     },
     "npm:aurelia-task-queue@1.0.0": {

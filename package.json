@@ -51,6 +51,7 @@
     },
     "devDependencies": {
       "aurelia-pal-browser": "^1.0.0-rc.1.0.0",
+      "aurelia-polyfills": "^1.3.0",
       "babel": "babel-core@^5.8.24",
       "babel-runtime": "^5.8.24",
       "core-js": "^2.0.3"
@@ -68,6 +69,7 @@
     "aurelia-templating": "^1.0.0"
   },
   "devDependencies": {
+    "aurelia-polyfills": "^1.3.0",
     "aurelia-tools": "^0.2.4",
     "babel-dts-generator": "^0.6.1",
     "babel-eslint": "^6.1.2",
@@ -113,79 +115,5 @@
     "vinyl": "^1.1.1",
     "vinyl-paths": "^2.1.0",
     "yargs": "^4.8.1"
-  },
-  "aurelia": {
-    "documentation": {
-      "articles": [
-        {
-          "title": "What is Aurelia?",
-          "href": "doc/article/en-US/what-is-aurelia.md"
-        },
-        {
-          "title": "Quick Start",
-          "href": "doc/article/en-US/quick-start.md"
-        },
-        {
-          "title": "Contact Manager Tutorial",
-          "href": "doc/article/en-US/contact-manager-tutorial.md"
-        },
-        {
-          "title": "The Aurelia CLI",
-          "href": "doc/article/en-US/the-aurelia-cli.md"
-        },
-        {
-          "title": "JSPM Setup",
-          "href": "doc/article/en-US/setup-jspm.md"
-        },
-        {
-          "title": "JSPM Bundling",
-          "href": "doc/article/en-US/bundling-jspm.md"
-        },
-        {
-          "title": "Webpack Setup",
-          "href": "doc/article/en-US/setup-webpack.md"
-        },
-        {
-          "title": "Webpack Bundling",
-          "href": "doc/article/en-US/bundling-webpack.md"
-        },
-        {
-          "title": "Creating Components",
-          "href": "doc/article/en-US/creating-components.md"
-        },
-        {
-          "title": "App Configuration and Startup",
-          "href": "doc/article/en-US/app-configuration-and-startup.md"
-        },
-        {
-          "title": "Securing Your App",
-          "href": "doc/article/en-US/securing-your-app.md"
-        },
-        {
-          "title": "Cheat Sheet",
-          "href": "doc/article/en-US/cheat-sheet.md"
-        },
-        {
-          "title": "Getting Help",
-          "href": "doc/article/en-US/getting-help.md"
-        },
-        {
-          "title": "Technical Benefits",
-          "href": "doc/article/en-US/technical-benefits.md"
-        },
-        {
-          "title": "Business Advantages",
-          "href": "doc/article/en-US/business-advantages.md"
-        },
-        {
-          "title": "Integrating with Polymer",
-          "href": "doc/article/en-US/integrating-with-polymer.md"
-        },
-        {
-          "title": "Migrating from Angular 1",
-          "href": "doc/article/en-US/migrating-from-angular-1.md"
-        }
-      ]
-    }
   }
 }
