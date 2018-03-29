@@ -154,8 +154,8 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
     Aurelia.prototype.enhance = function enhance() {
       var _this2 = this;
 
-      var bindingContext = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-      var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+      var bindingContext = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var applicationHost = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
       this._configureHost(applicationHost || _aureliaPal.DOM.querySelectorAll('body')[0]);
 
@@ -171,8 +171,8 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
     Aurelia.prototype.setRoot = function setRoot() {
       var _this3 = this;
 
-      var root = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-      var applicationHost = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+      var root = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+      var applicationHost = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
       var instruction = {};
 
@@ -401,7 +401,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
     };
 
     FrameworkConfiguration.prototype.feature = function feature(plugin) {
-      var config = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
       var hasIndex = /\/index$/i.test(plugin);
       var moduleId = hasIndex || getExt(plugin) ? plugin : plugin + '/index';
@@ -497,14 +497,20 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-m
       return this.basicConfiguration().history().router();
     };
 
-    FrameworkConfiguration.prototype.developmentLogging = function developmentLogging() {
+    FrameworkConfiguration.prototype.developmentLogging = function developmentLogging(level) {
       var _this6 = this;
+
+      var logLevel = level ? TheLogManager.logLevel[level] : undefined;
+
+      if (logLevel === undefined) {
+        logLevel = TheLogManager.logLevel.debug;
+      }
 
       this.preTask(function () {
         return _this6.aurelia.loader.normalize('aurelia-logging-console', _this6.bootstrapperName).then(function (name) {
           return _this6.aurelia.loader.loadModule(name).then(function (m) {
             TheLogManager.addAppender(new m.ConsoleAppender());
-            TheLogManager.setLevel(TheLogManager.logLevel.debug);
+            TheLogManager.setLevel(logLevel);
           });
         });
       });

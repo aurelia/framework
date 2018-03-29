@@ -524,14 +524,21 @@ export class FrameworkConfiguration {
 
   /**
    * Plugs in the ConsoleAppender and sets the log level to debug.
+   * @param level The log level (none/error/warn/info/debug), default to 'debug'.
    * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  developmentLogging(): FrameworkConfiguration {
+  developmentLogging(level?: String): FrameworkConfiguration {
+    let logLevel = level ? TheLogManager.logLevel[level] : undefined;
+
+    if (logLevel === undefined) {
+      logLevel = TheLogManager.logLevel.debug;
+    }
+
     this.preTask(() => {
       return this.aurelia.loader.normalize('aurelia-logging-console', this.bootstrapperName).then(name => {
         return this.aurelia.loader.loadModule(name).then(m => {
           TheLogManager.addAppender(new m.ConsoleAppender());
-          TheLogManager.setLevel(TheLogManager.logLevel.debug);
+          TheLogManager.setLevel(logLevel);
         });
       });
     });

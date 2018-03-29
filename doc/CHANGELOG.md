@@ -1,3 +1,22 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/aurelia/framework/compare/1.1.5...1.2.0) (2018-03-29)
+
+
+### Bug Fixes
+
+* **doc:** clarify when detached() is called ([6eee2b9](https://github.com/aurelia/framework/commit/6eee2b9))
+* **doc:** updated contact detail screenshot to bootstrap 4 styles ([5cdfe26](https://github.com/aurelia/framework/commit/5cdfe26))
+* **doc:** updated screenshots to bootstrap 4 styles ([88f0210](https://github.com/aurelia/framework/commit/88f0210))
+* **doc:** updated the form layout in the contact manager tutorial ([19a5dbe](https://github.com/aurelia/framework/commit/19a5dbe))
+* **doc:** upgrade contacts tutorial to bootstrap 4 ([2bb2f55](https://github.com/aurelia/framework/commit/2bb2f55))
+
+
+### Features
+
+* **log:** support optional log level param to developmentLogging(). ([7962912](https://github.com/aurelia/framework/commit/7962912))
+
+
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/aurelia/framework/compare/1.1.2...v1.1.3) (2017-07-11)
 

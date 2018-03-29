@@ -147,7 +147,7 @@ function runTasks(config, tasks) {
 }
 
 function loadPlugin(config, loader, info) {
-  logger.debug(`Loading plugin ${ info.moduleId }.`);
+  logger.debug(`Loading plugin ${info.moduleId}.`);
   config.resourcesRelativeTo = info.resourcesRelativeTo;
 
   let id = info.moduleId;
@@ -163,12 +163,12 @@ function loadPlugin(config, loader, info) {
       if ('configure' in m) {
         return Promise.resolve(m.configure(config, info.config || {})).then(() => {
           config.resourcesRelativeTo = null;
-          logger.debug(`Configured plugin ${ info.moduleId }.`);
+          logger.debug(`Configured plugin ${info.moduleId}.`);
         });
       }
 
       config.resourcesRelativeTo = null;
-      logger.debug(`Loaded plugin ${ info.moduleId }.`);
+      logger.debug(`Loaded plugin ${info.moduleId}.`);
     });
   }
 }
@@ -291,7 +291,7 @@ export let FrameworkConfiguration = class FrameworkConfiguration {
     for (let i = 0, ii = toAdd.length; i < ii; ++i) {
       resource = toAdd[i];
       if (typeof resource !== 'string') {
-        throw new Error(`Invalid resource path [${ resource }]. Resources must be specified as relative module IDs.`);
+        throw new Error(`Invalid resource path [${resource}]. Resources must be specified as relative module IDs.`);
       }
 
       let parent = resourcesRelativeTo[0];
@@ -367,12 +367,18 @@ export let FrameworkConfiguration = class FrameworkConfiguration {
     return this.basicConfiguration().history().router();
   }
 
-  developmentLogging() {
+  developmentLogging(level) {
+    let logLevel = level ? TheLogManager.logLevel[level] : undefined;
+
+    if (logLevel === undefined) {
+      logLevel = TheLogManager.logLevel.debug;
+    }
+
     this.preTask(() => {
       return this.aurelia.loader.normalize('aurelia-logging-console', this.bootstrapperName).then(name => {
         return this.aurelia.loader.loadModule(name).then(m => {
           TheLogManager.addAppender(new m.ConsoleAppender());
-          TheLogManager.setLevel(TheLogManager.logLevel.debug);
+          TheLogManager.setLevel(logLevel);
         });
       });
     });

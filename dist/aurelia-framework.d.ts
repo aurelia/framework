@@ -26,33 +26,33 @@ import {
  * The framework core that provides the main Aurelia object.
  */
 export declare class Aurelia {
-
+  
   /**
      * The DOM Element that Aurelia will attach to.
      */
   host: Element;
-
+  
   /**
     /**
      * The loader used by the application.
      */
   loader: Loader;
-
+  
   /**
      * The root DI container used by the application.
      */
   container: Container;
-
+  
   /**
      * The global view resources used by the application.
      */
   resources: ViewResources;
-
+  
   /**
      * The configuration used during application startup.
      */
   use: FrameworkConfiguration;
-
+  
   /**
      * Creates an instance of Aurelia.
      * @param loader The loader for this Aurelia instance to use. If a loader is not specified, Aurelia will use the loader type specified by PLATFORM.Loader.
@@ -60,13 +60,13 @@ export declare class Aurelia {
      * @param resources The resource registry for this Aurelia instance to use. If a resource registry is not specified, Aurelia will create an empty registry.
      */
   constructor(loader?: Loader, container?: Container, resources?: ViewResources);
-
+  
   /**
      * Loads plugins, then resources, and then starts the Aurelia instance.
      * @return Returns a Promise with the started Aurelia instance.
      */
   start(): Promise<Aurelia>;
-
+  
   /**
      * Enhances the host's existing elements with behaviors and bindings.
      * @param bindingContext A binding context for the enhanced elements.
@@ -74,7 +74,7 @@ export declare class Aurelia {
      * @return Returns a Promise for the current Aurelia instance.
      */
   enhance(bindingContext?: Object, applicationHost?: string | Element): Promise<Aurelia>;
-
+  
   /**
      * Instantiates the root component and adds it to the DOM.
      * @param root The root component to load upon bootstrap.
@@ -88,23 +88,23 @@ export declare class Aurelia {
  * Manages configuring the aurelia framework instance.
  */
 export declare class FrameworkConfiguration {
-
+  
   /**
      * The root DI container used by the application.
      */
   container: Container;
-
+  
   /**
      * The aurelia instance.
      */
   aurelia: Aurelia;
-
+  
   /**
      * Creates an instance of FrameworkConfiguration.
      * @param aurelia An instance of Aurelia.
      */
   constructor(aurelia: Aurelia);
-
+  
   /**
      * Adds an existing object to the framework's dependency injection container.
      * @param type The object type of the dependency that the framework will inject.
@@ -112,7 +112,7 @@ export declare class FrameworkConfiguration {
      * @return Returns the current FrameworkConfiguration instance.
      */
   instance(type: any, instance: any): FrameworkConfiguration;
-
+  
   /**
      * Adds a singleton to the framework's dependency injection container.
      * @param type The object type of the dependency that the framework will inject.
@@ -120,7 +120,7 @@ export declare class FrameworkConfiguration {
      * @return Returns the current FrameworkConfiguration instance.
      */
   singleton(type: any, implementation?: Function): FrameworkConfiguration;
-
+  
   /**
      * Adds a transient to the framework's dependency injection container.
      * @param type The object type of the dependency that the framework will inject.
@@ -128,21 +128,21 @@ export declare class FrameworkConfiguration {
      * @return Returns the current FrameworkConfiguration instance.
      */
   transient(type: any, implementation?: Function): FrameworkConfiguration;
-
+  
   /**
      * Adds an async function that runs before the plugins are run.
      * @param task The function to run before start.
      * @return Returns the current FrameworkConfiguration instance.
      */
   preTask(task: Function): FrameworkConfiguration;
-
+  
   /**
      * Adds an async function that runs after the plugins are run.
      * @param task The function to run after start.
      * @return Returns the current FrameworkConfiguration instance.
      */
   postTask(task: Function): FrameworkConfiguration;
-
+  
   /**
      * Configures an internal feature plugin before Aurelia starts.
      * @param plugin The folder for the internal plugin to configure (expects an index.js in that folder).
@@ -150,14 +150,14 @@ export declare class FrameworkConfiguration {
      * @return Returns the current FrameworkConfiguration instance.
      */
   feature(plugin: string, config?: any): FrameworkConfiguration;
-
+  
   /**
      * Adds globally available view resources to be imported into the Aurelia framework.
      * @param resources The relative module id to the resource. (Relative to the plugin's installer.)
      * @return Returns the current FrameworkConfiguration instance.
      */
   globalResources(resources: string | string[]): FrameworkConfiguration;
-
+  
   /**
      * Renames a global resource that was imported.
      * @param resourcePath The path to the resource.
@@ -165,7 +165,7 @@ export declare class FrameworkConfiguration {
      * @return Returns the current FrameworkConfiguration instance.
      */
   globalName(resourcePath: string, newName: string): FrameworkConfiguration;
-
+  
   /**
      * Configures an external, 3rd party plugin before Aurelia starts.
      * @param plugin The ID of the 3rd party plugin to configure.
@@ -173,55 +173,63 @@ export declare class FrameworkConfiguration {
      * @return Returns the current FrameworkConfiguration instance.
    */
   plugin(plugin: string, config?: any): FrameworkConfiguration;
-
+  
+  // Default configuration helpers
+  // Note: Please do NOT add PLATFORM.moduleName() around those module names.
+  //       Those functions are not guaranteed to be called, they are here to faciliate
+  //       common configurations. If they are not called, we don't want to include a
+  //       static dependency on those modules.
+  //       Including those modules in the bundle or not is a decision that must be
+  //       taken by the bundling tool, at build time.
   /**
      * Plugs in the default binding language from aurelia-templating-binding.
      * @return Returns the current FrameworkConfiguration instance.
     */
   defaultBindingLanguage(): FrameworkConfiguration;
-
+  
   /**
      * Plugs in the router from aurelia-templating-router.
      * @return Returns the current FrameworkConfiguration instance.
     */
   router(): FrameworkConfiguration;
-
+  
   /**
      * Plugs in the default history implementation from aurelia-history-browser.
      * @return Returns the current FrameworkConfiguration instance.
     */
   history(): FrameworkConfiguration;
-
+  
   /**
      * Plugs in the default templating resources (if, repeat, show, compose, etc.) from aurelia-templating-resources.
      * @return Returns the current FrameworkConfiguration instance.
     */
   defaultResources(): FrameworkConfiguration;
-
+  
   /**
      * Plugs in the event aggregator from aurelia-event-aggregator.
      * @return Returns the current FrameworkConfiguration instance.
     */
   eventAggregator(): FrameworkConfiguration;
-
+  
   /**
      * Sets up a basic Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().eventAggregator();`
      * @return Returns the current FrameworkConfiguration instance.
     */
   basicConfiguration(): FrameworkConfiguration;
-
+  
   /**
      * Sets up the standard Aurelia configuration. This is equivalent to calling `.defaultBindingLanguage().defaultResources().eventAggregator().history().router();`
      * @return Returns the current FrameworkConfiguration instance.
     */
   standardConfiguration(): FrameworkConfiguration;
-
+  
   /**
      * Plugs in the ConsoleAppender and sets the log level to debug.
+     * @param level The log level (none/error/warn/info/debug), default to 'debug'.
      * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
     */
-  developmentLogging(): FrameworkConfiguration;
-
+  developmentLogging(level?: String): FrameworkConfiguration;
+  
   /**
      * Loads and configures the plugins registered with this instance.
      * @return Returns a promise which resolves when all plugins are loaded and configured.
@@ -235,8 +243,8 @@ export * from 'aurelia-templating';
 export * from 'aurelia-loader';
 export * from 'aurelia-task-queue';
 export * from 'aurelia-path';
-export * from 'aurelia-pal';
 /**
-   * The log manager.
-   */
-  export const LogManager: any;
+ * The log manager.
+ */
+export const LogManager: typeof TheLogManager;
+export * from 'aurelia-pal';
