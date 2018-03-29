@@ -354,7 +354,8 @@ export class FrameworkConfiguration {
    * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
   developmentLogging(level?: String): FrameworkConfiguration {
-    let logLevel = level ? TheLogManager.logLevel[level] : undefined
+    let logLevel = level ? TheLogManager.logLevel[level] : undefined;
+
     if (logLevel === undefined) {
       logLevel = TheLogManager.logLevel.debug;
     }
