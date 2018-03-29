@@ -22,6 +22,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 
 ## Wood Sponsors
 
+* [Adam Żurański](https://opencollective.com/adam-zuranski)
 * [Alexander Taran](https://github.com/alexander-taran)
 * [Allen Joslin](https://opencollective.com/allen-joslin)
 * [Andrew Camilleri](https://github.com/Kukks)
