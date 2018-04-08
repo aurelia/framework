@@ -38,6 +38,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Erik Lieben](https://www.eriklieben.com)
 * [Fabian Ituarte](http://fabianituarte.com/)
 * [Fabio Chines](https://tagsistemi.it)
+* [George Breeze](http://styrit.com/)
 * [John D'Amore](https://www.diameterhealth.com/)
 * [Juliën Hanssens](https://hanssens.com)
 * [Khuzema Kanore](http://wisdom.com.kw)
