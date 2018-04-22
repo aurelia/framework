@@ -15,6 +15,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [AmVenture](https://www.amventure.com/)
 * [Diapason](https://www.diapason-treasury.com/trms/)
 * [Effectory](https://www.effectory.com/)
+* [ihorizon Pty Ltd](http://ihorizon.net/)
 * [Merchise](http://www.merchise.cl/)
 * [Nordic Trustee](https://nordictrustee.com/)
 * [Ormasoft](http://www.ormasoft.cl/)
