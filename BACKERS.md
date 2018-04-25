@@ -40,6 +40,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Fabian Ituarte](http://fabianituarte.com/)
 * [Fabio Chines](https://tagsistemi.it)
 * [George Breeze](http://styrit.com/)
+* [GuruGate](https://www.gurugate.com/)
 * [HostPresto](https://hostpresto.com/)
 * [John D'Amore](https://www.diameterhealth.com/)
 * [Juliën Hanssens](https://hanssens.com)
