@@ -56,6 +56,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Robert B](https://opencollective.com/robert-b)
 * [Saqib Rokadia](https://invioinc.com/)
 * [Scott Criswell](https://twitter.com/scriswell)
+* [Sean Hunter](https://sean-hunter.io/)
 * [Shannon Horn](http://smoothirish.com)
 * [Steven Pena](https://twitter.com/steven_pena)
 * [Tyler Presley](https://strengthen.io)
