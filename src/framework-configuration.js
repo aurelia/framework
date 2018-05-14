@@ -280,9 +280,7 @@ export class FrameworkConfiguration {
           this.behaviorsToLoad.push(meta);
         }
         if (this.behaviorsToLoad.length === 1) {
-          this.postTask(() => {
-            loadBehaviors(this);
-          });
+          this.postTask(() => loadBehaviors(this));
         }
       }
     }
