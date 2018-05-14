@@ -118,8 +118,8 @@ function getExt(name: string) { // eslint-disable-line consistent-return
 }
 
 function loadBehaviors(config: FrameworkConfiguration) {
-  return Promise.all(config.behaviorToLoad.map(m => m.load(config.container, m.target))).then(() => {
-    config.behaviorToLoad = null;
+  return Promise.all(config.behaviorsToLoad.map(m => m.load(config.container, m.target))).then(() => {
+    config.behaviorsToLoad = null;
   });
 }
 
@@ -162,7 +162,8 @@ export class FrameworkConfiguration {
      * Custom element's metadata queue for loading view factory
      * @type {HtmlBehaviorResource[]}
      */
-    this.behaviorToLoad = [];
+    this.behaviorsToLoad = [];
+    this.queuedPlugins = new WeakSet();
     this.resourcesToLoad = {};
     this.preTask(() => aurelia.loader.normalize('aurelia-bootstrapper').then(name => this.bootstrapperName = name));
     this.postTask(() => {
@@ -251,7 +252,7 @@ export class FrameworkConfiguration {
    * @param resources The relative module id to the resource. (Relative to the plugin's installer.)
    * @return Returns the current FrameworkConfiguration instance.
    */
-  globalResources(resources: string | Function | (string | Function)[]): FrameworkConfiguration {
+  globalResources(resources: string | Function | Array<string | Function>): FrameworkConfiguration {
     assertProcessed(this);
 
     let toAdd = Array.isArray(resources) ? resources : arguments;
@@ -276,10 +277,12 @@ export class FrameworkConfiguration {
       } else {
         let meta = this.aurelia.resources.autoRegister(this.container, resource);
         if (meta instanceof HtmlBehaviorResource && meta.elementName !== null) {
-          this.behaviorToLoad.push(meta);
+          this.behaviorsToLoad.push(meta);
         }
-        if (this.behaviorToLoad.length === 1) {
-          this.postTask(() => loadBehaviors(this));
+        if (this.behaviorsToLoad.length === 1) {
+          this.postTask(() => {
+            loadBehaviors(this);
+          });
         }
       }
     }
@@ -317,6 +320,10 @@ export class FrameworkConfiguration {
       info = { moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: pluginConfig || {} };
       break;
     case 'function':
+      if (this.queuedPlugins.has(plugin)) {
+        return this;
+      }
+      this.queuedPlugins.add(plugin);
       info = { configure: plugin, config: pluginConfig || {} };
       break;
     default:

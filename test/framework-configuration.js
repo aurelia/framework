@@ -64,10 +64,11 @@ describe('the framework config', () => {
   });
 
   describe('plugin()', () => {
-    let configSpy,
-        loadModule,
-        config;
-
+    let configSpy;
+    let loadModule;
+    /**@type {FrameworkConfiguration} */
+    let config;
+    /**@type {Aurelia} */
     let aurelia, mockContainer, mockLoader, mockResources, mockPlugin, mockViewEngine;
 
     beforeEach(() => {
@@ -200,44 +201,14 @@ describe('the framework config', () => {
       expect(info.config).toBeDefined('info.config should have been an empty object when not specified');
     });
 
-    fit('should queue and load html behavior when calling globalResources with custom element classes', done => {
-      const mockLoadResources = jasmine.createSpy();
-      const mockLoadResourcesTask = jasmine.createSpy(undefined, function() {
-        if (Object.keys(config.resourcesToLoad).length) {
-          return mockLoadResources();
-        }
-      });
-
-      let behaviorQueued = false;
-      let behaviorLoaded = false;
+    it('should queue loading behavior task when calling globalResources on custom element', () => {
       aurelia.resources.autoRegister = function() {
         const meta = new HtmlBehaviorResource();
         meta.elementName = 'el';
-        meta.load = function() {
-          behaviorLoaded = true;
-        };
         return meta;
       };
-      
-      config.behaviorToLoad.push = function() {
-        behaviorQueued = true;
-        return [].push.apply(this, arguments);
-      };
-      config.postTasks.splice(0, 1, mockLoadResourcesTask);
-      config.plugin(function(cfg) {
-        cfg.globalResources(class El {});
-      });
-
-      config
-        .apply()
-        .then(
-          () => {
-            expect(behaviorQueued).toBe(true, 'It should haved queued html behavior to load');
-            expect(behaviorLoaded).toBe(true, 'It should have loaded behavior');
-          },
-          () => expect(true).toBeFalsy('FrameworkConfiguration should have been applied')
-        )
-        .then(done);
+      config.globalResources(class El {});
+      expect(config.behaviorsToLoad.length).toBe(1);
     });
   });
 
@@ -294,6 +265,71 @@ describe('the framework config', () => {
       config.apply()
         .then(
           () => expect(mockLoadResources).not.toHaveBeenCalled(),
+          () => expect(true).toBeFalsy('FrameworkConfiguration should have been applied')
+        )
+        .then(done);
+    });
+
+    it('should queue and load html behavior when calling globalResources with custom element classes', done => {
+      const mockLoadResources = jasmine.createSpy();
+      const mockLoadResourcesTask = jasmine.createSpy(undefined, function() {
+        if (Object.keys(config.resourcesToLoad).length) {
+          return mockLoadResources();
+        }
+      });
+
+      const config = aurelia.use;
+
+      let behaviorQueued = false;
+      let behaviorLoaded = false;
+      
+      aurelia.resources.autoRegister = function() {
+        const meta = new HtmlBehaviorResource();
+        meta.elementName = 'el';
+        meta.load = function() {
+          behaviorLoaded = true;
+        };
+        return meta;
+      };
+
+      config.behaviorsToLoad.push = function() {
+        behaviorQueued = true;
+        return [].push.apply(this, arguments);
+      };
+      config.postTasks.splice(0, 1, mockLoadResourcesTask);
+      config.plugin(function(cfg) {
+        cfg.globalResources(class El {});
+      });
+
+      config
+        .apply()
+        .then(
+          () => {
+            expect(behaviorQueued).toBe(true, 'It should haved queued html behavior to load');
+            expect(behaviorLoaded).toBe(true, 'It should have loaded behavior');
+          },
+          () => expect(true).toBeFalsy('FrameworkConfiguration should have been applied')
+        )
+        .then(done);
+    });
+
+    it('should not queue the same plugin configure twice', (done) => {
+      let count = 0;
+      function configurePluginA() {
+        count++;
+      }
+      function configurePluginB(config) {
+        config.plugin(configurePluginA);
+      }
+      
+      aurelia.use
+        .plugin(configurePluginB)
+        .plugin(configurePluginA)
+        .apply()
+        .then(
+          () => {
+            expect(count).toBe(1, 'It should haved called configurePluginA once');
+          },
           () => expect(true).toBeFalsy('FrameworkConfiguration should have been applied')
         )
         .then(done);
