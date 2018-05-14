@@ -1,7 +1,7 @@
 import './setup';
 import {FrameworkConfiguration} from '../src/framework-configuration';
 import {Aurelia} from '../src/aurelia';
-import {Metadata} from 'aurelia-metadata';
+import { HtmlBehaviorResource } from 'aurelia-templating';
 
 describe('the framework config', () => {
   it('should initialize', () => {
@@ -177,6 +177,68 @@ describe('the framework config', () => {
         done();
       });
     });
+
+    it('should normalize configure function for plugin', () => {
+      function configure() {}
+      config.plugin(configure);
+      expect(config.info.length).toBe(1);
+
+      var info = config.info[0];
+      expect(info.moduleId).toBe(undefined, 'info.moduleId should have been undefined when using configure fn');
+      expect(info.configure).toBe(configure);
+      expect(info.config).toBeDefined('info.config should have been an empty object when not specified');
+    });
+
+    it('should normalize configure function for feature', () => {
+      function configure() {}
+      config.feature(configure);
+      expect(config.info.length).toBe(1);
+
+      var info = config.info[0];
+      expect(info.moduleId).toBe(undefined, 'info.moduleId should have been undefined when using configure fn');
+      expect(info.configure).toBe(configure);
+      expect(info.config).toBeDefined('info.config should have been an empty object when not specified');
+    });
+
+    fit('should queue and load html behavior when calling globalResources with custom element classes', done => {
+      const mockLoadResources = jasmine.createSpy();
+      const mockLoadResourcesTask = jasmine.createSpy(undefined, function() {
+        if (Object.keys(config.resourcesToLoad).length) {
+          return mockLoadResources();
+        }
+      });
+
+      let behaviorQueued = false;
+      let behaviorLoaded = false;
+      aurelia.resources.autoRegister = function() {
+        const meta = new HtmlBehaviorResource();
+        meta.elementName = 'el';
+        meta.load = function() {
+          behaviorLoaded = true;
+        };
+        return meta;
+      };
+      
+      config.behaviorToLoad.push = function() {
+        behaviorQueued = true;
+        return [].push.apply(this, arguments);
+      };
+      config.postTasks.splice(0, 1, mockLoadResourcesTask);
+      config.plugin(function(cfg) {
+        cfg.globalResources(class El {});
+      });
+
+      config
+        .apply()
+        .then(
+          () => {
+            expect(behaviorQueued).toBe(true, 'It should haved queued html behavior to load');
+            expect(behaviorLoaded).toBe(true, 'It should have loaded behavior');
+          },
+          () => expect(true).toBeFalsy('FrameworkConfiguration should have been applied')
+        )
+        .then(done);
+    });
   });
 
   describe('apply()', () => {
@@ -213,6 +275,28 @@ describe('the framework config', () => {
       })
       .catch((reason) => expect(true).toBeFalsy(reason))
       .then(done);
+    });
+
+    it('should not call loadResources when there\'s none', (done) => {
+      const mockLoadResources = jasmine.createSpy();
+      const mockLoadResourcesTask = jasmine.createSpy(undefined, function() {
+        if (Object.keys(config.resourcesToLoad).length) {
+          return mockLoadResources();
+        }
+      });
+      const config = aurelia.use;
+
+      aurelia.resources.autoRegister = function() {};
+      config.postTasks.splice(0, 1, mockLoadResourcesTask);
+      config.plugin(function(cfg) {
+        cfg.globalResources(class El {});
+      });
+      config.apply()
+        .then(
+          () => expect(mockLoadResources).not.toHaveBeenCalled(),
+          () => expect(true).toBeFalsy('FrameworkConfiguration should have been applied')
+        )
+        .then(done);
     });
   });
 });

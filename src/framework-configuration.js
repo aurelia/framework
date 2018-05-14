@@ -1,12 +1,12 @@
 import * as TheLogManager from 'aurelia-logging';
-import {ViewEngine} from 'aurelia-templating';
+import {ViewEngine, HtmlBehaviorResource} from 'aurelia-templating';
 import {join} from 'aurelia-path';
 import {Container} from 'aurelia-dependency-injection';
 
 const logger = TheLogManager.getLogger('aurelia');
 const extPattern = /\.[^/.]+$/;
 
-function runTasks(config, tasks) {
+function runTasks(config: FrameworkConfiguration, tasks) {
   let current;
   let next = () => {
     current = tasks.shift();
@@ -20,18 +20,30 @@ function runTasks(config, tasks) {
   return next();
 }
 
-function loadPlugin(config, loader, info) {
+interface FrameworkPluginInfo {
+  moduleId?: string;
+  resourcesRelativeTo?: string[];
+  configure?: (config: FrameworkConfiguration, pluginConfig?: any) => any;
+  config?: any;
+}
+
+function loadPlugin(config: FrameworkConfiguration, loader: Loader, info: FrameworkPluginInfo) {
   logger.debug(`Loading plugin ${info.moduleId}.`);
-  config.resourcesRelativeTo = info.resourcesRelativeTo;
+  if (typeof info.moduleId === 'string') {
+    config.resourcesRelativeTo = info.resourcesRelativeTo;
 
-  let id = info.moduleId; // General plugins installed/configured by the end user.
+    let id = info.moduleId; // General plugins installed/configured by the end user.
 
-  if (info.resourcesRelativeTo.length > 1 ) { // In case of bootstrapper installed plugins like `aurelia-templating-resources` or `aurelia-history-browser`.
-    return loader.normalize(info.moduleId, info.resourcesRelativeTo[1])
-      .then(normalizedId => _loadPlugin(normalizedId));
+    if (info.resourcesRelativeTo.length > 1 ) { // In case of bootstrapper installed plugins like `aurelia-templating-resources` or `aurelia-history-browser`.
+      return loader.normalize(info.moduleId, info.resourcesRelativeTo[1])
+        .then(normalizedId => _loadPlugin(normalizedId));
+    }
+
+    return _loadPlugin(id);
+  } else if (typeof info.configure === 'function') {
+    // use info.config || {} to keep behavior consistent with loading from string
+    return Promise.resolve(info.configure.call(null, config, info.config || {}));
   }
-
-  return _loadPlugin(id);
 
   function _loadPlugin(moduleId) {
     return loader.loadModule(moduleId).then(m => { // eslint-disable-line consistent-return
@@ -98,14 +110,20 @@ function loadResources(aurelia, resourcesToLoad, appResources) {
   }
 }
 
-function getExt(name) { // eslint-disable-line consistent-return
+function getExt(name: string) { // eslint-disable-line consistent-return
   let match = name.match(extPattern);
   if (match && match.length > 0) {
     return (match[0].split('.'))[1];
   }
 }
 
-function assertProcessed(plugins) {
+function loadBehaviors(config: FrameworkConfiguration) {
+  return Promise.all(config.behaviorToLoad.map(m => m.load(config.container, m.target))).then(() => {
+    config.behaviorToLoad = null;
+  });
+}
+
+function assertProcessed(plugins: FrameworkConfiguration) {
   if (plugins.processed) {
     throw new Error('This config instance has already been applied. To load more plugins or global resources, create a new FrameworkConfiguration instance.');
   }
@@ -132,13 +150,29 @@ export class FrameworkConfiguration {
   constructor(aurelia: Aurelia) {
     this.aurelia = aurelia;
     this.container = aurelia.container;
+    /**
+     * Plugin / feature loadind instruction
+     * @type {FrameworkPluginInfo[]}
+     */
     this.info = [];
     this.processed = false;
     this.preTasks = [];
     this.postTasks = [];
+    /**
+     * Custom element's metadata queue for loading view factory
+     * @type {HtmlBehaviorResource[]}
+     */
+    this.behaviorToLoad = [];
     this.resourcesToLoad = {};
     this.preTask(() => aurelia.loader.normalize('aurelia-bootstrapper').then(name => this.bootstrapperName = name));
-    this.postTask(() => loadResources(aurelia, this.resourcesToLoad, aurelia.resources));
+    this.postTask(() => {
+      // if devs want to go all in static, and remove loader
+      // the following code shouldn't run
+      // add a check to make sure it only runs when there is something to do so
+      if (Object.keys(this.resourcesToLoad).length) {
+        return loadResources(aurelia, this.resourcesToLoad, aurelia.resources);
+      }
+    });
   }
 
   /**
@@ -202,11 +236,14 @@ export class FrameworkConfiguration {
    * @param config The configuration for the specified plugin.
    * @return Returns the current FrameworkConfiguration instance.
    */
-  feature(plugin: string, config?: any = {}): FrameworkConfiguration {
-    let hasIndex = /\/index$/i.test(plugin);
-    let moduleId = hasIndex || getExt(plugin) ? plugin : plugin + '/index';
-    let root = hasIndex ? plugin.substr(0, plugin.length - 6) : plugin;
-    return this.plugin({ moduleId, resourcesRelativeTo: [root, ''], config });
+  feature(plugin: string | ((config: FrameworkConfiguration, pluginConfig?: any) => any), config?: any = {}): FrameworkConfiguration {
+    if (typeof plugin === 'string') {
+      let hasIndex = /\/index$/i.test(plugin);
+      let moduleId = hasIndex || getExt(plugin) ? plugin : plugin + '/index';
+      let root = hasIndex ? plugin.substr(0, plugin.length - 6) : plugin;
+      return this.plugin({ moduleId, resourcesRelativeTo: [root, ''], config });
+    }
+    return this.plugin(plugin, config);
   }
 
   /**
@@ -214,7 +251,7 @@ export class FrameworkConfiguration {
    * @param resources The relative module id to the resource. (Relative to the plugin's installer.)
    * @return Returns the current FrameworkConfiguration instance.
    */
-  globalResources(resources: string|string[]): FrameworkConfiguration {
+  globalResources(resources: string | Function | (string | Function)[]): FrameworkConfiguration {
     assertProcessed(this);
 
     let toAdd = Array.isArray(resources) ? resources : arguments;
@@ -223,19 +260,28 @@ export class FrameworkConfiguration {
 
     for (let i = 0, ii = toAdd.length; i < ii; ++i) {
       resource = toAdd[i];
-      if (typeof resource !== 'string') {
+      if (!resource) {
         throw new Error(`Invalid resource path [${resource}]. Resources must be specified as relative module IDs.`);
       }
+      if (typeof resource === 'string') {
+        let parent = resourcesRelativeTo[0];
+        let grandParent = resourcesRelativeTo[1];
+        let name = resource;
 
-      let parent = resourcesRelativeTo[0];
-      let grandParent = resourcesRelativeTo[1];
-      let name = resource;
+        if ((resource.startsWith('./') || resource.startsWith('../')) && parent !== '') {
+          name = join(parent, resource);
+        }
 
-      if ((resource.startsWith('./') || resource.startsWith('../')) && parent !== '') {
-        name = join(parent, resource);
+        this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
+      } else {
+        let meta = this.aurelia.resources.autoRegister(this.container, resource);
+        if (meta instanceof HtmlBehaviorResource && meta.elementName !== null) {
+          this.behaviorToLoad.push(meta);
+        }
+        if (this.behaviorToLoad.length === 1) {
+          this.postTask(() => loadBehaviors(this));
+        }
       }
-
-      this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
     }
 
     return this;
@@ -256,17 +302,30 @@ export class FrameworkConfiguration {
   /**
    * Configures an external, 3rd party plugin before Aurelia starts.
    * @param plugin The ID of the 3rd party plugin to configure.
-   * @param config The configuration for the specified plugin.
+   * @param pluginConfig The configuration for the specified plugin.
    * @return Returns the current FrameworkConfiguration instance.
  */
-  plugin(plugin: string, config?: any): FrameworkConfiguration {
+  plugin(
+    plugin: string | ((frameworkConfig: FrameworkConfiguration) => any) | FrameworkPluginInfo,
+    pluginConfig?: any
+  ): FrameworkConfiguration {
     assertProcessed(this);
 
-    if (typeof (plugin) === 'string') {
-      return this.plugin({ moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: config || {} });
+    let info: FrameworkPluginInfo;
+    switch (typeof plugin) {
+    case 'string':
+      info = { moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: pluginConfig || {} };
+      break;
+    case 'function':
+      info = { configure: plugin, config: pluginConfig || {} };
+      break;
+    default:
+      // this is for internal use, from `feature` call
+      info = plugin;
+      break;
     }
 
-    this.info.push(plugin);
+    this.info.push(info);
     return this;
   }
 
