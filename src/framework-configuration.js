@@ -163,7 +163,7 @@ export class FrameworkConfiguration {
      * @type {HtmlBehaviorResource[]}
      */
     this.behaviorsToLoad = [];
-    this.queuedPlugins = new WeakSet();
+    this.queuedPlugins = [];
     this.resourcesToLoad = {};
     this.preTask(() => aurelia.loader.normalize('aurelia-bootstrapper').then(name => this.bootstrapperName = name));
     this.postTask(() => {
@@ -318,10 +318,13 @@ export class FrameworkConfiguration {
       info = { moduleId: plugin, resourcesRelativeTo: [plugin, ''], config: pluginConfig || {} };
       break;
     case 'function':
-      if (this.queuedPlugins.has(plugin)) {
+      if (this.queuedPlugins.indexOf(plugin) !== -1) {
         return this;
       }
-      this.queuedPlugins.add(plugin);
+      this.queuedPlugins.push(plugin);
+      if (this.queuedPlugins.length === 1) {
+        this.postTask(() => this.queuedPlugins = null);
+      } 
       info = { configure: plugin, config: pluginConfig || {} };
       break;
     default:

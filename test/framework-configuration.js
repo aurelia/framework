@@ -329,6 +329,7 @@ describe('the framework config', () => {
         .then(
           () => {
             expect(count).toBe(1, 'It should haved called configurePluginA once');
+            expect(aurelia.use.queuedPlugins).toBe(null, 'It should haved cleaned plugins queue');
           },
           () => expect(true).toBeFalsy('FrameworkConfiguration should have been applied')
         )
