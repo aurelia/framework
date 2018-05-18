@@ -45,6 +45,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [GuruGate](https://www.gurugate.com/)
 * [HostPresto](https://hostpresto.com/)
 * [John D'Amore](https://www.diameterhealth.com/)
+* [Jordan Ware](https://opencollective.com/jordan-ware)
 * [Juliën Hanssens](https://hanssens.com)
 * [Khuzema Kanore](http://wisdom.com.kw)
 * [Luka Cetina](https://opencollective.com/luka-cetina)
