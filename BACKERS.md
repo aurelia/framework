@@ -26,6 +26,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 ## Wood Sponsors
 
 * [Adam Żurański](https://opencollective.com/adam-zuranski)
+* [Alex Dresko](https://www.alexdresko.com/)
 * [Alexander Taran](https://github.com/alexander-taran)
 * [Allen Joslin](https://opencollective.com/allen-joslin)
 * [Andrew Camilleri](https://github.com/Kukks)
@@ -48,6 +49,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Jordan Ware](https://opencollective.com/jordan-ware)
 * [Juliën Hanssens](https://hanssens.com)
 * [Khuzema Kanore](http://wisdom.com.kw)
+* [Leafdot s.r.o.](https://www.leafdot.net/)
 * [Luka Cetina](https://opencollective.com/luka-cetina)
 * [Michael Lakerveld](https://twitter.com/lakerfld)
 * [Nick Floyd](http://archcoder.com)
