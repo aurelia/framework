@@ -51,6 +51,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Khuzema Kanore](http://wisdom.com.kw)
 * [Leafdot s.r.o.](https://www.leafdot.net/)
 * [Luka Cetina](https://opencollective.com/luka-cetina)
+* [Matthew Corven](https://opencollective.com/matthew-corven)
 * [Michael Lakerveld](https://twitter.com/lakerfld)
 * [Nick Floyd](http://archcoder.com)
 * [Per K. Kummermo](https://twitter.com/MrDonutseeker)
