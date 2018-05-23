@@ -313,7 +313,7 @@ describe('the framework config', () => {
         .then(done);
     });
 
-    it('should not queue the same plugin configure twice', (done) => {
+    it('should not call the same plugin configure twice', (done) => {
       let count = 0;
       function configurePluginA() {
         count++;
@@ -329,10 +329,50 @@ describe('the framework config', () => {
         .then(
           () => {
             expect(count).toBe(1, 'It should haved called configurePluginA once');
-            expect(aurelia.use.queuedPlugins).toBe(null, 'It should haved cleaned plugins queue');
+            expect(aurelia.use.configuredPlugins).toBe(null, 'It should haved cleaned configured plugins cache');
           },
           () => expect(true).toBeFalsy('FrameworkConfiguration should have been applied')
         )
+        .then(done);
+    });
+
+    it('should not call the same plugin configure twice when using both module id and fns', done => {
+      let count = 0;
+      function module1Configure(config) {
+        config
+          .plugin('c.js')
+          .plugin('b.js');
+      }
+      function module2Configure(config) {
+        config
+          .plugin('c.js')
+      }
+      function module3Configure(config) {
+        count++;
+      }
+      const modules = {
+        'a.js': {
+          configure: module1Configure
+        },
+        'b.js': {
+          configure: module2Configure,
+        },
+        'c.js': {
+          configure: module3Configure
+        }
+      };
+      mockLoader.loadModule = function(moduleId) {
+        return Promise.resolve(modules[moduleId]);
+      };
+      aurelia.use
+        .plugin('a.js')
+        .plugin('b.js')
+        .plugin(module3Configure)
+        .apply()
+        .then(() => {
+          expect(count).toBe(1);
+        })
+        .catch(() => expect(true).toBeFalsy('This should have configured'))
         .then(done);
     });
   });
