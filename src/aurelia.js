@@ -114,7 +114,7 @@ export class Aurelia {
    * @param applicationHost The DOM object that Aurelia will attach to.
    * @return Returns a Promise of the current Aurelia instance.
    */
-  setRoot(root: string = null, applicationHost: string | Element = null): Promise<Aurelia> {
+  setRoot(root: string | Function = null, applicationHost: string | Element = null): Promise<Aurelia> {
     let instruction = {};
 
     if (this.root && this.root.viewModel && this.root.viewModel.router) {

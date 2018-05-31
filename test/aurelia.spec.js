@@ -1,10 +1,10 @@
+import { Container } from 'aurelia-dependency-injection';
+import { Loader } from 'aurelia-loader';
+import { DOM, PLATFORM } from 'aurelia-pal';
+import { BindingLanguage, ViewResources, ViewSlot, inlineView } from 'aurelia-templating';
+import { Aurelia } from '../src/aurelia';
+import { FrameworkConfiguration } from '../src/framework-configuration';
 import './setup';
-import {Aurelia} from '../src/aurelia';
-import {Container} from 'aurelia-dependency-injection';
-import {Loader} from 'aurelia-loader';
-import {BindingLanguage, ViewSlot, ViewResources, CompositionEngine} from 'aurelia-templating';
-import {FrameworkConfiguration} from '../src/framework-configuration';
-import {DOM, PLATFORM} from 'aurelia-pal';
 
 describe('aurelia', () => {
   describe("constructor", () => {
@@ -203,6 +203,57 @@ describe('aurelia', () => {
           done();
         });
 
+    });
+
+    it('should accept view model class as root', (done) => {
+
+      const emptyMetadata = Object.freeze({});
+      const metadataContainerKey = '__metadata__';
+  
+      Reflect.getOwnMetadata = function(metadataKey, target, targetKey) {
+        if (target.hasOwnProperty(metadataContainerKey)) {
+          return (target[metadataContainerKey][targetKey] || emptyMetadata)[metadataKey];
+        }
+      };
+  
+      Reflect.defineMetadata = function(metadataKey, metadataValue, target, targetKey) {
+        let metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : (target[metadataContainerKey] = {});
+        let targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
+        targetContainer[metadataKey] = metadataValue;
+      };
+  
+      Reflect.metadata = function(metadataKey, metadataValue) {
+        return function(target, targetKey) {
+          Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
+        };
+      };
+
+      let documentSpy = spyOn(document, "getElementById").and.returnValue(document.body);
+
+      @inlineView('<template>Hello</template>')
+      class App {}
+
+      aurelia = new Aurelia({});
+      aurelia.use.instance(BindingLanguage, {
+        inspectTextContent() {
+          return null;
+        }
+      })
+
+      aurelia.setRoot(App)
+        .then(aurelia => {
+          expect(documentSpy).toHaveBeenCalledWith("applicationHost");
+          expect(aurelia.root.viewModel.constructor).toBe(App);
+        })
+        .catch((ex) => {
+          expect(ex).toBeFalsy("It should have composed");
+        })
+        .then(() => {
+          Reflect.getOwnMetadata = null;
+          Reflect.defineMetadata = null;
+          Reflect.metadata = null;
+          done();
+        });
     });
   });
 
