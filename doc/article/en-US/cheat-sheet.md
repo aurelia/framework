@@ -1240,6 +1240,14 @@ Since the view model's navigation lifecycle is called only once, you may have pr
   </source-code>
 </code-listing>
 
+<code-listing heading="Bypassing the Router for a Link">
+  <source-code lang="HTML">
+    <template>
+      <a href="/my-page" router-ignore>Click to load my-page from server</a>
+    </template>
+  </source-code>
+</code-listing>
+
 ## Custom Attributes
 
 <code-listing heading="Simple Attribute Declaration">
