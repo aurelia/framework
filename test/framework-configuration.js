@@ -1,7 +1,7 @@
 import './setup';
 import {FrameworkConfiguration} from '../src/framework-configuration';
 import {Aurelia} from '../src/aurelia';
-import {Metadata} from 'aurelia-metadata';
+import { HtmlBehaviorResource } from 'aurelia-templating';
 
 describe('the framework config', () => {
   it('should initialize', () => {
@@ -64,10 +64,11 @@ describe('the framework config', () => {
   });
 
   describe('plugin()', () => {
-    let configSpy,
-        loadModule,
-        config;
-
+    let configSpy;
+    let loadModule;
+    /**@type {FrameworkConfiguration} */
+    let config;
+    /**@type {Aurelia} */
     let aurelia, mockContainer, mockLoader, mockResources, mockPlugin, mockViewEngine;
 
     beforeEach(() => {
@@ -177,6 +178,38 @@ describe('the framework config', () => {
         done();
       });
     });
+
+    it('should normalize configure function for plugin', () => {
+      function configure() {}
+      config.plugin(configure);
+      expect(config.info.length).toBe(1);
+
+      var info = config.info[0];
+      expect(info.moduleId).toBe(undefined, 'info.moduleId should have been undefined when using configure fn');
+      expect(info.configure).toBe(configure);
+      expect(info.config).toBeDefined('info.config should have been an empty object when not specified');
+    });
+
+    it('should normalize configure function for feature', () => {
+      function configure() {}
+      config.feature(configure);
+      expect(config.info.length).toBe(1);
+
+      var info = config.info[0];
+      expect(info.moduleId).toBe(undefined, 'info.moduleId should have been undefined when using configure fn');
+      expect(info.configure).toBe(configure);
+      expect(info.config).toBeDefined('info.config should have been an empty object when not specified');
+    });
+
+    it('should queue loading behavior task when calling globalResources on custom element', () => {
+      aurelia.resources.autoRegister = function() {
+        const meta = new HtmlBehaviorResource();
+        meta.elementName = 'el';
+        return meta;
+      };
+      config.globalResources(class El {});
+      expect(config.behaviorsToLoad.length).toBe(1);
+    });
   });
 
   describe('apply()', () => {
@@ -213,6 +246,134 @@ describe('the framework config', () => {
       })
       .catch((reason) => expect(true).toBeFalsy(reason))
       .then(done);
+    });
+
+    it('should not call loadResources when there\'s none', (done) => {
+      const mockLoadResources = jasmine.createSpy();
+      const mockLoadResourcesTask = jasmine.createSpy(undefined, function() {
+        if (Object.keys(config.resourcesToLoad).length) {
+          return mockLoadResources();
+        }
+      });
+      const config = aurelia.use;
+
+      aurelia.resources.autoRegister = function() {};
+      config.postTasks.splice(0, 1, mockLoadResourcesTask);
+      config.plugin(function(cfg) {
+        cfg.globalResources(class El {});
+      });
+      config.apply()
+        .then(
+          () => expect(mockLoadResources).not.toHaveBeenCalled(),
+          () => expect(true).toBeFalsy('FrameworkConfiguration should have been applied')
+        )
+        .then(done);
+    });
+
+    it('should queue and load html behavior when calling globalResources with custom element classes', done => {
+      const mockLoadResources = jasmine.createSpy();
+      const mockLoadResourcesTask = jasmine.createSpy(undefined, function() {
+        if (Object.keys(config.resourcesToLoad).length) {
+          return mockLoadResources();
+        }
+      });
+
+      const config = aurelia.use;
+
+      let behaviorQueued = false;
+      let behaviorLoaded = false;
+      
+      aurelia.resources.autoRegister = function() {
+        const meta = new HtmlBehaviorResource();
+        meta.elementName = 'el';
+        meta.load = function() {
+          behaviorLoaded = true;
+        };
+        return meta;
+      };
+
+      config.behaviorsToLoad.push = function() {
+        behaviorQueued = true;
+        return [].push.apply(this, arguments);
+      };
+      config.postTasks.splice(0, 1, mockLoadResourcesTask);
+      config.plugin(function(cfg) {
+        cfg.globalResources(class El {});
+      });
+
+      config
+        .apply()
+        .then(
+          () => {
+            expect(behaviorQueued).toBe(true, 'It should haved queued html behavior to load');
+            expect(behaviorLoaded).toBe(true, 'It should have loaded behavior');
+          },
+          () => expect(true).toBeFalsy('FrameworkConfiguration should have been applied')
+        )
+        .then(done);
+    });
+
+    it('should not call the same plugin configure twice', (done) => {
+      let count = 0;
+      function configurePluginA() {
+        count++;
+      }
+      function configurePluginB(config) {
+        config.plugin(configurePluginA);
+      }
+      
+      aurelia.use
+        .plugin(configurePluginB)
+        .plugin(configurePluginA)
+        .apply()
+        .then(
+          () => {
+            expect(count).toBe(1, 'It should haved called configurePluginA once');
+            expect(aurelia.use.configuredPlugins).toBe(null, 'It should haved cleaned configured plugins cache');
+          },
+          () => expect(true).toBeFalsy('FrameworkConfiguration should have been applied')
+        )
+        .then(done);
+    });
+
+    it('should not call the same plugin configure twice when using both module id and fns', done => {
+      let count = 0;
+      function module1Configure(config) {
+        config
+          .plugin('c.js')
+          .plugin('b.js');
+      }
+      function module2Configure(config) {
+        config
+          .plugin('c.js')
+      }
+      function module3Configure(config) {
+        count++;
+      }
+      const modules = {
+        'a.js': {
+          configure: module1Configure
+        },
+        'b.js': {
+          configure: module2Configure,
+        },
+        'c.js': {
+          configure: module3Configure
+        }
+      };
+      mockLoader.loadModule = function(moduleId) {
+        return Promise.resolve(modules[moduleId]);
+      };
+      aurelia.use
+        .plugin('a.js')
+        .plugin('b.js')
+        .plugin(module3Configure)
+        .apply()
+        .then(() => {
+          expect(count).toBe(1);
+        })
+        .catch(() => expect(true).toBeFalsy('This should have configured'))
+        .then(done);
     });
   });
 });
