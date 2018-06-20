@@ -48,6 +48,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [HostPresto](https://hostpresto.com/)
 * [John D'Amore](https://www.diameterhealth.com/)
 * [Jordan Ware](https://opencollective.com/jordan-ware)
+* [Jørgen Skogås](https://opencollective.com/jorgen-skogas)
 * [Juliën Hanssens](https://hanssens.com)
 * [Khuzema Kanore](http://wisdom.com.kw)
 * [Leafdot s.r.o.](https://www.leafdot.net/)
