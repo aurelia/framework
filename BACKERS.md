@@ -37,6 +37,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Christoph Noe](http://neonnoe.com/)
 * [CP Huo](https://opencollective.com/cp-huo)
 * [David Snell](https://twitter.com/mentalengine)
+* [Dexter Haslem](https://dexterhaslem.com/)
 * [Dimitry Panchenko](https://opencollective.com/graycrow)
 * [Dwayne Charrington](https://ilikekillnerds.com)
 * [Enrico Padovani](https://alchemists.it)
