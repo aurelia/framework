@@ -529,7 +529,7 @@ export class FrameworkConfiguration {
 
   _addNormalizedPlugin(name, config) {
     let plugin = { moduleId: name, resourcesRelativeTo: [name, ''], config: config || {} };
-    this.plugin(plugin);
+    this.info.push(plugin);
 
     this.preTask(() => {
       let relativeTo = [name, this.bootstrapperName];

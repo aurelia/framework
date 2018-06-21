@@ -521,7 +521,7 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
           var _this6 = this;
 
           var plugin = { moduleId: name, resourcesRelativeTo: [name, ''], config: config || {} };
-          this.plugin(plugin);
+          this.info.push(plugin);
 
           this.preTask(function () {
             var relativeTo = [name, _this6.bootstrapperName];

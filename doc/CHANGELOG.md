@@ -1,3 +1,13 @@
+<a name="1.3.0-rc.2"></a>
+# [1.3.0-rc.2](https://github.com/aurelia/framework/compare/1.3.0-rc.1...1.3.0-rc.2) (2018-06-21)
+
+
+### Bug Fixes
+
+* **FrameworkConfiguration:** use private info ([5a51394](https://github.com/aurelia/framework/commit/5a51394))
+
+
+
 <a name="1.3.0-rc.1"></a>
 # [1.3.0-rc.1](https://github.com/aurelia/framework/compare/1.2.0...1.3.0-rc.1) (2018-06-21)
 

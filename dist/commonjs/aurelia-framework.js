@@ -535,7 +535,7 @@ var FrameworkConfiguration = function () {
     var _this6 = this;
 
     var plugin = { moduleId: name, resourcesRelativeTo: [name, ''], config: config || {} };
-    this.plugin(plugin);
+    this.info.push(plugin);
 
     this.preTask(function () {
       var relativeTo = [name, _this6.bootstrapperName];
