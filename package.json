@@ -65,7 +65,8 @@
     "aurelia-pal": "^1.0.0",
     "aurelia-path": "^1.0.0",
     "aurelia-task-queue": "^1.0.0",
-    "aurelia-templating": "^1.0.0"
+    "aurelia-templating": "^1.0.0",
+    "opencollective": "^1.0.3"
   },
   "devDependencies": {
     "aurelia-tools": "^0.2.4",
@@ -187,5 +188,13 @@
         }
       ]
     }
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/aurelia",
+    "logo": "https://opencollective.com/aurelia/logo.txt"
+  },
+  "scripts": {
+    "postinstall": "opencollective postinstall"
   }
 }
