@@ -1,3 +1,14 @@
+<a name="1.3.0-rc.1"></a>
+# [1.3.0-rc.1](https://github.com/aurelia/framework/compare/1.2.0...1.3.0-rc.1) (2018-06-21)
+
+
+### Features
+
+* **Aurelia:** ability to define root with constructor ([15fc9dd](https://github.com/aurelia/framework/commit/15fc9dd))
+* **config:** accepts classes beside module id string ([80a3d39](https://github.com/aurelia/framework/commit/80a3d39))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/aurelia/framework/compare/1.1.5...1.2.0) (2018-03-29)
 

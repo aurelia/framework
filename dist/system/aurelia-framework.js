@@ -3,7 +3,7 @@
 System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loader', 'aurelia-templating', 'aurelia-pal', 'aurelia-path', 'aurelia-binding', 'aurelia-metadata', 'aurelia-task-queue'], function (_export, _context) {
   "use strict";
 
-  var TheLogManager, Container, Loader, BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction, ViewEngine, DOM, PLATFORM, relativeToFile, join, Aurelia, logger, extPattern, FrameworkConfiguration, LogManager;
+  var TheLogManager, Container, Loader, BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction, ViewEngine, HtmlBehaviorResource, DOM, PLATFORM, relativeToFile, join, _typeof, Aurelia, logger, extPattern, FrameworkConfiguration, LogManager;
 
   
 
@@ -32,36 +32,53 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
     return next();
   }
 
-  function loadPlugin(config, loader, info) {
+  function loadPlugin(fwConfig, loader, info) {
     logger.debug('Loading plugin ' + info.moduleId + '.');
-    config.resourcesRelativeTo = info.resourcesRelativeTo;
+    if (typeof info.moduleId === 'string') {
+      fwConfig.resourcesRelativeTo = info.resourcesRelativeTo;
 
-    var id = info.moduleId;
+      var id = info.moduleId;
 
-    if (info.resourcesRelativeTo.length > 1) {
-      return loader.normalize(info.moduleId, info.resourcesRelativeTo[1]).then(function (normalizedId) {
-        return _loadPlugin(normalizedId);
-      });
+      if (info.resourcesRelativeTo.length > 1) {
+        return loader.normalize(info.moduleId, info.resourcesRelativeTo[1]).then(function (normalizedId) {
+          return _loadPlugin(normalizedId);
+        });
+      }
+
+      return _loadPlugin(id);
+    } else if (typeof info.configure === 'function') {
+      if (fwConfig.configuredPlugins.indexOf(info.configure) !== -1) {
+        return Promise.resolve();
+      }
+      fwConfig.configuredPlugins.push(info.configure);
+
+      return Promise.resolve(info.configure.call(null, fwConfig, info.config || {}));
     }
-
-    return _loadPlugin(id);
+    throw new Error(invalidConfigMsg(info.moduleId || info.configure, 'plugin'));
 
     function _loadPlugin(moduleId) {
       return loader.loadModule(moduleId).then(function (m) {
         if ('configure' in m) {
-          return Promise.resolve(m.configure(config, info.config || {})).then(function () {
-            config.resourcesRelativeTo = null;
+          if (fwConfig.configuredPlugins.indexOf(m.configure) !== -1) {
+            return Promise.resolve();
+          }
+          return Promise.resolve(m.configure(fwConfig, info.config || {})).then(function () {
+            fwConfig.configuredPlugins.push(m.configure);
+            fwConfig.resourcesRelativeTo = null;
             logger.debug('Configured plugin ' + info.moduleId + '.');
           });
         }
 
-        config.resourcesRelativeTo = null;
+        fwConfig.resourcesRelativeTo = null;
         logger.debug('Loaded plugin ' + info.moduleId + '.');
       });
     }
   }
 
   function loadResources(aurelia, resourcesToLoad, appResources) {
+    if (Object.keys(resourcesToLoad).length === 0) {
+      return Promise.resolve();
+    }
     var viewEngine = aurelia.container.get(ViewEngine);
 
     return Promise.all(Object.keys(resourcesToLoad).map(function (n) {
@@ -118,10 +135,22 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
     }
   }
 
+  function loadBehaviors(config) {
+    return Promise.all(config.behaviorsToLoad.map(function (m) {
+      return m.load(config.container, m.target);
+    })).then(function () {
+      config.behaviorsToLoad = null;
+    });
+  }
+
   function assertProcessed(plugins) {
     if (plugins.processed) {
       throw new Error('This config instance has already been applied. To load more plugins or global resources, create a new FrameworkConfiguration instance.');
     }
+  }
+
+  function invalidConfigMsg(cfg, type) {
+    return 'Invalid ' + type + ' [' + cfg + '], ' + type + ' must be specified as functions or relative module IDs.';
   }
 
   return {
@@ -152,6 +181,7 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
       TemplatingEngine = _aureliaTemplating.TemplatingEngine;
       CompositionTransaction = _aureliaTemplating.CompositionTransaction;
       ViewEngine = _aureliaTemplating.ViewEngine;
+      HtmlBehaviorResource = _aureliaTemplating.HtmlBehaviorResource;
       var _exportObj3 = {};
 
       for (var _key3 in _aureliaTemplating) {
@@ -205,6 +235,12 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
       _export(_exportObj8);
     }],
     execute: function () {
+      _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+        return typeof obj;
+      } : function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+
       _export('Aurelia', Aurelia = function () {
         function Aurelia(loader, container, resources) {
           
@@ -349,10 +385,15 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
 
           this.aurelia = aurelia;
           this.container = aurelia.container;
+
           this.info = [];
           this.processed = false;
           this.preTasks = [];
           this.postTasks = [];
+
+          this.behaviorsToLoad = [];
+
+          this.configuredPlugins = [];
           this.resourcesToLoad = {};
           this.preTask(function () {
             return aurelia.loader.normalize('aurelia-bootstrapper').then(function (name) {
@@ -394,13 +435,26 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
         FrameworkConfiguration.prototype.feature = function feature(plugin) {
           var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-          var hasIndex = /\/index$/i.test(plugin);
-          var moduleId = hasIndex || getExt(plugin) ? plugin : plugin + '/index';
-          var root = hasIndex ? plugin.substr(0, plugin.length - 6) : plugin;
-          return this.plugin({ moduleId: moduleId, resourcesRelativeTo: [root, ''], config: config });
+          switch (typeof plugin === 'undefined' ? 'undefined' : _typeof(plugin)) {
+            case 'string':
+              var hasIndex = /\/index$/i.test(plugin);
+              var _moduleId = hasIndex || getExt(plugin) ? plugin : plugin + '/index';
+              var root = hasIndex ? plugin.substr(0, plugin.length - 6) : plugin;
+              this.info.push({ moduleId: _moduleId, resourcesRelativeTo: [root, ''], config: config });
+              break;
+
+            case 'function':
+              this.info.push({ configure: plugin, config: config || {} });
+              break;
+            default:
+              throw new Error(invalidConfigMsg(plugin, 'feature'));
+          }
+          return this;
         };
 
         FrameworkConfiguration.prototype.globalResources = function globalResources(resources) {
+          var _this5 = this;
+
           assertProcessed(this);
 
           var toAdd = Array.isArray(resources) ? resources : arguments;
@@ -409,19 +463,31 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
 
           for (var i = 0, ii = toAdd.length; i < ii; ++i) {
             resource = toAdd[i];
-            if (typeof resource !== 'string') {
-              throw new Error('Invalid resource path [' + resource + ']. Resources must be specified as relative module IDs.');
+            switch (typeof resource === 'undefined' ? 'undefined' : _typeof(resource)) {
+              case 'string':
+                var parent = resourcesRelativeTo[0];
+                var grandParent = resourcesRelativeTo[1];
+                var name = resource;
+
+                if ((resource.startsWith('./') || resource.startsWith('../')) && parent !== '') {
+                  name = join(parent, resource);
+                }
+
+                this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
+                break;
+              case 'function':
+                var meta = this.aurelia.resources.autoRegister(this.container, resource);
+                if (meta instanceof HtmlBehaviorResource && meta.elementName !== null) {
+                  if (this.behaviorsToLoad.push(meta) === 1) {
+                    this.postTask(function () {
+                      return loadBehaviors(_this5);
+                    });
+                  }
+                }
+                break;
+              default:
+                throw new Error(invalidConfigMsg(resource, 'resource'));
             }
-
-            var parent = resourcesRelativeTo[0];
-            var grandParent = resourcesRelativeTo[1];
-            var name = resource;
-
-            if ((resource.startsWith('./') || resource.startsWith('../')) && parent !== '') {
-              name = join(parent, resource);
-            }
-
-            this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
           }
 
           return this;
@@ -433,25 +499,32 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
           return this;
         };
 
-        FrameworkConfiguration.prototype.plugin = function plugin(_plugin, config) {
+        FrameworkConfiguration.prototype.plugin = function plugin(_plugin, pluginConfig) {
           assertProcessed(this);
 
-          if (typeof _plugin === 'string') {
-            return this.plugin({ moduleId: _plugin, resourcesRelativeTo: [_plugin, ''], config: config || {} });
+          var info = void 0;
+          switch (typeof _plugin === 'undefined' ? 'undefined' : _typeof(_plugin)) {
+            case 'string':
+              info = { moduleId: _plugin, resourcesRelativeTo: [_plugin, ''], config: pluginConfig || {} };
+              break;
+            case 'function':
+              info = { configure: _plugin, config: pluginConfig || {} };
+              break;
+            default:
+              throw new Error(invalidConfigMsg(_plugin, 'plugin'));
           }
-
-          this.info.push(_plugin);
+          this.info.push(info);
           return this;
         };
 
         FrameworkConfiguration.prototype._addNormalizedPlugin = function _addNormalizedPlugin(name, config) {
-          var _this5 = this;
+          var _this6 = this;
 
           var plugin = { moduleId: name, resourcesRelativeTo: [name, ''], config: config || {} };
           this.plugin(plugin);
 
           this.preTask(function () {
-            var relativeTo = [name, _this5.bootstrapperName];
+            var relativeTo = [name, _this6.bootstrapperName];
             plugin.moduleId = name;
             plugin.resourcesRelativeTo = relativeTo;
             return Promise.resolve();
@@ -489,7 +562,7 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
         };
 
         FrameworkConfiguration.prototype.developmentLogging = function developmentLogging(level) {
-          var _this6 = this;
+          var _this7 = this;
 
           var logLevel = level ? TheLogManager.logLevel[level] : undefined;
 
@@ -498,8 +571,8 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
           }
 
           this.preTask(function () {
-            return _this6.aurelia.loader.normalize('aurelia-logging-console', _this6.bootstrapperName).then(function (name) {
-              return _this6.aurelia.loader.loadModule(name).then(function (m) {
+            return _this7.aurelia.loader.normalize('aurelia-logging-console', _this7.bootstrapperName).then(function (name) {
+              return _this7.aurelia.loader.loadModule(name).then(function (m) {
                 TheLogManager.addAppender(new m.ConsoleAppender());
                 TheLogManager.setLevel(logLevel);
               });
@@ -510,29 +583,30 @@ System.register(['aurelia-logging', 'aurelia-dependency-injection', 'aurelia-loa
         };
 
         FrameworkConfiguration.prototype.apply = function apply() {
-          var _this7 = this;
+          var _this8 = this;
 
           if (this.processed) {
             return Promise.resolve();
           }
 
           return runTasks(this, this.preTasks).then(function () {
-            var loader = _this7.aurelia.loader;
-            var info = _this7.info;
+            var loader = _this8.aurelia.loader;
+            var info = _this8.info;
             var current = void 0;
 
             var next = function next() {
               current = info.shift();
               if (current) {
-                return loadPlugin(_this7, loader, current).then(next);
+                return loadPlugin(_this8, loader, current).then(next);
               }
 
-              _this7.processed = true;
+              _this8.processed = true;
+              _this8.configuredPlugins = null;
               return Promise.resolve();
             };
 
             return next().then(function () {
-              return runTasks(_this7, _this7.postTasks);
+              return runTasks(_this8, _this8.postTasks);
             });
           });
         };

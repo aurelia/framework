@@ -11,7 +11,8 @@ import {
   ViewResources,
   TemplatingEngine,
   CompositionTransaction,
-  ViewEngine
+  ViewEngine,
+  HtmlBehaviorResource
 } from 'aurelia-templating';
 import {
   DOM,
@@ -21,6 +22,12 @@ import {
   relativeToFile,
   join
 } from 'aurelia-path';
+export declare interface FrameworkPluginInfo {
+  moduleId?: string;
+  resourcesRelativeTo?: string[];
+  configure?: (config: FrameworkConfiguration, pluginConfig?: any) => any;
+  config?: any;
+}
 
 /**
  * The framework core that provides the main Aurelia object.
@@ -81,7 +88,7 @@ export declare class Aurelia {
      * @param applicationHost The DOM object that Aurelia will attach to.
      * @return Returns a Promise of the current Aurelia instance.
      */
-  setRoot(root?: string, applicationHost?: string | Element): Promise<Aurelia>;
+  setRoot(root?: string | Function, applicationHost?: string | Element): Promise<Aurelia>;
 }
 
 /**
@@ -149,14 +156,14 @@ export declare class FrameworkConfiguration {
      * @param config The configuration for the specified plugin.
      * @return Returns the current FrameworkConfiguration instance.
      */
-  feature(plugin: string, config?: any): FrameworkConfiguration;
+  feature(plugin: string | ((config: FrameworkConfiguration, pluginConfig?: any) => any), config?: any): FrameworkConfiguration;
   
   /**
      * Adds globally available view resources to be imported into the Aurelia framework.
      * @param resources The relative module id to the resource. (Relative to the plugin's installer.)
      * @return Returns the current FrameworkConfiguration instance.
      */
-  globalResources(resources: string | string[]): FrameworkConfiguration;
+  globalResources(resources: string | Function | Array<string | Function>): FrameworkConfiguration;
   
   /**
      * Renames a global resource that was imported.
@@ -169,10 +176,10 @@ export declare class FrameworkConfiguration {
   /**
      * Configures an external, 3rd party plugin before Aurelia starts.
      * @param plugin The ID of the 3rd party plugin to configure.
-     * @param config The configuration for the specified plugin.
+     * @param pluginConfig The configuration for the specified plugin.
      * @return Returns the current FrameworkConfiguration instance.
    */
-  plugin(plugin: string, config?: any): FrameworkConfiguration;
+  plugin(plugin: string | ((frameworkConfig: FrameworkConfiguration) => any) | FrameworkPluginInfo, pluginConfig?: any): FrameworkConfiguration;
   
   // Default configuration helpers
   // Note: Please do NOT add PLATFORM.moduleName() around those module names.
@@ -243,8 +250,9 @@ export * from 'aurelia-templating';
 export * from 'aurelia-loader';
 export * from 'aurelia-task-queue';
 export * from 'aurelia-path';
+export * from 'aurelia-pal';
+
 /**
  * The log manager.
  */
 export const LogManager: typeof TheLogManager;
-export * from 'aurelia-pal';
