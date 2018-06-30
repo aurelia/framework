@@ -63,6 +63,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Richard Sykora](https://twitter.com/richardsykora)
 * [Robert B](https://opencollective.com/robert-b)
 * [Saqib Rokadia](https://invioinc.com/)
+* [Saravanan Velappan](https://opencollective.com/saravanan-velappan)
 * [Scott Criswell](https://twitter.com/scriswell)
 * [Sean Hunter](https://sean-hunter.io/)
 * [Shannon Horn](http://smoothirish.com)
