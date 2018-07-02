@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "1.3.0-rc.2",
+  "version": "1.3.0",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
@@ -28,7 +28,7 @@
       "dist": "dist/amd"
     },
     "peerDependencies": {
-      "aurelia-binding": "^1.0.0 || ^2.0.0",
+      "aurelia-binding": "^2.0.0",
       "aurelia-dependency-injection": "^1.0.0",
       "aurelia-loader": "^1.0.0",
       "aurelia-logging": "^1.0.0",
@@ -36,10 +36,10 @@
       "aurelia-pal": "^1.0.0",
       "aurelia-path": "^1.0.0",
       "aurelia-task-queue": "^1.0.0",
-      "aurelia-templating": "^1.8.0-rc.1"
+      "aurelia-templating": "^1.8.1"
     },
     "dependencies": {
-      "aurelia-binding": "^1.0.0 || ^2.0.0",
+      "aurelia-binding": "^2.0.0",
       "aurelia-dependency-injection": "^1.0.0",
       "aurelia-loader": "^1.0.0",
       "aurelia-logging": "^1.0.0",
@@ -47,7 +47,7 @@
       "aurelia-pal": "^1.0.0",
       "aurelia-path": "^1.0.0",
       "aurelia-task-queue": "^1.0.0",
-      "aurelia-templating": "^1.8.0-rc.1"
+      "aurelia-templating": "^1.8.1"
     },
     "devDependencies": {
       "aurelia-pal-browser": "^1.0.0-rc.1.0.0",
@@ -57,7 +57,7 @@
     }
   },
   "dependencies": {
-    "aurelia-binding": "^1.0.0 || ^2.0.0",
+    "aurelia-binding": "^2.0.0",
     "aurelia-dependency-injection": "^1.0.0",
     "aurelia-loader": "^1.0.0",
     "aurelia-logging": "^1.0.0",
@@ -65,7 +65,7 @@
     "aurelia-pal": "^1.0.0",
     "aurelia-path": "^1.0.0",
     "aurelia-task-queue": "^1.0.0",
-    "aurelia-templating": "^1.8.0-rc.1"
+    "aurelia-templating": "^1.8.1"
   },
   "devDependencies": {
     "aurelia-tools": "^0.2.4",
