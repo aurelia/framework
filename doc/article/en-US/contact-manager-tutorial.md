@@ -1067,7 +1067,7 @@ Ok, now that we've got an `api` property we can bind to, update your `app.html` 
       <require from="./styles.css"></require>
       <require from="./contact-list"></require>
 
-      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <nav class="navbar navbar-light bg-light fixed-top" role="navigation">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">
             <i class="fa fa-user"></i>
