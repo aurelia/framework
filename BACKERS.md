@@ -29,6 +29,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Alex Dresko](https://www.alexdresko.com/)
 * [Alexander Taran](https://github.com/alexander-taran)
 * [Allen Joslin](https://opencollective.com/allen-joslin)
+* [Álvaro Domínguez López](https://twitter.com/alvarodlVR)
 * [Andrew Camilleri](https://github.com/Kukks)
 * [Arturo Martinez](https://twitter.com/artmasa)
 * [Ats Uiboupin](https://github.com/atsu85)
