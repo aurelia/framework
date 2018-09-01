@@ -34,6 +34,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Arturo Martinez](https://twitter.com/artmasa)
 * [Ats Uiboupin](https://github.com/atsu85)
 * [Brandon Ryan](https://mainstream-tech.com)
+* [Brandon Wittwer](http://brandonwittwer.com/)
 * [Christian Kotzbauer](https://code-chris.github.io)
 * [Christoph Noe](http://neonnoe.com/)
 * [CP Huo](https://opencollective.com/cp-huo)
