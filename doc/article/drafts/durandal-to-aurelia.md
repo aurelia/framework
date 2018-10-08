@@ -452,12 +452,12 @@ Aurelia the bindings are segragated out in to their own attributes.  Example -
 
 Knockout.js
 ```
-<input data-bind="value: myProperty" />
+<input data-bind="value: myProperty">
 ```
 
 Aurelia
 ```
-<input value.bind="myProperty" />
+<input value.bind="myProperty">
 ```
 
 Here are a few examples for the most important bindings:
@@ -478,12 +478,12 @@ Aurelia
 
 Knockout.js
 ```
-<input data-bind="value: myProperty" />
+<input data-bind="value: myProperty">
 ```
 
 Aurelia
 ```
-<input value.bind="myProperty" />
+<input value.bind="myProperty">
 ```
 
 ##### If binding
@@ -592,7 +592,7 @@ this to each of your views. Add the standalone ```knockout``` custom attribute t
 <button data-bind="click: changeVisibility">Change Visibility</button>
 <div data-bind="if: isVisible">
     <span data-bind="text: firstName"></span>
-    <br/>
+    <br>
     <span data-bind="text: lastName"></span>
 </div>
 ```
@@ -605,7 +605,7 @@ becomes
         <button data-bind="click: changeVisibility">Change Visibility</button>
         <div data-bind="if: isVisible">
             <span data-bind="text: firstName"></span>
-            <br/>
+            <br>
             <span data-bind="text: lastName"></span>
         </div>
     </div>
