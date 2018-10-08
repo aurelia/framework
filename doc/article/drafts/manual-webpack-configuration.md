@@ -160,7 +160,7 @@ with
 
   Modify the dev task so it doesn't throw an error,
   by replacing old dev task in `package.json`
-  with the slightly different version (without `--progress`)<br/>
+  with the slightly different version (without `--progress`)<br>
     Replace:
 
     ```json
@@ -228,12 +228,12 @@ with
                     removeComments: true,               // remove all comments
                     collapseWhitespace: true,           // collapse white space between block elements (div, header, footer, p etc...)
                     collapseInlineTagWhitespace: true,  // collapse white space between inline elements (button, span, i, b, a etc...)
-                    collapseBooleanAttributes: true,    // <input required="required"/> => <input required />
-                    removeAttributeQuotes: true,        // <input class="abcd" /> => <input class=abcd />
-                    minifyCSS: true,                    // <input style="display: inline-block; width: 50px;" /> => <input style="display:inline-block;width:50px;"/>
+                    collapseBooleanAttributes: true,    // <input required="required"> => <input required>
+                    removeAttributeQuotes: true,        // <input class="abcd"> => <input class=abcd>
+                    minifyCSS: true,                    // <input style="display: inline-block; width: 50px;"> => <input style="display:inline-block;width:50px;">
                     minifyJS: true,                     // same with CSS but for javascript
                     removeScriptTypeAttributes: true,   // <script type="text/javascript"> => <script>
-                    removeStyleLinkTypeAttributes: true // <link type="text/css" /> => <link />
+                    removeStyleLinkTypeAttributes: true // <link type="text/css"> => <link>
                 }
             }
         })
@@ -309,7 +309,7 @@ with
       ```
 
   * Pass some extra configuration to our `babel-loader` to enable simpler transformation
-    and tree-shaking to remove unused codes by:<br/>
+    and tree-shaking to remove unused codes by:<br>
     Replacing:
 
       ```js
@@ -517,12 +517,12 @@ with
                             removeComments: true,               // remove all comments
                             collapseWhitespace: true,           // collapse white space between block elements (div, header, footer, p etc...)
                             collapseInlineTagWhitespace: true,  // collapse white space between inline elements (button, span, i, b, a etc...)
-                            collapseBooleanAttributes: true,    // <input required="required"/> => <input required />
-                            removeAttributeQuotes: true,        // <input class="abcd" /> => <input class=abcd />
-                            minifyCSS: true,                    // <input style="display: inline-block; width: 50px;" /> => <input style="display:inline-block;width:50px;"/>
+                            collapseBooleanAttributes: true,    // <input required="required"> => <input required>
+                            removeAttributeQuotes: true,        // <input class="abcd"> => <input class=abcd>
+                            minifyCSS: true,                    // <input style="display: inline-block; width: 50px;"> => <input style="display:inline-block;width:50px;">
                             minifyJS: true,                     // same with CSS but for javascript
                             removeScriptTypeAttributes: true,   // <script type="text/javascript"> => <script>
-                            removeStyleLinkTypeAttributes: true // <link type="text/css" /> => <link />
+                            removeStyleLinkTypeAttributes: true // <link type="text/css"> => <link>
                         }
                     }
                 }),

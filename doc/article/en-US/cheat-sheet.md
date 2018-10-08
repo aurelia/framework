@@ -560,7 +560,7 @@ A typical select element is rendered using a combination of `value.bind` and `re
   <source-code lang="HTML">
     <template>
       <label repeat.for="color of colors">
-        <input type="radio" name="clrs" value.bind="color" checked.bind="$parent.favoriteColor" />
+        <input type="radio" name="clrs" value.bind="color" checked.bind="$parent.favoriteColor">
         ${color}
       </label>
     </template>
@@ -571,7 +571,7 @@ A typical select element is rendered using a combination of `value.bind` and `re
   <source-code lang="HTML">
     <template>
       <label repeat.for="employee of employees">
-        <input type="radio" name="emps" model.bind="employee" checked.bind="$parent.employeeOfTheMonth" />
+        <input type="radio" name="emps" model.bind="employee" checked.bind="$parent.employeeOfTheMonth">
         ${employee.fullName}
       </label>
     </template>
@@ -581,9 +581,9 @@ A typical select element is rendered using a combination of `value.bind` and `re
 <code-listing heading="Radios with a Boolean">
   <source-code lang="HTML">
     <template>
-      <label><input type="radio" name="tacos" model.bind="null" checked.bind="likesTacos" />Unanswered</label>
-      <label><input type="radio" name="tacos" model.bind="true" checked.bind="likesTacos" />Yes</label>
-      <label><input type="radio" name="tacos" model.bind="false" checked.bind="likesTacos" />No</label>
+      <label><input type="radio" name="tacos" model.bind="null" checked.bind="likesTacos">Unanswered</label>
+      <label><input type="radio" name="tacos" model.bind="true" checked.bind="likesTacos">Yes</label>
+      <label><input type="radio" name="tacos" model.bind="false" checked.bind="likesTacos">No</label>
     </template>
   </source-code>
 </code-listing>
@@ -597,7 +597,7 @@ A typical select element is rendered using a combination of `value.bind` and `re
   <source-code lang="HTML">
     <template>
       <label repeat.for="color of colors">
-        <input type="checkbox" value.bind="color" checked.bind="$parent.favoriteColors" />
+        <input type="checkbox" value.bind="color" checked.bind="$parent.favoriteColors" >
         ${color}
       </label>
     </template>
@@ -608,7 +608,7 @@ A typical select element is rendered using a combination of `value.bind` and `re
   <source-code lang="HTML">
     <template>
       <label repeat.for="employee of employees">
-        <input type="checkbox" model.bind="employee" checked.bind="$parent.favoriteEmployees" />
+        <input type="checkbox" model.bind="employee" checked.bind="$parent.favoriteEmployees">
         ${employee.fullName}
       </label>
     </template>
@@ -618,9 +618,9 @@ A typical select element is rendered using a combination of `value.bind` and `re
 <code-listing heading="Checkboxes with Booleans">
   <source-code lang="HTML">
     <template>
-      <li><label><input type="checkbox" checked.bind="wantsFudge" />Fudge</label></li>
-      <li><label><input type="checkbox" checked.bind="wantsSprinkles" />Sprinkles</label></li>
-      <li><label><input type="checkbox" checked.bind="wantsCherry" />Cherry</label></li>
+      <li><label><input type="checkbox" checked.bind="wantsFudge">Fudge</label></li>
+      <li><label><input type="checkbox" checked.bind="wantsSprinkles">Sprinkles</label></li>
+      <li><label><input type="checkbox" checked.bind="wantsCherry">Cherry</label></li>
     </template>
   </source-code>
 </code-listing>
