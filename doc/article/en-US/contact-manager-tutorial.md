@@ -1063,7 +1063,6 @@ Ok, now that we've got an `api` property we can bind to, update your `app.html` 
 <code-listing heading="app.html">
   <source-code lang="HTML">
     <template>
-      <require from="bootstrap/css/bootstrap.css"></require>
       <require from="./styles.css"></require>
       <require from="./contact-list"></require>
 
