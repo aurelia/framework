@@ -86,6 +86,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [John Kattestaart](https://twitter.com/Jkattestaart)
 * [Miroslav Popovic](https://miroslavpopovic.com)
 * [Radenko Zec](https://opencollective.com/radenkozec)
+* [Ranorex](https://www.ranorex.com/)
 * [Richard Bartley](https://twitter.com/RBRbBartley)
 * [Steven Moore](https://twitter.com/smoore4moma)
 * [Waldemar Bandosz](https://twitter.com/wbanos)
