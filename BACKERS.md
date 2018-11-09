@@ -65,6 +65,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Red Feet](https://twitter.com/redfeet)
 * [Richard Sykora](https://twitter.com/richardsykora)
 * [Robert B](https://opencollective.com/robert-b)
+* [Robert Kling](https://klingcode.wordpress.com/)
 * [Saqib Rokadia](https://invioinc.com/)
 * [Saravanan Velappan](https://opencollective.com/saravanan-velappan)
 * [Scott Criswell](https://twitter.com/scriswell)
