@@ -84,6 +84,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Brian Oommen](https://opencollective.com/brian-oommen)
 * [COMsulting](http://www.comsulting.de/)
 * [Huberto Kusters](https://opencollective.com/huberto-kusters)
+* [Jason Sobell](https://opencollective.com/jason-sobell)
 * [John Kattestaart](https://twitter.com/Jkattestaart)
 * [Miroslav Popovic](https://miroslavpopovic.com)
 * [Radenko Zec](https://opencollective.com/radenkozec)
