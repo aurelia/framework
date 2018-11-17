@@ -251,8 +251,3 @@ export * from 'aurelia-loader';
 export * from 'aurelia-task-queue';
 export * from 'aurelia-path';
 export * from 'aurelia-pal';
-
-/**
- * The log manager.
- */
-export const LogManager: typeof TheLogManager;
