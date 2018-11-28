@@ -1,11 +1,12 @@
 # Contributing
 
-Please begin by reading [our contributing guidelines](https://github.com/DurandalProject/about/blob/master/CONTRIBUTING.md). The contributing document will provide you with all the information you need to get started. Once you have read that, you will need to also [sign our CLA](http://goo.gl/forms/dI8QDDSyKR) before we can accept a Pull Request from you. More information on the process is included in the [contributor's guide](https://github.com/DurandalProject/about/blob/master/CONTRIBUTING.md).
+Please begin by reading [our contributing guidelines](https://github.com/DurandalProject/about/blob/master/CONTRIBUTING.md). The contributing document will provide you with all the information you need to get started. Later, as part of your first pull request, you will be asked to sign our Contributors License Agreement. More information on the process is included in the full [contributor's guide](https://github.com/DurandalProject/about/blob/master/CONTRIBUTING.md).
 
-# Getting started
+## Getting started
+
 Ready to get started? The below sections take you through the steps required to get the framework running on your local development environment, and run the associated tests.
 
-## Building The Code
+### Building The Code
 
 To build the code, follow these steps.
 
@@ -25,11 +26,11 @@ To build the code, follow these steps.
   ```shell
   gulp build
   ```
-5. You will find the compiled code in the `dist` folder, available in three module formats: AMD, CommonJS and ES6.
+5. You will find the compiled code in the `dist` folder, available in several different module formats.
 
-6. See `gulpfile.js` for other tasks related to generating the docs and linting.
+6. See `gulpfile.js` for other available tasks.
 
-## Running The Tests
+### Running The Tests
 
 To run the unit tests, first ensure that you have followed the steps above in order to install all dependencies and successfully build the library. Once you have done that, proceed with these additional steps:
 
