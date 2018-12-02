@@ -17,6 +17,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Diapason](https://www.diapason-treasury.com/trms/)
 * [Effectory](https://www.effectory.com/)
 * [Exceptionless](https://exceptionless.com/)
+* [Fire Stick Tricks](https://www.firesticktricks.com/)
 * [ihorizon Pty Ltd](http://ihorizon.net/)
 * [Merchise](http://www.merchise.cl/)
 * [Nordic Trustee](https://nordictrustee.com/)
