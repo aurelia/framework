@@ -74,6 +74,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Sean Hunter](https://sean-hunter.io/)
 * [Shannon Horn](http://smoothirish.com)
 * [Steven Pena](https://twitter.com/steven_pena)
+* [Taichi Shimizu](https://opencollective.com/taichi-shimizu)
 * [Ted Chirvasiu](https://opencollective.com/ted-chirvasiu)
 * [Triplebyte](https://triplebyte.com/)
 * [Tyler Presley](https://strengthen.io)
