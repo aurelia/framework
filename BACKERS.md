@@ -23,6 +23,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Nordic Trustee](https://nordictrustee.com/)
 * [Ormasoft](http://www.ormasoft.cl/)
 * [Team Extension](https://teamextension.io/)
+* [TrueVendor](https://uiuxagencies.top)
 * [Vevida](https://vevida.com/)
 
 ## Wood Sponsors
