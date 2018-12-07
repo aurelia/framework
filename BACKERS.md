@@ -18,6 +18,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Effectory](https://www.effectory.com/)
 * [Exceptionless](https://exceptionless.com/)
 * [Fire Stick Tricks](https://www.firesticktricks.com/)
+* [GiveMeDeals](https://www.givemedeals.com/)
 * [ihorizon Pty Ltd](http://ihorizon.net/)
 * [Merchise](http://www.merchise.cl/)
 * [Nordic Trustee](https://nordictrustee.com/)
