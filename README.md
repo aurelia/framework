@@ -49,7 +49,7 @@ export class App {
 </template>
 ```
 
-> Check out the interactive version of this example on [Code Sandbox](https://codesandbox.io/s/l7p0nqjy17).
+> Check out the interactive version of this example on [Code Sandbox](https://codesandbox.io/s/y41qjr36j).
 
 This example shows you some of the powerful features of the aurelia binding syntax. To see further examples, online playgrounds, guides, and detailed API documentation, head on over to [aurelia.io](https://aurelia.io).
 
