@@ -26,6 +26,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Team Extension](https://teamextension.io/)
 * [TrueVendor](https://uiuxagencies.top)
 * [Vevida](https://vevida.com/)
+* [Virtual Private Servers](https://www.vpsserver.com/)
 
 ## Wood Sponsors
 
