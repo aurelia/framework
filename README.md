@@ -11,7 +11,7 @@
 
 # aurelia-framework
 
-Aurelia is a modern, front-end JavaScript framework for building browser, mobile, and desktop applications.
+Aurelia is a modern, front-end JavaScript framework for building browser, mobile, and desktop applications. It focuses on aligning closely with web platform specifications, using convention over configuration, and having minimal framework intrusion. Basically, we want you to just write your code without the framework getting in your way. :wink:
 
 This library is part of the [Aurelia](http://www.aurelia.io/) platform. It contains the `aurelia-framework` library, which brings together all the required core aurelia libraries into a ready-to-go application-building platform.
 
@@ -20,21 +20,40 @@ Aurelia applications are built by composing a series of simple components. By co
 ```js
 //app.js
 export class App {
-  message = 'Hello World!';
+  welcome = "Welcome to Aurelia";
+
+  quests = [
+    "To seek the holy grail",
+    "To take the ring to Mordor",
+    "To rescue princess Leia"
+  ];
 }
 ```
 
 ```html
 <!-- app.html -->
 <template>
-  <h1>${message}</h1>
-</template>
+  <form>
+    <label for="name-field">What is your name?</label>
+    <input id="name-field" value.bind="name & debounce:500">
 
+    <label for="quest-field">What is your quest?</label>
+    <select id="quest-field" value.bind="quest">
+      <option></option>
+      <option repeat.for="q of quests">${q}</option>
+    </select>
+  </form>
+
+  <p if.bind="name">${welcome}, ${name}!</p>
+  <p if.bind="quest">Now set forth ${quest.toLowerCase()}!</p>
+</template>
 ```
 
-> Check out the interactive version of this example on [Code Sandbox](https://codesandbox.io/s/849oxmjm82).
+> Check out the interactive version of this example on [Code Sandbox](https://codesandbox.io/s/l7p0nqjy17).
 
-As you may have guessed, this will render `Hello World!`  into the `<h1>` element on the page. This is just a basic example of how you can use Aurelia's simple, declarative syntax to render a value from your backing view-model to your view. But of course, you can do much more! To see further examples, online playgrounds, guides, and detailed API documentation, head on over to [aurelia.io](https://aurelia.io).
+This example shows you some of the powerful features of the aurelia binding syntax. To see further examples, online playgrounds, guides, and detailed API documentation, head on over to [aurelia.io](https://aurelia.io).
+
+Feeling excited? To quickly get started building your project with aurelia, you can use the [aurelia CLI](https://aurelia.io/docs/cli/basics).
 
 ## Documentation
 
