@@ -14,6 +14,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 
 * [AmVenture](https://www.amventure.com/)
 * [CodeFirst](https://www.codefirst.co.uk/)
+* [Datantify](http://datantify.com)
 * [Diapason](https://www.diapason-treasury.com/trms/)
 * [Effectory](https://www.effectory.com/)
 * [Exceptionless](https://exceptionless.com/)
