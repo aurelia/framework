@@ -13,7 +13,7 @@ jobs:
       - checkout
       - run: npm ci
       - run: ./node_modules/.bin/jspm install
-      - run: npm run test
+      - run: ./node_modules/.bin/karma start --single-run
   build:
     executor: docker-circleci
     steps:
