@@ -7,15 +7,23 @@ executors:
       - image: "circleci/node:10.12-stretch-browsers"
 
 jobs:
-  build_test:
+  test:
     executor: docker-circleci
     steps:
       - checkout
       - run: npm ci
-      - run: jspm install
+      - run: ./node_modules/.bin/jspm install
       - run: npm run test
+  build:
+    executor: docker-circleci
+    steps:
+      - checkout
+      - run: npm ci
+      - run: ./node_modules/.bin/jspm install
+      - run: ./node_modules/.bin/gulp build
       
 workflows:
   build_test:
     jobs:
-      - build_test
+      - test
+      - build
