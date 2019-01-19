@@ -7,23 +7,23 @@ executors:
       - image: "circleci/node:10.12-stretch-browsers"
 
 jobs:
-  test:
+  unit_test:
     executor: docker-circleci
     steps:
       - checkout
       - run: npm ci
       - run: ./node_modules/.bin/jspm install
-      - run: ./node_modules/.bin/karma start --single-run
-  build:
+      - run: ./node_modules/.bin/gulp cover
+  prepare_release:
     executor: docker-circleci
     steps:
       - checkout
       - run: npm ci
       - run: ./node_modules/.bin/jspm install
-      - run: ./node_modules/.bin/gulp build
+      - run: ./node_modules/.bin/gulp prepare-release
       
 workflows:
   build_test:
     jobs:
-      - test
-      - build
+      - unit_test
+      - prepare_release
