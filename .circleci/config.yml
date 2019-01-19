@@ -1,22 +1,18 @@
 version: 2.1
-#####
-# Circle CI
-#
-# For running docker images on circle ci, see: https://circleci.com/docs/docker
-# For circle.yml explanation, see: https://circleci.com/docs/manually
-#####
 
-machine:
-  node:
-    version: 6.4.0
+executors:
+  docker-circleci:
+    working_directory: "~/repo"
+    docker:
+      - image: "circleci/node:10.12-stretch-browsers"
 
-dependencies:
-  pre:
-    - npm install -g jspm
-  override:
-    - npm install
-    - jspm install
-
-test:
-  override:
-    - npm test
+jobs:
+  build_test:
+    executor: docker-circleci
+    steps:
+      - npm i -g jspm
+      - checkout
+      - npm ci
+      - jspm install
+      - npm run test
+      
