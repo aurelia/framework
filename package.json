@@ -90,6 +90,7 @@
     "gulp-typescript": "^2.13.6",
     "gulp-util": "^3.0.7",
     "jasmine-core": "^2.4.1",
+    "jspm": "^0.16.53",
     "karma": "^1.1.2",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-chrome-launcher": "^2.2.0",
