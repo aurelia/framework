@@ -10,11 +10,11 @@ jobs:
   build_test:
     executor: docker-circleci
     steps:
-      - npm i -g jspm
+      - run: npm i -g jspm
       - checkout
-      - npm ci
-      - jspm install
-      - npm run test
+      - run: npm ci
+      - run: jspm install
+      - run: npm run test
       
 workflows:
   build_test:
