@@ -20,24 +20,16 @@
     "type": "git",
     "url": "http://github.com/aurelia/framework"
   },
+  "scripts": {
+    "test": "karma start",
+    "test:debugger": "karma start --browsers ChromeDebugging"
+  },
   "jspm": {
     "registry": "npm",
-    "jspmPackage": true,
     "main": "aurelia-framework",
     "format": "amd",
     "directories": {
       "dist": "dist/amd"
-    },
-    "peerDependencies": {
-      "aurelia-binding": "^2.0.0",
-      "aurelia-dependency-injection": "^1.0.0",
-      "aurelia-loader": "^1.0.0",
-      "aurelia-logging": "^1.0.0",
-      "aurelia-metadata": "^1.0.0",
-      "aurelia-pal": "^1.0.0",
-      "aurelia-path": "^1.0.0",
-      "aurelia-task-queue": "^1.0.0",
-      "aurelia-templating": "^1.8.1"
     },
     "dependencies": {
       "aurelia-binding": "^2.0.0",
@@ -100,10 +92,11 @@
     "jasmine-core": "^2.4.1",
     "karma": "^1.1.2",
     "karma-babel-preprocessor": "^6.0.1",
-    "karma-chrome-launcher": "^1.0.1",
+    "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.0.2",
-    "karma-jspm": "^2.2.0",
+    "karma-jspm": "^2.2.3",
+    "karma-mocha-reporter": "^2.2.5",
     "merge2": "^1.0.2",
     "object.assign": "^4.0.4",
     "require-dir": "^0.3.0",

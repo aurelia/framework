@@ -2,6 +2,7 @@
 // Generated on Fri Dec 05 2014 16:49:29 GMT-0500 (EST)
 
 module.exports = function(config) {
+  const browsers = config.browsers;
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -14,8 +15,11 @@ module.exports = function(config) {
 
     jspm: {
       // Edit this to your needs
-      loadFiles: ['test/**/*.js'],
-      serveFiles : ['src/**/*.js']
+      loadFiles: ['test/**/*.spec.js'],
+      serveFiles : [
+        'src/**/*.js',
+        'test/setup.js'
+      ]
     },
 
 
@@ -49,7 +53,8 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    // reporters: ['progress'],
+    reporters: ["mocha"],
 
 
     // web server port
@@ -71,11 +76,52 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
-
+    browsers: browsers && browsers.length > 0 ? browsers : ['ChromeHeadlessOpt'],
+    customLaunchers: {
+      ChromeDebugging: {
+        base: "Chrome",
+        flags: [...commonChromeFlags, "--remote-debugging-port=9333"],
+        debug: true
+      },
+      ChromeHeadlessOpt: {
+        base: 'ChromeHeadless',
+        flags: [
+          ...commonChromeFlags
+        ]
+      }
+    },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    singleRun: false,
+
+    mochaReporter: {
+      ignoreSkipped: true
+    },
   });
 };
+
+const commonChromeFlags = [
+  '--no-default-browser-check',
+  '--no-first-run',
+  '--no-managed-user-acknowledgment-check',
+  '--no-pings',
+  '--no-sandbox',
+  '--no-wifi',
+  '--no-zygote',
+  '--disable-background-networking',
+  '--disable-background-timer-throttling',
+  '--disable-backing-store-limit',
+  '--disable-boot-animation',
+  '--disable-breakpad',
+  '--disable-cache',
+  '--disable-clear-browsing-data-counters',
+  '--disable-cloud-import',
+  '--disable-component-extensions-with-background-pages',
+  '--disable-contextual-search',
+  '--disable-default-apps',
+  '--disable-extensions',
+  '--disable-infobars',
+  '--disable-translate',
+  '--disable-sync'
+];
