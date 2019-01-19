@@ -16,3 +16,7 @@ jobs:
       - jspm install
       - npm run test
       
+workflows:
+  build_test:
+    jobs:
+      - build_test
