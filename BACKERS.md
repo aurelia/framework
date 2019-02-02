@@ -6,10 +6,6 @@ Below you'll find a list of the wonderful people and organizations that have mad
 
 * [Hogia](https://www.hogia.se/)
 
-## Silver Sponsors
-
-* [Simployer](https://www.simployer.no/)
-
 ## Bronze Sponsors
 
 * [AmVenture](https://www.amventure.com/)
@@ -22,8 +18,10 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [GiveMeDeals](https://www.givemedeals.com/)
 * [ihorizon Pty Ltd](http://ihorizon.net/)
 * [Merchise](http://www.merchise.cl/)
+* [MonoVM](https://MonoVM.com)
 * [Nordic Trustee](https://nordictrustee.com/)
 * [Ormasoft](http://www.ormasoft.cl/)
+* [Simployer](https://www.simployer.no/)
 * [Team Extension](https://teamextension.io/)
 * [TrueVendor](https://uiuxagencies.top)
 * [Vevida](https://vevida.com/)
