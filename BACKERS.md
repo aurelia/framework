@@ -6,6 +6,10 @@ Below you'll find a list of the wonderful people and organizations that have mad
 
 * [Hogia](https://www.hogia.se/)
 
+## Silver Sponsors
+
+* [Symbiosys](https://www.smbsol.com/)
+
 ## Bronze Sponsors
 
 * [AmVenture](https://www.amventure.com/)
