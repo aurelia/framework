@@ -95,8 +95,9 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Vildan Softic](http://pragmatic-coder.net)
 * [weagle08](https://github.com/weagle08)
 
-## Generous One-Time Gifts
+## One-Time Gifts
 
+* [Besten Pfannen](https://opencollective.com/besten-pfannen)
 * [Brian Oommen](https://opencollective.com/brian-oommen)
 * [COMsulting](http://www.comsulting.de/)
 * [Daniyar Kulakhmetov](https://opencollective.com/daniyar-kulakhmetov)
