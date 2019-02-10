@@ -75,6 +75,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Nick Floyd](http://archcoder.com)
 * [Per K. Kummermo](https://twitter.com/MrDonutseeker)
 * [Prasan Kumar](https://antaressystems.com)
+* [ProxyCrawl](https://proxycrawl.com/)
 * [Red Feet](https://twitter.com/redfeet)
 * [Richard Sykora](https://twitter.com/richardsykora)
 * [Robert B](https://opencollective.com/robert-b)
