@@ -14,6 +14,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 
 * [AmVenture](https://www.amventure.com/)
 * [CodeFirst](https://www.codefirst.co.uk/)
+* [CreeperHost](https://www.creeperhost.net/)
 * [Datantify](http://datantify.com)
 * [Diapason](https://www.diapason-treasury.com/trms/)
 * [Effectory](https://www.effectory.com/)
@@ -43,6 +44,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Ats Uiboupin](https://github.com/atsu85)
 * [Brandon Ryan](https://mainstream-tech.com)
 * [Brandon Wittwer](http://brandonwittwer.com/)
+* [Carl Cubillas](https://github.com/cubski)
 * [Christian Kotzbauer](https://code-chris.github.io)
 * [Christoph Noe](http://neonnoe.com/)
 * [CP Huo](https://opencollective.com/cp-huo)
