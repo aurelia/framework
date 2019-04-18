@@ -31,6 +31,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Ormasoft](http://www.ormasoft.cl/)
 * [Simployer](https://www.simployer.no/)
 * [Team Extension](https://teamextension.io/)
+* [Tekhattan](https://tekhattan.com/)
 * [TrueVendor](https://uiuxagencies.top)
 * [Ungerboeck Software International](https://ungerboeck.com/)
 * [Usave](https://usave.co.uk/utilities/broadband/)
