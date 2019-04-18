@@ -13,10 +13,13 @@ Below you'll find a list of the wonderful people and organizations that have mad
 ## Bronze Sponsors
 
 * [AmVenture](https://www.amventure.com/)
+* [Blokt](https://blokt.com/)
 * [CodeFirst](https://www.codefirst.co.uk/)
 * [CreeperHost](https://www.creeperhost.net/)
+* [Codeline](https://www.codeline.io/)
 * [Datantify](http://datantify.com)
 * [Diapason](https://www.diapason-treasury.com/trms/)
+* [Dolittle](https://dolittle.com/)
 * [Effectory](https://www.effectory.com/)
 * [Exceptionless](https://exceptionless.com/)
 * [Fire Stick Tricks](https://www.firesticktricks.com/)
@@ -29,6 +32,8 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Simployer](https://www.simployer.no/)
 * [Team Extension](https://teamextension.io/)
 * [TrueVendor](https://uiuxagencies.top)
+* [Ungerboeck Software International](https://ungerboeck.com/)
+* [Usave](https://usave.co.uk/utilities/broadband/)
 * [Vevida](https://vevida.com/)
 * [Virtual Private Servers](https://www.vpsserver.com/)
 
