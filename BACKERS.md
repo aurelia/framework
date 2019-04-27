@@ -29,6 +29,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [MonoVM](https://MonoVM.com)
 * [Nordic Trustee](https://nordictrustee.com/)
 * [Ormasoft](http://www.ormasoft.cl/)
+* [PromoCodeWatch](https://www.promocodewatch.com/)
 * [Simployer](https://www.simployer.no/)
 * [Team Extension](https://teamextension.io/)
 * [Tekhattan](https://tekhattan.com/)
