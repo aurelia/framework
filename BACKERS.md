@@ -14,6 +14,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 
 * [AmVenture](https://www.amventure.com/)
 * [Blokt](https://blokt.com/)
+* [Clay](https://clay.global)
 * [CodeFirst](https://www.codefirst.co.uk/)
 * [CreeperHost](https://www.creeperhost.net/)
 * [Codeline](https://www.codeline.io/)
