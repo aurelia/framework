@@ -24,6 +24,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Effectory](https://www.effectory.com/)
 * [Exceptionless](https://exceptionless.com/)
 * [Fire Stick Tricks](https://www.firesticktricks.com/)
+* [Free Car Check](https://www.freecarcheck.co.uk)
 * [GiveMeDeals](https://www.givemedeals.com/)
 * [ihorizon Pty Ltd](http://ihorizon.net/)
 * [Merchise](http://www.merchise.cl/)
@@ -39,6 +40,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Usave](https://usave.co.uk/utilities/broadband/)
 * [Vevida](https://vevida.com/)
 * [Virtual Private Servers](https://www.vpsserver.com/)
+* [Y8](https://www.y8.com/ )
 
 ## Wood Sponsors
 
