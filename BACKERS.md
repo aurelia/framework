@@ -8,6 +8,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 
 ## Silver Sponsors
 
+* [Haselt](http://www.haselt.com)
 * [Symbiosys](https://www.smbsol.com/)
 
 ## Bronze Sponsors
@@ -53,6 +54,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Andrew Camilleri](https://github.com/Kukks)
 * [Arturo Martinez](https://twitter.com/artmasa)
 * [Ats Uiboupin](https://github.com/atsu85)
+* [Bill Kurtson](https://opencollective.com/bill-kurtson)
 * [Brandon Ryan](https://mainstream-tech.com)
 * [Brandon Wittwer](http://brandonwittwer.com/)
 * [Carl Cubillas](https://github.com/cubski)
