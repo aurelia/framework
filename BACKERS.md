@@ -114,6 +114,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Veikko Eeva](https://twitter.com/veikkoeeva)
 * [Vildan Softic](http://pragmatic-coder.net)
 * [weagle08](https://github.com/weagle08)
+* [Yauri E](https://opencollective.com/yauri-e)
 
 ## One-Time Gifts
 
