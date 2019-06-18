@@ -14,6 +14,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 ## Bronze Sponsors
 
 * [AmVenture](https://www.amventure.com/)
+* [Baytech Consulting](https://baytechconsulting.com)
 * [Blokt](https://blokt.com/)
 * [EduBirdie](https://edubirdie.com/research-papers-writing-services)
 * [Clay](https://clay.global)
