@@ -78,6 +78,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [GuruGate](https://www.gurugate.com/)
 * [Hosting Canada](https://hostingcanada.org/)
 * [HostPresto](https://hostpresto.com/)
+* [Ivan Dolgintsev](https://opencollective.com/ivan-dolgintsev)
 * [Jack Ma](https://twitter.com/jack4it)
 * [John D'Amore](https://www.diameterhealth.com/)
 * [Jon Carlson](https://opencollective.com/jon-carlson)
