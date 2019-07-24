@@ -127,6 +127,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Daniyar Kulakhmetov](https://opencollective.com/daniyar-kulakhmetov)
 * [Game Server Kings](https://www.gameserverkings.com/)
 * [Huberto Kusters](https://opencollective.com/huberto-kusters)
+* [J. Austin Hughey](https://opencollective.com/j-austin-hughey)
 * [Jason Sobell](https://opencollective.com/jason-sobell)
 * [John Kattestaart](https://twitter.com/Jkattestaart)
 * [Miroslav Popovic](https://miroslavpopovic.com)
