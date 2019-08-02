@@ -41,6 +41,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [TrueVendor](https://uiuxagencies.top)
 * [Ungerboeck Software International](https://ungerboeck.com/)
 * [Usave](https://usave.co.uk/utilities/broadband/)
+* [UX Top 5](https://opencollective.com/ux-top-5)
 * [Vevida](https://vevida.com/)
 * [Virtual Private Servers](https://www.vpsserver.com/)
 * [Y8](https://www.y8.com/ )
