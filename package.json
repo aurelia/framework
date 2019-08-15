@@ -14,7 +14,7 @@
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
   "main": "dist/commonjs/aurelia-framework.js",
-  "module": "dist/es2015/aurelia-framework.js",
+  "module": "dist/native-modules/aurelia-framework.js",
   "typings": "dist/aurelia-framework.d.ts",
   "repository": {
     "type": "git",
