@@ -13,6 +13,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 
 ## Bronze Sponsors
 
+* [Allan Pumphrey](https://opencollective.com/allan-pumphrey)
 * [AmVenture](https://www.amventure.com/)
 * [Baytech Consulting](https://baytechconsulting.com)
 * [Blokt](https://blokt.com/)
@@ -46,6 +47,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Vevida](https://vevida.com/)
 * [Virtual Private Servers](https://www.vpsserver.com/)
 * [Y8](https://www.y8.com/ )
+* [Zambion](https://zambion.com/)
 
 ## Wood Sponsors
 
