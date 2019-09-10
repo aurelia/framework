@@ -33,6 +33,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [GiveMeDeals](https://www.givemedeals.com/)
 * [ihorizon Pty Ltd](http://ihorizon.net/)
 * [Merchise](http://www.merchise.cl/)
+* [Money Pug](https://moneypug.co.uk/)
 * [MonoVM](https://MonoVM.com)
 * [Nordic Trustee](https://nordictrustee.com/)
 * [Ormasoft](http://www.ormasoft.cl/)
@@ -46,6 +47,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [UX Top 5](https://opencollective.com/ux-top-5)
 * [Vevida](https://vevida.com/)
 * [Virtual Private Servers](https://www.vpsserver.com/)
+* [VPNGorilla](https://vpngorilla.com/)
 * [Y8](https://www.y8.com/ )
 * [Zambion](https://zambion.com/)
 
