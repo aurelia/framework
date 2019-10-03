@@ -41,6 +41,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Simployer](https://www.simployer.no/)
 * [Team Extension](https://teamextension.io/)
 * [Tekhattan](https://tekhattan.com/)
+* [Top Web Design Agencies](https://opencollective.com/top-web-design-agencies)
 * [TrueVendor](https://uiuxagencies.top)
 * [Ungerboeck Software International](https://ungerboeck.com/)
 * [Usave](https://usave.co.uk/utilities/broadband/)
@@ -143,4 +144,5 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Ranorex](https://www.ranorex.com/)
 * [Richard Bartley](https://twitter.com/RBRbBartley)
 * [Steven Moore](https://twitter.com/smoore4moma)
+* [Tiarnan Breffni](https://opencollective.com/tiarnan-breffni)
 * [Waldemar Bandosz](https://twitter.com/wbanos)
