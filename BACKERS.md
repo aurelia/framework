@@ -76,6 +76,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Dexter Haslem](https://dexterhaslem.com/)
 * [Dimitry Panchenko](https://opencollective.com/graycrow)
 * [Dwayne Charrington](https://ilikekillnerds.com)
+* [Eduardo Rocha](https://opencollective.com/hockdudu)
 * [Enrico Padovani](https://alchemists.it)
 * [Eric Edgar](https://twitter.com/ericedgar1)
 * [Erik Lieben](https://www.eriklieben.com)
