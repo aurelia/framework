@@ -34,6 +34,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Free Car Check](https://www.freecarcheck.uk)
 * [GiveMeDeals](https://www.givemedeals.com/)
 * [ihorizon Pty Ltd](http://ihorizon.net/)
+* [Loan Scouter](https://loanscouter.com/)
 * [Merchise](http://www.merchise.cl/)
 * [Money Pug](https://moneypug.co.uk/)
 * [MonoVM](https://MonoVM.com)
