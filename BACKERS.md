@@ -123,6 +123,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Steven Pena](https://twitter.com/steven_pena)
 * [Taichi Shimizu](https://opencollective.com/taichi-shimizu)
 * [Ted Chirvasiu](https://opencollective.com/ted-chirvasiu)
+* [Tim Turner](https://opencollective.com/tim-turner)
 * [Triplebyte](https://triplebyte.com/)
 * [Tyler Presley](https://strengthen.io)
 * [Unhype](https://unhype.com/)
