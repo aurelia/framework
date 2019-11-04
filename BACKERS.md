@@ -147,6 +147,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Brian Oommen](https://opencollective.com/brian-oommen)
 * [COMsulting](http://www.comsulting.de/)
 * [Daniyar Kulakhmetov](https://opencollective.com/daniyar-kulakhmetov)
+* [Danny Cummings](https://opencollective.com/danny-cummings)
 * [Game Server Kings](https://www.gameserverkings.com/)
 * [Huberto Kusters](https://opencollective.com/huberto-kusters)
 * [J. Austin Hughey](https://opencollective.com/j-austin-hughey)
