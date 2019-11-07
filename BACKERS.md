@@ -73,6 +73,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Arturo Martinez](https://twitter.com/artmasa)
 * [Ats Uiboupin](https://github.com/atsu85)
 * [Bill Kurtson](https://opencollective.com/bill-kurtson)
+* Bonus Finder [Canada](https://www.bonus.ca/), [US](https://www.bonusfinder.com/casino), [Deutschland](https://www.bonus.com.de/freispiele), [New Zealand](https://www.bonus.net.nz/free-spins)
 * [Brandon Ryan](https://mainstream-tech.com)
 * [Brandon Wittwer](http://brandonwittwer.com/)
 * [Carl Cubillas](https://github.com/cubski)
