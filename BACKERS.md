@@ -156,6 +156,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [John Kattestaart](https://twitter.com/Jkattestaart)
 * [Lisa Gumerman](https://opencollective.com/lisa-gumerman)
 * [Miroslav Popovic](https://miroslavpopovic.com)
+* [Pyae Kyaw](https://opencollective.com/pyae-kyaw)
 * [Radenko Zec](https://opencollective.com/radenkozec)
 * [Ranorex](https://www.ranorex.com/)
 * [Richard Bartley](https://twitter.com/RBRbBartley)
