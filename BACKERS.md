@@ -143,6 +143,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Unhype](https://unhype.com/)
 * [Veikko Eeva](https://twitter.com/veikkoeeva)
 * [Vildan Softic](http://pragmatic-coder.net)
+* [Vasiliy Sayganov](https://opencollective.com/vasiliy-sayganov)
 * [weagle08](https://github.com/weagle08)
 * [Writers Per Hour](https://writersperhour.com/urgent-essay-writing-service)
 * [Yauri E](https://opencollective.com/yauri-e)
