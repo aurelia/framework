@@ -161,6 +161,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [J. Austin Hughey](https://opencollective.com/j-austin-hughey)
 * [Jason Sobell](https://opencollective.com/jason-sobell)
 * [John Kattestaart](https://twitter.com/Jkattestaart)
+* [Laurence Drews](https://opencollective.com/laurence-drews)
 * [Lisa Gumerman](https://opencollective.com/lisa-gumerman)
 * [Miroslav Popovic](https://miroslavpopovic.com)
 * [Pyae Kyaw](https://opencollective.com/pyae-kyaw)
