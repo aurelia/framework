@@ -158,6 +158,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Danny Cummings](https://opencollective.com/danny-cummings)
 * [Game Server Kings](https://www.gameserverkings.com/)
 * [Huberto Kusters](https://opencollective.com/huberto-kusters)
+* [InfoCentral Solutions Pty Ltd](https://opencollective.com/infocentral-solutions-pty-ltd)
 * [J. Austin Hughey](https://opencollective.com/j-austin-hughey)
 * [Jason Sobell](https://opencollective.com/jason-sobell)
 * [John Kattestaart](https://twitter.com/Jkattestaart)
