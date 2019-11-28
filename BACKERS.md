@@ -97,6 +97,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Gamble Genie](https://gamblegenie.co.uk/)
 * [George Breeze](http://styrit.com/)
 * [GuruGate](https://www.gurugate.com/)
+* [Hit Casino Bonus](https://hitcasinobonus.com/)
 * [Hosting Canada](https://hostingcanada.org/)
 * [HostPresto](https://hostpresto.com/)
 * [Ivan Dolgintsev](https://opencollective.com/ivan-dolgintsev)
