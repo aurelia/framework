@@ -120,6 +120,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Matthew Corven](https://opencollective.com/matthew-corven)
 * [Michael Lakerveld](https://twitter.com/lakerfld)
 * [Mogens Heller Grabe](https://github.com/mookid8000)
+* [Nate Judice](https://github.com/NaJ64)
 * [Nick Floyd](http://archcoder.com)
 * [Per K. Kummermo](https://twitter.com/MrDonutseeker)
 * [Prasan Kumar](https://antaressystems.com)
