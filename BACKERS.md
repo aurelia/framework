@@ -41,6 +41,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Loan Scouter](https://loanscouter.com/)
 * [Matchbanker](https://matchbanker.es/)
 * [Merchise](http://www.merchise.cl/)
+* [Monetta](https://monetta.pl)
 * [Money Pug](https://moneypug.co.uk/)
 * [MonoVM](https://MonoVM.com)
 * [Nordic Trustee](https://nordictrustee.com/)
