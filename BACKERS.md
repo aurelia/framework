@@ -132,6 +132,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Richard Sykora](https://twitter.com/richardsykora)
 * [Robert B](https://opencollective.com/robert-b)
 * [Robert Kling](https://klingcode.wordpress.com/)
+* [Rodu](https://github.com/rodu)
 * [Saqib Rokadia](https://invioinc.com/)
 * [Saravanan Velappan](https://opencollective.com/saravanan-velappan)
 * [Sayan Pal](https://twitter.com/Sayan751)
