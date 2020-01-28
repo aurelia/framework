@@ -48,6 +48,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Ormasoft](http://www.ormasoft.cl/)
 * [PromoCodeWatch](https://www.promocodewatch.com/)
 * [Simployer](https://www.simployer.no/)
+* [Solace](https://solace.com/)
 * [Super Credit](https://superkredit.net/)
 * [Team Extension](https://teamextension.io/)
 * [Tekhattan](https://tekhattan.com/)
