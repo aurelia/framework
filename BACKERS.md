@@ -118,6 +118,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Leafdot s.r.o.](https://www.leafdot.net/)
 * [Luka Cetina](https://opencollective.com/luka-cetina)
 * [Marco Knol](https://www.linkedin.com/in/marco-knol-9ba01194/)
+* [marekpetak](https://github.com/marekpetak)
 * [Matter](https://matterapp.com/)
 * [Matthew Corven](https://opencollective.com/matthew-corven)
 * [Michael Lakerveld](https://twitter.com/lakerfld)
