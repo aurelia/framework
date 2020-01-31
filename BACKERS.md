@@ -110,6 +110,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Jordan Ware](https://opencollective.com/jordan-ware)
 * [Jorge Rodríguez Galán](https://opencollective.com/jorge-rodriguez-galan)
 * [Jørgen Skogås](https://opencollective.com/jorgen-skogas)
+* [Josh Dovishaw](https://github.com/CuddleBunny)
 * [Joseph Kesselring](https://github.com/jkesselring)
 * [Ju Zhao](https://opencollective.com/ju-zhao)
 * [Juliën Hanssens](https://hanssens.com)
