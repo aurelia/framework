@@ -45,6 +45,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Monetta](https://monetta.pl)
 * [Money Pug](https://moneypug.co.uk/)
 * [MonoVM](https://MonoVM.com)
+* [Nettikasinot](https://www.nettikasinot.org/)
 * [Nordic Trustee](https://nordictrustee.com/)
 * [Ormasoft](http://www.ormasoft.cl/)
 * [PromoCodeWatch](https://www.promocodewatch.com/)
