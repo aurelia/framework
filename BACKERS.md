@@ -48,6 +48,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Nettikasinot](https://www.nettikasinot.org/)
 * [Nordic Trustee](https://nordictrustee.com/)
 * [Ormasoft](http://www.ormasoft.cl/)
+* [Pelisivut](https://www.pelisivut.com)
 * [PromoCodeWatch](https://www.promocodewatch.com/)
 * [Simployer](https://www.simployer.no/)
 * [Solace](https://solace.com/)
