@@ -41,6 +41,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [GiveMeDeals](https://www.givemedeals.com/)
 * [ihorizon Pty Ltd](http://ihorizon.net/)
 * [Kasinot](https://www.kasinot.fi/)
+* [Leon](https://opencollective.com/leon)
 * [Loan Scouter](https://loanscouter.com/)
 * [Matchbanker](https://matchbanker.es/)
 * [Merchise](http://www.merchise.cl/)
