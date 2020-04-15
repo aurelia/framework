@@ -42,6 +42,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Free Car Check](https://www.freecarcheck.uk)
 * [GiveMeDeals](https://www.givemedeals.com/)
 * [ihorizon Pty Ltd](http://ihorizon.net/)
+* [Kasinohai](https://www.kasinohai.com/nettikasinot)
 * [Kasinot](https://www.kasinot.fi/)
 * [Lånen.se](https://www.xn--lnen-qoa.se/)
 * [Leon](https://opencollective.com/leon)
