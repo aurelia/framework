@@ -54,6 +54,8 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [MonoVM](https://MonoVM.com)
 * [Nettikasinot](https://www.nettikasinot.org/)
 * [Nordic Trustee](https://nordictrustee.com/)
+* [Onlinecasinoinformatie](https://onlinecasinoinformatie.com/)
+* [Onlinecasinoplatz](https://onlinecasinoplatz.com/)
 * [Ormasoft](http://www.ormasoft.cl/)
 * [Paraskasino](https://www.paraskasino.fi)
 * [Pelisivut](https://www.pelisivut.com)
