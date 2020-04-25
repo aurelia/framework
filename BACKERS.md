@@ -14,6 +14,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 ## Bronze Sponsors
 
 * [Allan Pumphrey](https://opencollective.com/allan-pumphrey)
+* [All Time List](https://alltimelist.com/)
 * [AmVenture](https://www.amventure.com/)
 * [Baytech Consulting](https://baytechconsulting.com)
 * [Blokt](https://blokt.com/)
