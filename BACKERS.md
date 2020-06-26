@@ -60,6 +60,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Onlinecasinoplatz](https://onlinecasinoplatz.com/)
 * [Ormasoft](http://www.ormasoft.cl/)
 * [Paraskasino](https://www.paraskasino.fi)
+* [Parhaatkasinot](https://www.parhaatkasinot.com)
 * [Pelisivut](https://www.pelisivut.com)
 * [PromoCodeWatch](https://www.promocodewatch.com/)
 * [Simployer](https://www.simployer.no/)
