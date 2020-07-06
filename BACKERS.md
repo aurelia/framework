@@ -147,6 +147,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Nick Floyd](http://archcoder.com)
 * [Nihar Damarasingu](https://opencollective.com/nihar-damarasingu)
 * [Per K. Kummermo](https://twitter.com/MrDonutseeker)
+* [PhilipTKC](https://github.com/PhilipTKC)
 * [Prasan Kumar](https://antaressystems.com)
 * [ProxyCrawl](https://proxycrawl.com/)
 * [Red Feet](https://twitter.com/redfeet)
