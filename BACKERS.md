@@ -144,6 +144,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Mogens Heller Grabe](https://github.com/mookid8000)
 * [Montana Mendy](https://github.com/Montana)
 * [Nate Judice](https://github.com/NaJ64)
+* [Nettcasinobonus](https://nettcasinobonus.com/)
 * [Nick Floyd](http://archcoder.com)
 * [Nihar Damarasingu](https://opencollective.com/nihar-damarasingu)
 * [Per K. Kummermo](https://twitter.com/MrDonutseeker)
