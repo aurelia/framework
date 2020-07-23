@@ -176,6 +176,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Vildan Softic](http://pragmatic-coder.net)
 * [Vasiliy Sayganov](https://opencollective.com/vasiliy-sayganov)
 * [weagle08](https://github.com/weagle08)
+* [William Entriken](https://github.com/fulldecent)
 * [Writers Per Hour](https://writersperhour.com/urgent-essay-writing-service)
 * [Yauri E](https://opencollective.com/yauri-e)
 
