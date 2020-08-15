@@ -64,6 +64,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Parhaatkasinot](https://www.parhaatkasinot.com)
 * [Pelisivut](https://www.pelisivut.com)
 * [PromoCodeWatch](https://www.promocodewatch.com/)
+* [RajBet](https://raj.bet/)
 * [Simployer](https://www.simployer.no/)
 * [Solace](https://solace.com/)
 * [Super Credit](https://superkredit.net/)
