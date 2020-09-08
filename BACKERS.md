@@ -19,6 +19,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Baytech Consulting](https://baytechconsulting.com)
 * [Blokt](https://blokt.com/)
 * [EduBirdie](https://edubirdie.com/research-papers-writing-services)
+* [Buy.Fineproxy.Org](https://buy.fineproxy.org/eng/)
 * [Capitalbay News](https://www.capitalbay.news/)
 * [Casino Online](https://casinoonline.casino/)
 * [Cosinot.net](https://www.casinot.net)
