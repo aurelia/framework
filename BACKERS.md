@@ -157,6 +157,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [ProxyCrawl](https://proxycrawl.com/)
 * [Red Feet](https://twitter.com/redfeet)
 * [Richard Sykora](https://twitter.com/richardsykora)
+* [Robert Binneman](https://github.com/RobertBinneman)
 * [Robert B](https://opencollective.com/robert-b)
 * [Robert Kling](https://klingcode.wordpress.com/)
 * [Rodu](https://github.com/rodu)
