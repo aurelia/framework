@@ -138,6 +138,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Juliën Hanssens](https://hanssens.com)
 * [Kenneth Moore](https://opencollective.com/thegooeyguy)
 * [Khuzema Kanore](http://wisdom.com.kw)
+* [Lance Newman](https://opencollective.com/lance-newman)
 * [Leafdot s.r.o.](https://www.leafdot.net/)
 * [Luka Cetina](https://opencollective.com/luka-cetina)
 * [Marco Knol](https://www.linkedin.com/in/marco-knol-9ba01194/)
