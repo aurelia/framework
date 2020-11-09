@@ -147,6 +147,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Marco Knol](https://www.linkedin.com/in/marco-knol-9ba01194/)
 * [marekpetak](https://github.com/marekpetak)
 * [Matter](https://matterapp.com/)
+* [Matthew Conrad](https://github.com/mvrad)
 * [Matthew Corven](https://opencollective.com/matthew-corven)
 * [Michael Lakerveld](https://twitter.com/lakerfld)
 * [Mogens Heller Grabe](https://github.com/mookid8000)
