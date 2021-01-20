@@ -198,6 +198,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [COMsulting](http://www.comsulting.de/)
 * [Daniyar Kulakhmetov](https://opencollective.com/daniyar-kulakhmetov)
 * [Danny Cummings](https://opencollective.com/danny-cummings)
+* [Dennis Battenfeld](https://opencollective.com/guest-3f58fba7)
 * [Game Server Kings](https://www.gameserverkings.com/)
 * [Huberto Kusters](https://opencollective.com/huberto-kusters)
 * [InfoCentral Solutions Pty Ltd](https://opencollective.com/infocentral-solutions-pty-ltd)
