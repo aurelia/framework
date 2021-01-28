@@ -56,6 +56,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Monetta](https://monetta.pl)
 * [Money Pug](https://moneypug.co.uk/)
 * [MonoVM](https://MonoVM.com)
+* [Netpositive](https://opencollective.com/netpositive)
 * [Nettikasinolista.com](https://nettikasinolista.com/)
 * [Nettikasinot](https://www.nettikasinot.org/)
 * [Nordic Trustee](https://nordictrustee.com/)
