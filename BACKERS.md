@@ -202,6 +202,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Dennis Battenfeld](https://opencollective.com/guest-3f58fba7)
 * [Game Server Kings](https://www.gameserverkings.com/)
 * [Huberto Kusters](https://opencollective.com/huberto-kusters)
+* [IGUTech](https://www.igutech.com)
 * [InfoCentral Solutions Pty Ltd](https://opencollective.com/infocentral-solutions-pty-ltd)
 * [J. Austin Hughey](https://opencollective.com/j-austin-hughey)
 * [Jason Sobell](https://opencollective.com/jason-sobell)
