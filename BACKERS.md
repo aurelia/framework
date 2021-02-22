@@ -105,6 +105,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Brandon Ryan](https://mainstream-tech.com)
 * [Brandon Wittwer](http://brandonwittwer.com/)
 * [Carl Cubillas](https://github.com/cubski)
+* [Carlos Rufo](https://github.com/swcarlosrj)
 * [Cédric Vermeulen](https://opencollective.com/cedric-vermeulen)
 * [Christian Kotzbauer](https://code-chris.github.io)
 * [Christoph Noe](http://neonnoe.com/)
