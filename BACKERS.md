@@ -161,6 +161,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Nihar Damarasingu](https://opencollective.com/nihar-damarasingu)
 * [Per K. Kummermo](https://twitter.com/MrDonutseeker)
 * [PhilipTKC](https://github.com/PhilipTKC)
+* [Plugin.IO](https://github.com/pluginio)
 * [Prasan Kumar](https://antaressystems.com)
 * [ProxyCrawl](https://proxycrawl.com/)
 * [Red Feet](https://twitter.com/redfeet)
