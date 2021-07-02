@@ -96,6 +96,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Ananth Subramanian](https://opencollective.com/ananth-subramanian)
 * [Andrew Camilleri](https://github.com/Kukks)
 * [Arjen de Blok](https://opencollective.com/arjen-de-blok)
+* Artur Erotschkin
 * [Arturo Martinez](https://twitter.com/artmasa)
 * [Ats Uiboupin](https://github.com/atsu85)
 * [Avraham Essoudry](https://github.com/avrahamcool)
