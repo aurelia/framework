@@ -154,6 +154,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Matthew Conrad](https://github.com/mvrad)
 * [Matthew Corven](https://opencollective.com/matthew-corven)
 * [Michael Lakerveld](https://twitter.com/lakerfld)
+* Michele Manara
 * [Mogens Heller Grabe](https://github.com/mookid8000)
 * [Montana Mendy](https://github.com/Montana)
 * [Nate Judice](https://github.com/NaJ64)
