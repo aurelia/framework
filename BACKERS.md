@@ -181,6 +181,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Sean Hunter](https://sean-hunter.io/)
 * [Shannon Horn](http://smoothirish.com)
 * [ShowMyIP](https://www.showmyip.com/)
+* [Singletree Technologies](https://singletreetech.com/)
 * [Steven Pena](https://twitter.com/steven_pena)
 * [Taichi Shimizu](https://opencollective.com/taichi-shimizu)
 * [Ted Chirvasiu](https://opencollective.com/ted-chirvasiu)
