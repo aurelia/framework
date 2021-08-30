@@ -203,6 +203,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 
 ## One-Time Gifts
 
+* [Allt om Företagslån](https://www.alltomforetagslan.se/)
 * [Asht](https://opencollective.com/asht)
 * [Besten Pfannen](https://opencollective.com/besten-pfannen)
 * [Brian Oommen](https://opencollective.com/brian-oommen)
