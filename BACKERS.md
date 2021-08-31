@@ -219,6 +219,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Jason Sobell](https://opencollective.com/jason-sobell)
 * [John Kattestaart](https://twitter.com/Jkattestaart)
 * [Laurence Drews](https://opencollective.com/laurence-drews)
+* [LEI Certificate](https://www.leicertificate.org/en/)
 * [Lisa Gumerman](https://opencollective.com/lisa-gumerman)
 * [Miroslav Popovic](https://miroslavpopovic.com)
 * [Pyae Kyaw](https://opencollective.com/pyae-kyaw)
