@@ -114,6 +114,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Christian Kotzbauer](https://code-chris.github.io)
 * [Christoph Noe](http://neonnoe.com/)
 * [CP Huo](https://opencollective.com/cp-huo)
+* [Cristián Ormazábal](https://www.ormasoft.cl/)
 * [Daniel Kütt](https://twitter.com/kyttike)
 * [Daniel Rothmaler](https://github.com/drothmaler)
 * [David Morris](https://opencollective.com/david-morris)
