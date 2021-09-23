@@ -9,6 +9,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 ## Silver Sponsors
 
 * [Haselt](http://www.haselt.com)
+* [Movavi Screen Recorder](https://www.movavi.com/screen-recorder/)
 * [Symbiosys](https://www.smbsol.com/)
 
 ## Bronze Sponsors
