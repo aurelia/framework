@@ -76,6 +76,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Simployer](https://www.simployer.no/)
 * [Solace](https://solace.com/)
 * [Super Credit](https://superkredit.net/)
+* [Targeted Web Traffic](https://www.targetedwebtraffic.com/)
 * [Team Extension](https://teamextension.io/)
 * [Tekhattan](https://tekhattan.com/)
 * [Top Web Design Agencies](https://opencollective.com/top-web-design-agencies)
