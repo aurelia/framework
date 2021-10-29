@@ -140,6 +140,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Jack Ma](https://twitter.com/jack4it)
 * [James Reategui](https://github.com/JamesReate)
 * [John D'Amore](https://www.diameterhealth.com/)
+* [John Manko](https://github.com/johnmanko)
 * [Jon Carlson](https://opencollective.com/jon-carlson)
 * [Jonas Frost](https://opencollective.com/jonas-frost)
 * [Jordan Ware](https://opencollective.com/jordan-ware)
