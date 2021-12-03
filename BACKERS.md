@@ -190,6 +190,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Steven Pena](https://twitter.com/steven_pena)
 * [Taichi Shimizu](https://opencollective.com/taichi-shimizu)
 * [Ted Chirvasiu](https://opencollective.com/ted-chirvasiu)
+* [theArianit](https://github.com/theArianit)
 * [Thomas Darling](https://github.com/thomas-darling)
 * [Tomas Kulhanek](https://github.com/TomasKulhanek)
 * [Tim Fish](https://github.com/timfish)
