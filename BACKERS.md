@@ -138,6 +138,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [HostPresto](https://hostpresto.com/)
 * [Ivan Dolgintsev](https://opencollective.com/ivan-dolgintsev)
 * [Jack Ma](https://twitter.com/jack4it)
+* [James](https://opencollective.com/guest-22047709)
 * [James Reategui](https://github.com/JamesReate)
 * [John D'Amore](https://www.diameterhealth.com/)
 * [John Manko](https://github.com/johnmanko)
