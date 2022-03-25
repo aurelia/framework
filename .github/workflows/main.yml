@@ -1,0 +1,16 @@
+name: main
+on: [push]
+
+jobs:
+
+  ci:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 11
+      - run: npm ci
+      - run: npm i -g jspm
+      - run: npx gulp prepare-release
