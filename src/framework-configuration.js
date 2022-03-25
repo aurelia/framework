@@ -258,7 +258,7 @@ export class FrameworkConfiguration {
     case 'string':
       let hasIndex = /\/index$/i.test(plugin);
       let moduleId = hasIndex || getExt(plugin) ? plugin : plugin + '/index';
-      let root = hasIndex ? plugin.substr(0, plugin.length - 6) : plugin;
+      let root = hasIndex ? plugin.slice(0, -6) : plugin;
       this.info.push({ moduleId, resourcesRelativeTo: [root, ''], config });
       break;
       // return this.plugin({ moduleId, resourcesRelativeTo: [root, ''], config });
