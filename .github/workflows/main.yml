@@ -13,4 +13,5 @@ jobs:
           node-version: 11
       - run: npm ci
       - run: npm i -g jspm
+      - run: npx gulp test
       - run: npx gulp prepare-release
