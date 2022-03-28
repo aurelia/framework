@@ -100,7 +100,7 @@
     "jasmine-core": "^2.4.1",
     "karma": "^6.3.17",
     "karma-babel-preprocessor": "^6.0.1",
-    "karma-chrome-launcher": "^1.0.1",
+    "karma-chrome-launcher": "^3.1.1",
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.0.2",
     "karma-jspm": "^2.2.0",
