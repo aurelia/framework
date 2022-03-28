@@ -20,6 +20,7 @@ module.exports = function(config) {
 
     plugins: [
       'karma-jspm',
+      'karma-jasmine',
       'karma-chrome-launcher'
     ],
 
