@@ -18,10 +18,10 @@ module.exports = function(config) {
       serveFiles: ['src/**/*.js']
     },
 
-    // plugins: [
-    //   'karma-jspm',
-    //   'karma-chrome-launcher'
-    // ],
+    plugins: [
+      'karma-jspm',
+      'karma-chrome-launcher'
+    ],
 
 
     // list of files / patterns to load in the browser

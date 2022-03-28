@@ -13,6 +13,5 @@ jobs:
           node-version: 11
       - run: npm ci
       - run: npm i -g jspm
-      - run: jspm dl-loader -y
       - run: npx gulp test
       - run: npx gulp prepare-release
