@@ -15,8 +15,13 @@ module.exports = function(config) {
     jspm: {
       // Edit this to your needs
       loadFiles: ['test/**/*.js'],
-      serveFiles : ['src/**/*.js']
+      serveFiles: ['src/**/*.js']
     },
+
+    // plugins: [
+    //   'karma-jspm',
+    //   'karma-chrome-launcher'
+    // ],
 
 
     // list of files / patterns to load in the browser
