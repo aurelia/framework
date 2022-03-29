@@ -13,3 +13,6 @@ import * as TheLogManager from 'aurelia-logging';
  * The log manager.
  */
 export const LogManager = TheLogManager;
+
+export { Aurelia } from './aurelia';
+export { FrameworkConfiguration } from './framework-configuration';
