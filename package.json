@@ -15,7 +15,7 @@
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
   "main": "dist/commonjs/aurelia-framework.js",
   "module": "dist/native-modules/aurelia-framework.js",
-  "typings": "dist/aurelia-framework.d.ts",
+  "typings": "dist/types/aurelia-framework.d.ts",
   "repository": {
     "type": "git",
     "url": "http://github.com/aurelia/framework"
@@ -25,6 +25,7 @@
     "clean:dist": "rimraf dist",
     "pre:build": "npm run clean:dist",
     "build": "rollup -c",
+    "build:dts": "tsc src/aurelia-framework.ts --emitDeclarationOnly --declaration --declarationDir dist/types",
     "lint": "eslint .",
     "cut-release": "gulp prepare-release"
   },
