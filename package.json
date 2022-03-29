@@ -26,6 +26,7 @@
     "pre:build": "npm run clean:dist",
     "build": "rollup -c",
     "build:dts": "tsc src/aurelia-framework.ts --emitDeclarationOnly --declaration --declarationDir dist/types",
+    "postbuild": "npm run build:dts",
     "lint": "eslint .",
     "cut-release": "gulp prepare-release"
   },
@@ -91,7 +92,7 @@
     "rollup": "^2.70.1",
     "run-sequence": "^1.2.2",
     "through2": "^2.0.1",
-    "typedoc": "^0.11.1",
+    "typedoc": "^0.22.13",
     "typescript": "^4.6.3",
     "vinyl": "^1.1.1",
     "vinyl-paths": "^2.1.0",
