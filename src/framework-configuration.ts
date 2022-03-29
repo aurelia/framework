@@ -1,7 +1,9 @@
 import * as TheLogManager from 'aurelia-logging';
-import {ViewEngine, HtmlBehaviorResource} from 'aurelia-templating';
-import {join} from 'aurelia-path';
-import {Container} from 'aurelia-dependency-injection';
+import { ViewEngine, HtmlBehaviorResource } from 'aurelia-templating';
+import { join } from 'aurelia-path';
+import { type Container } from 'aurelia-dependency-injection';
+import { type Aurelia } from './aurelia';
+import { type Loader } from 'aurelia-loader';
 
 const logger = TheLogManager.getLogger('aurelia');
 const extPattern = /\.[^/.]+$/;
@@ -163,16 +165,44 @@ export class FrameworkConfiguration {
   aurelia: Aurelia;
 
   /**
+   * Plugin / feature loading instruction
+   * @type {FrameworkPluginInfo[]}
+   *
+   * @internal
+   */
+  info: FrameworkPluginInfo[];
+
+  /** @internal */
+  processed: boolean;
+
+  /** @internal */
+  preTasks: any[];
+
+  /** @internal */
+  postTasks: any[];
+
+  /** @internal */
+  behaviorsToLoad: any[];
+
+  /** @internal */
+  configuredPlugins: any[];
+
+  /** @internal */
+  resourcesToLoad: Record<string, any>;
+
+  /** @internal */
+  bootstrapperName: string;
+
+  /** @internal */
+  resourcesRelativeTo: string[];
+
+  /**
    * Creates an instance of FrameworkConfiguration.
    * @param aurelia An instance of Aurelia.
    */
   constructor(aurelia: Aurelia) {
     this.aurelia = aurelia;
     this.container = aurelia.container;
-    /**
-     * Plugin / feature loading instruction
-     * @type {FrameworkPluginInfo[]}
-     */
     this.info = [];
     this.processed = false;
     this.preTasks = [];
@@ -188,7 +218,8 @@ export class FrameworkConfiguration {
      */
     this.configuredPlugins = [];
     this.resourcesToLoad = {};
-    this.preTask(() => aurelia.loader.normalize('aurelia-bootstrapper').then(name => this.bootstrapperName = name));
+    this.preTask(() => aurelia.loader.normalize('aurelia-bootstrapper', undefined)
+      .then(name => this.bootstrapperName = name));
     this.postTask(() => loadResources(aurelia, this.resourcesToLoad, aurelia.resources));
   }
 
@@ -253,7 +284,7 @@ export class FrameworkConfiguration {
    * @param config The configuration for the specified plugin.
    * @return Returns the current FrameworkConfiguration instance.
    */
-  feature(plugin: string | ((config: FrameworkConfiguration, pluginConfig?: any) => any), config?: any = {}): FrameworkConfiguration {
+  feature(plugin: string | ((config: FrameworkConfiguration, pluginConfig?: any) => any), config: any = {}): FrameworkConfiguration {
     switch (typeof plugin) {
     case 'string':
       let hasIndex = /\/index$/i.test(plugin);
@@ -353,7 +384,8 @@ export class FrameworkConfiguration {
     return this;
   }
 
-  _addNormalizedPlugin(name, config) {
+  /** @internal */
+  _addNormalizedPlugin(name, config?) {
     let plugin = { moduleId: name, resourcesRelativeTo: [name, ''], config: config || {} };
     this.info.push(plugin);
 
@@ -436,7 +468,7 @@ export class FrameworkConfiguration {
    * @param level The log level (none/error/warn/info/debug), default to 'debug'.
    * @return {FrameworkConfiguration} Returns the current FrameworkConfiguration instance.
   */
-  developmentLogging(level?: String): FrameworkConfiguration {
+  developmentLogging(level?: string): FrameworkConfiguration {
     let logLevel = level ? TheLogManager.logLevel[level] : undefined;
 
     if (logLevel === undefined) {
@@ -482,5 +514,11 @@ export class FrameworkConfiguration {
 
       return next().then(() => runTasks(this, this.postTasks));
     });
+  }
+}
+
+declare module 'aurelia-templating' {
+  interface HtmlBehaviorResource {
+    elementName: string | null;
   }
 }

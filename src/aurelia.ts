@@ -1,20 +1,20 @@
 import * as TheLogManager from 'aurelia-logging';
 import {Container} from 'aurelia-dependency-injection';
 import {Loader} from 'aurelia-loader';
-import {BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction} from 'aurelia-templating';
+import {BindingLanguage, ViewSlot, ViewResources, TemplatingEngine, CompositionTransaction, View, CompositionContext} from 'aurelia-templating';
 import {DOM, PLATFORM} from 'aurelia-pal';
 import {relativeToFile} from 'aurelia-path';
 import {FrameworkConfiguration} from './framework-configuration';
 
 function preventActionlessFormSubmit() {
   DOM.addEventListener('submit', evt => {
-    const target = evt.target;
+    const target = evt.target as HTMLFormElement;
     const action = target.action;
 
     if (target.tagName.toLowerCase() === 'form' && !action) {
       evt.preventDefault();
     }
-  });
+  }, false);
 }
 
 /**
@@ -43,6 +43,24 @@ export class Aurelia {
    * The configuration used during application startup.
    */
   use: FrameworkConfiguration;
+
+  /** @internal */
+  private logger: TheLogManager.Logger;
+
+  /** @internal */
+  _started: Promise<this>;
+
+  /** @internal */
+  private hostConfigured: boolean;
+
+  /** @internal */
+  private root: View;
+
+  /** @internal */
+  private configModuleId: string;
+
+  /** @internal */
+  private hostSlot: ViewSlot;
 
   /**
    * Creates an instance of Aurelia.
@@ -100,7 +118,7 @@ export class Aurelia {
     this._configureHost(applicationHost || DOM.querySelectorAll('body')[0]);
 
     return new Promise(resolve => {
-      let engine = this.container.get(TemplatingEngine);
+      let engine = this.container.get(TemplatingEngine) as TemplatingEngine;
       this.root = engine.enhance({container: this.container, element: this.host, resources: this.resources, bindingContext: bindingContext});
       this.root.attached();
       this._onAureliaComposed();
@@ -115,7 +133,7 @@ export class Aurelia {
    * @return Returns a Promise of the current Aurelia instance.
    */
   setRoot(root: string | Function = null, applicationHost: string | Element = null): Promise<Aurelia> {
-    let instruction = {};
+    let instruction = {} as CompositionContext;
 
     if (this.root && this.root.viewModel && this.root.viewModel.router) {
       this.root.viewModel.router.deactivate();
@@ -124,7 +142,7 @@ export class Aurelia {
 
     this._configureHost(applicationHost);
 
-    let engine = this.container.get(TemplatingEngine);
+    let engine = this.container.get(TemplatingEngine) as TemplatingEngine;
     let transaction = this.container.get(CompositionTransaction);
     delete transaction.initialComposition;
 
@@ -141,7 +159,7 @@ export class Aurelia {
     instruction.viewSlot = this.hostSlot;
     instruction.host = this.host;
 
-    return engine.compose(instruction).then(r => {
+    return engine.compose(instruction).then((r: View) => {
       this.root = r;
       instruction.viewSlot.attached();
       this._onAureliaComposed();
@@ -149,6 +167,7 @@ export class Aurelia {
     });
   }
 
+  /** @internal */
   _configureHost(applicationHost) {
     if (this.hostConfigured) {
       return;
@@ -166,14 +185,21 @@ export class Aurelia {
     }
 
     this.hostConfigured = true;
-    this.host.aurelia = this;
+    (this.host as any).aurelia = this;
     this.hostSlot = new ViewSlot(this.host, true);
     this.hostSlot.transformChildNodesIntoView();
     this.container.registerInstance(DOM.boundary, this.host);
   }
 
+  /** @internal */
   _onAureliaComposed() {
     let evt = DOM.createCustomEvent('aurelia-composed', { bubbles: true, cancelable: true });
     setTimeout(() => DOM.dispatchEvent(evt), 1);
+  }
+}
+
+declare module 'aurelia-templating' {
+  interface View {
+    viewModel: any;
   }
 }

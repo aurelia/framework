@@ -20,6 +20,9 @@
     "type": "git",
     "url": "http://github.com/aurelia/framework"
   },
+  "scripts": {
+    "test": "karma start --single-run"
+  },
   "jspm": {
     "registry": "npm",
     "jspmPackage": true,
@@ -70,6 +73,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
+    "@types/jasmine": "^4.0.0",
+    "@types/node": "^17.0.23",
+    "aurelia-pal-browser": "^1.8.1",
     "aurelia-tools": "^0.2.4",
     "babel-dts-generator": "^0.6.1",
     "babel-eslint": "^6.1.2",
@@ -98,13 +104,14 @@
     "gulp-typedoc-extractor": "0.0.8",
     "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-util": "^3.0.8",
-    "jasmine-core": "^2.4.1",
+    "jasmine-core": "^4.0.1",
     "karma": "^6.3.17",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-chrome-launcher": "^3.1.1",
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.0.2",
     "karma-jspm": "^2.2.0",
+    "karma-typescript": "^5.5.3",
     "merge2": "^1.0.2",
     "object.assign": "^4.0.4",
     "require-dir": "^0.3.0",

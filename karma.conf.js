@@ -1,6 +1,9 @@
 // Karma configuration
 // Generated on Fri Dec 05 2014 16:49:29 GMT-0500 (EST)
 
+/**
+ * @param {import('karma').Config} config
+ */
 module.exports = function(config) {
   config.set({
 
@@ -10,52 +13,61 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jspm', 'jasmine'],
+    frameworks: ['jasmine', 'karma-typescript'],
 
-    jspm: {
-      // Edit this to your needs
-      loadFiles: ['test/**/*.js'],
-      serveFiles: ['src/**/*.js']
-    },
-
-    plugins: [
-      'karma-jspm',
-      'karma-jasmine',
-      'karma-chrome-launcher'
+    files: [
+      'src/**/*.ts',
+      'test/**/*.ts'
     ],
 
-
-    // list of files / patterns to load in the browser
-    files: [],
-
+    plugins: [
+      'karma-jasmine',
+      'karma-typescript',
+      'karma-coverage',
+      'karma-chrome-launcher'
+    ],
 
     // list of files to exclude
     exclude: [
     ],
-
-
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.js': ['babel'],
-      'src/**/*.js': ['babel']
+      // 'test/**/*.js': ['babel'],
+      // 'src/**/*.js': ['babel'],
+      '**/*.ts': ['karma-typescript']
     },
-    'babelPreprocessor': {
-      options: {
-        sourceMap: 'inline',
-        presets: [ 'es2015-loose', 'stage-1'],
-        plugins: [
-          'syntax-flow',
-          'transform-decorators-legacy',
-          'transform-flow-strip-types'
-        ]
-      }
-    },
+    // 'babelPreprocessor': {
+    //   options: {
+    //     sourceMap: 'inline',
+    //     presets: [ 'es2015-loose', 'stage-1'],
+    //     plugins: [
+    //       'syntax-flow',
+    //       'transform-decorators-legacy',
+    //       'transform-flow-strip-types'
+    //     ]
+    //   }
+    // },
+    karmaTypescriptConfig: (() => {
+      /**@type {import('karma-typescript').KarmaTypescriptConfig} */
+      const options = {
+        bundlerOptions: {
+          entrypoints: /\.spec\.ts$/
+        },
+        compilerOptions: {
+          emitDecoratorMetadata: true,
+          experimentalDecorators: true,
+          module: 'commonjs',
+          sourceMap: true,
+          target: 'ES2015',
+          lib: ['es2015', 'dom']
+        },
+        exclude: ['dist', 'node_modules']
+      };
+      return options;
+    })(),
 
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'karma-typescript'],
 
 
     // web server port
@@ -68,7 +80,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_ERROR,
 
 
     // enable / disable watching file and executing tests whenever any file changes

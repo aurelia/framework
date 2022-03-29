@@ -2,6 +2,7 @@ import './setup';
 import {FrameworkConfiguration} from '../src/framework-configuration';
 import {Aurelia} from '../src/aurelia';
 import { HtmlBehaviorResource } from 'aurelia-templating';
+import { Loader } from 'aurelia-loader';
 
 describe('the framework config', () => {
   it('should initialize', () => {
@@ -10,9 +11,9 @@ describe('the framework config', () => {
 
     expect(config).toBeDefined();
     expect(config.aurelia).toBe(aureliaMock);
-    expect(config.info).toEqual(jasmine.any(Array));
-    expect(config.info.length).toEqual(0);
-    expect(config.processed).toBeFalsy();
+    expect(config['info']).toEqual(jasmine.any(Array));
+    expect(config['info'].length).toEqual(0);
+    expect(config['processed']).toBeFalsy();
   });
 
   describe('with', () => {
@@ -23,7 +24,7 @@ describe('the framework config', () => {
 
     beforeEach(() => {
       mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'registerSingleton', 'makeGlobal']);
-      aurelia = new Aurelia({}, mockContainer);
+      aurelia = new Aurelia({} as Loader, mockContainer);
       testInstance = new TestClass();
     });
 
@@ -76,7 +77,7 @@ describe('the framework config', () => {
       mockResources = jasmine.createSpy('viewResources');
 
       mockViewEngine = jasmine.createSpyObj("viewEngine", ["importViewResources"]);
-      mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
+      mockViewEngine.importViewResources.and.returnValue(new Promise<void>((resolve, error) => {
         resolve();
       }));
 
@@ -149,7 +150,7 @@ describe('the framework config', () => {
     it("should load a plugin, call it's configure function and resolve the returned promise if defined", (done) => {
       var pluginConfig = {};
       var resolved = false;
-      configSpy.configure = jasmine.createSpy("configure").and.returnValue(new Promise((resolve) => {
+      configSpy.configure = jasmine.createSpy("configure").and.returnValue(new Promise<void>((resolve) => {
         resolved = true;
         resolve();
       }));
@@ -204,7 +205,7 @@ describe('the framework config', () => {
     it('should queue loading behavior task when calling globalResources on custom element', () => {
       aurelia.resources.autoRegister = function() {
         const meta = new HtmlBehaviorResource();
-        meta.elementName = 'el';
+        meta['elementName'] = 'el';
         return meta;
       };
       config.globalResources(class El {});
@@ -220,7 +221,7 @@ describe('the framework config', () => {
       mockResources = jasmine.createSpy('viewResources');
 
       mockViewEngine = jasmine.createSpyObj("viewEngine", ["importViewResources"]);
-      mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
+      mockViewEngine.importViewResources.and.returnValue(new Promise<void>((resolve, error) => {
         resolve();
       }));
 
@@ -282,12 +283,13 @@ describe('the framework config', () => {
 
       let behaviorQueued = false;
       let behaviorLoaded = false;
-      
+
       aurelia.resources.autoRegister = function() {
         const meta = new HtmlBehaviorResource();
-        meta.elementName = 'el';
-        meta.load = function() {
+        meta['elementName'] = 'el';
+        meta['load'] = function() {
           behaviorLoaded = true;
+          return Promise.resolve(null);
         };
         return meta;
       };

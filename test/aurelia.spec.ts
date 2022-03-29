@@ -6,26 +6,38 @@ import { Aurelia } from '../src/aurelia';
 import { FrameworkConfiguration } from '../src/framework-configuration';
 import './setup';
 
-describe('aurelia', () => {
-  describe("constructor", () => {
+type AureliaAppHost = HTMLElement & { aurelia?: Aurelia };
 
-    it("should have good defaults", () => {
-      let mockLoader = {};
-      PLATFORM.Loader = function(){
+declare global {
+  namespace Reflect {
+    export var getOwnMetadata: (metadataKey, target, targetKey) => any;
+    export var defineMetadata: (metadataKey, metadataValue, target, targetKey) => void;
+    export var metadata: (metadataKey, metadataValue) => any;
+  }
+}
+
+describe('aurelia', () => {
+  Reflect
+  const document = window.document as Document & { body: AureliaAppHost };
+
+  describe('constructor', () => {
+    it('should have good defaults', () => {
+      let mockLoader = {} as Loader;
+      PLATFORM.Loader = function() {
         return mockLoader;
-      }
+      };
       let aurelia = new Aurelia();
 
       expect(aurelia.loader).toBe(mockLoader);
       expect(aurelia.container).toEqual(jasmine.any(Container));
       expect(aurelia.resources).toEqual(jasmine.any(ViewResources));
       expect(aurelia.use).toEqual(jasmine.any(FrameworkConfiguration));
-      expect(aurelia.started).toBeFalsy();
+      expect(aurelia['started']).toBeFalsy();
     });
 
-    it("will take in a loader, container and resource registry", () => {
-      let mockLoader = jasmine.createSpy('loader');
-      let mockResources = jasmine.createSpy('viewResources');
+    it('will take in a loader, container and resource registry', () => {
+      let mockLoader = jasmine.createSpy('loader') as Loader & jasmine.Spy;
+      let mockResources = jasmine.createSpy('viewResources') as ViewResources & jasmine.Spy;
       let mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'makeGlobal']);
 
       let aurelia = new Aurelia(mockLoader, mockContainer, mockResources);
@@ -33,25 +45,25 @@ describe('aurelia', () => {
       expect(aurelia.container).toBe(mockContainer);
       expect(aurelia.resources).toBe(mockResources);
       expect(aurelia.use).toEqual(jasmine.any(FrameworkConfiguration));
-      expect(aurelia.started).toBeFalsy();
+      expect(aurelia['started']).toBeFalsy();
 
       //Lets check the container was called
       expect(mockContainer.registerInstance).toHaveBeenCalledWith(Aurelia, aurelia);
       expect(mockContainer.registerInstance).toHaveBeenCalledWith(Loader, mockLoader);
       expect(mockContainer.registerInstance).toHaveBeenCalledWith(ViewResources, mockResources);
     });
-
   });
 
   describe('start()', () => {
-    let aurelia, mockContainer, mockLoader, mockResources, mockPlugin, mockViewEngine;
+    // eslint-disable-next-line one-var
+    let aurelia: Aurelia, mockContainer, mockLoader, mockResources, mockPlugin, mockViewEngine;
 
     beforeEach(() => {
       mockLoader = jasmine.createSpy('loader');
       mockResources = jasmine.createSpy('viewResources');
 
-      mockViewEngine = jasmine.createSpyObj("viewEngine", ["importViewResources"]);
-      mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
+      mockViewEngine = jasmine.createSpyObj('viewEngine', ['importViewResources']);
+      mockViewEngine.importViewResources.and.returnValue(new Promise<void>((resolve, error) => {
         resolve();
       }));
 
@@ -60,7 +72,7 @@ describe('aurelia', () => {
       mockContainer.get.and.returnValue(mockViewEngine);
 
       mockPlugin = jasmine.createSpyObj('plugin', ['apply']);
-      mockPlugin.apply.and.returnValue(new Promise((resolve, error) => {
+      mockPlugin.apply.and.returnValue(new Promise<void>((resolve, error) => {
         resolve();
       }));
 
@@ -68,42 +80,41 @@ describe('aurelia', () => {
       aurelia.use = mockPlugin;
     });
 
-    it("will return if it's already started", (done) => {
-      aurelia.started = true;
-      aurelia.start()
-        .catch((reason) => expect(true).toBeFalsy(reason))
-        .then(done);
+    it("will return if it's already started", () => {
+      aurelia._started = Promise.resolve(aurelia);
+      return aurelia.start()
+        .catch((reason) => expect(true).toBeFalsy(reason));
     });
 
-    it("will fail if the plugin loader fails", (done) => {
+    it('will fail if the plugin loader fails', (done) => {
       mockPlugin.apply.and.returnValue(new Promise((resolve, error) => {
         error();
       }));
 
       aurelia.start()
-        .then(() => expect(true).toBeFalsy("Startup should have failed"))
+        .then(() => expect(true).toBeFalsy('Startup should have failed'))
         .catch(() => expect(mockPlugin.apply).toHaveBeenCalled())
         .then(done);
     });
 
     //I'm going to assume start should fail in this case.
-    it("should check for a binding language and log an error if one is not set", (done) => {
+    it('should check for a binding language and log an error if one is not set', (done) => {
       mockContainer.hasResolver.and.returnValue(false);
       aurelia.start()
-        .then(() => expect(true).toBeFalsy("Should have not started up"))
+        .then(() => expect(true).toBeFalsy('Should have not started up'))
         .catch(() => expect(mockContainer.hasResolver).toHaveBeenCalledWith(BindingLanguage))
         .then(done);
     });
 
-    it("should fire a custom event when started", (done) => {
-      var documentSpy = spyOn(document, "dispatchEvent").and.callThrough();
+    it('should fire a custom event when started', (done) => {
+      let documentSpy = spyOn(document, 'dispatchEvent').and.callThrough();
       aurelia.start()
         .then((result) => {
           expect(result).toBe(aurelia);
           expect(documentSpy).toHaveBeenCalled();
-          var event = documentSpy.calls.mostRecent().args[0];
+          let event = documentSpy.calls.mostRecent().args[0];
           expect(event).toEqual(jasmine.any(window.Event));
-          expect(event.type).toEqual("aurelia-started");
+          expect(event.type).toEqual('aurelia-started');
         })
         .catch(() => expect(true).toBeFalsy("Starting shouldn't have failed"))
         .then(done);
@@ -111,16 +122,17 @@ describe('aurelia', () => {
   });
 
   describe('setRoot()', () => {
+    // eslint-disable-next-line one-var
     let aurelia, mockContainer, mockLoader, mockCompositionEngine, rootModel, composePromise, composeListener;
 
     beforeEach(() => {
-      mockLoader = jasmine.createSpy("loader");
-      mockContainer = jasmine.createSpyObj("container", ["get", "registerInstance", 'makeGlobal']);
-      mockCompositionEngine = jasmine.createSpyObj("compositionEngine", ["compose"]);
+      mockLoader = jasmine.createSpy('loader');
+      mockContainer = jasmine.createSpyObj('container', ['get', 'registerInstance', 'makeGlobal']);
+      mockCompositionEngine = jasmine.createSpyObj('compositionEngine', ['compose']);
 
       rootModel = {};
       composePromise = new Promise((resolve, error) => {
-        resolve(rootModel)
+        resolve(rootModel);
       });
 
       mockContainer.get.and.returnValue(mockCompositionEngine);
@@ -132,18 +144,18 @@ describe('aurelia', () => {
     afterEach(() => {
       delete document.body.aurelia;
       if (composeListener) {
-        document.removeEventListener("aurelia-composed", composeListener);
+        document.removeEventListener('aurelia-composed', composeListener);
       }
     });
 
-    it("should try and find the element with an id of applicationHost if one is not supplied", (done) => {
-      let documentSpy = spyOn(document, "getElementById").and.returnValue(document.body);
+    it('should try and find the element with an id of applicationHost if one is not supplied', (done) => {
+      let documentSpy = spyOn(document, 'getElementById').and.returnValue(document.body);
       aurelia.setRoot(rootModel)
         .then((result) => {
           expect(result).toBe(aurelia);
           expect(aurelia.host).toBe(document.body);
           expect(document.body.aurelia).toBe(aurelia);
-          expect(documentSpy).toHaveBeenCalledWith("applicationHost");
+          expect(documentSpy).toHaveBeenCalledWith('applicationHost');
         })
         .catch((reason) => expect(false).toBeTruthy(reason))
         .then(done);
@@ -152,7 +164,7 @@ describe('aurelia', () => {
     it("should use the applicationHost if it's not a string as the host", (done) => {
       //This wouldn't have succeeded because registerInstance checks the type
       //But the function doesn't guard against applicationHost so this test is valid
-      let host = { firstChild:{} };
+      let host = { firstChild: {} } as AureliaAppHost;
       aurelia.setRoot(rootModel, host)
         .then((result) => {
           expect(result).toBe(aurelia);
@@ -163,9 +175,9 @@ describe('aurelia', () => {
         .then(done);
     });
 
-    it("should call the compose function of the composition instance with a well formed instruction", (done) => {
+    it('should call the compose function of the composition instance with a well formed instruction', (done) => {
       let attachedSpy;
-      let documentSpy = spyOn(document, "getElementById").and.returnValue(document.body);
+      let documentSpy = spyOn(document, 'getElementById').and.returnValue(document.body);
       mockCompositionEngine.compose.and.callFake((instruction) => {
         attachedSpy = spyOn(instruction.viewSlot, 'attached');
         return composePromise;
@@ -188,65 +200,63 @@ describe('aurelia', () => {
     });
 
     it("should fire a custom aurelia-composed event when it's done", (done) => {
-      let documentSpy = spyOn(document, "getElementById").and.returnValue(document.body);
+      let documentSpy = spyOn(document, 'getElementById').and.returnValue(document.body);
       composeListener = (event) => {
         expect(event).toEqual(jasmine.any(window.Event));
-        expect(event.type).toEqual("aurelia-composed");
+        expect(event.type).toEqual('aurelia-composed');
         done();
       };
 
       //Can't do the same trick with aurelia-start because it waits till after the promise is resolved to fire the event
-      document.addEventListener("aurelia-composed", composeListener);
+      document.addEventListener('aurelia-composed', composeListener);
       aurelia.setRoot(rootModel)
         .catch((reason) => {
           expect(false).toBeTruthy(reason);
           done();
         });
-
     });
 
     it('should accept view model class as root', (done) => {
-
       const emptyMetadata = Object.freeze({});
       const metadataContainerKey = '__metadata__';
-  
+
       Reflect.getOwnMetadata = function(metadataKey, target, targetKey) {
         if (target.hasOwnProperty(metadataContainerKey)) {
           return (target[metadataContainerKey][targetKey] || emptyMetadata)[metadataKey];
         }
       };
-  
+
       Reflect.defineMetadata = function(metadataKey, metadataValue, target, targetKey) {
         let metadataContainer = target.hasOwnProperty(metadataContainerKey) ? target[metadataContainerKey] : (target[metadataContainerKey] = {});
         let targetContainer = metadataContainer[targetKey] || (metadataContainer[targetKey] = {});
         targetContainer[metadataKey] = metadataValue;
       };
-  
+
       Reflect.metadata = function(metadataKey, metadataValue) {
         return function(target, targetKey) {
           Reflect.defineMetadata(metadataKey, metadataValue, target, targetKey);
         };
       };
 
-      let documentSpy = spyOn(document, "getElementById").and.returnValue(document.body);
+      let documentSpy = spyOn(document, 'getElementById').and.returnValue(document.body);
 
       @inlineView('<template>Hello</template>')
       class App {}
 
-      aurelia = new Aurelia({});
+      aurelia = new Aurelia({} as Loader);
       aurelia.use.instance(BindingLanguage, {
         inspectTextContent() {
           return null;
         }
-      })
+      });
 
       aurelia.setRoot(App)
         .then(aurelia => {
-          expect(documentSpy).toHaveBeenCalledWith("applicationHost");
+          expect(documentSpy).toHaveBeenCalledWith('applicationHost');
           expect(aurelia.root.viewModel.constructor).toBe(App);
         })
         .catch((ex) => {
-          expect(ex).toBeFalsy("It should have composed");
+          expect(ex).toBeFalsy('It should have composed');
         })
         .then(() => {
           Reflect.getOwnMetadata = null;
@@ -266,8 +276,8 @@ describe('aurelia', () => {
     beforeEach(() => {
       mockLoader = jasmine.createSpy('loader');
 
-      mockViewEngine = jasmine.createSpyObj("viewEngine", ['importViewResources', 'enhance']);
-      mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
+      mockViewEngine = jasmine.createSpyObj('viewEngine', ['importViewResources', 'enhance']);
+      mockViewEngine.importViewResources.and.returnValue(new Promise<void>((resolve, error) => {
         resolve();
       }));
 
@@ -280,7 +290,7 @@ describe('aurelia', () => {
       mockResources = jasmine.createSpy('viewResources');
 
       mockPlugin = jasmine.createSpyObj('plugin', ['apply']);
-      mockPlugin.apply.and.returnValue(new Promise((resolve, error) => {
+      mockPlugin.apply.and.returnValue(new Promise<void>((resolve, error) => {
         resolve();
       }));
 
@@ -292,7 +302,7 @@ describe('aurelia', () => {
       let result;
 
       it('configures body as host', () => {
-        let documentSpy = spyOn(document, "querySelectorAll").and.returnValue([document.body]);
+        spyOn(document, 'querySelectorAll').and.returnValue([document.body] as unknown as NodeListOf<HTMLElement>);
         spyOn(aurelia, '_configureHost');
         result = aurelia.enhance();
         expect(aurelia._configureHost).toHaveBeenCalledWith(document.body);
@@ -306,7 +316,7 @@ describe('aurelia', () => {
         let elId = 'Testing';
         let fakeElement = DOM.createElement('div');
         fakeElement.setAttribute('id', elId);
-        let documentSpy = spyOn(document, "getElementById").and.returnValue(fakeElement);
+        let documentSpy = spyOn(document, 'getElementById').and.returnValue(fakeElement);
         result = aurelia.enhance({}, elId);
         expect(aurelia.host).toBe(fakeElement);
       });
@@ -318,13 +328,10 @@ describe('aurelia', () => {
       it('configures body as host', () => {
         let elId = 'Testing';
         let fakeElement = DOM.createElement('div');
-        fakeElement.setAttribute('id', fakeElement);
+        // fakeElement.setAttribute('id', fakeElement);
         result = aurelia.enhance({}, fakeElement);
         expect(aurelia.host).toBe(fakeElement);
       });
     });
   });
-
-
-
 });
