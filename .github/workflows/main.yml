@@ -13,4 +13,4 @@ jobs:
           node-version: 14
       - run: npm ci
       - run: npm run test
-      - run: npx gulp prepare-release
+      - run: npm run cut-release
