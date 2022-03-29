@@ -69,6 +69,7 @@
     "aurelia-templating": "^1.8.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.8",
     "aurelia-tools": "^0.2.4",
     "babel-dts-generator": "^0.6.1",
     "babel-eslint": "^6.1.2",
