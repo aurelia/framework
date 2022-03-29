@@ -2,17 +2,18 @@ import './setup';
 import {FrameworkConfiguration} from '../src/framework-configuration';
 import {Aurelia} from '../src/aurelia';
 import { HtmlBehaviorResource } from 'aurelia-templating';
+import { Loader } from 'aurelia-loader';
 
 describe('the framework config', () => {
   it('should initialize', () => {
-    let aureliaMock = jasmine.createSpyObj('aureliaMock', ['loader']);
-    let config = new FrameworkConfiguration(aureliaMock);
+    const aureliaMock = jasmine.createSpyObj('aureliaMock', ['loader']);
+    const config = new FrameworkConfiguration(aureliaMock);
 
     expect(config).toBeDefined();
     expect(config.aurelia).toBe(aureliaMock);
-    expect(config.info).toEqual(jasmine.any(Array));
-    expect(config.info.length).toEqual(0);
-    expect(config.processed).toBeFalsy();
+    expect(config['info']).toEqual(jasmine.any(Array));
+    expect(config['info'].length).toEqual(0);
+    expect(config['processed']).toBeFalsy();
   });
 
   describe('with', () => {
@@ -23,7 +24,7 @@ describe('the framework config', () => {
 
     beforeEach(() => {
       mockContainer = jasmine.createSpyObj('container', ['registerInstance', 'registerSingleton', 'makeGlobal']);
-      aurelia = new Aurelia({}, mockContainer);
+      aurelia = new Aurelia({} as Loader, mockContainer);
       testInstance = new TestClass();
     });
 
@@ -38,7 +39,7 @@ describe('the framework config', () => {
     });
 
     it("globalResources will add an array of paths", () => {
-      let resourceName = './someResource';
+      const resourceName = './someResource';
       expect(aurelia.use.globalResources([resourceName])).toBe(aurelia.use);
       expect(aurelia.use.resourcesToLoad[resourceName].moduleId).toEqual(resourceName);
     });
@@ -52,7 +53,7 @@ describe('the framework config', () => {
     it('globalResources will make relative to resourcesRelativeTo if set on config', () => {
       aurelia.use.resourcesRelativeTo = ['plugin', 'bootstrapper'];
 
-      let resourceName = './someResource';
+      const resourceName = './someResource';
 
       expect(aurelia.use.globalResources([resourceName])).toBe(aurelia.use);
 
@@ -69,14 +70,14 @@ describe('the framework config', () => {
     /**@type {FrameworkConfiguration} */
     let config;
     /**@type {Aurelia} */
-    let aurelia, mockContainer, mockLoader, mockResources, mockPlugin, mockViewEngine;
+    let aurelia, mockContainer, mockLoader, mockResources, mockViewEngine;
 
     beforeEach(() => {
       mockLoader = jasmine.createSpy('loader');
       mockResources = jasmine.createSpy('viewResources');
 
       mockViewEngine = jasmine.createSpyObj("viewEngine", ["importViewResources"]);
-      mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
+      mockViewEngine.importViewResources.and.returnValue(new Promise<void>((resolve) => {
         resolve();
       }));
 
@@ -106,17 +107,17 @@ describe('the framework config', () => {
       config.plugin('noPlugin');
       expect(config.info.length).toBe(1);
 
-      var info = config.info[0];
+      const info = config.info[0];
       expect(info.moduleId).toBe('noPlugin');
       expect(info.config).toBeDefined();
     });
 
     it('should lazily add config if config has not been processed', (done) => {
-      var pluginConfig = {};
+      const pluginConfig = {};
       config.plugin('noPlugin', pluginConfig);
       expect(config.info.length).toBe(1);
 
-      var info = config.info[0];
+      const info = config.info[0];
       expect(info.moduleId).toBe('noPlugin');
       expect(info.config).toBe(pluginConfig);
 
@@ -134,7 +135,7 @@ describe('the framework config', () => {
     });
 
     it("should load a plugin and call its configure function if it's defined", (done) => {
-      var pluginConfig = {};
+      const pluginConfig = {};
       configSpy.configure = jasmine.createSpy("configure").and.returnValue(null);
 
       config.plugin("plugin", pluginConfig).apply()
@@ -147,9 +148,9 @@ describe('the framework config', () => {
     });
 
     it("should load a plugin, call it's configure function and resolve the returned promise if defined", (done) => {
-      var pluginConfig = {};
-      var resolved = false;
-      configSpy.configure = jasmine.createSpy("configure").and.returnValue(new Promise((resolve) => {
+      const pluginConfig = {};
+      let resolved = false;
+      configSpy.configure = jasmine.createSpy("configure").and.returnValue(new Promise<void>((resolve) => {
         resolved = true;
         resolve();
       }));
@@ -184,7 +185,7 @@ describe('the framework config', () => {
       config.plugin(configure);
       expect(config.info.length).toBe(1);
 
-      var info = config.info[0];
+      const info = config.info[0];
       expect(info.moduleId).toBe(undefined, 'info.moduleId should have been undefined when using configure fn');
       expect(info.configure).toBe(configure);
       expect(info.config).toBeDefined('info.config should have been an empty object when not specified');
@@ -195,7 +196,7 @@ describe('the framework config', () => {
       config.feature(configure);
       expect(config.info.length).toBe(1);
 
-      var info = config.info[0];
+      const info = config.info[0];
       expect(info.moduleId).toBe(undefined, 'info.moduleId should have been undefined when using configure fn');
       expect(info.configure).toBe(configure);
       expect(info.config).toBeDefined('info.config should have been an empty object when not specified');
@@ -204,7 +205,7 @@ describe('the framework config', () => {
     it('should queue loading behavior task when calling globalResources on custom element', () => {
       aurelia.resources.autoRegister = function() {
         const meta = new HtmlBehaviorResource();
-        meta.elementName = 'el';
+        meta['elementName'] = 'el';
         return meta;
       };
       config.globalResources(class El {});
@@ -213,14 +214,14 @@ describe('the framework config', () => {
   });
 
   describe('apply()', () => {
-    let aurelia, mockContainer, mockLoader, mockResources, mockPlugin, mockViewEngine;
+    let aurelia, mockContainer, mockLoader, mockResources, mockViewEngine;
 
     beforeEach(() => {
       mockLoader = jasmine.createSpy('loader');
       mockResources = jasmine.createSpy('viewResources');
 
       mockViewEngine = jasmine.createSpyObj("viewEngine", ["importViewResources"]);
-      mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
+      mockViewEngine.importViewResources.and.returnValue(new Promise<void>((resolve) => {
         resolve();
       }));
 
@@ -235,9 +236,9 @@ describe('the framework config', () => {
     it("should load resources that are defined and register them with the resource registry", (done) => {
       aurelia.use.resourcesToLoad["./aResource"] = {moduleId: './aResource', relativeTo: ''};
 
-      let resource = jasmine.createSpyObj("resource", ["register"]);
+      const resource = jasmine.createSpyObj("resource", ["register"]);
 
-      mockViewEngine.importViewResources.and.returnValue(new Promise((resolve, error) => {
+      mockViewEngine.importViewResources.and.returnValue(new Promise((resolve) => {
         resolve([resource]);
       }));
 
@@ -282,19 +283,20 @@ describe('the framework config', () => {
 
       let behaviorQueued = false;
       let behaviorLoaded = false;
-      
+
       aurelia.resources.autoRegister = function() {
         const meta = new HtmlBehaviorResource();
-        meta.elementName = 'el';
-        meta.load = function() {
+        meta['elementName'] = 'el';
+        meta['load'] = function() {
           behaviorLoaded = true;
+          return Promise.resolve(null);
         };
         return meta;
       };
 
-      config.behaviorsToLoad.push = function() {
+      config.behaviorsToLoad.push = function(...args: unknown[]) {
         behaviorQueued = true;
-        return [].push.apply(this, arguments);
+        return [].push.apply(this, args);
       };
       config.postTasks.splice(0, 1, mockLoadResourcesTask);
       config.plugin(function(cfg) {
@@ -347,7 +349,8 @@ describe('the framework config', () => {
         config
           .plugin('c.js')
       }
-      function module3Configure(config) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      function module3Configure(_config) {
         count++;
       }
       const modules = {

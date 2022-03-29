@@ -4,3 +4,5 @@ bower_components
 .idea
 .DS_STORE
 build/reports
+coverage
+.npmrc
