@@ -17,7 +17,6 @@ declare global {
 }
 
 describe('aurelia', () => {
-  Reflect
   const document = window.document as Document & { body: AureliaAppHost };
 
   describe('constructor', () => {

@@ -198,6 +198,7 @@ export class Aurelia {
   }
 }
 
+/** @internal */
 declare module 'aurelia-templating' {
   interface View {
     viewModel: any;

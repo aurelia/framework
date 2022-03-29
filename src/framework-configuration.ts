@@ -517,6 +517,7 @@ export class FrameworkConfiguration {
   }
 }
 
+/** @internal */
 declare module 'aurelia-templating' {
   interface HtmlBehaviorResource {
     elementName: string | null;
