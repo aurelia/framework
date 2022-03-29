@@ -31,7 +31,7 @@
     "precut-release": "npm run lint && npm run test",
     "doc": "typedoc src/aurelia-framework.ts --json doc/api.json",
     "postdoc": "node doc/cleanup.js",
-    "cut-release": "npm run build && gulp prepare-release"
+    "cut-release": "npm run build && npm run doc && gulp prepare-release"
   },
   "dependencies": {
     "aurelia-binding": "^2.0.0",
@@ -65,6 +65,7 @@
     "babel-preset-es2015-loose": "^7.0.0",
     "babel-preset-es2015-loose-native-modules": "^1.0.0",
     "babel-preset-stage-1": "^6.5.0",
+    "conventional-changelog": "^3.1.25",
     "del": "^2.2.1",
     "eslint": "^8.12.0",
     "gulp": "^4.0.2",

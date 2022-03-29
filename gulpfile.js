@@ -4,9 +4,6 @@
 const gulp = require('gulp');
 const bump = require('gulp-bump');
 const conventionalChangelog = require('gulp-conventional-changelog');
-const typedoc = require('gulp-typedoc');
-const through2 = require('through2');
-const pkg = require('./package.json');
 
 const docPath = './doc';
 const yargs = require('yargs');
@@ -24,7 +21,8 @@ gulp.task('changelog', function() {
   return gulp.src(`${docPath}/CHANGELOG.md`, {
     buffer: false
   }).pipe(conventionalChangelog({
-    preset: 'angular'
+    preset: 'angular',
+    releaseCount: 0,
   }))
   .pipe(gulp.dest(docPath));
 });
