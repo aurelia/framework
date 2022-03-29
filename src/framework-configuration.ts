@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import * as TheLogManager from 'aurelia-logging';
 import { ViewEngine, HtmlBehaviorResource } from 'aurelia-templating';
 import { join } from 'aurelia-path';
@@ -311,6 +312,7 @@ export class FrameworkConfiguration {
   globalResources(resources: string | Function | Array<string | Function>): FrameworkConfiguration {
     assertProcessed(this);
 
+    // eslint-disable-next-line prefer-rest-params
     let toAdd = Array.isArray(resources) ? resources : arguments;
     let resource;
     let resourcesRelativeTo = this.resourcesRelativeTo || ['', ''];

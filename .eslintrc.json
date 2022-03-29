@@ -1,7 +1,31 @@
 {
-  "extends": "./node_modules/aurelia-tools/.eslintrc.json",
-  "ignorePatterns": ["**/dist/**/*.js"],
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "extends": ["plugin:@typescript-eslint/recommended"],
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    ".vscode",
+    "*.config.js",
+    ".webpack",
+    "_warmup",
+    "**/*.js"
+  ],
+  "plugins": [],
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "sourceType": "module"
+  },
   "rules": {
-
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/consistent-type-assertions": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "prefer-const": "off"
   }
 }

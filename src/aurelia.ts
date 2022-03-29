@@ -114,7 +114,7 @@ export class Aurelia {
    * @param applicationHost The DOM object that Aurelia will enhance.
    * @return Returns a Promise for the current Aurelia instance.
    */
-  enhance(bindingContext: Object = {}, applicationHost: string | Element = null): Promise<Aurelia> {
+  enhance(bindingContext: object = {}, applicationHost: string | Element = null): Promise<Aurelia> {
     this._configureHost(applicationHost || DOM.querySelectorAll('body')[0]);
 
     return new Promise(resolve => {
@@ -132,6 +132,7 @@ export class Aurelia {
    * @param applicationHost The DOM object that Aurelia will attach to.
    * @return Returns a Promise of the current Aurelia instance.
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   setRoot(root: string | Function = null, applicationHost: string | Element = null): Promise<Aurelia> {
     let instruction = {} as CompositionContext;
 
