@@ -1,5 +1,4 @@
 // @ts-check
-// require('./build/tasks');
 
 const gulp = require('gulp');
 const bump = require('gulp-bump');
