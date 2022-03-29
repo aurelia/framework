@@ -28,7 +28,10 @@
     "build:dts": "tsc src/aurelia-framework.ts --emitDeclarationOnly --declaration --declarationDir dist/types",
     "postbuild": "npm run build:dts",
     "lint": "eslint .",
-    "cut-release": "gulp prepare-release"
+    "precut-release": "npm run lint && npm run test",
+    "doc": "typedoc src/aurelia-framework.ts --json doc/api.json",
+    "postdoc": "node doc/cleanup.js",
+    "cut-release": "npm run build && gulp prepare-release"
   },
   "dependencies": {
     "aurelia-binding": "^2.0.0",

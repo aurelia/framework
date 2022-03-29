@@ -23,7 +23,7 @@ function runTasks(config: FrameworkConfiguration, tasks) {
   return next();
 }
 
-interface FrameworkPluginInfo {
+export interface FrameworkPluginInfo {
   moduleId?: string;
   resourcesRelativeTo?: string[];
   configure?: (config: FrameworkConfiguration, pluginConfig?: any) => any;
