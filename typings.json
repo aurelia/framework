@@ -1,4 +1,4 @@
 {
   "name": "aurelia-framework",
-  "main": "dist/types/aurelia-framework.d.ts"
+  "main": "dist/aurelia-framework.d.ts"
 }
