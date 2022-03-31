@@ -1,3 +1,13 @@
+# [1.4.0](https://github.com/aurelia/framework/compare/1.3.1...1.4.0) (2022-03-31)
+
+
+### Bug Fixes
+
+* **all:** point package.json module from dist/es2015 back to dist/native-modules ([0e59359](https://github.com/aurelia/framework/commit/0e593594ddc72f10c5f630728cfe2448862dde7b))
+* **dep:** resolve vulnerable dep issue ([#1000](https://github.com/aurelia/framework/issues/1000)) ([78102fd](https://github.com/aurelia/framework/commit/78102fdc3ecb52be5bc3cec998025f4fa8510856))
+
+
+
 <a name="1.3.0-rc.2"></a>
 # [1.3.0-rc.2](https://github.com/aurelia/framework/compare/1.3.0-rc.1...1.3.0-rc.2) (2018-06-21)
 

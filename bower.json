@@ -1,6 +1,6 @@
 {
   "name": "aurelia-framework",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "The aurelia framework brings together all the required core aurelia libraries into a ready-to-go application-building platform.",
   "keywords": [
     "aurelia",
@@ -27,6 +27,6 @@
     "aurelia-pal": "^1.0.0",
     "aurelia-path": "^1.0.0",
     "aurelia-task-queue": "^1.0.0",
-    "aurelia-templating": "^1.8.1"
+    "aurelia-templating": "^1.11.0"
   }
 }
