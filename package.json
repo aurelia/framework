@@ -24,7 +24,7 @@
     "dist",
     "src",
     "doc/api.json",
-    "CHANGELOG.md",
+    "doc/CHANGELOG.md",
     "typings.json",
     "README.md",
     "LICENSE"
