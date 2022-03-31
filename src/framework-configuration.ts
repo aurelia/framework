@@ -332,6 +332,9 @@ export class FrameworkConfiguration {
         this.resourcesToLoad[name] = { moduleId: name, relativeTo: grandParent };
         break;
       case 'function':
+        // todo: remove this line, accidentally made autoRegister internal
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         let meta = this.aurelia.resources.autoRegister(this.container, resource);
         if (meta instanceof HtmlBehaviorResource && meta.elementName !== null) {
           if (this.behaviorsToLoad.push(meta) === 1) {
