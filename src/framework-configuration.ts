@@ -2,9 +2,9 @@
 import * as TheLogManager from 'aurelia-logging';
 import { ViewEngine, HtmlBehaviorResource } from 'aurelia-templating';
 import { join } from 'aurelia-path';
-import { type Container } from 'aurelia-dependency-injection';
-import { type Aurelia } from './aurelia';
-import { type Loader } from 'aurelia-loader';
+import type { Container } from 'aurelia-dependency-injection';
+import type { Aurelia } from './aurelia';
+import type { Loader } from 'aurelia-loader';
 
 const logger = TheLogManager.getLogger('aurelia');
 const extPattern = /\.[^/.]+$/;
@@ -242,7 +242,7 @@ export class FrameworkConfiguration {
    * @return Returns the current FrameworkConfiguration instance.
    */
   singleton(type: any, implementation?: Function): FrameworkConfiguration {
-    this.container.registerSingleton(type, implementation);
+    this.container.registerSingleton(type, implementation as any);
     return this;
   }
 
@@ -253,7 +253,7 @@ export class FrameworkConfiguration {
    * @return Returns the current FrameworkConfiguration instance.
    */
   transient(type: any, implementation?: Function): FrameworkConfiguration {
-    this.container.registerTransient(type, implementation);
+    this.container.registerTransient(type, implementation as any);
     return this;
   }
 

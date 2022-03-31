@@ -145,7 +145,7 @@ export class Aurelia {
 
     let engine = this.container.get(TemplatingEngine) as TemplatingEngine;
     let transaction = this.container.get(CompositionTransaction);
-    delete transaction.initialComposition;
+    delete (transaction as any).initialComposition;
 
     if (!root) {
       if (this.configModuleId) {
