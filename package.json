@@ -20,6 +20,15 @@
     "type": "git",
     "url": "http://github.com/aurelia/framework"
   },
+  "files": [
+    "dist",
+    "src",
+    "doc/api.json",
+    "CHANGELOG.md",
+    "typings.json",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "test": "karma start --single-run",
     "clean:dist": "rimraf dist",
