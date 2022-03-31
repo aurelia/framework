@@ -55,10 +55,9 @@
     "aurelia-pal": "^1.0.0",
     "aurelia-path": "^1.1.7",
     "aurelia-task-queue": "^1.0.0",
-    "aurelia-templating": "^1.11.0"
+    "aurelia-templating": "^1.11.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.8",
     "@rollup/plugin-typescript": "^8.3.1",
     "@types/jasmine": "^4.0.0",
     "@types/node": "^17.0.23",
