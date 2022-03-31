@@ -7,12 +7,7 @@ export * from 'aurelia-task-queue';
 export * from 'aurelia-path';
 export * from 'aurelia-pal';
 
-import * as TheLogManager from 'aurelia-logging';
-
-/**
- * The log manager.
- */
-export const LogManager = TheLogManager;
+export * as LogManager from 'aurelia-logging';
 
 export { Aurelia } from './aurelia';
 export { FrameworkConfiguration, FrameworkPluginInfo } from './framework-configuration';
