@@ -53,9 +53,9 @@
     "aurelia-logging": "^1.0.0",
     "aurelia-metadata": "^1.0.0",
     "aurelia-pal": "^1.0.0",
-    "aurelia-path": "^1.0.0",
+    "aurelia-path": "^1.1.7",
     "aurelia-task-queue": "^1.0.0",
-    "aurelia-templating": "^1.8.1"
+    "aurelia-templating": "^1.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
