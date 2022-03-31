@@ -20,19 +20,31 @@
     "type": "git",
     "url": "http://github.com/aurelia/framework"
   },
+  "files": [
+    "dist",
+    "src",
+    "doc/api.json",
+    "doc/CHANGELOG.md",
+    "typings.json",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "test": "karma start --single-run",
     "clean:dist": "rimraf dist",
+    "lint": "eslint .",
     "pre:build": "npm run clean:dist",
     "build": "rollup -c",
     "build:dts:tsc": "tsc src/aurelia-framework.ts --emitDeclarationOnly --declaration --declarationDir dist/types",
     "build:dts": "dts-bundle-generator src/aurelia-framework.ts -o dist/types/aurelia-framework.d.ts",
     "postbuild": "npm run build:dts",
-    "lint": "eslint .",
-    "precut-release": "npm run lint && npm run test",
-    "doc": "typedoc src/aurelia-framework.ts --json doc/api.json",
+    "typedoc": "typedoc src/aurelia-framework.ts --json doc/api.json",
+    "posttypedoc": "node doc/cleanup.js",
+    "changelog": "conventional-changelog -p angular -i doc/CHANGELOG.md -s",
     "postdoc": "node doc/cleanup.js",
-    "cut-release": "npm run build && npm run doc && gulp prepare-release"
+    "precut-release": "npm run test && npm run lint",
+    "cut-release": "npm run build && npm run typedoc && npm version --git-tag-version false",
+    "postcut-release": "node doc/bower-version.js && npm run changelog"
   },
   "dependencies": {
     "aurelia-binding": "^2.0.0",
@@ -41,9 +53,9 @@
     "aurelia-logging": "^1.0.0",
     "aurelia-metadata": "^1.0.0",
     "aurelia-pal": "^1.0.0",
-    "aurelia-path": "^1.0.0",
+    "aurelia-path": "^1.1.7",
     "aurelia-task-queue": "^1.0.0",
-    "aurelia-templating": "^1.8.1"
+    "aurelia-templating": "^1.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
@@ -54,11 +66,9 @@
     "@typescript-eslint/parser": "^5.17.0",
     "aurelia-pal-browser": "^1.8.1",
     "conventional-changelog": "^3.1.25",
+    "conventional-changelog-cli": "^2.2.2",
     "dts-bundle-generator": "^6.5.0",
     "eslint": "^8.12.0",
-    "gulp": "^4.0.2",
-    "gulp-bump": "^3.2.0",
-    "gulp-conventional-changelog": "^2.0.35",
     "jasmine-core": "^4.0.1",
     "karma": "^6.3.17",
     "karma-chrome-launcher": "^3.1.1",
@@ -67,9 +77,8 @@
     "karma-typescript": "^5.5.3",
     "rimraf": "^3.0.2",
     "rollup": "^2.70.1",
-    "through2": "^2.0.1",
+    "tslib": "^2.3.1",
     "typedoc": "^0.22.13",
-    "typescript": "^4.6.3",
-    "yargs": "^4.8.1"
+    "typescript": "^4.6.3"
   }
 }

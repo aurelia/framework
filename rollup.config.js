@@ -61,5 +61,9 @@ export default [
     'aurelia-metadata'
   ];
   config.output.forEach(output => output.sourcemap = true);
+  config.onwarn = /** @param {import('rollup').RollupWarning} warning */ (warning, warn) => {
+    if (warning.code === 'CIRCULAR_DEPENDENCY') return;
+    warn(warning.message);
+  };
   return config;
 });

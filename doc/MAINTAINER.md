@@ -7,7 +7,7 @@
   # with minor
   npm run cut-release -- --bump minor
   ```
-3. Commit: `git add .` and then `git commit chore(release): prepare release vXXX`
-4. Tag: `git tag`
-5. Push to remote repo: `git push`
+3. Commit: `git add .` and then `git commit chore(release): prepare release vXXX` where `XXX` is the new version
+4. Tag: `git tag -a XXX` where `XXX` is the version
+5. Push to remote repo: `git push --follow-tags`
 6. Publish: Run `npm publish` to release the new version
