@@ -1,3 +1,12 @@
+## [1.4.1](https://github.com/aurelia/framework/compare/1.4.0...1.4.1) (2022-03-31)
+
+
+### Bug Fixes
+
+* **dep:** use latest templating to resolve chain dep vul issue ([#1001](https://github.com/aurelia/framework/issues/1001)) ([1930cf1](https://github.com/aurelia/framework/commit/1930cf16291b6d6bb3ad7ee5e5de404bfb47cd03))
+
+
+
 # [1.4.0](https://github.com/aurelia/framework/compare/1.3.1...1.4.0) (2022-03-31)
 
 
