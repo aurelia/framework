@@ -40,11 +40,10 @@
     "postbuild": "npm run build:dts",
     "typedoc": "typedoc src/aurelia-framework.ts --json doc/api.json",
     "posttypedoc": "node doc/cleanup.js",
-    "changelog": "conventional-changelog -p angular -i doc/CHANGELOG.md -s",
-    "postdoc": "node doc/cleanup.js",
-    "precut-release": "npm run test && npm run lint",
-    "cut-release": "npm run build && npm run typedoc && npm version --git-tag-version false",
-    "postcut-release": "node doc/bower-version.js && npm run changelog"
+    "changelog": "standard-version -t \"\" -i doc/CHANGELOG.md --skip.commit --skip.tag",
+    "precut-release": "npm run test && npm run lint && npm run build",
+    "cut-release": "npm run changelog",
+    "postcut-release": "npm run typedoc"
   },
   "dependencies": {
     "aurelia-binding": "^2.0.0",
@@ -64,8 +63,6 @@
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
     "aurelia-pal-browser": "^1.8.1",
-    "conventional-changelog": "^3.1.25",
-    "conventional-changelog-cli": "^2.2.2",
     "dts-bundle-generator": "^6.5.0",
     "eslint": "^8.12.0",
     "jasmine-core": "^4.0.1",
@@ -76,6 +73,7 @@
     "karma-typescript": "^5.5.3",
     "rimraf": "^3.0.2",
     "rollup": "^2.70.1",
+    "standard-version": "^9.3.2",
     "tslib": "^2.3.1",
     "typedoc": "^0.22.13",
     "typescript": "^4.6.3"
