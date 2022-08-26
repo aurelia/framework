@@ -46,6 +46,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Fire Stick Tricks](https://www.firesticktricks.com/)
 * [Free Car Check](https://www.freecarcheck.uk)
 * [Car Check Experts](https://carcheckexperts.co.uk/)
+* [Car Dot Check](https://cardotcheck.co.uk)
 * [Keep Moving Care](https://keepmovingcare.com)
 * [GiveMeDeals](https://www.givemedeals.com/)
 * [ihorizon Pty Ltd](http://ihorizon.net/)
