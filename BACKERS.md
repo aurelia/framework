@@ -214,6 +214,7 @@ Below you'll find a list of the wonderful people and organizations that have mad
 * [Besten Pfannen](https://opencollective.com/besten-pfannen)
 * [Brian Oommen](https://opencollective.com/brian-oommen)
 * [COMsulting](http://www.comsulting.de/)
+* [Cupertino Panes](http://panejs.com/)
 * [Daniyar Kulakhmetov](https://opencollective.com/daniyar-kulakhmetov)
 * [Danny Cummings](https://opencollective.com/danny-cummings)
 * [Dennis Battenfeld](https://opencollective.com/guest-3f58fba7)
